@@ -4,9 +4,10 @@ import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
 import { UserProvider } from "./lib/context/user";
 import { IdeasProvider } from "./lib/context/ideas";
+import { motion, AnimatePresence } from "framer-motion";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { motion, AnimatePresence } from "framer-motion";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");

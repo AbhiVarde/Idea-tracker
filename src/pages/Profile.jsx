@@ -4,13 +4,15 @@ import { useIdeas } from "../lib/context/ideas";
 import { motion } from "framer-motion";
 import {
   User,
-  Mail,
   Calendar,
-  BarChart3,
   Lightbulb,
   Tag,
   Trophy,
+  Zap,
+  Clock,
+  PieChart,
 } from "lucide-react";
+import { LuArrowRight } from "react-icons/lu";
 
 export function Profile({ navigate }) {
   const user = useUser();
@@ -47,7 +49,7 @@ export function Profile({ navigate }) {
       totalIdeas: userIdeas.length,
       categories,
       priorities,
-      recentActivity: userIdeas.slice(0, 5),
+      recentActivity: userIdeas.slice(0, 3),
     });
   }, [ideas.current, user.current, navigate]);
 
@@ -57,232 +59,271 @@ export function Profile({ navigate }) {
   const topCategory = Object.entries(stats.categories).sort(
     (a, b) => b[1] - a[1]
   )[0];
+  const productivityScore = Math.min(
+    100,
+    Math.round(
+      (stats.totalIdeas /
+        Math.max(
+          1,
+          Math.ceil(
+            (Date.now() - new Date(user.current.$createdAt)) /
+              (1000 * 60 * 60 * 24 * 30)
+          )
+        )) *
+        10
+    )
+  );
 
   return (
-    <div className="max-w-2xl mx-auto p-4 space-y-4">
+    <div className="max-w-2xl mx-auto p-4 space-y-6">
       {/* Header */}
       <motion.div
-        className="text-center"
+        className="flex items-center justify-between"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">
-          Developer Profile
-        </h1>
-        <p className="text-gray-400 text-sm sm:text-base">
-          Track your creative journey and achievements
-        </p>
+        <div>
+          <h1 className="text-2xl font-bold text-white">Your Profile</h1>
+          <p className="text-gray-400 text-sm">
+            Overview of your creative contributions
+          </p>
+        </div>
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          className="w-12 h-12 rounded-lg bg-[#FD366E] flex items-center justify-center"
+        >
+          <User className="w-5 h-5 text-white" />
+        </motion.div>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Profile Info */}
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 gap-6">
+        {/* Profile Card */}
         <motion.div
-          className="md:col-span-1"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          className="bg-gradient-to-br from-[#1D1D1D] to-[#2A2A2A] rounded-2xl p-6 border border-gray-800 shadow-lg"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5 space-y-5">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-[#FD366E] rounded-full flex items-center justify-center mx-auto shadow-lg ring-2 ring-[#FD366E]/40">
-                <User className="w-9 h-9 sm:w-11 sm:h-11 text-white" />
-              </div>
-              <h2 className="text-lg sm:text-xl font-medium text-white mt-3 mb-0.5 truncate">
-                {user.current.name || "Developer"}
-              </h2>
-              <p className="text-gray-400 text-xs sm:text-sm">Idea Innovator</p>
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3 text-gray-300">
-                <Mail className="w-4 h-4 text-[#FD366E] flex-shrink-0" />
-                <span className="text-xs sm:text-sm truncate">
-                  {user.current.email}
-                </span>
-              </div>
-              <div className="flex items-center space-x-3 text-gray-300">
-                <Calendar className="w-4 h-4 text-[#FD366E] flex-shrink-0" />
-                <span className="text-xs sm:text-sm">
-                  Member since {memberSince}
-                </span>
-              </div>
-              <div className="flex items-center space-x-3 text-gray-300">
-                <Lightbulb className="w-4 h-4 text-[#FD366E] flex-shrink-0" />
-                <span className="text-xs sm:text-sm">
-                  {stats.totalIdeas} Ideas Created
-                </span>
+          <div className="flex flex-col sm:flex-row gap-6">
+            <div className="flex-shrink-0">
+              <div className="w-20 h-20 rounded-xl bg-[#FD366E] flex items-center justify-center shadow-lg">
+                <User className="w-8 h-8 text-white" />
               </div>
             </div>
-
-            {topCategory && (
-              <div className="bg-[#fd366e0a] border border-[#FD366E] rounded-lg p-3">
-                <div className="flex items-center space-x-2 mb-1">
-                  <Trophy className="w-4 h-4 text-[#FD366E]" />
-                  <span className="font-semibold text-white text-sm">
-                    Top Category
+            <div className="flex-grow">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-bold text-white">
+                    {user.current.name || "Developer"}
+                  </h2>
+                  <p className="text-gray-400 text-sm">{user.current.email}</p>
+                </div>
+                <div className="flex items-center space-x-2 bg-[#fd366e0a] border border-[#FD366E]/30 rounded-full px-3 py-1">
+                  <Zap className="w-4 h-4 text-[#FD366E]" />
+                  <span className="text-xs font-medium text-white">
+                    {productivityScore}% Productive
                   </span>
                 </div>
-                <p className="text-white text-sm truncate">
-                  {topCategory[0]} ({topCategory[1]} ideas)
-                </p>
               </div>
-            )}
+
+              <div className="mt-4 grid grid-cols-2 gap-4">
+                <div className="bg-[#252525] rounded-lg p-3 border-[0.5px] border-[#FD366E]">
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="w-4 h-4 text-[#FD366E]" />
+                    <span className="text-xs text-gray-300">Member since</span>
+                  </div>
+                  <p className="text-white text-sm font-medium mt-1">
+                    {memberSince}
+                  </p>
+                </div>
+                <div className="bg-[#252525] rounded-lg p-3 border-[0.5px] border-[#FD366E]">
+                  <div className="flex items-center space-x-2">
+                    <Lightbulb className="w-4 h-4 text-[#FD366E]" />
+                    <span className="text-xs text-gray-300">Total ideas</span>
+                  </div>
+                  <p className="text-white text-sm font-medium mt-1">
+                    {stats.totalIdeas}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
 
-        {/* Stats and Activity */}
+        {/* Stats Overview */}
         <motion.div
-          className="md:col-span-1"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div className="space-y-5">
-            {/* Stats Cards */}
-            <div className="grid grid-cols-3 gap-3">
-              <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-4 text-center">
-                <Lightbulb className="w-6 h-6 text-[#FD366E] mx-auto mb-1" />
-                <div className="text-xl font-bold text-white">
-                  {stats.totalIdeas}
-                </div>
-                <div className="text-gray-400 text-xs">Total Ideas</div>
-              </div>
-              <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-4 text-center">
-                <Tag className="w-6 h-6 text-[#FD366E] mx-auto mb-1" />
-                <div className="text-xl font-bold text-white">
-                  {Object.keys(stats.categories).length}
-                </div>
-                <div className="text-gray-400 text-xs">Categories</div>
-              </div>
-              <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-4 text-center">
-                <BarChart3 className="w-6 h-6 text-[#FD366E] mx-auto mb-1" />
-                <div className="text-xl font-bold text-white">
-                  {stats.recentActivity.length > 0
-                    ? Math.round(
-                        stats.totalIdeas /
-                          Math.max(
-                            1,
-                            Math.ceil(
-                              (Date.now() - new Date(user.current.$createdAt)) /
-                                (1000 * 60 * 60 * 24 * 30)
-                            )
-                          )
-                      )
-                    : 0}
-                </div>
-                <div className="text-gray-400 text-xs">Ideas/Month</div>
-              </div>
+          <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-4 flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-lg bg-[#fd366e0a] border border-[#FD366E]/20 flex items-center justify-center">
+              <Lightbulb className="w-5 h-5 text-[#FD366E]" />
             </div>
+            <div>
+              <p className="text-gray-400 text-xs">Total Ideas</p>
+              <p className="text-white font-bold">{stats.totalIdeas}</p>
+            </div>
+          </div>
+          <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-4 flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-lg bg-[#fd366e0a] border border-[#FD366E]/20 flex items-center justify-center">
+              <Tag className="w-5 h-5 text-[#FD366E]" />
+            </div>
+            <div>
+              <p className="text-gray-400 text-xs">Categories</p>
+              <p className="text-white font-bold">
+                {Object.keys(stats.categories).length}
+              </p>
+            </div>
+          </div>
+          <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-4 flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-lg bg-[#fd366e0a] border border-[#FD366E]/20 flex items-center justify-center">
+              <Clock className="w-5 h-5 text-[#FD366E]" />
+            </div>
+            <div>
+              <p className="text-gray-400 text-xs">Ideas/Month</p>
+              <p className="text-white font-bold">
+                {stats.totalIdeas > 0
+                  ? Math.round(
+                      stats.totalIdeas /
+                        Math.max(
+                          1,
+                          Math.ceil(
+                            (Date.now() - new Date(user.current.$createdAt)) /
+                              (1000 * 60 * 60 * 24 * 30)
+                          )
+                        )
+                    )
+                  : 0}
+              </p>
+            </div>
+          </div>
+        </motion.div>
 
-            {/* Category Breakdown */}
-            <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-4">
-              <h3 className="text-lg font-bold text-white mb-3 flex items-center">
-                <BarChart3 className="w-5 h-5 mr-2 text-[#FD366E]" />
-                Category Breakdown
+        {/* Category and Recent Activity */}
+        <motion.div
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          {/* Category Breakdown */}
+          <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-white flex items-center">
+                <PieChart className="w-5 h-5 mr-2 text-[#FD366E]" />
+                Categories
               </h3>
-
-              {Object.keys(stats.categories).length > 0 ? (
-                <div className="space-y-3">
-                  {Object.entries(stats.categories)
-                    .sort((a, b) => b[1] - a[1])
-                    .map(([category, count]) => {
-                      const percentage = (count / stats.totalIdeas) * 100;
-                      return (
-                        <div key={category} className="space-y-1">
-                          <div className="flex justify-between text-xs sm:text-sm">
-                            <span className="text-gray-300 truncate">
-                              {category}
-                            </span>
-                            <span className="text-gray-400">{count} ideas</span>
-                          </div>
-                          <div className="w-full bg-gray-800 rounded-full h-1.5">
-                            <motion.div
-                              className="bg-[#FD366E] h-1.5 rounded-full"
-                              initial={{ width: 0 }}
-                              animate={{ width: `${percentage}%` }}
-                              transition={{ duration: 1, delay: 0.5 }}
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
+              {topCategory && (
+                <div className="flex items-center space-x-1 bg-[#252525] rounded-full px-2 py-1">
+                  <Trophy className="w-3 h-3 text-[#FD366E]" />
+                  <span className="text-xs text-white">{topCategory[0]}</span>
                 </div>
-              ) : (
-                <p className="text-gray-400 text-center py-6 text-sm">
-                  No ideas yet. Start creating!
-                </p>
               )}
             </div>
 
-            {/* Recent Activity */}
-            <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-4">
-              <h3 className="text-lg font-bold text-white mb-3">
-                Recent Ideas
-              </h3>
-
-              {stats.recentActivity.length > 0 ? (
-                <motion.div
-                  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    visible: {
-                      transition: {
-                        staggerChildren: 0.1,
-                      },
-                    },
-                    hidden: {},
-                  }}
-                >
-                  {stats.recentActivity.map((idea, index) => (
-                    <motion.div
-                      key={idea.$id}
-                      className="flex flex-col justify-between p-4 bg-gray-800/50 border border-gray-700 rounded-lg"
-                      variants={{
-                        hidden: { opacity: 0, y: 10 },
-                        visible: { opacity: 1, y: 0 },
-                      }}
-                    >
-                      <div>
-                        <h4 className="font-medium text-white mb-2 truncate">
-                          {idea.title}
-                        </h4>
-                        <p className="text-xs sm:text-sm text-gray-400 mb-3">
-                          <span className="bg-[#fd366e0a] border border-[#FD366E] text-white px-2 py-0.5 rounded-full text-[10px] sm:text-xs mr-2">
-                            {idea.category || "Web App"}
+            {Object.keys(stats.categories).length > 0 ? (
+              <div className="space-y-4">
+                {Object.entries(stats.categories)
+                  .sort((a, b) => b[1] - a[1])
+                  .map(([category, count]) => {
+                    const percentage = Math.round(
+                      (count / stats.totalIdeas) * 100
+                    );
+                    return (
+                      <div key={category}>
+                        <div className="flex justify-between text-sm mb-1">
+                          <span className="text-gray-300">{category}</span>
+                          <span className="text-gray-400">
+                            {percentage}% • {count}
                           </span>
-                          {new Date(idea.$createdAt).toLocaleDateString()}
-                        </p>
+                        </div>
+                        <div className="w-full bg-gray-800 rounded-full h-1.5">
+                          <motion.div
+                            className="bg-gradient-to-r from-[#FD366E] to-[#FE6B49] h-1.5 rounded-full"
+                            initial={{ width: 0 }}
+                            animate={{ width: `${percentage}%` }}
+                            transition={{ duration: 1, delay: 0.5 }}
+                          />
+                        </div>
                       </div>
+                    );
+                  })}
+              </div>
+            ) : (
+              <div className="text-center py-6">
+                <PieChart className="w-8 h-8 text-gray-600 mx-auto mb-2" />
+                <p className="text-gray-400 text-sm">No categories yet</p>
+              </div>
+            )}
+          </div>
+
+          {/* Recent Activity */}
+          <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5">
+            <h3 className="text-lg font-bold text-white flex items-center mb-4">
+              <Clock className="w-5 h-5 mr-2 text-[#FD366E]" />
+              Recent Ideas
+            </h3>
+
+            {stats.recentActivity.length > 0 ? (
+              <div className="space-y-4">
+                {stats.recentActivity.map((idea) => (
+                  <motion.div
+                    key={idea.$id}
+                    className="p-3 bg-[#252525] border border-gray-800 rounded-lg"
+                    whileHover={{ y: -2 }}
+                  >
+                    <div className="flex justify-between items-start">
+                      <h4 className="font-medium text-white text-sm">
+                        {idea.title}
+                      </h4>
                       <span
-                        className={`mt-auto px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap self-start ${
+                        className={`text-xs px-2 py-0.5 rounded-full ${
                           idea.priority === "High"
-                            ? "bg-red-500/20 text-red-300 border border-red-500/30"
+                            ? "bg-red-500/20 text-red-300"
                             : idea.priority === "Medium"
-                            ? "bg-yellow-500/20 text-yellow-300 border border-yellow-500/30"
-                            : "bg-green-500/20 text-green-300 border border-green-500/30"
+                            ? "bg-yellow-500/20 text-yellow-300"
+                            : "bg-green-500/20 text-green-300"
                         }`}
                       >
                         {idea.priority || "Medium"}
                       </span>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              ) : (
-                <div className="text-center py-6">
-                  <Lightbulb className="w-10 h-10 text-gray-600 mx-auto mb-2" />
-                  <p className="text-gray-400 mb-3 text-sm">No ideas yet.</p>
-                  <motion.button
-                    onClick={() => navigate("home")}
-                    className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors text-sm"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    Create your first idea →
-                  </motion.button>
-                </div>
-              )}
-            </div>
+                    </div>
+                    <div className="flex justify-between items-center mt-2">
+                      <span className="text-xs text-gray-400">
+                        {new Date(idea.$createdAt).toLocaleDateString()}
+                      </span>
+                      <span className="text-xs bg-[#fd366e0a] border border-[#FD366E]/20 text-[#FD366E] px-2 py-0.5 rounded">
+                        {idea.category || "Web App"}
+                      </span>
+                    </div>
+                  </motion.div>
+                ))}
+                <motion.button
+                  onClick={() => navigate("home")}
+                  className="w-full mt-2 text-sm text-[#FD366E] hover:text-[#FD366E]/80 transition-colors flex items-center justify-center space-x-1"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <span>View all ideas</span>
+                  <LuArrowRight className="w-4 h-4" />
+                </motion.button>
+              </div>
+            ) : (
+              <div className="text-center py-6">
+                <Lightbulb className="w-8 h-8 text-gray-600 mx-auto mb-2" />
+                <p className="text-gray-400 text-sm mb-3">No recent ideas</p>
+                <motion.button
+                  onClick={() => navigate("home")}
+                  className="text-sm bg-[#FD366E] hover:bg-[#FD366E]/90 text-white px-4 py-2 rounded-lg"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  Create your first idea
+                </motion.button>
+              </div>
+            )}
           </div>
         </motion.div>
       </div>
