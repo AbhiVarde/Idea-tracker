@@ -56,9 +56,7 @@ function Footer() {
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                  {tech.icon}
-                </div>
+                <div>{tech.icon}</div>
                 <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
                   {tech.name}
                 </div>
