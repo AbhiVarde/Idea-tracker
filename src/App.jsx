@@ -5,6 +5,7 @@ import { Profile } from "./pages/Profile";
 import { UserProvider } from "./lib/context/user";
 import { IdeasProvider } from "./lib/context/ideas";
 import { motion, AnimatePresence } from "framer-motion";
+import { Analytics } from "@vercel/analytics/react";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -66,6 +67,7 @@ function App() {
     <div className="min-h-screen bg-[#1D1D1D] text-white">
       <UserProvider>
         <IdeasProvider>
+          <Analytics />
           <Navbar navigate={navigate} currentPage={currentPage} />
           <main className="container mx-auto px-4 py-8">
             <AnimatePresence mode="wait">
