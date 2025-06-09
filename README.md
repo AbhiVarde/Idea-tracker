@@ -1,28 +1,70 @@
-# 💡 Idea Tracker
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/AbhiVarde/idea-tracker)
 
-A sleek and powerful idea management app built with React and Appwrite. Organize your side project ideas with categories, tags, priorities, and more - because we all have 99 ideas and finish 1.
-
-### 🚀 Tech Stack
+# Idea Tracker
 
 - **Library**: [React](https://react.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/)
 - **Backend**: [Appwrite](https://appwrite.io/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Deployment**: [Vercel](https://vercel.com)
 
-### ✨ Extended Features
+## Features
 
-- 📂 Categories & Priorities  
-- 🏷️ Tags system for flexible idea labeling  
-- 🔍 Real-time search & filters  
-- 👤 User profiles with stats  
-- 🧭 Multi-page routing with smooth navigation  
+### Core Features
+- 🔐 Secure authentication with session management
+- 📝 Full CRUD operations for idea management
+- 🛡️ Privacy-first - users can only manage their own ideas
+- ⚡ Real-time sync across all devices
 
-## 🛡 License
+### Extended Features
+- 🗂️ Smart organization with categories and priorities
+- 🏷️ Color-coded tag system for quick filtering
+- 🔍 Powerful search functionality
+- 📊 User dashboard with idea statistics
+- 🎨 Beautiful UI with smooth animations
+- 🆓 100% Free and Open Source
 
-This project is licensed under the MIT License.
+## Getting Started
 
-## 👨‍💻 Author
+### Prerequisites
 
-**Abhi Varde**  
-📧 [abhivarde.contact@gmail.com](mailto:abhivarde.contact@gmail.com)  
-🔗 [abhivarde.in](https://abhivarde.in)
+- Node.js 16+ and npm
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/AbhiVarde/idea-tracker.git
+   cd idea-tracker
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm start
+   ```
+
+4. **Open your browser**
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+💖 **Love Idea Tracker? Support with a one-time gift!**  
+From ☕ **$9** to keep development rolling, to 🚀 **$999** for a full promo of your work.  
+[Become a Sponsor →](https://github.com/sponsors/AbhiVarde)
+
+---
+
+## License
+
+Idea Tracker is licensed under the [MIT License](http://choosealicense.com/licenses/mit/). All rights reserved.
+
+## Authors
+
+Idea Tracker is created and maintained by [Abhi Varde](https://www.abhivarde.in/).
