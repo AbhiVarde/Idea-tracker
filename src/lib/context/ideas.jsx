@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, useRef } from "react";
 import { databases } from "../appwrite";
 import { ID, Query } from "appwrite";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 export const IDEAS_DATABASE_ID = `${process.env.REACT_APP_APPWRITE_DATABASE_ID}`;
 export const IDEAS_COLLECTION_ID = `${process.env.REACT_APP_APPWRITE_COLLECTION_ID}`;
@@ -15,7 +15,6 @@ export function useIdeas() {
 export function IdeasProvider(props) {
   const [ideas, setIdeas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [lastFetchTime, setLastFetchTime] = useState(null);
   const lastFetchTimeRef = useRef(null);
 
   const getErrorMessage = (error) => {
@@ -87,11 +86,9 @@ export function IdeasProvider(props) {
   function clearExistingIdeas() {
     setIdeas([]);
     const newFetchTime = new Date().toISOString();
-    setLastFetchTime(newFetchTime);
     lastFetchTimeRef.current = newFetchTime;
   }
 
-  // Fetch only new ideas created after lastFetchTime
   async function fetchNewIdeas() {
     try {
       setIsLoading(true);
@@ -110,7 +107,6 @@ export function IdeasProvider(props) {
 
       setIdeas(response.documents);
       const newFetchTime = new Date().toISOString();
-      setLastFetchTime(newFetchTime);
       lastFetchTimeRef.current = newFetchTime;
     } catch (err) {
       console.error("Error fetching new ideas:", err);
@@ -121,14 +117,16 @@ export function IdeasProvider(props) {
     }
   }
 
-  // Initialize with empty state (no existing ideas)
   async function init() {
     try {
       setIsLoading(true);
-      // Start with empty ideas array - only show new ones going forward
-      setIdeas([]);
+      const response = await databases.listDocuments(
+        IDEAS_DATABASE_ID,
+        IDEAS_COLLECTION_ID,
+        [Query.orderDesc("$createdAt"), Query.limit(50)]
+      );
+      setIdeas(response.documents);
       const newFetchTime = new Date().toISOString();
-      setLastFetchTime(newFetchTime);
       lastFetchTimeRef.current = newFetchTime;
     } catch (err) {
       console.error("Error initializing:", err);
@@ -138,7 +136,6 @@ export function IdeasProvider(props) {
     }
   }
 
-  // Initialize once and set up real-time subscription
   useEffect(() => {
     init();
 
@@ -150,24 +147,18 @@ export function IdeasProvider(props) {
         const payload = response.payload;
 
         if (eventType.includes("create")) {
-          const ideaCreatedAt = new Date(payload.$createdAt);
-          const initTime = new Date(lastFetchTimeRef.current);
+          setIdeas((prev) => {
+            if (prev.find((idea) => idea.$id === payload.$id)) {
+              return prev;
+            }
+            const ideaCreatedAt = new Date(payload.$createdAt);
+            const initTime = new Date(lastFetchTimeRef.current);
 
-          if (ideaCreatedAt > initTime) {
-            setIdeas((prev) => {
-              // Check if idea already exists (avoid duplicates)
-              if (prev.find((idea) => idea.$id === payload.$id)) {
-                return prev;
-              }
+            if (prev.length === 0 || ideaCreatedAt > initTime) {
               return [payload, ...prev].slice(0, 50);
-            });
-          }
-        } else if (eventType.includes("update")) {
-          setIdeas((prev) =>
-            prev.map((idea) => (idea.$id === payload.$id ? payload : idea))
-          );
-        } else if (eventType.includes("delete")) {
-          setIdeas((prev) => prev.filter((idea) => idea.$id !== payload.$id));
+            }
+            return prev;
+          });
         }
       }
     );

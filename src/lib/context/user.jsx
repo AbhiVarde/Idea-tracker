@@ -1,7 +1,7 @@
 import { ID } from "appwrite";
 import { createContext, useContext, useEffect, useState } from "react";
 import { account } from "../appwrite";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const UserContext = createContext();
 

@@ -7,8 +7,7 @@ import { IdeasProvider } from "./lib/context/ideas";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
 
 function App() {
@@ -77,97 +76,8 @@ function App() {
           </main>
           <Footer />
 
-          {/* Slim Toast Container without custom colors */}
-          <ToastContainer
-            position="top-right"
-            autoClose={4000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-            limit={3}
-            toastClassName="font-sans !bg-[#2A2A2A] !border !border-gray-700 !rounded-lg !shadow-lg !min-h-[48px] !py-2"
-            bodyClassName="font-sans text-white !text-sm !py-1 !px-3"
-          />
-
-          {/* Slim Toast Global Styles */}
-          <style jsx global>{`
-            .Toastify__toast {
-              background: #2a2a2a !important;
-              border: 1px solid #374151 !important;
-              border-radius: 8px !important;
-              box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
-              color: white !important;
-              min-height: 48px !important;
-              padding: 8px 12px !important;
-              font-size: 14px !important;
-            }
-
-            .Toastify__toast--success {
-              border-left: 3px solid #10b981 !important;
-            }
-
-            .Toastify__toast--error {
-              border-left: 3px solid #ef4444 !important;
-            }
-
-            .Toastify__toast--warning {
-              border-left: 3px solid #f59e0b !important;
-            }
-
-            .Toastify__toast--info {
-              border-left: 3px solid #3b82f6 !important;
-            }
-
-            .Toastify__toast-body {
-              padding: 4px 8px !important;
-              margin: 0 !important;
-              line-height: 1.4 !important;
-            }
-
-            .Toastify__toast-icon {
-              width: 16px !important;
-              height: 16px !important;
-              margin-right: 8px !important;
-            }
-
-            .Toastify__close-button {
-              color: white !important;
-              opacity: 0.7 !important;
-              width: 16px !important;
-              height: 16px !important;
-              font-size: 12px !important;
-            }
-
-            .Toastify__close-button:hover {
-              opacity: 1 !important;
-            }
-
-            .Toastify__toast-container {
-              width: 320px !important;
-            }
-
-            @media screen and (max-width: 480px) {
-              .Toastify__toast-container {
-                width: 100vw !important;
-                padding: 0 1rem !important;
-                left: 0 !important;
-                margin: 0 !important;
-              }
-
-              .Toastify__toast {
-                margin-bottom: 8px !important;
-                border-radius: 8px !important;
-                min-height: 44px !important;
-                font-size: 13px !important;
-              }
-            }
-          `}</style>
+          {/* Sonner Toast Container */}
+          <Toaster theme="dark" visibleToasts={3} />
         </IdeasProvider>
       </UserProvider>
     </div>

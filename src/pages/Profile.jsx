@@ -13,6 +13,7 @@ import {
   PieChart,
 } from "lucide-react";
 import { LuArrowRight } from "react-icons/lu";
+import moment from "moment";
 
 export function Profile({ navigate }) {
   const user = useUser();
@@ -25,12 +26,13 @@ export function Profile({ navigate }) {
   });
 
   useEffect(() => {
+    if (!user.isInitialized) return;
+
     if (!user.current) {
       navigate("login");
       return;
     }
 
-    // Calculate stats
     const userIdeas = ideas.current.filter(
       (idea) => idea.userId === user.current.$id
     );
@@ -51,11 +53,21 @@ export function Profile({ navigate }) {
       priorities,
       recentActivity: userIdeas.slice(0, 3),
     });
-  }, [ideas.current, user.current, navigate]);
+  }, [ideas.current, user.current, user.isInitialized, navigate]);
 
   if (!user.current) return null;
 
-  const memberSince = new Date(user.current.$createdAt).toLocaleDateString();
+  if (!user.isInitialized) {
+    return (
+      <div className="max-w-2xl mx-auto p-4 flex items-center justify-center min-h-[200px]">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-[#FD366E] border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+          <p className="text-gray-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   const topCategory = Object.entries(stats.categories).sort(
     (a, b) => b[1] - a[1]
   )[0];
@@ -128,18 +140,21 @@ export function Profile({ navigate }) {
                 </div>
               </div>
 
-              <div className="mt-4 grid grid-cols-2 gap-4">
-                <div className="bg-[#252525] rounded-lg p-3 border-[0.5px] border-[#FD366E]">
-                  <div className="flex items-center space-x-2">
+              <div className="mt-4 flex flex-col md:flex-row gap-4">
+                {/* Member since card */}
+                <div className="flex-1 bg-[#252525] rounded-lg p-4 border border-[#FD366E]">
+                  <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-[#FD366E]" />
                     <span className="text-xs text-gray-300">Member since</span>
                   </div>
                   <p className="text-white text-sm font-medium mt-1">
-                    {memberSince}
+                    {moment(user.current.$createdAt).format("MMM D, YYYY")}
                   </p>
                 </div>
-                <div className="bg-[#252525] rounded-lg p-3 border-[0.5px] border-[#FD366E]">
-                  <div className="flex items-center space-x-2">
+
+                {/* Total ideas card */}
+                <div className="flex-1 bg-[#252525] rounded-lg p-4 border border-[#FD366E]">
+                  <div className="flex items-center gap-2">
                     <Lightbulb className="w-4 h-4 text-[#FD366E]" />
                     <span className="text-xs text-gray-300">Total ideas</span>
                   </div>

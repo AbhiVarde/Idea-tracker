@@ -11,7 +11,9 @@ import {
   Calendar,
   User as UserIcon,
   X,
+  PieChart,
 } from "lucide-react";
+import moment from "moment";
 
 const CATEGORIES = [
   "Web App",
@@ -294,6 +296,7 @@ export function Home({ navigate }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
+              <PieChart className="w-8 h-8 text-gray-600 mx-auto mb-2" />
               <p className="text-gray-400 text-lg">
                 {searchTerm || filterCategory !== "All"
                   ? "No ideas match your filters"
@@ -306,7 +309,7 @@ export function Home({ navigate }) {
                 {filteredIdeas.map((idea, index) => (
                   <motion.div
                     key={idea.$id}
-                    className="bg-[#1D1D1D] rounded-xl p-6 border border-gray-800 hover:border-[#FD366E]/30 transition-all duration-300 group"
+                    className="bg-[#1D1D1D] rounded-2xl p-5 border border-gray-800 hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
@@ -314,14 +317,15 @@ export function Home({ navigate }) {
                     whileHover={{ scale: 1.02, y: -4 }}
                     layout
                   >
-                    <div className="flex items-start justify-between mb-4">
-                      <h3 className="text-xl font-bold text-white group-hover:text-[#FD366E] transition-colors">
+                    {/* Title and Delete */}
+                    <div className="flex items-start justify-between mb-3">
+                      <h3 className="text-lg md:text-xl font-semibold text-white group-hover:text-[#FD366E] transition-colors line-clamp-2">
                         {idea.title}
                       </h3>
-                      {user.current && user.current.$id === idea.userId && (
+                      {user.current?.$id === idea.userId && (
                         <motion.button
                           onClick={() => ideas.remove(idea.$id)}
-                          className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                          className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                         >
@@ -330,16 +334,18 @@ export function Home({ navigate }) {
                       )}
                     </div>
 
-                    <p className="text-gray-400 mb-4 line-clamp-3">
+                    {/* Description */}
+                    <p className="text-gray-400 mb-3 text-sm leading-relaxed line-clamp-4">
                       {idea.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="bg-[#FD366E]/10 text-white px-3 py-1 rounded-full text-sm border border-[#FD366E]/30">
+                    {/* Category + Priority */}
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      <span className="bg-[#FD366E]/10 text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30">
                         {idea.category}
                       </span>
                       <span
-                        className={`px-3 py-1 rounded-full text-sm border ${getPriorityColor(
+                        className={`px-3 py-1 rounded-full text-xs border ${getPriorityColor(
                           idea.priority
                         )}`}
                       >
@@ -347,12 +353,13 @@ export function Home({ navigate }) {
                       </span>
                     </div>
 
+                    {/* Tags */}
                     {idea.tags && (
                       <div className="flex flex-wrap gap-2 mb-4">
                         {idea.tags.split(",").map((tag, i) => (
                           <span
                             key={i}
-                            className="bg-gray-800/50 text-gray-300 px-2 py-1 rounded-lg text-xs flex items-center"
+                            className="bg-gray-800/50 text-gray-300 px-2 py-1 rounded-md text-xs flex items-center"
                           >
                             <Tag className="w-3 h-3 mr-1" />
                             {tag.trim()}
@@ -361,10 +368,11 @@ export function Home({ navigate }) {
                       </div>
                     )}
 
-                    <div className="flex items-center text-xs text-gray-500">
-                      <Calendar className="w-3 h-3 mr-1" />
-                      {new Date(idea.$createdAt).toLocaleDateString()}
-                    </div>
+                    {/* Bottom Meta Info */}
+                    <span className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      {moment(idea.$createdAt).format("MMM D, YYYY")}
+                    </span>
                   </motion.div>
                 ))}
               </AnimatePresence>
