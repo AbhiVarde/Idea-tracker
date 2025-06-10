@@ -9,18 +9,16 @@ export function Login({ navigate }) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
 
     try {
       await user.login(email, password);
       navigate("home");
     } catch (err) {
-      setError("Invalid email or password");
+      console.error("Login error:", err);
     } finally {
       setIsLoading(false);
     }
@@ -29,13 +27,12 @@ export function Login({ navigate }) {
   const handleRegister = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
 
     try {
       await user.register(email, password);
       navigate("home");
     } catch (err) {
-      setError("Registration failed. Email might already exist.");
+      console.error("Registration error:", err);
     } finally {
       setIsLoading(false);
     }
@@ -67,16 +64,6 @@ export function Login({ navigate }) {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <form onSubmit={handleLogin} className="space-y-6">
-            {error && (
-              <motion.div
-                className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-2 rounded-lg text-sm"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-              >
-                {error}
-              </motion.div>
-            )}
-
             {/* Email */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-300">

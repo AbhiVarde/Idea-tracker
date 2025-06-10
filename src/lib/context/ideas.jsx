@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useRef } from "react";
 import { databases } from "../appwrite";
 import { ID, Query } from "appwrite";
+import { toast } from "react-toastify";
 
 export const IDEAS_DATABASE_ID = `${process.env.REACT_APP_APPWRITE_DATABASE_ID}`;
 export const IDEAS_COLLECTION_ID = `${process.env.REACT_APP_APPWRITE_COLLECTION_ID}`;
@@ -15,6 +16,15 @@ export function IdeasProvider(props) {
   const [ideas, setIdeas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastFetchTime, setLastFetchTime] = useState(null);
+  const lastFetchTimeRef = useRef(null);
+
+  const getErrorMessage = (error) => {
+    if (error?.code === 401) return "Please log in to continue";
+    if (error?.code === 404) return "Database or collection not found";
+    if (error?.code === 400) return "Invalid data provided";
+    if (error?.message) return error.message;
+    return "Something went wrong. Please try again.";
+  };
 
   async function add(idea) {
     try {
@@ -29,9 +39,11 @@ export function IdeasProvider(props) {
         }
       );
       setIdeas((prev) => [response, ...prev].slice(0, 50));
+      toast.success("Idea added successfully!");
       return response;
     } catch (err) {
       console.error("Error adding idea:", err);
+      toast.error(getErrorMessage(err));
       throw err;
     }
   }
@@ -50,9 +62,11 @@ export function IdeasProvider(props) {
       setIdeas((prev) =>
         prev.map((idea) => (idea.$id === id ? response : idea))
       );
+      toast.success("Idea updated successfully!");
       return response;
     } catch (err) {
       console.error("Error updating idea:", err);
+      toast.error(getErrorMessage(err));
       throw err;
     }
   }
@@ -65,16 +79,19 @@ export function IdeasProvider(props) {
         id
       );
       setIdeas((prev) => prev.filter((idea) => idea.$id !== id));
+      toast.info("Idea deleted successfully");
     } catch (err) {
       console.error("Error removing idea:", err);
+      toast.error(getErrorMessage(err));
       throw err;
     }
   }
 
-  // Clear existing ideas and start fresh
   function clearExistingIdeas() {
     setIdeas([]);
-    setLastFetchTime(new Date().toISOString());
+    const newFetchTime = new Date().toISOString();
+    setLastFetchTime(newFetchTime);
+    lastFetchTimeRef.current = newFetchTime;
   }
 
   // Fetch only new ideas created after lastFetchTime
@@ -84,9 +101,8 @@ export function IdeasProvider(props) {
 
       const queries = [Query.orderDesc("$createdAt"), Query.limit(50)];
 
-      // If we have a last fetch time, only get ideas created after that
-      if (lastFetchTime) {
-        queries.push(Query.greaterThan("createdAt", lastFetchTime));
+      if (lastFetchTimeRef.current) {
+        queries.push(Query.greaterThan("createdAt", lastFetchTimeRef.current));
       }
 
       const response = await databases.listDocuments(
@@ -95,11 +111,13 @@ export function IdeasProvider(props) {
         queries
       );
 
-      // Only show new ideas, don't append to existing ones
       setIdeas(response.documents);
-      setLastFetchTime(new Date().toISOString());
+      const newFetchTime = new Date().toISOString();
+      setLastFetchTime(newFetchTime);
+      lastFetchTimeRef.current = newFetchTime;
     } catch (err) {
       console.error("Error fetching new ideas:", err);
+      toast.error(getErrorMessage(err));
       setIdeas([]);
     } finally {
       setIsLoading(false);
@@ -112,7 +130,9 @@ export function IdeasProvider(props) {
       setIsLoading(true);
       // Start with empty ideas array - only show new ones going forward
       setIdeas([]);
-      setLastFetchTime(new Date().toISOString());
+      const newFetchTime = new Date().toISOString();
+      setLastFetchTime(newFetchTime);
+      lastFetchTimeRef.current = newFetchTime;
     } catch (err) {
       console.error("Error initializing:", err);
       setIdeas([]);
@@ -121,7 +141,7 @@ export function IdeasProvider(props) {
     }
   }
 
-  // Subscribe to real-time updates - only for new ideas
+  // Initialize once and set up real-time subscription
   useEffect(() => {
     init();
 
@@ -135,7 +155,7 @@ export function IdeasProvider(props) {
         if (eventType.includes("create")) {
           // Only add if it's truly new (created after our initialization)
           const ideaCreatedAt = new Date(payload.createdAt);
-          const initTime = new Date(lastFetchTime);
+          const initTime = new Date(lastFetchTimeRef.current);
 
           if (ideaCreatedAt > initTime) {
             setIdeas((prev) => {
@@ -161,7 +181,7 @@ export function IdeasProvider(props) {
         unsubscribe();
       }
     };
-  }, [lastFetchTime]);
+  }, []);
 
   const contextValue = {
     current: ideas,
