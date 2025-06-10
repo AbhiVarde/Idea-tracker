@@ -66,6 +66,10 @@ export function Home({ navigate }) {
   };
 
   const filteredIdeas = ideas.current.filter((idea) => {
+    if (!user.current || idea.userId !== user.current.$id) {
+      return false;
+    }
+    
     const matchesSearch =
       idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       idea.description.toLowerCase().includes(searchTerm.toLowerCase());
