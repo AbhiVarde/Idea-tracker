@@ -20,7 +20,6 @@ function App() {
     else if (path === "/profile") setCurrentPage("profile");
     else setCurrentPage("home");
 
-    // Handle browser navigation
     const handlePopState = () => {
       const path = window.location.pathname;
       if (path === "/login") setCurrentPage("login");
@@ -39,28 +38,18 @@ function App() {
   };
 
   const pageVariants = {
-    initial: {
-      opacity: 0,
-      y: 20,
-      scale: 0.98,
-    },
+    initial: { opacity: 0, y: 20, scale: 0.98 },
     in: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
-        duration: 0.4,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      },
+      transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
     },
     out: {
       opacity: 0,
       y: -20,
       scale: 1.02,
-      transition: {
-        duration: 0.3,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      },
+      transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
     },
   };
 
@@ -88,7 +77,7 @@ function App() {
           </main>
           <Footer />
 
-          {/* Slim Custom Toast Container */}
+          {/* Slim Toast Container without custom colors */}
           <ToastContainer
             position="top-right"
             autoClose={4000}
@@ -104,24 +93,9 @@ function App() {
             toastClassName="font-sans !bg-[#2A2A2A] !border !border-gray-700 !rounded-lg !shadow-lg !min-h-[48px] !py-2"
             bodyClassName="font-sans text-white !text-sm !py-1 !px-3"
             progressClassName="!bg-[#FD366E] !h-[2px]"
-            style={{
-              // Custom CSS variables for toast variants
-              "--toastify-color-success": "#10B981",
-              "--toastify-color-error": "#EF4444",
-              "--toastify-color-warning": "#F59E0B",
-              "--toastify-color-info": "#3B82F6",
-              "--toastify-text-color-success": "#FFFFFF",
-              "--toastify-text-color-error": "#FFFFFF",
-              "--toastify-text-color-warning": "#FFFFFF",
-              "--toastify-text-color-info": "#FFFFFF",
-              "--toastify-icon-color-success": "#10B981",
-              "--toastify-icon-color-error": "#EF4444",
-              "--toastify-icon-color-warning": "#F59E0B",
-              "--toastify-icon-color-info": "#3B82F6",
-            }}
           />
 
-          {/* Slim Toast Styles */}
+          {/* Slim Toast Global Styles */}
           <style jsx global>{`
             .Toastify__toast {
               background: #2a2a2a !important;
