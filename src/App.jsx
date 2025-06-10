@@ -77,7 +77,11 @@ function App() {
           <Footer />
 
           {/* Sonner Toast Container */}
-          <Toaster theme="dark" visibleToasts={3} />
+          <Toaster
+            theme="dark"
+            visibleToasts={3}
+            style={{ fontFamily: '"Poppins", sans-serif' }}
+          />
         </IdeasProvider>
       </UserProvider>
     </div>
