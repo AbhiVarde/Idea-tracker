@@ -92,7 +92,6 @@ function App() {
             limit={3}
             toastClassName="font-sans !bg-[#2A2A2A] !border !border-gray-700 !rounded-lg !shadow-lg !min-h-[48px] !py-2"
             bodyClassName="font-sans text-white !text-sm !py-1 !px-3"
-            progressClassName="!bg-[#FD366E] !h-[2px]"
           />
 
           {/* Slim Toast Global Styles */}
@@ -135,12 +134,6 @@ function App() {
               width: 16px !important;
               height: 16px !important;
               margin-right: 8px !important;
-            }
-
-            .Toastify__progress-bar {
-              background: #fd366e !important;
-              height: 2px !important;
-              border-radius: 0 0 8px 8px !important;
             }
 
             .Toastify__close-button {
