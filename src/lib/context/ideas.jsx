@@ -34,8 +34,6 @@ export function IdeasProvider(props) {
         ID.unique(),
         {
           ...idea,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
         }
       );
       setIdeas((prev) => [response, ...prev].slice(0, 50));
@@ -56,7 +54,6 @@ export function IdeasProvider(props) {
         id,
         {
           ...updatedIdea,
-          updatedAt: new Date().toISOString(),
         }
       );
       setIdeas((prev) =>
@@ -102,7 +99,7 @@ export function IdeasProvider(props) {
       const queries = [Query.orderDesc("$createdAt"), Query.limit(50)];
 
       if (lastFetchTimeRef.current) {
-        queries.push(Query.greaterThan("createdAt", lastFetchTimeRef.current));
+        queries.push(Query.greaterThan("$createdAt", lastFetchTimeRef.current));
       }
 
       const response = await databases.listDocuments(
@@ -153,8 +150,7 @@ export function IdeasProvider(props) {
         const payload = response.payload;
 
         if (eventType.includes("create")) {
-          // Only add if it's truly new (created after our initialization)
-          const ideaCreatedAt = new Date(payload.createdAt);
+          const ideaCreatedAt = new Date(payload.$createdAt);
           const initTime = new Date(lastFetchTimeRef.current);
 
           if (ideaCreatedAt > initTime) {
