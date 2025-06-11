@@ -16,6 +16,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import moment from "moment";
+import FlipWords from "../components/FlipWords";
 
 const CATEGORIES = [
   "Web App",
@@ -27,6 +28,7 @@ const CATEGORIES = [
   "Other",
 ];
 const PRIORITIES = ["Low", "Medium", "High"];
+const WORDS = ["Ideas Hub", "Creative Space", "Vision Board", "Dream Factory"];
 
 export function Home({ navigate }) {
   const user = useUser();
@@ -164,7 +166,8 @@ export function Home({ navigate }) {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-wide">
-          Your Creative <span className="text-[#FD366E]">Ideas Hub</span>
+          Your Creative{" "}
+          <FlipWords words={WORDS} duration={3000} className="text-[#FD366E]" />
         </h1>
         <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed sm:leading-loose">
           Capture, organize, and bring your brilliant ideas to life
