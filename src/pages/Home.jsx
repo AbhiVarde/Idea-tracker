@@ -28,7 +28,15 @@ const CATEGORIES = [
   "Other",
 ];
 const PRIORITIES = ["Low", "Medium", "High"];
-const WORDS = ["Ideas Hub", "Creative Space", "Vision Board", "Dream Factory"];
+const WORDS = [
+  "Ideas Hub",
+  "Vision Board",
+  "Dream Factory",
+  "Project Vault",
+  "Inspiration Wall",
+  "Idea Bank",
+  "Next Big Thing",
+];
 
 export function Home({ navigate }) {
   const user = useUser();
