@@ -16,13 +16,14 @@
 - 🛡️ Privacy-first - users can only manage their own ideas
 - ⚡ Real-time sync across all devices
 
-### Extended Features
-- 🗂️ Smart organization with categories and priorities
-- 🏷️ Color-coded tag system for quick filtering
-- 🔍 Powerful search functionality
-- 📊 User dashboard with idea statistics
-- 🎨 Beautiful UI with smooth animations
-- 🆓 100% Free and Open Source
+###  Extended Features  
+- 🍀 Organized by Category & Priority
+- 🥬 Color-coded Tags 
+- 🥒 Smart Search & Filtering 
+- 🪴 Edit Your Ideas Anytime
+- 🌱 Personal Dashboard
+- 🧩 Smooth UI & Animations
+- 💚 Free & Open Source
 
 ## Getting Started
 
