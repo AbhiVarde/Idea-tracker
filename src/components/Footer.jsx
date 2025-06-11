@@ -78,7 +78,6 @@ function Footer() {
                     <p className="text-xs font-medium">Vote on</p>
                     <p className="text-sm font-bold">Product Hunt</p>
                   </div>
-                  {/* <div className="w-2 h-2 bg-white rounded-full ml-auto mt-1 group-hover:scale-125 transition-transform duration-200"></div> */}
                 </div>
               </div>
             </div>
@@ -135,7 +134,7 @@ function Footer() {
             href="https://github.com/AbhiVarde/Idea-tracker"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative"
+            className="group relative hidden sm:block"
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
@@ -146,7 +145,7 @@ function Footer() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <SiGithub className="w-5 h-5 text-gray-400 hover:text-white transition-colors duration-300" />
+            <SiGithub className="w-5 h-5 text-white transition-all duration-300" />
             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
               View Code
             </div>

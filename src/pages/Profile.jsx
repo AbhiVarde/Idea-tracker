@@ -88,7 +88,6 @@ export function Profile({ navigate }) {
 
   return (
     <div className="max-w-2xl mx-auto p-4 space-y-6">
-      {/* Header */}
       <motion.div
         className="flex items-center justify-between"
         initial={{ opacity: 0, y: -20 }}
@@ -109,9 +108,7 @@ export function Profile({ navigate }) {
         </motion.div>
       </motion.div>
 
-      {/* Main Grid */}
       <div className="grid grid-cols-1 gap-6">
-        {/* Profile Card */}
         <motion.div
           className="bg-gradient-to-br from-[#1D1D1D] to-[#2A2A2A] rounded-2xl p-6 border border-gray-800 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
@@ -126,12 +123,8 @@ export function Profile({ navigate }) {
             </div>
             <div className="flex-grow">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div>
-                  <h2 className="text-xl font-bold text-white">
-                    {user.current.name || "Developer"}
-                  </h2>
-                  <p className="text-gray-400 text-sm">{user.current.email}</p>
-                </div>
+                <p className="text-white text-md ">{user.current.email}</p>
+
                 <div className="flex items-center space-x-2 bg-[#fd366e0a] border border-[#FD366E]/30 rounded-full px-3 py-1">
                   <Zap className="w-4 h-4 text-[#FD366E]" />
                   <span className="text-xs font-medium text-white">
@@ -141,7 +134,6 @@ export function Profile({ navigate }) {
               </div>
 
               <div className="mt-4 flex flex-col md:flex-row gap-4">
-                {/* Member since card */}
                 <div className="flex-1 bg-[#252525] rounded-lg p-4 border border-[#FD366E]">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-[#FD366E]" />
@@ -152,7 +144,7 @@ export function Profile({ navigate }) {
                   </p>
                 </div>
 
-                {/* Total ideas card */}
+              
                 <div className="flex-1 bg-[#252525] rounded-lg p-4 border border-[#FD366E]">
                   <div className="flex items-center gap-2">
                     <Lightbulb className="w-4 h-4 text-[#FD366E]" />
@@ -167,7 +159,7 @@ export function Profile({ navigate }) {
           </div>
         </motion.div>
 
-        {/* Stats Overview */}
+      
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-4"
           initial={{ opacity: 0 }}
@@ -218,14 +210,14 @@ export function Profile({ navigate }) {
           </div>
         </motion.div>
 
-        {/* Category and Recent Activity */}
+      
         <motion.div
           className="grid grid-cols-1 lg:grid-cols-2 gap-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          {/* Category Breakdown */}
+     
           <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold text-white flex items-center">
@@ -276,7 +268,7 @@ export function Profile({ navigate }) {
             )}
           </div>
 
-          {/* Recent Activity */}
+      
           <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5">
             <h3 className="text-lg font-bold text-white flex items-center mb-4">
               <Clock className="w-5 h-5 mr-2 text-[#FD366E]" />

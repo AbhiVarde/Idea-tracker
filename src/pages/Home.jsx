@@ -12,6 +12,8 @@ import {
   User as UserIcon,
   X,
   PieChart,
+  Edit3,
+  ChevronDown,
 } from "lucide-react";
 import moment from "moment";
 
@@ -38,6 +40,15 @@ export function Home({ navigate }) {
   const [showForm, setShowForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
+  const [filterPriority, setFilterPriority] = useState("All");
+  const [filterTags, setFilterTags] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editCategory, setEditCategory] = useState("");
+  const [editPriority, setEditPriority] = useState("");
+  const [editTags, setEditTags] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,6 +76,45 @@ export function Home({ navigate }) {
     }
   };
 
+  const startEdit = (idea) => {
+    setEditingId(idea.$id);
+    setEditTitle(idea.title);
+    setEditDescription(idea.description);
+    setEditCategory(idea.category);
+    setEditPriority(idea.priority);
+    setEditTags(idea.tags || "");
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditTitle("");
+    setEditDescription("");
+    setEditCategory("");
+    setEditPriority("");
+    setEditTags("");
+  };
+
+  const saveEdit = async (ideaId) => {
+    if (!editTitle.trim()) return;
+
+    try {
+      await ideas.update(ideaId, {
+        title: editTitle,
+        description: editDescription,
+        category: editCategory,
+        priority: editPriority,
+        tags: editTags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean)
+          .join(","),
+      });
+      cancelEdit();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const filteredIdeas = ideas.current.filter((idea) => {
     if (!user.current || idea.userId !== user.current.$id) {
       return false;
@@ -73,10 +123,26 @@ export function Home({ navigate }) {
     const matchesSearch =
       idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       idea.description.toLowerCase().includes(searchTerm.toLowerCase());
+
     const matchesCategory =
       filterCategory === "All" || idea.category === filterCategory;
-    return matchesSearch && matchesCategory;
+
+    const matchesPriority =
+      filterPriority === "All" || idea.priority === filterPriority;
+
+    const matchesTags =
+      !filterTags ||
+      (idea.tags && idea.tags.toLowerCase().includes(filterTags.toLowerCase()));
+
+    return matchesSearch && matchesCategory && matchesPriority && matchesTags;
   });
+
+  const clearFilters = () => {
+    setFilterCategory("All");
+    setFilterPriority("All");
+    setFilterTags("");
+    setSearchTerm("");
+  };
 
   const getPriorityColor = (priority) => {
     switch (priority) {
@@ -91,7 +157,6 @@ export function Home({ navigate }) {
 
   return (
     <div className="max-w-2xl mx-auto p-4 space-y-4">
-      {/* Header */}
       <motion.div
         className="text-center"
         initial={{ opacity: 0, y: -30 }}
@@ -106,7 +171,6 @@ export function Home({ navigate }) {
         </p>
       </motion.div>
 
-      {/* Add Idea */}
       {user.current ? (
         <motion.section
           className="bg-[#1D1D1D] rounded-2xl p-4 border border-gray-800"
@@ -220,7 +284,6 @@ export function Home({ navigate }) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          {/* First Row: Icon + Title + Button */}
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-2">
               <UserIcon className="w-7 h-7 text-[#FD366E]" />
@@ -241,47 +304,156 @@ export function Home({ navigate }) {
             </motion.button>
           </div>
 
-          {/* Second Row: Description */}
           <p className="text-gray-400 text-start">
             Login to start tracking your amazing ideas
           </p>
         </motion.section>
       )}
 
-      {/* Search & Filter */}
       <motion.section
-        className="flex flex-col sm:flex-row gap-4"
+        className="space-y-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <input
-            type="text"
-            placeholder="Search ideas..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-[#1D1D1D] border border-gray-800 rounded-xl pl-12 pr-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-          />
-        </div>
-        <div className="relative">
-          <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <select
-            value={filterCategory}
-            onChange={(e) => setFilterCategory(e.target.value)}
-            className="bg-[#1D1D1D] border border-gray-800 rounded-xl pl-12 pr-8 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E] appearance-none min-w-[180px]"
+        <div className="flex items-center gap-4">
+          <div className="relative group flex-1">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#FD366E] transition-colors duration-200 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search ideas by title or description..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-[#1D1D1D] border border-gray-800 rounded-xl pl-12 pr-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+            />
+            {searchTerm && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                onClick={() => setSearchTerm("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </motion.button>
+            )}
+          </div>
+
+          <motion.button
+            onClick={() => setShowFilters(!showFilters)}
+            className="flex items-center space-x-2 bg-[#1D1D1D] border border-gray-800 rounded-xl px-4 py-2 text-white hover:border-[#FD366E]/40 transition-all duration-200 group flex-shrink-0"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <option value="All" className="bg-[#1D1D1D]">
-              All Categories
-            </option>
-            {CATEGORIES.map((cat) => (
-              <option key={cat} value={cat} className="bg-[#1D1D1D]">
-                {cat}
-              </option>
-            ))}
-          </select>
+            <Filter className="w-4 h-4 group-hover:text-[#FD366E] transition-colors" />
+            <span className="font-medium">Filters</span>
+            <motion.div
+              animate={{ rotate: showFilters ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronDown className="w-4 h-4" />
+            </motion.div>
+          </motion.button>
+
+          <AnimatePresence>
+            {(filterCategory !== "All" ||
+              filterPriority !== "All" ||
+              filterTags ||
+              searchTerm) && (
+              <motion.button
+                key="clear-all"
+                initial={{ opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 8 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                onClick={clearFilters}
+                className="text-[#FD366E] hover:text-[#FD366E]/80 text-sm font-medium px-3 py-2 rounded-lg hover:bg-[#FD366E]/10 transition-all duration-200 flex-shrink-0"
+              >
+                Clear All
+              </motion.button>
+            )}
+          </AnimatePresence>
         </div>
+
+        <AnimatePresence>
+          {showFilters && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, y: -10 }}
+              animate={{ opacity: 1, height: "auto", y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-6 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <label className="block text-sm font-medium text-gray-400 mb-2">
+                      Category
+                    </label>
+                    <select
+                      value={filterCategory}
+                      onChange={(e) => setFilterCategory(e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                    >
+                      <option value="All" className="bg-[#1D1D1D]">
+                        All Categories
+                      </option>
+                      {CATEGORIES.map((cat) => (
+                        <option key={cat} value={cat} className="bg-[#1D1D1D]">
+                          {cat}
+                        </option>
+                      ))}
+                    </select>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 }}
+                  >
+                    <label className="block text-sm font-medium text-gray-400 mb-2">
+                      Priority
+                    </label>
+                    <select
+                      value={filterPriority}
+                      onChange={(e) => setFilterPriority(e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                    >
+                      <option value="All" className="bg-[#1D1D1D]">
+                        All Priorities
+                      </option>
+                      {PRIORITIES.map((pri) => (
+                        <option key={pri} value={pri} className="bg-[#1D1D1D]">
+                          {pri}
+                        </option>
+                      ))}
+                    </select>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <label className="block text-sm font-medium text-gray-400 mb-2">
+                      Tags
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Filter by tags..."
+                      value={filterTags}
+                      onChange={(e) => setFilterTags(e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                    />
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.section>
 
       {/* Ideas List */}
@@ -292,94 +464,198 @@ export function Home({ navigate }) {
           </h2>
         </div>
 
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {filteredIdeas.length === 0 ? (
             <motion.div
+              key="empty-state"
               className="text-center py-16"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
             >
               <PieChart className="w-8 h-8 text-gray-600 mx-auto mb-2" />
               <p className="text-gray-400 text-lg">
-                {searchTerm || filterCategory !== "All"
+                {searchTerm ||
+                filterCategory !== "All" ||
+                filterPriority !== "All" ||
+                filterTags
                   ? "No ideas match your filters"
                   : "No ideas yet. Create your first one!"}
               </p>
             </motion.div>
           ) : (
-            <motion.div className="grid grid-cols-1 gap-6" layout>
-              <AnimatePresence>
-                {filteredIdeas.map((idea, index) => (
-                  <motion.div
-                    key={idea.$id}
-                    className="bg-[#1D1D1D] rounded-2xl p-5 border border-gray-800 hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02, y: -4 }}
-                    layout
-                  >
-                    {/* Title and Delete */}
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-lg md:text-xl font-semibold text-white group-hover:text-[#FD366E] transition-colors line-clamp-2">
-                        {idea.title}
-                      </h3>
-                      {user.current?.$id === idea.userId && (
-                        <motion.button
-                          onClick={() => ideas.remove(idea.$id)}
-                          className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <Trash2 className="w-5 h-5" />
-                        </motion.button>
-                      )}
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-400 mb-3 text-sm leading-relaxed line-clamp-4">
-                      {idea.description}
-                    </p>
-
-                    {/* Category + Priority */}
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      <span className="bg-[#FD366E]/10 text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30">
-                        {idea.category}
-                      </span>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs border ${getPriorityColor(
-                          idea.priority
-                        )}`}
-                      >
-                        {idea.priority}
-                      </span>
-                    </div>
-
-                    {/* Tags */}
-                    {idea.tags && (
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {idea.tags.split(",").map((tag, i) => (
-                          <span
-                            key={i}
-                            className="bg-gray-800/50 text-gray-300 px-2 py-1 rounded-md text-xs flex items-center"
+            <motion.div
+              key="ideas-grid"
+              className="grid grid-cols-1 gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {filteredIdeas.map((idea, index) => (
+                <motion.div
+                  key={idea.$id}
+                  className="bg-[#1D1D1D] rounded-2xl p-5 border border-gray-800 hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  whileHover={{ scale: 1.01, y: -2 }}
+                >
+                  {editingId === idea.$id ? (
+                    <motion.div
+                      layout
+                      key="editing"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="space-y-4"
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-semibold text-white">
+                          Edit Idea
+                        </h3>
+                        <div className="flex space-x-2">
+                          <motion.button
+                            onClick={() => saveEdit(idea.$id)}
+                            className="bg-[#FD366E] hover:bg-[#FD366E]/90 text-white px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-1"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                           >
-                            <Tag className="w-3 h-3 mr-1" />
-                            {tag.trim()}
-                          </span>
-                        ))}
+                            <span>Save</span>
+                          </motion.button>
+                          <button
+                            onClick={cancelEdit}
+                            className="text-white p-1 hover:bg-gray-800 rounded-lg transition-colors"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
+                        </div>
                       </div>
-                    )}
 
-                    {/* Bottom Meta Info */}
-                    <span className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {moment(idea.$createdAt).format("MMM D, YYYY")}
-                    </span>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                      <input
+                        type="text"
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                        className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                      />
+
+                      <textarea
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                        rows={3}
+                        className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
+                      />
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <select
+                          value={editCategory}
+                          onChange={(e) => setEditCategory(e.target.value)}
+                          className="bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                        >
+                          {CATEGORIES.map((cat) => (
+                            <option
+                              key={cat}
+                              value={cat}
+                              className="bg-[#1D1D1D]"
+                            >
+                              {cat}
+                            </option>
+                          ))}
+                        </select>
+                        <select
+                          value={editPriority}
+                          onChange={(e) => setEditPriority(e.target.value)}
+                          className="bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                        >
+                          {PRIORITIES.map((pri) => (
+                            <option
+                              key={pri}
+                              value={pri}
+                              className="bg-[#1D1D1D]"
+                            >
+                              {pri}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <input
+                        type="text"
+                        placeholder="Tags (comma separated)"
+                        value={editTags}
+                        onChange={(e) => setEditTags(e.target.value)}
+                        className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                      />
+                    </motion.div>
+                  ) : (
+                    <>
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-lg md:text-xl font-semibold text-white group-hover:text-[#FD366E] transition-colors line-clamp-2">
+                          {idea.title}
+                        </h3>
+                        {user.current?.$id === idea.userId && (
+                          <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <motion.button
+                              onClick={() => startEdit(idea)}
+                              className="text-blue-400 hover:text-blue-300"
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
+                            >
+                              <Edit3 className="w-5 h-5" />
+                            </motion.button>
+                            <motion.button
+                              onClick={() => ideas.remove(idea.$id)}
+                              className="text-red-400 hover:text-red-300"
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
+                            >
+                              <Trash2 className="w-5 h-5" />
+                            </motion.button>
+                          </div>
+                        )}
+                      </div>
+
+                      <p className="text-gray-400 mb-3 text-sm leading-relaxed line-clamp-4">
+                        {idea.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="bg-[#FD366E]/10 text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30">
+                          {idea.category}
+                        </span>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs border ${getPriorityColor(
+                            idea.priority
+                          )}`}
+                        >
+                          {idea.priority}
+                        </span>
+                      </div>
+
+                      {idea.tags && (
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {idea.tags.split(",").map((tag, i) => (
+                            <span
+                              key={i}
+                              className="bg-gray-800/50 text-gray-300 px-2 py-1 rounded-md text-xs flex items-center"
+                            >
+                              <Tag className="w-3 h-3 mr-1" />
+                              {tag.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <span className="flex items-center text-gray-400 gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {moment(idea.$createdAt).format("MMM D, YYYY")}
+                      </span>
+                    </>
+                  )}
+                </motion.div>
+              ))}
             </motion.div>
           )}
         </AnimatePresence>

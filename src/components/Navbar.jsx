@@ -1,6 +1,7 @@
 import { useUser } from "../lib/context/user";
 import { motion } from "framer-motion";
 import { Home, User, LogIn, LogOut, Lightbulb, Sparkles } from "lucide-react";
+import { SiGithub } from "react-icons/si";
 
 function Navbar({ navigate, currentPage }) {
   const user = useUser();
@@ -56,6 +57,24 @@ function Navbar({ navigate, currentPage }) {
                   onClick={() => navigate("profile")}
                 />
 
+                <motion.a
+                  href="https://github.com/AbhiVarde/Idea-tracker"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative sm:hidden flex items-center justify-center text-white p-2 rounded-lg transition-all duration-300"
+                  whileHover={{
+                    scale: 1.15,
+                    y: -2,
+                    transition: { type: "spring", stiffness: 300, damping: 20 },
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <SiGithub className="w-5 h-5" />
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                    View Code
+                  </div>
+                </motion.a>
+
                 {/* User Info */}
                 <div className="flex items-center space-x-3 ml-2 sm:ml-4 pl-3 border-l border-gray-700">
                   <div className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm select-none">
@@ -93,13 +112,33 @@ function Navbar({ navigate, currentPage }) {
                 </div>
               </>
             ) : (
-              <NavButton
-                icon={LogIn}
-                label="Login"
-                isActive={true}
-                onClick={() => navigate("login")}
-                forceActiveStyle
-              />
+              <>
+                <motion.a
+                  href="https://github.com/AbhiVarde/Idea-tracker"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative sm:hidden flex items-center justify-center text-white p-2 rounded-lg transition-all duration-300"
+                  whileHover={{
+                    scale: 1.15,
+                    y: -2,
+                    transition: { type: "spring", stiffness: 300, damping: 20 },
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <SiGithub className="w-5 h-5" />
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                    View Code
+                  </div>
+                </motion.a>
+
+                <NavButton
+                  icon={LogIn}
+                  label="Login"
+                  isActive={true}
+                  onClick={() => navigate("login")}
+                  forceActiveStyle
+                />
+              </>
             )}
           </div>
         </div>

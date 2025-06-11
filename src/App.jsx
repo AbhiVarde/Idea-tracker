@@ -80,6 +80,7 @@ function App() {
           <Toaster
             theme="dark"
             visibleToasts={3}
+            position="top-right"
             style={{ fontFamily: '"Poppins", sans-serif' }}
           />
         </IdeasProvider>
