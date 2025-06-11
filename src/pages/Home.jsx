@@ -69,7 +69,7 @@ export function Home({ navigate }) {
     if (!user.current || idea.userId !== user.current.$id) {
       return false;
     }
-    
+
     const matchesSearch =
       idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       idea.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -98,7 +98,7 @@ export function Home({ navigate }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <h1 className="text-3xl font-bold text-white mb-3 tracking-wide">
+        <h1 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-wide">
           Your Creative <span className="text-[#FD366E]">Ideas Hub</span>
         </h1>
         <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed sm:leading-loose">

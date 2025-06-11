@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
-import { SiAppwrite, SiReact, SiTailwindcss, SiFramer } from "react-icons/si";
+import {
+  SiAppwrite,
+  SiReact,
+  SiTailwindcss,
+  SiFramer,
+  SiGithub,
+} from "react-icons/si";
 import { ExternalLink } from "lucide-react";
 
 function Footer() {
@@ -33,10 +39,56 @@ function Footer() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
     >
-      <div className="max-w-2xl mx-auto px-4 pt-4 pb-6">
-        <div className="flex flex-col sm:flex-row items-center justify-center text-md text-gray-400">
+      <div className="max-w-2xl mx-auto px-4 pt-6 pb-6">
+        {/* Product Hunt Badge Section */}
+        <motion.div
+          className="flex justify-center mb-4"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <motion.a
+            href="https://www.producthunt.com/products/sync-ui-2?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-sync&#0045;ui&#0045;2"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group"
+            whileHover={{
+              scale: 1.05,
+              transition: { type: "spring", stiffness: 300, damping: 20 },
+            }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-lg p-3 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center space-x-3 text-white">
+                <div className="flex-shrink-0">
+                  <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
+                    <span className="text-orange-500 font-bold text-lg">
+                      🚀
+                    </span>
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold truncate">Sync UI</p>
+                  <p className="text-xs opacity-90 truncate">
+                    Animated UI kit for React devs
+                  </p>
+                </div>
+                <div className="flex-shrink-0">
+                  <div className="text-right">
+                    <p className="text-xs font-medium">Vote on</p>
+                    <p className="text-sm font-bold">Product Hunt</p>
+                  </div>
+                  {/* <div className="w-2 h-2 bg-white rounded-full ml-auto mt-1 group-hover:scale-125 transition-transform duration-200"></div> */}
+                </div>
+              </div>
+            </div>
+          </motion.a>
+        </motion.div>
+
+        {/* Main Footer Content */}
+        <div className="flex flex-col lg:flex-row items-center justify-between text-sm text-gray-400 gap-4">
           <motion.div
-            className="flex items-center flex-wrap gap-3"
+            className="flex items-center flex-wrap gap-3 justify-center lg:justify-start"
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
@@ -57,7 +109,7 @@ function Footer() {
                 whileTap={{ scale: 0.95 }}
               >
                 <div>{tech.icon}</div>
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
                   {tech.name}
                 </div>
               </motion.a>
@@ -78,6 +130,27 @@ function Footer() {
               <ExternalLink className="w-3 h-3 opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
             </motion.a>
           </motion.div>
+
+          <motion.a
+            href="https://github.com/AbhiVarde/Idea-tracker"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative"
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            whileHover={{
+              scale: 1.15,
+              y: -2,
+              transition: { type: "spring", stiffness: 300, damping: 20 },
+            }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <SiGithub className="w-5 h-5 text-gray-400 hover:text-white transition-colors duration-300" />
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+              View Code
+            </div>
+          </motion.a>
         </div>
       </div>
     </motion.footer>
