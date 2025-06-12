@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { account, databases } from "../appwrite";
 import { OAuthProvider, Query } from "appwrite";
 import { toast } from "sonner";
@@ -41,14 +41,13 @@ export function UserProvider({ children }) {
     localStorage.setItem("deletedAccounts", JSON.stringify(updatedAccounts));
   };
 
-  const init = async () => {
+  const init = useCallback(async () => {
     if (isInitialized) return;
 
     setLoading(true);
     try {
       const loggedIn = await account.get();
 
-      // Check if this account was manually deleted
       if (isAccountDeleted(loggedIn.email)) {
         await account.deleteSession("current");
         setUser(null);
@@ -62,7 +61,7 @@ export function UserProvider({ children }) {
       setLoading(false);
       setIsInitialized(true);
     }
-  };
+  }, [isInitialized]);
 
   // Login with email and password
   const login = async (email, password) => {
