@@ -95,7 +95,7 @@ export function IdeasProvider({ children }) {
     }
   }
 
-  async function fetchIdeas() {
+  const fetchIdeas = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -118,7 +118,7 @@ export function IdeasProvider({ children }) {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [user]);
 
   useEffect(() => {
     if (isInitialized) {
