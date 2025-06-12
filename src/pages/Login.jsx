@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useUser } from "../lib/context/user";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+import { BsGithub, BsDiscord } from "react-icons/bs";
 
 export function Login({ navigate }) {
   const user = useUser();
@@ -12,8 +14,11 @@ export function Login({ navigate }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    if (!email || !password) {
+      return;
+    }
 
+    setIsLoading(true);
     try {
       await user.login(email, password);
       navigate("home");
@@ -26,8 +31,11 @@ export function Login({ navigate }) {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    if (!email || !password) {
+      return;
+    }
 
+    setIsLoading(true);
     try {
       await user.register(email, password);
       navigate("home");
@@ -38,10 +46,25 @@ export function Login({ navigate }) {
     }
   };
 
+  // OAuth handlers - these work for both signup and signin
+  const handleGoogleLogin = () => {
+    if (isLoading) return;
+    user.loginWithGoogle();
+  };
+
+  const handleGithubLogin = () => {
+    if (isLoading) return;
+    user.loginWithGithub();
+  };
+
+  const handleDiscordLogin = () => {
+    if (isLoading) return;
+    user.loginWithDiscord();
+  };
+
   return (
     <div className="flex items-center justify-center p-4">
       <div className="w-full max-w-xl mx-auto">
-        {/* Header */}
         <motion.div
           className="text-center mb-8"
           initial={{ opacity: 0, y: -20 }}
@@ -55,16 +78,64 @@ export function Login({ navigate }) {
             Professional idea management for developers
           </p>
         </motion.div>
-
-        {/* Login Form */}
         <motion.div
           className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5 sm:p-8"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
+          <div className="mb-6">
+            <p className="text-gray-400 text-center mb-4 text-sm">
+              Sign up or sign in with your preferred method
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+              <motion.button
+                onClick={handleGoogleLogin}
+                disabled={isLoading}
+                className="flex items-center justify-center space-x-2 bg-white hover:bg-gray-100 disabled:bg-gray-600 disabled:cursor-not-allowed text-gray-900 font-medium py-2 px-4 rounded-lg transition-all"
+                whileHover={!isLoading ? { scale: 1.02 } : {}}
+                whileTap={!isLoading ? { scale: 0.98 } : {}}
+              >
+                <FcGoogle className="w-5 h-5" />
+                <span className="hidden sm:inline">Google</span>
+              </motion.button>
+
+              <motion.button
+                onClick={handleGithubLogin}
+                disabled={isLoading}
+                className="flex items-center justify-center space-x-2 bg-gray-900 hover:bg-gray-800 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-lg transition-all"
+                whileHover={!isLoading ? { scale: 1.02 } : {}}
+                whileTap={!isLoading ? { scale: 0.98 } : {}}
+              >
+                <BsGithub className="w-5 h-5" />
+                <span className="hidden sm:inline">GitHub</span>
+              </motion.button>
+
+              <motion.button
+                onClick={handleDiscordLogin}
+                disabled={isLoading}
+                className="flex items-center justify-center space-x-2 bg-[#5865F2] hover:bg-[#4752C4] disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-lg transition-all"
+                whileHover={!isLoading ? { scale: 1.02 } : {}}
+                whileTap={!isLoading ? { scale: 0.98 } : {}}
+              >
+                <BsDiscord className="w-5 h-5" />
+                <span className="hidden sm:inline">Discord</span>
+              </motion.button>
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-700"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-[#1D1D1D] text-gray-400">
+                  Or continue with email
+                </span>
+              </div>
+            </div>
+          </div>
+
           <form onSubmit={handleLogin} className="space-y-6">
-            {/* Email */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-300">
                 Email
@@ -78,11 +149,11 @@ export function Login({ navigate }) {
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full bg-transparent border border-gray-700 rounded-lg pl-10 pr-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all"
                   required
+                  disabled={isLoading}
                 />
               </div>
             </div>
 
-            {/* Password */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-300">
                 Password
@@ -96,11 +167,13 @@ export function Login({ navigate }) {
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full bg-transparent border border-gray-700 rounded-lg pl-10 pr-12 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all"
                   required
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors"
+                  disabled={isLoading}
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -111,14 +184,13 @@ export function Login({ navigate }) {
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <motion.button
                 type="submit"
-                disabled={isLoading}
-                className="bg-[#FD366E] hover:bg-[#FD366E]/80 disabled:bg-gray-600 text-white font-medium py-2 rounded-lg transition-all flex items-center justify-center order-2 sm:order-1"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                disabled={isLoading || !email || !password}
+                className="bg-[#FD366E] hover:bg-[#FD366E]/80 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium py-2 rounded-lg transition-all flex items-center justify-center order-2 sm:order-1"
+                whileHover={!isLoading ? { scale: 1.02 } : {}}
+                whileTap={!isLoading ? { scale: 0.98 } : {}}
               >
                 {isLoading ? (
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -130,17 +202,16 @@ export function Login({ navigate }) {
               <motion.button
                 type="button"
                 onClick={handleRegister}
-                disabled={isLoading}
-                className="bg-transparent hover:bg-gray-800 border border-gray-700 hover:border-gray-600 text-white font-medium py-2 rounded-lg transition-all order-1 sm:order-2"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                disabled={isLoading || !email || !password}
+                className="bg-transparent hover:bg-gray-800 border border-gray-700 hover:border-gray-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium py-2 rounded-lg transition-all order-1 sm:order-2"
+                whileHover={!isLoading ? { scale: 1.02 } : {}}
+                whileTap={!isLoading ? { scale: 0.98 } : {}}
               >
                 Register
               </motion.button>
             </div>
           </form>
 
-          {/* Features */}
           <div className="mt-8 pt-6 border-t border-gray-800">
             <p className="text-gray-400 text-md text-center mb-4">
               What you'll get:
@@ -160,8 +231,6 @@ export function Login({ navigate }) {
             </div>
           </div>
         </motion.div>
-
-        {/* Back Link */}
         <motion.div
           className="text-center mt-6"
           initial={{ opacity: 0 }}
@@ -171,6 +240,7 @@ export function Login({ navigate }) {
           <button
             onClick={() => navigate("home")}
             className="text-gray-400 hover:text-white transition-colors text-md"
+            disabled={isLoading}
           >
             ← Back to Ideas
           </button>

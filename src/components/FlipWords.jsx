@@ -40,7 +40,7 @@ const FlipWords = ({ words, duration = 3000, className = "" }) => {
         className={`inline-block relative ${className}`}
         key={currentWord}
       >
-        {currentWord.split(" ").map((word, wordIndex) => (
+        {currentWord?.split(" ")?.map((word, wordIndex) => (
           <motion.span
             key={word + wordIndex}
             initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
@@ -48,7 +48,7 @@ const FlipWords = ({ words, duration = 3000, className = "" }) => {
             transition={{ delay: wordIndex * 0.3, duration: 0.3 }}
             className="inline-block whitespace-nowrap"
           >
-            {word.split("").map((letter, letterIndex) => (
+            {word?.split("")?.map((letter, letterIndex) => (
               <motion.span
                 key={word + letterIndex}
                 initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}

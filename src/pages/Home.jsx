@@ -72,10 +72,10 @@ export function Home({ navigate }) {
         category,
         priority,
         tags: tags
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter(Boolean)
-          .join(","),
+          ?.split(",")
+          ?.map((tag) => tag.trim())
+          ?.filter(Boolean)
+          ?.join(","),
       });
       setTitle("");
       setDescription("");
@@ -181,7 +181,6 @@ export function Home({ navigate }) {
           Capture, organize, and bring your brilliant ideas to life
         </p>
       </motion.div>
-
       {user.current ? (
         <motion.section
           className="bg-[#1D1D1D] rounded-2xl p-4 border border-gray-800"
@@ -457,7 +456,7 @@ export function Home({ navigate }) {
                       placeholder="Filter by tags..."
                       value={filterTags}
                       onChange={(e) => setFilterTags(e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                      className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-[7px] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
                     />
                   </motion.div>
                 </div>
@@ -647,7 +646,7 @@ export function Home({ navigate }) {
 
                       {idea.tags && (
                         <div className="flex flex-wrap gap-2 mb-4">
-                          {idea.tags.split(",").map((tag, i) => (
+                          {idea.tags?.split(",")?.map((tag, i) => (
                             <span
                               key={i}
                               className="bg-gray-800/50 text-gray-300 px-2 py-1 rounded-md text-xs flex items-center"

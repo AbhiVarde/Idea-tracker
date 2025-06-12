@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, useRef } from "react";
 import { databases } from "../appwrite";
 import { ID, Query } from "appwrite";
 import { toast } from "sonner";
+import { useUser } from "./user";
 
 export const IDEAS_DATABASE_ID = `${process.env.REACT_APP_APPWRITE_DATABASE_ID}`;
 export const IDEAS_COLLECTION_ID = `${process.env.REACT_APP_APPWRITE_COLLECTION_ID}`;
@@ -12,20 +13,25 @@ export function useIdeas() {
   return useContext(IdeasContext);
 }
 
-export function IdeasProvider(props) {
+export function IdeasProvider({ children }) {
+  const { current: user, isInitialized } = useUser();
   const [ideas, setIdeas] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const lastFetchTimeRef = useRef(null);
 
   const getErrorMessage = (error) => {
     if (error?.code === 401) return "Please log in to continue";
     if (error?.code === 404) return "Database or collection not found";
     if (error?.code === 400) return "Invalid data provided";
-    if (error?.message) return error.message;
-    return "Something went wrong. Please try again.";
+    return error?.message || "Something went wrong. Please try again.";
   };
 
   async function add(idea) {
+    if (!user) {
+      toast.error("Please log in to add ideas");
+      return;
+    }
+
     try {
       const response = await databases.createDocument(
         IDEAS_DATABASE_ID,
@@ -33,27 +39,30 @@ export function IdeasProvider(props) {
         ID.unique(),
         {
           ...idea,
+          userId: user.$id,
         }
       );
       setIdeas((prev) => [response, ...prev].slice(0, 50));
       toast.success("Idea added successfully!");
       return response;
     } catch (err) {
-      console.error("Error adding idea:", err);
       toast.error(getErrorMessage(err));
       throw err;
     }
   }
 
   async function update(id, updatedIdea) {
+    if (!user) {
+      toast.error("Please log in to update ideas");
+      return;
+    }
+
     try {
       const response = await databases.updateDocument(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
         id,
-        {
-          ...updatedIdea,
-        }
+        updatedIdea
       );
       setIdeas((prev) =>
         prev.map((idea) => (idea.$id === id ? response : idea))
@@ -61,13 +70,17 @@ export function IdeasProvider(props) {
       toast.success("Idea updated successfully!");
       return response;
     } catch (err) {
-      console.error("Error updating idea:", err);
       toast.error(getErrorMessage(err));
       throw err;
     }
   }
 
   async function remove(id) {
+    if (!user) {
+      toast.error("Please log in to delete ideas");
+      return;
+    }
+
     try {
       await databases.deleteDocument(
         IDEAS_DATABASE_ID,
@@ -77,59 +90,30 @@ export function IdeasProvider(props) {
       setIdeas((prev) => prev.filter((idea) => idea.$id !== id));
       toast.info("Idea deleted successfully");
     } catch (err) {
-      console.error("Error removing idea:", err);
       toast.error(getErrorMessage(err));
       throw err;
     }
   }
 
-  function clearExistingIdeas() {
-    setIdeas([]);
-    const newFetchTime = new Date().toISOString();
-    lastFetchTimeRef.current = newFetchTime;
-  }
+  async function fetchIdeas() {
+    if (!user) return;
 
-  async function fetchNewIdeas() {
     try {
       setIsLoading(true);
-
-      const queries = [Query.orderDesc("$createdAt"), Query.limit(50)];
-
-      if (lastFetchTimeRef.current) {
-        queries.push(Query.greaterThan("$createdAt", lastFetchTimeRef.current));
-      }
-
       const response = await databases.listDocuments(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
-        queries
+        [
+          Query.equal("userId", user.$id),
+          Query.orderDesc("$createdAt"),
+          Query.limit(50),
+        ]
       );
-
       setIdeas(response.documents);
-      const newFetchTime = new Date().toISOString();
-      lastFetchTimeRef.current = newFetchTime;
+      lastFetchTimeRef.current = new Date().toISOString();
     } catch (err) {
-      console.error("Error fetching new ideas:", err);
+      console.error("Fetch ideas error:", err);
       toast.error(getErrorMessage(err));
-      setIdeas([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  async function init() {
-    try {
-      setIsLoading(true);
-      const response = await databases.listDocuments(
-        IDEAS_DATABASE_ID,
-        IDEAS_COLLECTION_ID,
-        [Query.orderDesc("$createdAt"), Query.limit(50)]
-      );
-      setIdeas(response.documents);
-      const newFetchTime = new Date().toISOString();
-      lastFetchTimeRef.current = newFetchTime;
-    } catch (err) {
-      console.error("Error initializing:", err);
       setIdeas([]);
     } finally {
       setIsLoading(false);
@@ -137,38 +121,46 @@ export function IdeasProvider(props) {
   }
 
   useEffect(() => {
-    init();
+    if (isInitialized) {
+      if (user) {
+        console.log("User authenticated, fetching ideas...", user);
+        fetchIdeas();
+      } else {
+        console.log("No user, clearing ideas");
+        setIdeas([]);
+        setIsLoading(false);
+      }
+    }
+  }, [user, isInitialized]);
 
-    // Set up real-time subscription
+  useEffect(() => {
+    if (!user) return;
+
     const unsubscribe = databases.client.subscribe(
       `databases.${IDEAS_DATABASE_ID}.collections.${IDEAS_COLLECTION_ID}.documents`,
       (response) => {
         const eventType = response.events[0];
         const payload = response.payload;
 
-        if (eventType.includes("create")) {
-          setIdeas((prev) => {
-            if (prev.find((idea) => idea.$id === payload.$id)) {
-              return prev;
-            }
-            const ideaCreatedAt = new Date(payload.$createdAt);
-            const initTime = new Date(lastFetchTimeRef.current);
-
-            if (prev.length === 0 || ideaCreatedAt > initTime) {
+        if (payload.userId === user.$id) {
+          if (eventType.includes("create")) {
+            setIdeas((prev) => {
+              if (prev.find((idea) => idea.$id === payload.$id)) return prev;
               return [payload, ...prev].slice(0, 50);
-            }
-            return prev;
-          });
+            });
+          } else if (eventType.includes("update")) {
+            setIdeas((prev) =>
+              prev.map((idea) => (idea.$id === payload.$id ? payload : idea))
+            );
+          } else if (eventType.includes("delete")) {
+            setIdeas((prev) => prev.filter((idea) => idea.$id !== payload.$id));
+          }
         }
       }
     );
 
-    return () => {
-      if (unsubscribe && typeof unsubscribe === "function") {
-        unsubscribe();
-      }
-    };
-  }, []);
+    return () => unsubscribe?.();
+  }, [user]);
 
   const contextValue = {
     current: ideas,
@@ -176,14 +168,12 @@ export function IdeasProvider(props) {
     update,
     remove,
     isLoading,
-    refresh: fetchNewIdeas,
-    clearExisting: clearExistingIdeas,
-    fetchNewOnly: fetchNewIdeas,
+    refresh: fetchIdeas,
   };
 
   return (
     <IdeasContext.Provider value={contextValue}>
-      {props.children}
+      {children}
     </IdeasContext.Provider>
   );
 }
