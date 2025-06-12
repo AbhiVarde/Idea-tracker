@@ -131,7 +131,7 @@ export function IdeasProvider({ children }) {
         setIsLoading(false);
       }
     }
-  }, [user, isInitialized]);
+  }, [user, isInitialized, fetchIdeas]);
 
   useEffect(() => {
     if (!user) return;

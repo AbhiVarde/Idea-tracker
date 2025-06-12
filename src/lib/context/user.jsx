@@ -218,7 +218,7 @@ export function UserProvider({ children }) {
   // Initialize on mount
   useEffect(() => {
     init();
-  }, []);
+  }, [init]);
 
   // Handle OAuth redirect
   useEffect(() => {

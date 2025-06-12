@@ -53,7 +53,7 @@ export function Profile({ navigate }) {
       priorities,
       recentActivity: userIdeas.slice(0, 3),
     });
-  }, [ideas.current, user.current, user.isInitialized, navigate]);
+  }, [ideas.current, user.current, user.isInitialized, navigate, ideas, user]);
 
   if (!user.current) return null;
 
@@ -144,7 +144,6 @@ export function Profile({ navigate }) {
                   </p>
                 </div>
 
-              
                 <div className="flex-1 bg-[#252525] rounded-lg p-4 border border-[#FD366E]">
                   <div className="flex items-center gap-2">
                     <Lightbulb className="w-4 h-4 text-[#FD366E]" />
@@ -159,7 +158,6 @@ export function Profile({ navigate }) {
           </div>
         </motion.div>
 
-      
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-4"
           initial={{ opacity: 0 }}
@@ -210,14 +208,12 @@ export function Profile({ navigate }) {
           </div>
         </motion.div>
 
-      
         <motion.div
           className="grid grid-cols-1 lg:grid-cols-2 gap-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-     
           <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold text-white flex items-center">
@@ -268,7 +264,6 @@ export function Profile({ navigate }) {
             )}
           </div>
 
-      
           <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5">
             <h3 className="text-lg font-bold text-white flex items-center mb-4">
               <Clock className="w-5 h-5 mr-2 text-[#FD366E]" />
