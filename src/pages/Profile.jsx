@@ -53,7 +53,7 @@ export function Profile({ navigate }) {
       priorities,
       recentActivity: userIdeas.slice(0, 3),
     });
-  }, [ideas.current, user.current, user.isInitialized, navigate, ideas, user]);
+  }, [user.isInitialized, navigate, ideas, user]);
 
   if (!user.current) return null;
 
