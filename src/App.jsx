@@ -42,7 +42,7 @@ function App() {
 
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
-  }, []); 
+  }, []);
 
   const navigate = (page) => {
     if (page === "404") {
@@ -72,7 +72,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1D1D1D] text-white">
+    <div className="min-h-screen bg-[#333333] text-white">
       <UserProvider>
         <IdeasProvider>
           {currentPage !== "404" && (
