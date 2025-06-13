@@ -8,7 +8,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Toaster } from "sonner";
-import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -56,7 +55,6 @@ function App() {
     <div className="min-h-screen bg-[#1D1D1D] text-white">
       <UserProvider>
         <IdeasProvider>
-          <Analytics />
           <Navbar navigate={navigate} currentPage={currentPage} />
           <main className="container mx-auto px-4 py-8">
             <AnimatePresence mode="wait">

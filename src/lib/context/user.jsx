@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { account, databases } from "../appwrite";
 import { OAuthProvider, Query } from "appwrite";
 import { toast } from "sonner";
@@ -142,27 +148,77 @@ export function UserProvider({ children }) {
 
   // OAuth Login methods
   const loginWithGoogle = () => {
-    account.createOAuth2Session(
-      OAuthProvider.Google,
-      `${window.location.origin}/`,
-      `${window.location.origin}/login`
-    );
+    try {
+      account.createOAuth2Token(
+        OAuthProvider.Google,
+        `${window.location.origin}/`,
+        `${window.location.origin}/login`
+      );
+    } catch (error) {
+      console.error("Google OAuth initiation failed:", error);
+      toast.error("OAuth failed", {
+        description: "Unable to connect with Google. Please try again.",
+      });
+    }
   };
 
   const loginWithGithub = () => {
-    account.createOAuth2Session(
-      OAuthProvider.Github,
-      `${window.location.origin}/`,
-      `${window.location.origin}/login`
-    );
+    try {
+      account.createOAuth2Token(
+        OAuthProvider.Github,
+        `${window.location.origin}/`,
+        `${window.location.origin}/login`
+      );
+    } catch (error) {
+      console.error("GitHub OAuth initiation failed:", error);
+      toast.error("OAuth failed", {
+        description: "Unable to connect with GitHub. Please try again.",
+      });
+    }
   };
 
   const loginWithDiscord = () => {
-    account.createOAuth2Session(
-      OAuthProvider.Discord,
-      `${window.location.origin}/`,
-      `${window.location.origin}/login`
-    );
+    try {
+      account.createOAuth2Token(
+        OAuthProvider.Discord,
+        `${window.location.origin}/`,
+        `${window.location.origin}/login`
+      );
+    } catch (error) {
+      console.error("Discord OAuth initiation failed:", error);
+      toast.error("OAuth failed", {
+        description: "Unable to connect with Discord. Please try again.",
+      });
+    }
+  };
+
+  // Handle OAuth callback 
+  const handleOAuthCallback = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get("userId");
+    const secret = urlParams.get("secret");
+
+    if (userId && secret) {
+      try {
+        setLoading(true);
+        await account.createSession(userId, secret);
+        const loggedIn = await account.get();
+        setUser(loggedIn);
+
+        window.history.replaceState({}, document.title, "/");
+        toast.success("Successfully logged in!", {
+          description: "Welcome to Idea Tracker!",
+        });
+      } catch (error) {
+        console.error("OAuth session creation failed:", error);
+        toast.error("Login failed", {
+          description: "Unable to complete OAuth login. Please try again.",
+        });
+        window.history.replaceState({}, document.title, "/login");
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   const logout = async () => {
@@ -219,22 +275,34 @@ export function UserProvider({ children }) {
     init();
   }, [init]);
 
-  // Handle OAuth redirect
   useEffect(() => {
     const handleOAuthRedirect = async () => {
       const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get("userId") || urlParams.get("secret")) {
+      const userId = urlParams.get("userId");
+      const secret = urlParams.get("secret");
+
+      if (userId && secret) {
         try {
+          setLoading(true);
+          await account.createSession(userId, secret);
           const loggedIn = await account.get();
           setUser(loggedIn);
-          // Clean URL
+
           window.history.replaceState(
             {},
             document.title,
             window.location.pathname
           );
+          toast.success("Successfully logged in!", {
+            description: "Welcome to Idea Tracker!",
+          });
         } catch (error) {
-          console.error("OAuth redirect error:", error);
+          console.error("OAuth session creation failed:", error);
+          toast.error("Login failed", {
+            description: "Unable to complete OAuth login. Please try again.",
+          });
+        } finally {
+          setLoading(false);
         }
       }
     };
@@ -256,6 +324,7 @@ export function UserProvider({ children }) {
     deleteAccount,
     account,
     databases,
+    handleOAuthCallback,
   };
 
   return (
