@@ -53,7 +53,7 @@ export function Profile({ navigate }) {
       priorities,
       recentActivity: userIdeas.slice(0, 3),
     });
-  }, [user.loading, user.current, navigate, ideas.current, user, ideas]);
+  }, [user.loading, navigate]);
 
   if (user.loading) {
     return (
@@ -296,7 +296,7 @@ export function Profile({ navigate }) {
                     </div>
                     <div className="flex justify-between items-center mt-2">
                       <span className="text-xs text-gray-400">
-                        {new Date(idea.$createdAt).toLocaleDateString()}
+                        {moment(idea.$createdAt).format("MMM D, YYYY")}
                       </span>
                       <span className="text-xs bg-[#fd366e0a] border border-[#FD366E]/20 text-[#FD366E] px-2 py-0.5 rounded">
                         {idea.category || "Web App"}
