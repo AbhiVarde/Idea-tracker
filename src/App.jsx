@@ -10,10 +10,10 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Toaster } from "sonner";
 
+const validRoutes = ["/", "/login", "/profile"];
+
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
-
-  const validRoutes = ["/", "/login", "/profile"];
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -42,7 +42,7 @@ function App() {
 
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
+  }, []); 
 
   const navigate = (page) => {
     if (page === "404") {

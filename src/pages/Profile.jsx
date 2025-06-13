@@ -26,16 +26,13 @@ export function Profile({ navigate }) {
   });
 
   useEffect(() => {
-    // Wait for user loading to complete
     if (user.loading) return;
 
-    // If no user is logged in, redirect to login
     if (!user.current) {
       navigate("login");
       return;
     }
 
-    // Calculate stats only when we have a user and ideas are loaded
     const userIdeas = ideas.current.filter(
       (idea) => idea.userId === user.current.$id
     );
@@ -56,9 +53,8 @@ export function Profile({ navigate }) {
       priorities,
       recentActivity: userIdeas.slice(0, 3),
     });
-  }, [user.loading, user.current, navigate, ideas.current]);
+  }, [user.loading, user.current, navigate, ideas.current, user, ideas]);
 
-  // Show loading while user data is being fetched
   if (user.loading) {
     return (
       <div className="max-w-2xl mx-auto p-4 flex items-center justify-center min-h-[200px]">
@@ -70,7 +66,6 @@ export function Profile({ navigate }) {
     );
   }
 
-  // If user is not logged in (and not loading), this will be handled by the useEffect redirect
   if (!user.current) return null;
 
   const topCategory = Object.entries(stats.categories).sort(
