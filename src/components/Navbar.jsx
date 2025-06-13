@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import AccountSettings from "../components/AccountSettings";
+import moment from "moment";
 
 function Navbar({ navigate, currentPage }) {
   const user = useUser();
@@ -252,9 +253,9 @@ function Navbar({ navigate, currentPage }) {
                               </p>
                               <p className="text-xs text-gray-400">
                                 Joined{" "}
-                                {new Date(
-                                  user.current.$createdAt
-                                ).toLocaleDateString()}
+                                {moment(user.current.$createdAt).format(
+                                  "MMM D, YYYY"
+                                )}
                               </p>
                             </div>
 

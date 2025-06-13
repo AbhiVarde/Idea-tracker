@@ -19,6 +19,7 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [oauthProcessed, setOauthProcessed] = useState(false); 
 
   const isAccountDeleted = (email) => {
     const deletedAccounts = JSON.parse(
@@ -84,6 +85,12 @@ export function UserProvider({ children }) {
       await account.createEmailPasswordSession(email, password);
       const loggedIn = await account.get();
       setUser(loggedIn);
+
+      // Show success toast for email/password login
+      toast.success("Successfully logged in!", {
+        description: "Welcome to Idea Tracker!",
+      });
+
       return loggedIn;
     } catch (error) {
       console.error("Login error:", error);
@@ -123,6 +130,14 @@ export function UserProvider({ children }) {
       await account.createEmailPasswordSession(email, password);
       const loggedIn = await account.get();
       setUser(loggedIn);
+
+      // Show success toast for email/password registration
+      if (!isAccountDeleted(email)) {
+        toast.success("Account created successfully!", {
+          description: "Welcome to Idea Tracker!",
+        });
+      }
+
       return loggedIn;
     } catch (error) {
       console.error("Registration error:", error);
@@ -192,35 +207,6 @@ export function UserProvider({ children }) {
     }
   };
 
-  // Handle OAuth callback 
-  const handleOAuthCallback = async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const userId = urlParams.get("userId");
-    const secret = urlParams.get("secret");
-
-    if (userId && secret) {
-      try {
-        setLoading(true);
-        await account.createSession(userId, secret);
-        const loggedIn = await account.get();
-        setUser(loggedIn);
-
-        window.history.replaceState({}, document.title, "/");
-        toast.success("Successfully logged in!", {
-          description: "Welcome to Idea Tracker!",
-        });
-      } catch (error) {
-        console.error("OAuth session creation failed:", error);
-        toast.error("Login failed", {
-          description: "Unable to complete OAuth login. Please try again.",
-        });
-        window.history.replaceState({}, document.title, "/login");
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
   const logout = async () => {
     try {
       await account.deleteSession("current");
@@ -277,11 +263,15 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     const handleOAuthRedirect = async () => {
+      if (oauthProcessed) return;
+
       const urlParams = new URLSearchParams(window.location.search);
       const userId = urlParams.get("userId");
       const secret = urlParams.get("secret");
 
       if (userId && secret) {
+        setOauthProcessed(true);
+
         try {
           setLoading(true);
           await account.createSession(userId, secret);
@@ -293,6 +283,7 @@ export function UserProvider({ children }) {
             document.title,
             window.location.pathname
           );
+
           toast.success("Successfully logged in!", {
             description: "Welcome to Idea Tracker!",
           });
@@ -301,6 +292,7 @@ export function UserProvider({ children }) {
           toast.error("Login failed", {
             description: "Unable to complete OAuth login. Please try again.",
           });
+          setOauthProcessed(false);
         } finally {
           setLoading(false);
         }
@@ -310,7 +302,7 @@ export function UserProvider({ children }) {
     if (isInitialized && !loading) {
       handleOAuthRedirect();
     }
-  }, [isInitialized, loading]);
+  }, [isInitialized, loading, oauthProcessed]);
 
   const contextValue = {
     current: user,
@@ -324,7 +316,6 @@ export function UserProvider({ children }) {
     deleteAccount,
     account,
     databases,
-    handleOAuthCallback,
   };
 
   return (

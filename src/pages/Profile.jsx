@@ -26,13 +26,16 @@ export function Profile({ navigate }) {
   });
 
   useEffect(() => {
-    if (!user.isInitialized) return;
+    // Wait for user loading to complete
+    if (user.loading) return;
 
+    // If no user is logged in, redirect to login
     if (!user.current) {
       navigate("login");
       return;
     }
 
+    // Calculate stats only when we have a user and ideas are loaded
     const userIdeas = ideas.current.filter(
       (idea) => idea.userId === user.current.$id
     );
@@ -53,20 +56,22 @@ export function Profile({ navigate }) {
       priorities,
       recentActivity: userIdeas.slice(0, 3),
     });
-  }, [user.isInitialized, navigate, ideas, user]);
+  }, [user.loading, user.current, navigate, ideas.current]);
 
-  if (!user.current) return null;
-
-  if (!user.isInitialized) {
+  // Show loading while user data is being fetched
+  if (user.loading) {
     return (
       <div className="max-w-2xl mx-auto p-4 flex items-center justify-center min-h-[200px]">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-[#FD366E] border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-          <p className="text-gray-400">Loading...</p>
+          <p className="text-gray-400">Loading profile...</p>
         </div>
       </div>
     );
   }
+
+  // If user is not logged in (and not loading), this will be handled by the useEffect redirect
+  if (!user.current) return null;
 
   const topCategory = Object.entries(stats.categories).sort(
     (a, b) => b[1] - a[1]

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
+import { NotFound } from "./pages/NotFound";
 import { UserProvider } from "./lib/context/user";
 import { IdeasProvider } from "./lib/context/ideas";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,14 +13,28 @@ import { Toaster } from "sonner";
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
 
+  const validRoutes = ["/", "/login", "/profile"];
+
   useEffect(() => {
     const path = window.location.pathname;
+
+    if (!validRoutes.includes(path)) {
+      setCurrentPage("404");
+      return;
+    }
+
     if (path === "/login") setCurrentPage("login");
     else if (path === "/profile") setCurrentPage("profile");
     else setCurrentPage("home");
 
     const handlePopState = () => {
       const path = window.location.pathname;
+
+      if (!validRoutes.includes(path)) {
+        setCurrentPage("404");
+        return;
+      }
+
       if (path === "/login") setCurrentPage("login");
       else if (path === "/profile") setCurrentPage("profile");
       else setCurrentPage("home");
@@ -30,6 +45,11 @@ function App() {
   }, []);
 
   const navigate = (page) => {
+    if (page === "404") {
+      setCurrentPage("404");
+      return;
+    }
+
     setCurrentPage(page);
     const path = page === "home" ? "/" : `/${page}`;
     window.history.pushState(null, "", path);
@@ -55,7 +75,10 @@ function App() {
     <div className="min-h-screen bg-[#1D1D1D] text-white">
       <UserProvider>
         <IdeasProvider>
-          <Navbar navigate={navigate} currentPage={currentPage} />
+          {currentPage !== "404" && (
+            <Navbar navigate={navigate} currentPage={currentPage} />
+          )}
+
           <main className="container mx-auto px-4 py-8">
             <AnimatePresence mode="wait">
               <motion.div
@@ -69,10 +92,12 @@ function App() {
                 {currentPage === "login" && <Login navigate={navigate} />}
                 {currentPage === "profile" && <Profile navigate={navigate} />}
                 {currentPage === "home" && <Home navigate={navigate} />}
+                {currentPage === "404" && <NotFound navigate={navigate} />}
               </motion.div>
             </AnimatePresence>
           </main>
-          <Footer />
+
+          {currentPage !== "404" && <Footer />}
 
           {/* Sonner Toast Container */}
           <Toaster
