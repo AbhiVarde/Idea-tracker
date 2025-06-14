@@ -1,4 +1,4 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/AbhiVarde/idea-tracker)
+[![Deploy to Appwrite](https://img.shields.io/badge/Deploy%20to-Appwrite-f02e65?style=for-the-badge&logo=appwrite&logoColor=f02e65&labelColor=1d1d1d)](https://cloud.appwrite.io/console)
 
 # Idea Tracker
 
@@ -18,11 +18,13 @@
 
 ###  Extended Features  
 - 🍀 Organized by Category & Priority
+- 🪴 Edit Your Ideas Anytime
 - 🥬 Color-coded Tags 
 - 🥒 Smart Search & Filtering 
-- 🪴 Edit Your Ideas Anytime
 - 🌱 Personal Dashboard
 - 🧩 Smooth UI & Animations
+- 🥦 Social Login (Google, GitHub, Discord)
+- 🌾 Delete Account Functionality
 - 💚 Free & Open Source
 
 ## Getting Started
