@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState, useRef, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from "react";
 import { databases } from "../appwrite";
 import { ID, Query } from "appwrite";
 import { toast } from "sonner";
@@ -42,7 +49,7 @@ export function IdeasProvider({ children }) {
           userId: user.$id,
         }
       );
-      setIdeas((prev) => [response, ...prev].slice(0, 50));
+
       toast.success("Idea added successfully!");
       return response;
     } catch (err) {
