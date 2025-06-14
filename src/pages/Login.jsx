@@ -79,7 +79,7 @@ export function Login({ navigate }) {
           </p>
         </motion.div>
         <motion.div
-          className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5 sm:p-8"
+          className="bg-[#000000] border border-gray-800 rounded-2xl p-5 sm:p-8"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -128,7 +128,7 @@ export function Login({ navigate }) {
                 <div className="w-full border-t border-gray-700"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-[#1D1D1D] text-gray-400">
+                <span className="px-2 bg-[#000000] text-gray-400">
                   Or continue with email
                 </span>
               </div>

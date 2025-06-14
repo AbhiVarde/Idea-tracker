@@ -71,15 +71,19 @@ function App() {
     },
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   return (
-    <div className="min-h-screen bg-[#1D1D1D] text-white">
+    <div className="min-h-screen bg-[#000000] text-white">
       <UserProvider>
         <IdeasProvider>
           {currentPage !== "404" && (
             <Navbar navigate={navigate} currentPage={currentPage} />
           )}
 
-          <main className="container mx-auto px-4 py-8">
+          <main className="container mx-auto px-4 py-4 sm:py-6">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentPage}

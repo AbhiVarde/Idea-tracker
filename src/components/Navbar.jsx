@@ -91,7 +91,7 @@ function Navbar({ navigate, currentPage }) {
   if (user.loading) {
     return (
       <motion.nav
-        className="bg-[#1D1D1D]/50 backdrop-blur-sm sticky top-0 z-50"
+        className="bg-[#000000]/50 backdrop-blur-sm sticky top-0 z-50"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -129,7 +129,7 @@ function Navbar({ navigate, currentPage }) {
   return (
     <>
       <motion.nav
-        className="bg-[#1D1D1D]/50 backdrop-blur-sm sticky top-0 z-50"
+        className="bg-[#000000]/50 backdrop-blur-sm sticky top-0 z-50"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -244,7 +244,7 @@ function Navbar({ navigate, currentPage }) {
                             duration: 0.25,
                             ease: [0.25, 0.1, 0.25, 1],
                           }}
-                          className="absolute right-0 mt-2 w-48 bg-[#1D1D1D] border border-gray-800 rounded-xl shadow-xl z-50"
+                          className="absolute right-0 mt-2 w-48 bg-[#000000] border border-gray-800 rounded-xl shadow-xl z-50"
                         >
                           <div className="p-2">
                             <div className="px-3 py-2 border-b border-gray-800 mb-1">
@@ -338,7 +338,7 @@ function NavButton({
   forceActiveStyle = false,
 }) {
   const activeStyle = "bg-[#FD366E] text-white shadow-lg shadow-[#FD366E]/20";
-  const defaultStyle = "text-gray-400 hover:text-white hover:bg-[#1D1D1D]/80";
+  const defaultStyle = "text-gray-400 hover:text-white hover:bg-[#000000]/80";
 
   return (
     <motion.button

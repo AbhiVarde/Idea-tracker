@@ -104,28 +104,30 @@ export function Profile({ navigate }) {
           whileHover={{ scale: 1.05 }}
           className="w-12 h-12 rounded-lg bg-[#FD366E] flex items-center justify-center"
         >
-          <User className="w-5 h-5 text-white" />
+          <User className="w-6 h-6 text-white" />
         </motion.div>
       </motion.div>
 
       <div className="grid grid-cols-1 gap-6">
         <motion.div
-          className="bg-gradient-to-br from-[#1D1D1D] to-[#2A2A2A] rounded-2xl p-6 border border-gray-800 shadow-lg"
+          className="bg-gradient-to-br from-[#000000] to-[#111111] rounded-2xl p-6 border border-gray-800 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex flex-col sm:flex-row gap-6">
-            <div className="flex-shrink-0">
-              <div className="w-20 h-20 rounded-xl bg-[#FD366E] flex items-center justify-center shadow-lg">
-                <User className="w-8 h-8 text-white" />
+          <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-stretch">
+            <div className="sm:w-28 flex-shrink-0">
+              <div className="w-28 h-28 sm:h-full rounded-xl bg-[#FD366E] flex items-center justify-center shadow-lg">
+                <User className="w-14 h-14 text-white" />
               </div>
             </div>
-            <div className="flex-grow">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <p className="text-white text-md ">{user.current.email}</p>
 
-                <div className="flex items-center space-x-2 bg-[#fd366e0a] border border-[#FD366E]/30 rounded-full px-3 py-1">
+            <div className="flex-grow w-full">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <p className="text-white text-sm sm:text-md break-words">
+                  {user.current.email}
+                </p>
+                <div className="flex items-center gap-2 bg-[#fd366e0a] border border-[#FD366E]/30 rounded-full px-3 py-1">
                   <Zap className="w-4 h-4 text-[#FD366E]" />
                   <span className="text-xs font-medium text-white">
                     {productivityScore}% Productive
@@ -133,8 +135,8 @@ export function Profile({ navigate }) {
                 </div>
               </div>
 
-              <div className="mt-4 flex flex-col md:flex-row gap-4">
-                <div className="flex-1 bg-[#252525] rounded-lg p-4 border border-[#FD366E]">
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-[#0F0F0F] rounded-lg p-4 border border-[#FD366E]">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-[#FD366E]" />
                     <span className="text-xs text-gray-300">Member since</span>
@@ -144,7 +146,7 @@ export function Profile({ navigate }) {
                   </p>
                 </div>
 
-                <div className="flex-1 bg-[#252525] rounded-lg p-4 border border-[#FD366E]">
+                <div className="bg-[#0F0F0F] rounded-lg p-4 border border-[#FD366E]">
                   <div className="flex items-center gap-2">
                     <Lightbulb className="w-4 h-4 text-[#FD366E]" />
                     <span className="text-xs text-gray-300">Total ideas</span>
@@ -164,7 +166,7 @@ export function Profile({ navigate }) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-4 flex items-center space-x-3">
+          <div className="bg-[#000000] border border-gray-800 rounded-xl p-4 flex items-center space-x-3">
             <div className="w-10 h-10 rounded-lg bg-[#fd366e0a] border border-[#FD366E]/20 flex items-center justify-center">
               <Lightbulb className="w-5 h-5 text-[#FD366E]" />
             </div>
@@ -173,7 +175,7 @@ export function Profile({ navigate }) {
               <p className="text-white font-bold">{stats.totalIdeas}</p>
             </div>
           </div>
-          <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-4 flex items-center space-x-3">
+          <div className="bg-[#000000] border border-gray-800 rounded-xl p-4 flex items-center space-x-3">
             <div className="w-10 h-10 rounded-lg bg-[#fd366e0a] border border-[#FD366E]/20 flex items-center justify-center">
               <Tag className="w-5 h-5 text-[#FD366E]" />
             </div>
@@ -184,7 +186,7 @@ export function Profile({ navigate }) {
               </p>
             </div>
           </div>
-          <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-4 flex items-center space-x-3">
+          <div className="bg-[#000000] border border-gray-800 rounded-xl p-4 flex items-center space-x-3">
             <div className="w-10 h-10 rounded-lg bg-[#fd366e0a] border border-[#FD366E]/20 flex items-center justify-center">
               <Clock className="w-5 h-5 text-[#FD366E]" />
             </div>
@@ -214,7 +216,7 @@ export function Profile({ navigate }) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5">
+          <div className="bg-[#000000] border border-gray-800 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold text-white flex items-center">
                 <PieChart className="w-5 h-5 mr-2 text-[#FD366E]" />
@@ -264,7 +266,7 @@ export function Profile({ navigate }) {
             )}
           </div>
 
-          <div className="bg-[#1D1D1D] border border-gray-800 rounded-2xl p-5">
+          <div className="bg-[#000000] border border-gray-800 rounded-2xl p-5">
             <h3 className="text-lg font-bold text-white flex items-center mb-4">
               <Clock className="w-5 h-5 mr-2 text-[#FD366E]" />
               Recent Ideas

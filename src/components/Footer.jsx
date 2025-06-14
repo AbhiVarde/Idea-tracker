@@ -34,7 +34,7 @@ function Footer() {
 
   return (
     <motion.footer
-      className="bg-[#1D1D1D]/50 backdrop-blur-sm sticky bottom-0 w-full"
+      className="bg-[#000000]/50 backdrop-blur-sm sticky bottom-0 w-full"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}

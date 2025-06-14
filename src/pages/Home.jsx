@@ -183,7 +183,7 @@ export function Home({ navigate }) {
       </motion.div>
       {user.current ? (
         <motion.section
-          className="bg-[#1D1D1D] rounded-2xl p-4 border border-gray-800"
+          className="bg-[#000000] rounded-2xl p-4 border border-gray-800"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -239,7 +239,7 @@ export function Home({ navigate }) {
                     className="bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                   >
                     {CATEGORIES.map((cat) => (
-                      <option key={cat} value={cat} className="bg-[#1D1D1D]">
+                      <option key={cat} value={cat} className="bg-[#000000]">
                         {cat}
                       </option>
                     ))}
@@ -261,7 +261,7 @@ export function Home({ navigate }) {
                     className="bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                   >
                     {PRIORITIES.map((pri) => (
-                      <option key={pri} value={pri} className="bg-[#1D1D1D]">
+                      <option key={pri} value={pri} className="bg-[#000000]">
                         {pri}
                       </option>
                     ))}
@@ -289,7 +289,7 @@ export function Home({ navigate }) {
         </motion.section>
       ) : (
         <motion.section
-          className="bg-[#1D1D1D] rounded-2xl p-4 border border-gray-800 text-white"
+          className="bg-[#000000] rounded-2xl p-4 border border-gray-800 text-white"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -334,7 +334,7 @@ export function Home({ navigate }) {
               placeholder="Search ideas by title or description..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-[#1D1D1D] border border-gray-800 rounded-xl pl-12 pr-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+              className="w-full bg-[#000000] border border-gray-800 rounded-xl pl-12 pr-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
             />
             {searchTerm && (
               <motion.button
@@ -350,7 +350,7 @@ export function Home({ navigate }) {
 
           <motion.button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center space-x-2 bg-[#1D1D1D] border border-gray-800 rounded-xl px-4 py-2 text-white hover:border-[#FD366E]/40 transition-all duration-200 group flex-shrink-0"
+            className="flex items-center space-x-2 bg-[#000000] border border-gray-800 rounded-xl px-4 py-2 text-white hover:border-[#FD366E]/40 transition-all duration-200 group flex-shrink-0"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -393,7 +393,7 @@ export function Home({ navigate }) {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden"
             >
-              <div className="bg-[#1D1D1D] border border-gray-800 rounded-xl p-6 space-y-4">
+              <div className="bg-[#000000] border border-gray-800 rounded-xl p-6 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -408,11 +408,11 @@ export function Home({ navigate }) {
                       onChange={(e) => setFilterCategory(e.target.value)}
                       className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
                     >
-                      <option value="All" className="bg-[#1D1D1D]">
+                      <option value="All" className="bg-[#000000]">
                         All Categories
                       </option>
                       {CATEGORIES.map((cat) => (
-                        <option key={cat} value={cat} className="bg-[#1D1D1D]">
+                        <option key={cat} value={cat} className="bg-[#000000]">
                           {cat}
                         </option>
                       ))}
@@ -432,11 +432,11 @@ export function Home({ navigate }) {
                       onChange={(e) => setFilterPriority(e.target.value)}
                       className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
                     >
-                      <option value="All" className="bg-[#1D1D1D]">
+                      <option value="All" className="bg-[#000000]">
                         All Priorities
                       </option>
                       {PRIORITIES.map((pri) => (
-                        <option key={pri} value={pri} className="bg-[#1D1D1D]">
+                        <option key={pri} value={pri} className="bg-[#000000]">
                           {pri}
                         </option>
                       ))}
@@ -506,7 +506,7 @@ export function Home({ navigate }) {
               {filteredIdeas.map((idea, index) => (
                 <motion.div
                   key={idea.$id}
-                  className="bg-[#1D1D1D] rounded-2xl p-5 border border-gray-800 hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
+                  className="bg-[#000000] rounded-2xl p-5 border border-gray-800 hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -568,7 +568,7 @@ export function Home({ navigate }) {
                             <option
                               key={cat}
                               value={cat}
-                              className="bg-[#1D1D1D]"
+                              className="bg-[#000000]"
                             >
                               {cat}
                             </option>
@@ -583,7 +583,7 @@ export function Home({ navigate }) {
                             <option
                               key={pri}
                               value={pri}
-                              className="bg-[#1D1D1D]"
+                              className="bg-[#000000]"
                             >
                               {pri}
                             </option>

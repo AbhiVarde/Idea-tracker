@@ -20,7 +20,7 @@ export function NotFound({ navigate }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#1D1D1D] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#000000] flex items-center justify-center px-4">
       <motion.div
         variants={staggerContainer}
         initial="initial"
