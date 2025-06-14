@@ -39,7 +39,7 @@ function Footer() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
     >
-      <div className="max-w-2xl mx-auto px-4 pt-6 pb-6">
+      <div className="max-w-2xl mx-auto px-4 py-4 sm:py-6">
         {/* Product Hunt Badge Section */}
         <motion.div
           className="flex justify-center mb-4"
