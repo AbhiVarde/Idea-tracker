@@ -72,7 +72,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#333333] text-white">
+    <div className="min-h-screen bg-[#1D1D1D] text-white">
       <UserProvider>
         <IdeasProvider>
           {currentPage !== "404" && (
