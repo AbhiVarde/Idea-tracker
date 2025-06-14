@@ -3,6 +3,7 @@ import { useUser } from "../lib/context/user";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trash2, AlertTriangle, X } from "lucide-react";
 import { toast } from "sonner";
+import moment from "moment";
 
 const AccountSettings = ({ isOpen, onClose }) => {
   const user = useUser();
@@ -89,7 +90,7 @@ const AccountSettings = ({ isOpen, onClose }) => {
               </p>
               <p className="text-gray-400 text-sm">
                 Member since{" "}
-                {new Date(user.current?.$createdAt).toLocaleDateString()}
+                {moment(user.current?.$createdAt).format("DD MMM YYYY")}
               </p>
             </div>
 
