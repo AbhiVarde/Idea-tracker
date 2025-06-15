@@ -223,9 +223,11 @@ export function IdeasProvider({ children }) {
       }
     );
 
+    const currentPendingOperations = pendingOperationsRef.current;
+
     return () => {
       unsubscribe?.();
-      pendingOperationsRef.current.clear();
+      currentPendingOperations.clear();
     };
   }, [user, addIdeaToState]);
 
