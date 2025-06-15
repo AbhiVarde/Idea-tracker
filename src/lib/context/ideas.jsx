@@ -25,6 +25,7 @@ export function IdeasProvider({ children }) {
   const [ideas, setIdeas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const lastFetchTimeRef = useRef(null);
+  const pendingOperationsRef = useRef(new Set());
 
   const getErrorMessage = (error) => {
     if (error?.code === 401) return "Please log in to continue";
@@ -33,28 +34,51 @@ export function IdeasProvider({ children }) {
     return error?.message || "Something went wrong. Please try again.";
   };
 
+  const addIdeaToState = useCallback((newIdea) => {
+    setIdeas((prev) => {
+      const existingIndex = prev.findIndex((idea) => idea.$id === newIdea.$id);
+
+      if (existingIndex >= 0) {
+        const updated = [...prev];
+        updated[existingIndex] = newIdea;
+        return updated;
+      } else {
+        return [newIdea, ...prev].slice(0, 50);
+      }
+    });
+  }, []);
+
   async function add(idea) {
     if (!user) {
       toast.error("Please log in to add ideas");
       return;
     }
 
+    const tempId = ID.unique();
+    pendingOperationsRef.current.add(tempId);
+
     try {
       const response = await databases.createDocument(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
-        ID.unique(),
+        tempId,
         {
           ...idea,
           userId: user.$id,
         }
       );
 
+      if (pendingOperationsRef.current.has(tempId)) {
+        addIdeaToState(response);
+      }
+
       toast.success("Idea added successfully!");
       return response;
     } catch (err) {
       toast.error(getErrorMessage(err));
       throw err;
+    } finally {
+      pendingOperationsRef.current.delete(tempId);
     }
   }
 
@@ -64,6 +88,8 @@ export function IdeasProvider({ children }) {
       return;
     }
 
+    pendingOperationsRef.current.add(id);
+
     try {
       const response = await databases.updateDocument(
         IDEAS_DATABASE_ID,
@@ -71,14 +97,20 @@ export function IdeasProvider({ children }) {
         id,
         updatedIdea
       );
-      setIdeas((prev) =>
-        prev.map((idea) => (idea.$id === id ? response : idea))
-      );
+
+      if (pendingOperationsRef.current.has(id)) {
+        setIdeas((prev) =>
+          prev.map((idea) => (idea.$id === id ? response : idea))
+        );
+      }
+
       toast.success("Idea updated successfully!");
       return response;
     } catch (err) {
       toast.error(getErrorMessage(err));
       throw err;
+    } finally {
+      pendingOperationsRef.current.delete(id);
     }
   }
 
@@ -88,17 +120,25 @@ export function IdeasProvider({ children }) {
       return;
     }
 
+    pendingOperationsRef.current.add(id);
+
     try {
       await databases.deleteDocument(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
         id
       );
-      setIdeas((prev) => prev.filter((idea) => idea.$id !== id));
+
+      if (pendingOperationsRef.current.has(id)) {
+        setIdeas((prev) => prev.filter((idea) => idea.$id !== id));
+      }
+
       toast.info("Idea deleted successfully");
     } catch (err) {
       toast.error(getErrorMessage(err));
       throw err;
+    } finally {
+      pendingOperationsRef.current.delete(id);
     }
   }
 
@@ -116,7 +156,13 @@ export function IdeasProvider({ children }) {
           Query.limit(50),
         ]
       );
-      setIdeas(response.documents);
+
+      const uniqueIdeas = response.documents.filter(
+        (idea, index, self) =>
+          index === self.findIndex((i) => i.$id === idea.$id)
+      );
+
+      setIdeas(uniqueIdeas);
       lastFetchTimeRef.current = new Date().toISOString();
     } catch (err) {
       console.error("Fetch ideas error:", err);
@@ -136,6 +182,7 @@ export function IdeasProvider({ children }) {
         console.log("No user, clearing ideas");
         setIdeas([]);
         setIsLoading(false);
+        pendingOperationsRef.current.clear();
       }
     }
   }, [user, isInitialized, fetchIdeas]);
@@ -149,25 +196,38 @@ export function IdeasProvider({ children }) {
         const eventType = response.events[0];
         const payload = response.payload;
 
-        if (payload.userId === user.$id) {
-          if (eventType.includes("create")) {
-            setIdeas((prev) => {
-              if (prev.find((idea) => idea.$id === payload.$id)) return prev;
-              return [payload, ...prev].slice(0, 50);
-            });
-          } else if (eventType.includes("update")) {
-            setIdeas((prev) =>
-              prev.map((idea) => (idea.$id === payload.$id ? payload : idea))
+        if (payload.userId !== user.$id) return;
+
+        if (pendingOperationsRef.current.has(payload.$id)) {
+          pendingOperationsRef.current.delete(payload.$id);
+          return;
+        }
+
+        if (eventType.includes("create")) {
+          addIdeaToState(payload);
+        } else if (eventType.includes("update")) {
+          setIdeas((prev) => {
+            const existingIndex = prev.findIndex(
+              (idea) => idea.$id === payload.$id
             );
-          } else if (eventType.includes("delete")) {
-            setIdeas((prev) => prev.filter((idea) => idea.$id !== payload.$id));
-          }
+            if (existingIndex >= 0) {
+              const updated = [...prev];
+              updated[existingIndex] = payload;
+              return updated;
+            }
+            return prev;
+          });
+        } else if (eventType.includes("delete")) {
+          setIdeas((prev) => prev.filter((idea) => idea.$id !== payload.$id));
         }
       }
     );
 
-    return () => unsubscribe?.();
-  }, [user]);
+    return () => {
+      unsubscribe?.();
+      pendingOperationsRef.current.clear();
+    };
+  }, [user, addIdeaToState]);
 
   const contextValue = {
     current: ideas,

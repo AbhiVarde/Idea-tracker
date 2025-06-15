@@ -115,9 +115,9 @@ export function Profile({ navigate }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-stretch">
+          <div className="flex flex-col md:flex-row gap-6 items-start sm:items-stretch">
             <div className="sm:w-28 flex-shrink-0">
-              <div className="w-28 h-28 sm:h-full rounded-xl bg-[#FD366E] flex items-center justify-center shadow-lg">
+              <div className="w-28 h-28 md:h-full rounded-xl bg-[#FD366E] flex items-center justify-center shadow-lg">
                 <User className="w-14 h-14 text-white" />
               </div>
             </div>
@@ -289,8 +289,8 @@ export function Profile({ navigate }) {
                           idea.priority === "High"
                             ? "bg-red-500/20 text-red-300"
                             : idea.priority === "Medium"
-                            ? "bg-yellow-500/20 text-yellow-300"
-                            : "bg-green-500/20 text-green-300"
+                              ? "bg-yellow-500/20 text-yellow-300"
+                              : "bg-green-500/20 text-green-300"
                         }`}
                       >
                         {idea.priority || "Medium"}
