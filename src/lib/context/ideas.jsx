@@ -21,7 +21,7 @@ export function useIdeas() {
 }
 
 export function IdeasProvider({ children }) {
-  const { current: user, isInitialized } = useUser();
+  const { current: user, isInitialized, loading } = useUser();
   const [ideas, setIdeas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const lastFetchTimeRef = useRef(null);
@@ -68,9 +68,8 @@ export function IdeasProvider({ children }) {
         }
       );
 
-      if (pendingOperationsRef.current.has(tempId)) {
-        addIdeaToState(response);
-      }
+      // Always update state immediately for better UX
+      addIdeaToState(response);
 
       toast.success("Idea added successfully!");
       return response;
@@ -98,11 +97,9 @@ export function IdeasProvider({ children }) {
         updatedIdea
       );
 
-      if (pendingOperationsRef.current.has(id)) {
-        setIdeas((prev) =>
-          prev.map((idea) => (idea.$id === id ? response : idea))
-        );
-      }
+      setIdeas((prev) =>
+        prev.map((idea) => (idea.$id === id ? response : idea))
+      );
 
       toast.success("Idea updated successfully!");
       return response;
@@ -129,9 +126,7 @@ export function IdeasProvider({ children }) {
         id
       );
 
-      if (pendingOperationsRef.current.has(id)) {
-        setIdeas((prev) => prev.filter((idea) => idea.$id !== id));
-      }
+      setIdeas((prev) => prev.filter((idea) => idea.$id !== id));
 
       toast.info("Idea deleted successfully");
     } catch (err) {
@@ -174,7 +169,7 @@ export function IdeasProvider({ children }) {
   }, [user]);
 
   useEffect(() => {
-    if (isInitialized) {
+    if (isInitialized && !loading) {
       if (user) {
         console.log("User authenticated, fetching ideas...", user);
         fetchIdeas();
@@ -185,10 +180,10 @@ export function IdeasProvider({ children }) {
         pendingOperationsRef.current.clear();
       }
     }
-  }, [user, isInitialized, fetchIdeas]);
+  }, [user, isInitialized, loading, fetchIdeas]);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || !isInitialized) return;
 
     const unsubscribe = databases.client.subscribe(
       `databases.${IDEAS_DATABASE_ID}.collections.${IDEAS_COLLECTION_ID}.documents`,
@@ -204,7 +199,13 @@ export function IdeasProvider({ children }) {
         }
 
         if (eventType.includes("create")) {
-          addIdeaToState(payload);
+          setIdeas((prev) => {
+            const exists = prev.some((idea) => idea.$id === payload.$id);
+            if (!exists) {
+              return [payload, ...prev].slice(0, 50);
+            }
+            return prev;
+          });
         } else if (eventType.includes("update")) {
           setIdeas((prev) => {
             const existingIndex = prev.findIndex(
@@ -229,7 +230,7 @@ export function IdeasProvider({ children }) {
       unsubscribe?.();
       currentPendingOperations.clear();
     };
-  }, [user, addIdeaToState]);
+  }, [user, isInitialized, addIdeaToState]);
 
   const contextValue = {
     current: ideas,

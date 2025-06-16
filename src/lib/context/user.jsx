@@ -307,6 +307,7 @@ export function UserProvider({ children }) {
   const contextValue = {
     current: user,
     loading,
+    isInitialized,
     login,
     logout,
     register,
