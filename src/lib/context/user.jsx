@@ -5,8 +5,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { account, databases } from "../appwrite";
-import { OAuthProvider, Query } from "appwrite";
+import { account, databases, storage } from "../appwrite";
+import { OAuthProvider, Query, ID } from "appwrite";
 import { toast } from "sonner";
 
 const UserContext = createContext();
@@ -19,7 +19,7 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
-  const [oauthProcessed, setOauthProcessed] = useState(false); 
+  const [oauthProcessed, setOauthProcessed] = useState(false);
 
   const isAccountDeleted = (email) => {
     const deletedAccounts = JSON.parse(
@@ -69,6 +69,82 @@ export function UserProvider({ children }) {
       setIsInitialized(true);
     }
   }, [isInitialized]);
+
+  const uploadProfilePicture = async (file) => {
+    try {
+      // Delete old profile picture if exists
+      if (user?.prefs?.profilePictureId) {
+        try {
+          await storage.deleteFile(
+            process.env.REACT_APP_APPWRITE_STORAGE_BUCKET_ID,
+            user.prefs.profilePictureId
+          );
+        } catch (error) {
+          console.warn("Error deleting old profile picture:", error);
+        }
+      }
+
+      // Upload new profile picture
+      const uploadedFile = await storage.createFile(
+        process.env.REACT_APP_APPWRITE_STORAGE_BUCKET_ID,
+        ID.unique(),
+        file
+      );
+
+      // Update user preferences with the new file ID
+      await account.updatePrefs({
+        ...user.prefs,
+        profilePictureId: uploadedFile.$id,
+      });
+
+      // Get the updated user data and update local state
+      const updatedUser = await account.get();
+      setUser(updatedUser);
+
+      toast.success("Profile picture updated successfully!");
+      return uploadedFile.$id;
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+      toast.error("Failed to upload profile picture");
+      throw error;
+    }
+  };
+
+  // Replace the removeProfilePicture function in your UserContext
+  const removeProfilePicture = async () => {
+    try {
+      if (user?.prefs?.profilePictureId) {
+        await storage.deleteFile(
+          process.env.REACT_APP_APPWRITE_STORAGE_BUCKET_ID,
+          user.prefs.profilePictureId
+        );
+      }
+
+      await account.updatePrefs({
+        ...user.prefs,
+        profilePictureId: null,
+      });
+
+      // Get the updated user data and update local state
+      const updatedUser = await account.get();
+      setUser(updatedUser);
+
+      toast.success("Profile picture removed successfully!");
+    } catch (error) {
+      console.error("Error removing profile picture:", error);
+      toast.error("Failed to remove profile picture");
+      throw error;
+    }
+  };
+
+  // Add this helper function to your UserContext
+  const getProfilePictureUrl = (profilePictureId) => {
+    if (!profilePictureId) return null;
+    return storage.getFileView(
+      process.env.REACT_APP_APPWRITE_STORAGE_BUCKET_ID,
+      profilePictureId
+    );
+  };
 
   // Login with email and password
   const login = async (email, password) => {
@@ -126,7 +202,7 @@ export function UserProvider({ children }) {
         });
       }
 
-      await account.create("unique()", email, password);
+      await account.create(ID.unique(), email, password);
       await account.createEmailPasswordSession(email, password);
       const loggedIn = await account.get();
       setUser(loggedIn);
@@ -222,6 +298,18 @@ export function UserProvider({ children }) {
     try {
       const currentUser = await account.get();
 
+      // Delete profile picture if exists
+      if (currentUser?.prefs?.profilePictureId) {
+        try {
+          await storage.deleteFile(
+            process.env.REACT_APP_APPWRITE_STORAGE_BUCKET_ID,
+            currentUser.prefs.profilePictureId
+          );
+        } catch (error) {
+          console.warn("Error deleting profile picture:", error);
+        }
+      }
+
       try {
         const userDocuments = await databases.listDocuments(
           process.env.REACT_APP_APPWRITE_DATABASE_ID,
@@ -315,6 +403,9 @@ export function UserProvider({ children }) {
     loginWithGithub,
     loginWithDiscord,
     deleteAccount,
+    uploadProfilePicture,
+    removeProfilePicture,
+    getProfilePictureUrl,
     account,
     databases,
   };

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useUser } from "../lib/context/user";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trash2, AlertTriangle, X } from "lucide-react";
+import { Trash2, AlertTriangle, X, Camera, Upload, UserX } from "lucide-react";
 import { toast } from "sonner";
 import moment from "moment";
 
@@ -10,7 +10,54 @@ const AccountSettings = ({ isOpen, onClose }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [showProfileActions, setShowProfileActions] = useState(false);
   const [error, setError] = useState("");
+  const fileInputRef = useRef(null);
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validate file type - only allow jpg, jpeg, png
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error("Please select a JPG, JPEG, or PNG image file");
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image size should be less than 5MB");
+      return;
+    }
+
+    setIsUploadingImage(true);
+    setShowProfileActions(false);
+    try {
+      await user.uploadProfilePicture(file);
+      // Clear the file input to allow re-uploading the same file
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
+
+  const handleRemoveImage = async () => {
+    setIsUploadingImage(true);
+    setShowProfileActions(false);
+    try {
+      await user.removeProfilePicture();
+    } catch (error) {
+      console.error("Remove error:", error);
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
 
   const handleDeleteAccount = async () => {
     if (deleteConfirmText !== "DELETE") return;
@@ -37,7 +84,29 @@ const AccountSettings = ({ isOpen, onClose }) => {
     setShowDeleteConfirm(false);
     setDeleteConfirmText("");
     setError("");
+    setShowProfileActions(false);
     onClose();
+  };
+
+  const getInitials = () => {
+    const currentUser = user.current;
+    let initials = "";
+    if (currentUser?.name) {
+      initials = currentUser.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2);
+    } else if (currentUser?.email) {
+      const emailParts = currentUser.email.split("@")[0].split(".");
+      initials = emailParts
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2);
+    }
+    return initials || "U";
   };
 
   if (!isOpen) return null;
@@ -77,14 +146,94 @@ const AccountSettings = ({ isOpen, onClose }) => {
 
           <div className="space-y-4">
             <div className="bg-gray-800/30 rounded-xl p-4 text-center">
-              <div className="w-12 h-12 bg-[#FD366E] rounded-full flex items-center justify-center text-white font-bold text-lg mx-auto mb-3">
-                {user.current?.email
-                  ?.split("@")[0]
-                  ?.split(".")
-                  ?.map((n) => n[0])
-                  ?.join("")
-                  ?.toUpperCase()}
+              <div className="relative inline-block mb-3">
+                <div className="w-16 h-16 bg-[#FD366E] rounded-full flex items-center justify-center text-white font-medium text-xl mx-auto relative">
+                  {user.current?.prefs?.profilePictureId ? (
+                    <>
+                      <img
+                        src={user.getProfilePictureUrl(
+                          user.current.prefs.profilePictureId
+                        )}
+                        alt="Profile"
+                        className="w-16 h-16 rounded-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                          e.target.nextElementSibling.style.display = "flex";
+                        }}
+                      />
+                      <div
+                        className="w-16 h-16 bg-[#FD366E] rounded-full flex items-center justify-center text-white font-medium text-xl absolute inset-0"
+                        style={{ display: "none" }}
+                      >
+                        {getInitials()}
+                      </div>
+                    </>
+                  ) : (
+                    getInitials()
+                  )}
+                </div>
+
+                {/* Profile Actions Button */}
+                <motion.button
+                  onClick={() => setShowProfileActions(!showProfileActions)}
+                  disabled={isUploadingImage}
+                  className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#FD366E] hover:bg-[#FD366E]/80 rounded-full flex items-center justify-center transition-colors disabled:opacity-50 border-2 border-black"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  {isUploadingImage ? (
+                    <div className="w-4 h-4 border border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <Camera className="w-4 h-4 text-white" />
+                  )}
+                </motion.button>
+
+                {/* Profile Actions Dropdown */}
+                <AnimatePresence>
+                  {showProfileActions && !isUploadingImage && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                      transition={{
+                        duration: 0.25,
+                        ease: [0.25, 0.1, 0.25, 1],
+                      }}
+                      className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-[#000000] border border-gray-800 rounded-xl shadow-xl z-10 w-36"
+                    >
+                      <motion.button
+                        onClick={() => {
+                          fileInputRef.current?.click();
+                          setShowProfileActions(false);
+                        }}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-lg transition-colors duration-200"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <Upload className="w-4 h-4" />
+                        <span className="text-sm">
+                          {user.current?.prefs?.profilePictureId
+                            ? "Change Photo"
+                            : "Upload Photo"}
+                        </span>
+                      </motion.button>
+
+                      {user.current?.prefs?.profilePictureId && (
+                        <motion.button
+                          onClick={handleRemoveImage}
+                          className="w-full flex items-center gap-2 px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors duration-200 ease-in-out"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <UserX className="w-4 h-4" />
+                          <span className="text-sm">Remove Photo</span>
+                        </motion.button>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
+
               <p className="text-white font-medium mb-1">
                 {user.current?.email}
               </p>
@@ -92,6 +241,14 @@ const AccountSettings = ({ isOpen, onClose }) => {
                 Member since{" "}
                 {moment(user.current?.$createdAt).format("DD MMM YYYY")}
               </p>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
             </div>
 
             {error && (

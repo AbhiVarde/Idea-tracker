@@ -40,23 +40,9 @@ function Navbar({ navigate, currentPage }) {
 
   const getAvatarContent = () => {
     const currentUser = user.current;
-
     if (!currentUser) return "?";
 
-    if (currentUser.avatarUrl) {
-      return (
-        <img
-          src={currentUser.avatarUrl}
-          alt="User Avatar"
-          className="w-8 h-8 rounded-full object-cover"
-          onError={(e) => {
-            e.target.style.display = "none";
-            e.target.nextSibling.style.display = "flex";
-          }}
-        />
-      );
-    }
-
+    // Generate initials fallback
     let initials = "";
     if (currentUser.name) {
       initials = currentUser.name
@@ -75,6 +61,67 @@ function Navbar({ navigate, currentPage }) {
     }
 
     return initials || "U";
+  };
+
+  const renderUserAvatar = () => {
+    const currentUser = user.current;
+    if (!currentUser) return null;
+
+    // Check if user has a profile picture from preferences
+    if (currentUser.prefs?.profilePictureId) {
+      const imageUrl = user.getProfilePictureUrl(
+        currentUser.prefs.profilePictureId
+      );
+      return (
+        <>
+          <img
+            src={imageUrl}
+            alt="Profile"
+            className="w-8 h-8 rounded-full object-cover"
+            onError={(e) => {
+              e.target.style.display = "none";
+              e.target.nextElementSibling.style.display = "flex";
+            }}
+          />
+          <div
+            className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm absolute inset-0"
+            style={{ display: "none" }}
+          >
+            {getAvatarContent()}
+          </div>
+        </>
+      );
+    }
+
+    // Check if user has an avatar URL (alternative avatar source)
+    if (currentUser.avatarUrl) {
+      return (
+        <>
+          <img
+            src={currentUser.avatarUrl}
+            alt="User Avatar"
+            className="w-8 h-8 rounded-full object-cover"
+            onError={(e) => {
+              e.target.style.display = "none";
+              e.target.nextElementSibling.style.display = "flex";
+            }}
+          />
+          <div
+            className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm absolute inset-0"
+            style={{ display: "none" }}
+          >
+            {getAvatarContent()}
+          </div>
+        </>
+      );
+    }
+
+    // Fallback to initials
+    return (
+      <div className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm">
+        {getAvatarContent()}
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -203,28 +250,8 @@ function Navbar({ navigate, currentPage }) {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <div className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm select-none relative">
-                        {user.current?.avatarUrl ? (
-                          <>
-                            <img
-                              src={user.current.avatarUrl}
-                              alt="User Avatar"
-                              className="w-8 h-8 rounded-full object-cover"
-                              onError={(e) => {
-                                e.target.style.display = "none";
-                                e.target.nextSibling.style.display = "flex";
-                              }}
-                            />
-                            <div
-                              className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm absolute inset-0"
-                              style={{ display: "none" }}
-                            >
-                              {getAvatarContent()}
-                            </div>
-                          </>
-                        ) : (
-                          getAvatarContent()
-                        )}
+                      <div className="relative select-none">
+                        {renderUserAvatar()}
                       </div>
                       <motion.div
                         animate={{ rotate: showUserDropdown ? 180 : 0 }}

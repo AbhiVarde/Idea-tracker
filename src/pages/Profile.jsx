@@ -88,26 +88,6 @@ export function Profile({ navigate }) {
 
   return (
     <div className="max-w-2xl mx-auto p-4 space-y-6">
-      <motion.div
-        className="flex items-center justify-between"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div>
-          <h1 className="text-2xl font-bold text-white">Your Profile</h1>
-          <p className="text-gray-400 text-sm">
-            Overview of your creative contributions
-          </p>
-        </div>
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="w-12 h-12 rounded-lg bg-[#FD366E] flex items-center justify-center"
-        >
-          <User className="w-6 h-6 text-white" />
-        </motion.div>
-      </motion.div>
-
       <div className="grid grid-cols-1 gap-6">
         <motion.div
           className="bg-gradient-to-br from-[#000000] to-[#111111] rounded-2xl p-6 border border-gray-800 shadow-lg"
@@ -117,8 +97,72 @@ export function Profile({ navigate }) {
         >
           <div className="flex flex-col md:flex-row gap-6 items-start sm:items-stretch">
             <div className="sm:w-28 flex-shrink-0">
-              <div className="w-28 h-28 md:h-full rounded-xl bg-[#FD366E] flex items-center justify-center shadow-lg">
-                <User className="w-14 h-14 text-white" />
+              <div className="w-28 h-28 md:h-full rounded-xl bg-[#FD366E] flex items-center justify-center shadow-lg relative overflow-hidden">
+                {user.current?.prefs?.profilePictureId ? (
+                  <>
+                    <img
+                      src={user.getProfilePictureUrl(
+                        user.current.prefs.profilePictureId
+                      )}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                        e.target.nextElementSibling.style.display = "flex";
+                      }}
+                    />
+                    <div
+                      className="w-full h-full bg-[#FD366E] flex items-center justify-center text-white font-med text-2xl absolute inset-0"
+                      style={{ display: "none" }}
+                    >
+                      {(() => {
+                        let initials = "";
+                        if (user.current?.name) {
+                          initials = user.current.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                            .toUpperCase()
+                            .slice(0, 2);
+                        } else if (user.current?.email) {
+                          const emailParts = user.current.email
+                            .split("@")[0]
+                            .split(".");
+                          initials = emailParts
+                            .map((part) => part[0])
+                            .join("")
+                            .toUpperCase()
+                            .slice(0, 2);
+                        }
+                        return initials || "U";
+                      })()}
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-white font-medium text-2xl md:text-3xl lg:text-4xl">
+                    {(() => {
+                      let initials = "";
+                      if (user.current?.name) {
+                        initials = user.current.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .toUpperCase()
+                          .slice(0, 2);
+                      } else if (user.current?.email) {
+                        const emailParts = user.current.email
+                          .split("@")[0]
+                          .split(".");
+                        initials = emailParts
+                          .map((part) => part[0])
+                          .join("")
+                          .toUpperCase()
+                          .slice(0, 2);
+                      }
+                      return initials || "U";
+                    })()}
+                  </div>
+                )}
               </div>
             </div>
 
