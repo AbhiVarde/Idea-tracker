@@ -3,7 +3,6 @@ import { useUser } from "../lib/context/user";
 import { useIdeas } from "../lib/context/ideas";
 import { motion } from "framer-motion";
 import {
-  User,
   Calendar,
   Lightbulb,
   Tag,
