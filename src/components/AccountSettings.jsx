@@ -19,14 +19,12 @@ const AccountSettings = ({ isOpen, onClose }) => {
     const file = event.target.files[0];
     if (!file) return;
 
-    // Validate file type - only allow jpg, jpeg, png
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
     if (!allowedTypes.includes(file.type)) {
       toast.error("Please select a JPG, JPEG, or PNG image file");
       return;
     }
 
-    // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       toast.error("Image size should be less than 5MB");
       return;

@@ -93,7 +93,7 @@ function Navbar({ navigate, currentPage }) {
       );
     }
 
-    // Check if user has an avatar URL (alternative avatar source)
+    // Check if user has an avatar URL
     if (currentUser.avatarUrl) {
       return (
         <>

@@ -110,7 +110,6 @@ export function UserProvider({ children }) {
     }
   };
 
-  // Replace the removeProfilePicture function in your UserContext
   const removeProfilePicture = async () => {
     try {
       if (user?.prefs?.profilePictureId) {
@@ -137,7 +136,6 @@ export function UserProvider({ children }) {
     }
   };
 
-  // Add this helper function to your UserContext
   const getProfilePictureUrl = (profilePictureId) => {
     if (!profilePictureId) return null;
     return storage.getFileView(
