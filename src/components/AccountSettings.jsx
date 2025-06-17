@@ -147,25 +147,28 @@ const AccountSettings = ({ isOpen, onClose }) => {
               <div className="relative inline-block mb-3">
                 <div className="w-16 h-16 bg-[#FD366E] rounded-full flex items-center justify-center text-white font-medium text-xl mx-auto relative">
                   {user.current?.prefs?.profilePictureId ? (
-                    <>
+                    <div className="relative w-16 h-16">
                       <img
                         src={user.getProfilePictureUrl(
                           user.current.prefs.profilePictureId
                         )}
                         alt="Profile"
                         className="w-16 h-16 rounded-full object-cover"
+                        onLoad={(e) => {
+                          // Hide fallback when image loads successfully
+                          const fallback = e.target.nextElementSibling;
+                          if (fallback) fallback.style.display = "none";
+                        }}
                         onError={(e) => {
                           e.target.style.display = "none";
-                          e.target.nextElementSibling.style.display = "flex";
+                          const fallback = e.target.nextElementSibling;
+                          if (fallback) fallback.style.display = "flex";
                         }}
                       />
-                      <div
-                        className="w-16 h-16 bg-[#FD366E] rounded-full flex items-center justify-center text-white font-medium text-xl absolute inset-0"
-                        style={{ display: "none" }}
-                      >
+                      <div className="w-16 h-16 bg-[#FD366E] rounded-full flex items-center justify-center text-white font-medium text-xl absolute inset-0">
                         {getInitials()}
                       </div>
-                    </>
+                    </div>
                   ) : (
                     getInitials()
                   )}

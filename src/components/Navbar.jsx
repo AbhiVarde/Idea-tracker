@@ -65,7 +65,11 @@ function Navbar({ navigate, currentPage }) {
 
   const renderUserAvatar = () => {
     const currentUser = user.current;
-    if (!currentUser) return null;
+    if (!currentUser || !user.userDataLoaded) {
+      return (
+        <div className="w-8 h-8 bg-gray-700 rounded-full animate-pulse"></div>
+      );
+    }
 
     // Check if user has a profile picture from preferences
     if (currentUser.prefs?.profilePictureId) {
@@ -73,46 +77,52 @@ function Navbar({ navigate, currentPage }) {
         currentUser.prefs.profilePictureId
       );
       return (
-        <>
+        <div className="relative w-8 h-8">
           <img
             src={imageUrl}
             alt="Profile"
             className="w-8 h-8 rounded-full object-cover"
+            onLoad={(e) => {
+              // Hide fallback when image loads successfully
+              const fallback = e.target.nextElementSibling;
+              if (fallback) fallback.style.display = "none";
+            }}
             onError={(e) => {
               e.target.style.display = "none";
-              e.target.nextElementSibling.style.display = "flex";
+              const fallback = e.target.nextElementSibling;
+              if (fallback) fallback.style.display = "flex";
             }}
           />
-          <div
-            className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm absolute inset-0"
-            style={{ display: "none" }}
-          >
+          <div className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm absolute inset-0">
             {getAvatarContent()}
           </div>
-        </>
+        </div>
       );
     }
 
     // Check if user has an avatar URL
     if (currentUser.avatarUrl) {
       return (
-        <>
+        <div className="relative w-8 h-8">
           <img
             src={currentUser.avatarUrl}
             alt="User Avatar"
             className="w-8 h-8 rounded-full object-cover"
+            onLoad={(e) => {
+              // Hide fallback when image loads successfully
+              const fallback = e.target.nextElementSibling;
+              if (fallback) fallback.style.display = "none";
+            }}
             onError={(e) => {
               e.target.style.display = "none";
-              e.target.nextElementSibling.style.display = "flex";
+              const fallback = e.target.nextElementSibling;
+              if (fallback) fallback.style.display = "flex";
             }}
           />
-          <div
-            className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm absolute inset-0"
-            style={{ display: "none" }}
-          >
+          <div className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm absolute inset-0">
             {getAvatarContent()}
           </div>
-        </>
+        </div>
       );
     }
 

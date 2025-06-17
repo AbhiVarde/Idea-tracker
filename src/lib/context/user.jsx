@@ -20,6 +20,7 @@ export function UserProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
   const [oauthProcessed, setOauthProcessed] = useState(false);
+  const [userDataLoaded, setUserDataLoaded] = useState(false);
 
   const isAccountDeleted = (email) => {
     const deletedAccounts = JSON.parse(
@@ -58,12 +59,15 @@ export function UserProvider({ children }) {
       if (isAccountDeleted(loggedIn.email)) {
         await account.deleteSession("current");
         setUser(null);
+        setUserDataLoaded(true);
         return;
       }
 
       setUser(loggedIn);
+      setUserDataLoaded(true);
     } catch (err) {
       setUser(null);
+      setUserDataLoaded(true);
     } finally {
       setLoading(false);
       setIsInitialized(true);
@@ -394,6 +398,7 @@ export function UserProvider({ children }) {
     current: user,
     loading,
     isInitialized,
+    userDataLoaded,
     login,
     logout,
     register,

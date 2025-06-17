@@ -98,22 +98,25 @@ export function Profile({ navigate }) {
             <div className="sm:w-28 flex-shrink-0">
               <div className="w-28 h-28 md:h-full rounded-xl bg-[#FD366E] flex items-center justify-center shadow-lg relative overflow-hidden">
                 {user.current?.prefs?.profilePictureId ? (
-                  <>
+                  <div className="relative w-full h-full">
                     <img
                       src={user.getProfilePictureUrl(
                         user.current.prefs.profilePictureId
                       )}
                       alt="Profile"
                       className="w-full h-full object-cover"
+                      onLoad={(e) => {
+                        // Hide fallback when image loads successfully
+                        const fallback = e.target.nextElementSibling;
+                        if (fallback) fallback.style.display = "none";
+                      }}
                       onError={(e) => {
                         e.target.style.display = "none";
-                        e.target.nextElementSibling.style.display = "flex";
+                        const fallback = e.target.nextElementSibling;
+                        if (fallback) fallback.style.display = "flex";
                       }}
                     />
-                    <div
-                      className="w-full h-full bg-[#FD366E] flex items-center justify-center text-white font-med text-2xl absolute inset-0"
-                      style={{ display: "none" }}
-                    >
+                    <div className="w-full h-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-2xl md:text-3xl lg:text-4xl absolute inset-0">
                       {(() => {
                         let initials = "";
                         if (user.current?.name) {
@@ -136,7 +139,7 @@ export function Profile({ navigate }) {
                         return initials || "U";
                       })()}
                     </div>
-                  </>
+                  </div>
                 ) : (
                   <div className="text-white font-medium text-2xl md:text-3xl lg:text-4xl">
                     {(() => {
