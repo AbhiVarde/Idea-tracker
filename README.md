@@ -40,6 +40,7 @@ Click the card to view it live:
 - 🧩 Smooth UI & Animations
 - 🥦 Social Login (Google, GitHub, Discord)
 - 🌾 Delete Account Functionality
+- 🫛 Upload Profile Picture
 - 💚 Free & Open Source
 
 *Ready to turn your ideas into reality?*
