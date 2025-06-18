@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub, BsDiscord } from "react-icons/bs";
+import { toast } from "sonner";
 
 export function Login({ navigate }) {
   const user = useUser();
@@ -11,10 +12,33 @@ export function Login({ navigate }) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) return "Email is required";
+    if (!emailRegex.test(email)) return "Please enter a valid email address";
+    return "";
+  };
+
+  const validatePassword = (password) => {
+    if (!password) return "Password is required";
+    if (password.length < 8)
+      return "Password must be at least 8 characters long";
+    return "";
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
+    const emailErr = validateEmail(email);
+    const passwordErr = validatePassword(password);
+
+    setEmailError(emailErr);
+    setPasswordError(passwordErr);
+
+    if (emailErr || passwordErr) {
+      toast.error("Please fix the errors before signing in");
       return;
     }
 
@@ -22,8 +46,10 @@ export function Login({ navigate }) {
     try {
       await user.login(email, password);
       navigate("home");
+      toast.success("Successfully signed in!");
     } catch (err) {
       console.error("Login error:", err);
+      toast.error("Invalid email or password. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -31,7 +57,14 @@ export function Login({ navigate }) {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
+    const emailErr = validateEmail(email);
+    const passwordErr = validatePassword(password);
+
+    setEmailError(emailErr);
+    setPasswordError(passwordErr);
+
+    if (emailErr || passwordErr) {
+      toast.error("Please fix the errors before registering");
       return;
     }
 
@@ -39,27 +72,62 @@ export function Login({ navigate }) {
     try {
       await user.register(email, password);
       navigate("home");
+      toast.success("Account created successfully!");
     } catch (err) {
       console.error("Registration error:", err);
+      if (err.message?.includes("already exists") || err.code === 409) {
+        toast.error(
+          "An account with this email already exists. Please sign in instead."
+        );
+      } else {
+        toast.error("Failed to create account. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
-  // OAuth handlers - these work for both signup and signin
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    if (emailError && value) {
+      setEmailError(validateEmail(value));
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    if (passwordError && value) {
+      setPasswordError(validatePassword(value));
+    }
+  };
+
   const handleGoogleLogin = () => {
     if (isLoading) return;
-    user.loginWithGoogle();
+    try {
+      user.loginWithGoogle();
+    } catch (err) {
+      toast.error("Failed to sign in with Google. Please try again.");
+    }
   };
 
   const handleGithubLogin = () => {
     if (isLoading) return;
-    user.loginWithGithub();
+    try {
+      user.loginWithGithub();
+    } catch (err) {
+      toast.error("Failed to sign in with GitHub. Please try again.");
+    }
   };
 
   const handleDiscordLogin = () => {
     if (isLoading) return;
-    user.loginWithDiscord();
+    try {
+      user.loginWithDiscord();
+    } catch (err) {
+      toast.error("Failed to sign in with Discord. Please try again.");
+    }
   };
 
   return (
@@ -78,6 +146,7 @@ export function Login({ navigate }) {
             Professional idea management for developers
           </p>
         </motion.div>
+
         <motion.div
           className="bg-[#000000] border border-gray-800 rounded-2xl p-5 sm:p-8"
           initial={{ opacity: 0, scale: 0.95 }}
@@ -144,14 +213,23 @@ export function Login({ navigate }) {
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
                 <input
                   type="email"
-                  placeholder="developer@appwrite.io"
+                  placeholder="developer@example.com"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-transparent border border-gray-700 rounded-lg pl-10 pr-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all"
+                  onChange={handleEmailChange}
+                  onBlur={() => setEmailError(validateEmail(email))}
+                  className={`w-full bg-transparent border rounded-lg pl-10 pr-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all ${
+                    emailError ? "border-red-500" : "border-gray-700"
+                  }`}
                   required
                   disabled={isLoading}
                 />
               </div>
+              {emailError && (
+                <p className="text-red-400 text-sm flex items-center space-x-1">
+                  <span>⚠</span>
+                  <span>{emailError}</span>
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -162,12 +240,16 @@ export function Login({ navigate }) {
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Your secure password"
+                  placeholder="Minimum 8 characters"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-transparent border border-gray-700 rounded-lg pl-10 pr-12 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all"
+                  onChange={handlePasswordChange}
+                  onBlur={() => setPasswordError(validatePassword(password))}
+                  className={`w-full bg-transparent border rounded-lg pl-10 pr-12 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all ${
+                    passwordError ? "border-red-500" : "border-gray-700"
+                  }`}
                   required
                   disabled={isLoading}
+                  minLength={8}
                 />
                 <button
                   type="button"
@@ -182,18 +264,33 @@ export function Login({ navigate }) {
                   )}
                 </button>
               </div>
+              {passwordError && (
+                <p className="text-red-400 text-sm flex items-center space-x-1">
+                  <span>⚠</span>
+                  <span>{passwordError}</span>
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <motion.button
                 type="submit"
-                disabled={isLoading || !email || !password}
+                disabled={
+                  isLoading ||
+                  !email ||
+                  !password ||
+                  emailError ||
+                  passwordError
+                }
                 className="bg-[#FD366E] hover:bg-[#FD366E]/80 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium py-2 rounded-lg transition-all flex items-center justify-center order-2 sm:order-1"
                 whileHover={!isLoading ? { scale: 1.02 } : {}}
                 whileTap={!isLoading ? { scale: 0.98 } : {}}
               >
                 {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                    <span>Signing in...</span>
+                  </>
                 ) : (
                   "Sign In"
                 )}
@@ -202,7 +299,13 @@ export function Login({ navigate }) {
               <motion.button
                 type="button"
                 onClick={handleRegister}
-                disabled={isLoading || !email || !password}
+                disabled={
+                  isLoading ||
+                  !email ||
+                  !password ||
+                  emailError ||
+                  passwordError
+                }
                 className="bg-transparent hover:bg-gray-800 border border-gray-700 hover:border-gray-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium py-2 rounded-lg transition-all order-1 sm:order-2"
                 whileHover={!isLoading ? { scale: 1.02 } : {}}
                 whileTap={!isLoading ? { scale: 0.98 } : {}}
@@ -231,6 +334,7 @@ export function Login({ navigate }) {
             </div>
           </div>
         </motion.div>
+
         <motion.div
           className="text-center mt-6"
           initial={{ opacity: 0 }}

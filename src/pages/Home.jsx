@@ -14,9 +14,11 @@ import {
   PieChart,
   Edit3,
   ChevronDown,
+  AlertTriangle,
 } from "lucide-react";
 import moment from "moment";
 import FlipWords from "../components/FlipWords";
+import { toast } from "sonner";
 
 const CATEGORIES = [
   "Web App",
@@ -60,29 +62,66 @@ export function Home({ navigate }) {
   const [editPriority, setEditPriority] = useState("");
   const [editTags, setEditTags] = useState("");
 
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title.trim()) return;
+
+    const trimmedTitle = title.trim();
+    const trimmedDescription = description.trim();
+
+    if (!trimmedTitle) {
+      toast.error("Please enter a title for your idea");
+      return;
+    }
+
+    if (trimmedTitle.length < 3) {
+      toast.error("Title must be at least 3 characters long");
+      return;
+    }
+
+    if (trimmedTitle.length > 100) {
+      toast.error("Title must be less than 100 characters");
+      return;
+    }
+
+    if (trimmedDescription.length > 500) {
+      toast.error("Description must be less than 500 characters");
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
+      const processedTags = tags
+        ?.split(",")
+        ?.map((tag) => tag.trim())
+        ?.filter(Boolean)
+        ?.filter((tag) => tag.length <= 20)
+        ?.slice(0, 10)
+        ?.join(",");
+
       await ideas.add({
         userId: user.current.$id,
-        title,
-        description,
+        title: trimmedTitle,
+        description: trimmedDescription,
         category,
         priority,
-        tags: tags
-          ?.split(",")
-          ?.map((tag) => tag.trim())
-          ?.filter(Boolean)
-          ?.join(","),
+        tags: processedTags,
       });
+
       setTitle("");
       setDescription("");
       setTags("");
       setShowForm(false);
+      toast.success("Idea added successfully!");
     } catch (err) {
       console.error(err);
+      toast.error("Failed to add idea. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -105,23 +144,66 @@ export function Home({ navigate }) {
   };
 
   const saveEdit = async (ideaId) => {
-    if (!editTitle.trim()) return;
+    const trimmedTitle = editTitle.trim();
+    const trimmedDescription = editDescription.trim();
+
+    if (!trimmedTitle) {
+      toast.error("Please enter a title for your idea");
+      return;
+    }
+
+    if (trimmedTitle.length < 3) {
+      toast.error("Title must be at least 3 characters long");
+      return;
+    }
+
+    if (trimmedTitle.length > 100) {
+      toast.error("Title must be less than 100 characters");
+      return;
+    }
+
+    if (trimmedDescription.length > 500) {
+      toast.error("Description must be less than 500 characters");
+      return;
+    }
+
+    setIsUpdating(true);
 
     try {
+      const processedTags = editTags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter(Boolean)
+        .filter((tag) => tag.length <= 20)
+        .slice(0, 10)
+        .join(",");
+
       await ideas.update(ideaId, {
-        title: editTitle,
-        description: editDescription,
+        title: trimmedTitle,
+        description: trimmedDescription,
         category: editCategory,
         priority: editPriority,
-        tags: editTags
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter(Boolean)
-          .join(","),
+        tags: processedTags,
       });
+
       cancelEdit();
+      toast.success("Idea updated successfully!");
     } catch (err) {
       console.error(err);
+      toast.error("Failed to update idea. Please try again.");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleDelete = async (ideaId) => {
+    try {
+      await ideas.remove(ideaId);
+      setDeleteConfirm(null);
+      toast.success("Idea deleted successfully!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to delete idea. Please try again.");
     }
   };
 
@@ -230,6 +312,7 @@ export function Home({ navigate }) {
                     placeholder="Idea title..."
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    maxLength={100}
                     className="bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                     required
                   />
@@ -251,6 +334,7 @@ export function Home({ navigate }) {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={3}
+                  maxLength={500}
                   className="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
                 />
 
@@ -268,20 +352,29 @@ export function Home({ navigate }) {
                   </select>
                   <input
                     type="text"
-                    placeholder="Tags (comma separated)"
+                    placeholder="Tags (comma separated, max 10)"
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
+                    maxLength={200}
                     className="bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                   />
                 </div>
 
                 <motion.button
                   type="submit"
-                  className="w-full bg-[#FD366E] hover:bg-[#FD366E]/90 text-white font-medium py-2 rounded-xl transition-all duration-300 shadow-lg shadow-[#FD366E]/20"
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={isSubmitting}
+                  className="w-full bg-[#FD366E] hover:bg-[#FD366E]/90 disabled:bg-[#FD366E]/50 disabled:cursor-not-allowed text-white font-medium py-2 rounded-xl transition-all duration-300 shadow-lg shadow-[#FD366E]/20 flex items-center justify-center space-x-2"
+                  whileHover={!isSubmitting ? { scale: 1.02, y: -1 } : {}}
+                  whileTap={!isSubmitting ? { scale: 0.98 } : {}}
                 >
-                  Save Idea
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <span>Save Idea</span>
+                  )}
                 </motion.button>
               </motion.form>
             )}
@@ -529,11 +622,19 @@ export function Home({ navigate }) {
                         <div className="flex space-x-2">
                           <motion.button
                             onClick={() => saveEdit(idea.$id)}
-                            className="bg-[#FD366E] hover:bg-[#FD366E]/90 text-white px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-1"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            disabled={isUpdating}
+                            className="bg-[#FD366E] hover:bg-[#FD366E]/90 disabled:bg-[#FD366E]/50 disabled:cursor-not-allowed text-white px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-1"
+                            whileHover={!isUpdating ? { scale: 1.05 } : {}}
+                            whileTap={!isUpdating ? { scale: 0.95 } : {}}
                           >
-                            <span>Save</span>
+                            {isUpdating ? (
+                              <>
+                                <div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin"></div>
+                                <span>Saving...</span>
+                              </>
+                            ) : (
+                              <span>Save</span>
+                            )}
                           </motion.button>
                           <button
                             onClick={cancelEdit}
@@ -616,7 +717,7 @@ export function Home({ navigate }) {
                               <Edit3 className="w-5 h-5" />
                             </motion.button>
                             <motion.button
-                              onClick={() => ideas.remove(idea.$id)}
+                              onClick={() => setDeleteConfirm(idea.$id)}
                               className="text-red-400 hover:text-red-300"
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
@@ -670,6 +771,72 @@ export function Home({ navigate }) {
           )}
         </AnimatePresence>
       </section>
+
+      {deleteConfirm && (
+        <motion.div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setDeleteConfirm(null)}
+        >
+          <motion.div
+            className="bg-[#000000] border border-gray-800 rounded-2xl p-6 max-w-md w-full mx-4"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 bg-red-500/30 rounded-full flex items-center justify-center">
+                <AlertTriangle className="w-5 h-5 text-red-400" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white">
+                  Delete Idea
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  This action cannot be undone
+                </p>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <p className="text-gray-300">
+                Are you sure you want to delete{" "}
+                <span className="font-medium text-white">
+                  "
+                  {
+                    filteredIdeas.find((idea) => idea.$id === deleteConfirm)
+                      ?.title
+                  }
+                  "
+                </span>
+                ?
+              </p>
+            </div>
+
+            <div className="flex space-x-3">
+              <motion.button
+                onClick={() => setDeleteConfirm(null)}
+                className="flex-1 bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded-xl transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Cancel
+              </motion.button>
+              <motion.button
+                onClick={() => handleDelete(deleteConfirm)}
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Delete
+              </motion.button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }
