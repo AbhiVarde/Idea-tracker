@@ -1,0 +1,1589 @@
+{
+  "version": 0.1,
+  "files": {
+    "components/AccountSettings.jsx": {
+      "scopes": {
+        "6/0/init/body/14/argument/1/1/3/1": {
+          "type": "element",
+          "hash": "da761b03817a816a0a44dcf5b5857996",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Account Settings"
+        },
+        "6/0/init/body/14/argument/1/1/3/3": {
+          "type": "element",
+          "hash": "d5aa5327f02c54a26ab21490b3e25f4a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Manage your account preferences"
+        },
+        "6/0/init/body/14/argument/1/1/5/1/1/1/1/expression/consequent/1-alt": {
+          "type": "attribute",
+          "hash": "d7878693f91303a438852d617f6d35df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "6/0/init/body/14/argument/1/1/5/1/1/9/1/expression/right/3/expression/right/3": {
+          "type": "element",
+          "hash": "4c84596262378c92950819a157a17a06",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Remove Photo"
+        },
+        "6/0/init/body/14/argument/1/1/5/1/5": {
+          "type": "element",
+          "hash": "519ea4fe2e1329e27bab07f85a2036bf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Member since <function:moment/>"
+        },
+        "6/0/init/body/14/argument/1/1/5/5/1/3": {
+          "type": "element",
+          "hash": "f5f7b88ff3122fb0d3a330e2b99d7e3d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete Account"
+        },
+        "6/0/init/body/14/argument/1/1/5/5/3": {
+          "type": "element",
+          "hash": "1cd5910f4813d1b397f04cfaa0a6b57c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This will permanently delete your account and all your ideas. This action cannot be undone."
+        },
+        "6/0/init/body/14/argument/1/1/5/5/5/expression/alternate/1": {
+          "type": "element",
+          "hash": "6a3c0f175b388b6044ed67874513c69a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Type \"DELETE\" to confirm:"
+        },
+        "6/0/init/body/14/argument/1/1/5/5/5/expression/alternate/3-placeholder": {
+          "type": "attribute",
+          "hash": "b520d54bda74a8f09b0cd502d55804af",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Type DELETE here"
+        },
+        "6/0/init/body/14/argument/1/1/5/5/5/expression/alternate/5/1": {
+          "type": "element",
+          "hash": "7afaa05272026382c83d9f963f45e3e2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "6/0/init/body/14/argument/1/1/5/5/5/expression/consequent/3": {
+          "type": "element",
+          "hash": "f5f7b88ff3122fb0d3a330e2b99d7e3d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete Account"
+        },
+        "6/0/init/body/8/argument/1/1/3/1": {
+          "type": "element",
+          "hash": "da761b03817a816a0a44dcf5b5857996",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Account Settings"
+        },
+        "6/0/init/body/8/argument/1/1/3/3": {
+          "type": "element",
+          "hash": "d5aa5327f02c54a26ab21490b3e25f4a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Manage your account preferences"
+        },
+        "6/0/init/body/8/argument/1/1/5/1/5": {
+          "type": "element",
+          "hash": "519ea4fe2e1329e27bab07f85a2036bf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Member since <function:moment/>"
+        },
+        "6/0/init/body/8/argument/1/1/5/5/1/3": {
+          "type": "element",
+          "hash": "f5f7b88ff3122fb0d3a330e2b99d7e3d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete Account"
+        },
+        "6/0/init/body/8/argument/1/1/5/5/3": {
+          "type": "element",
+          "hash": "1cd5910f4813d1b397f04cfaa0a6b57c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This will permanently delete your account and all your ideas. This action cannot be undone."
+        },
+        "6/0/init/body/8/argument/1/1/5/5/5/expression/alternate/1": {
+          "type": "element",
+          "hash": "6a3c0f175b388b6044ed67874513c69a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Type \"DELETE\" to confirm:"
+        },
+        "6/0/init/body/8/argument/1/1/5/5/5/expression/alternate/3-placeholder": {
+          "type": "attribute",
+          "hash": "b520d54bda74a8f09b0cd502d55804af",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Type DELETE here"
+        },
+        "6/0/init/body/8/argument/1/1/5/5/5/expression/alternate/5/1": {
+          "type": "element",
+          "hash": "7afaa05272026382c83d9f963f45e3e2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "6/0/init/body/8/argument/1/1/5/5/5/expression/consequent/3": {
+          "type": "element",
+          "hash": "f5f7b88ff3122fb0d3a330e2b99d7e3d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete Account"
+        }
+      }
+    },
+    "components/Footer.jsx": {
+      "scopes": {
+        "3/body/0/0/init/5/1/value-alt": {
+          "type": "attribute",
+          "hash": "678684b5c321228a54498065ce10238d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Lingo"
+        },
+        "3/body/0/0/init/5/1/value/1": {
+          "type": "element",
+          "hash": "3665a8a3798690d838cdedaf34d0af11",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "L"
+        },
+        "3/body/1/argument/1/3/1/1/1/1/1/1": {
+          "type": "element",
+          "hash": "676a79c325773fc15a925063f0dfcc93",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "🚀"
+        },
+        "3/body/1/argument/1/3/1/1/1/3/1": {
+          "type": "element",
+          "hash": "09500e317cc273bda513a4d4f4a145c8",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Sync UI"
+        },
+        "3/body/1/argument/1/3/1/1/1/3/3": {
+          "type": "element",
+          "hash": "87a2bd855267dcb0a32aed3155564001",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Animated UI kit for React devs"
+        },
+        "3/body/1/argument/1/3/1/1/1/5/1/1": {
+          "type": "element",
+          "hash": "9fe825c1e203bcf918d677a04cf7d41c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Vote on"
+        },
+        "3/body/1/argument/1/3/1/1/1/5/1/3": {
+          "type": "element",
+          "hash": "39add2ddd39cfb9274bf69a59469aa98",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Product Hunt"
+        },
+        "3/body/1/argument/1/7/1/1": {
+          "type": "element",
+          "hash": "daa64d7fb8b9ff0e8084dcef7bf9fb3f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Built with"
+        },
+        "3/body/1/argument/1/7/1/5": {
+          "type": "element",
+          "hash": "4bfd9ca52df95a588eb1829ede67aedb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "by"
+        },
+        "3/body/1/argument/1/7/1/7/1": {
+          "type": "element",
+          "hash": "054afe9c3fa465bdc9886e15f44f990c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "abhivarde.in"
+        },
+        "3/body/1/argument/1/7/3/3": {
+          "type": "element",
+          "hash": "8e2c21de85774504ebd69310fd7e7c95",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        }
+      }
+    },
+    "components/LanguageSwitcher.jsx": {
+      "scopes": {
+        "6/declaration/body/2/argument/1/1": {
+          "type": "element",
+          "hash": "1d60acdcf20a4e1df684fb4a213bf64f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "🌐"
+        },
+        "6/declaration/body/2/argument/1/3": {
+          "type": "element",
+          "hash": "277fd1a41cc237a437cd1d5e4a80463b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Language"
+        }
+      }
+    },
+    "components/Navbar.jsx": {
+      "scopes": {
+        "7/body/10/argument/1/1/1/1/3/expression/right": {
+          "type": "element",
+          "hash": "f274229d32acae395486caa4924f9903",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea Tracker"
+        },
+        "7/body/10/argument/1/1/1/3/1/expression/alternate/1/3": {
+          "type": "element",
+          "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "7/body/10/argument/1/1/1/3/1/expression/alternate/3-label": {
+          "type": "attribute",
+          "hash": "f4f219abeb5a465ecb1c7efaf50246de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login"
+        },
+        "7/body/10/argument/1/1/1/3/1/expression/consequent/1-label": {
+          "type": "attribute",
+          "hash": "104a3db3b671c04e167eafbe21e57881",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Home"
+        },
+        "7/body/10/argument/1/1/1/3/1/expression/consequent/3-label": {
+          "type": "attribute",
+          "hash": "d7878693f91303a438852d617f6d35df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "7/body/10/argument/1/1/1/3/1/expression/consequent/5/3": {
+          "type": "element",
+          "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "7/body/10/argument/1/1/1/3/1/expression/consequent/7/3/1/expression/right/1/1/3": {
+          "type": "element",
+          "hash": "c530f458023f5ac128847b16c6f1dcfa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Joined <function:moment/>"
+        },
+        "7/body/10/argument/1/1/1/3/1/expression/consequent/7/3/1/expression/right/1/3/3": {
+          "type": "element",
+          "hash": "8df6777277469c1fd88cc18dde2f1cc3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Settings"
+        },
+        "7/body/10/argument/1/1/1/3/1/expression/consequent/7/3/1/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "06efb815f8e1f5d09e63d262ba48b4e7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Sign Out"
+        },
+        "7/body/7/0/init/body/2/consequent/1/argument/1-alt": {
+          "type": "attribute",
+          "hash": "d7878693f91303a438852d617f6d35df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "7/body/7/0/init/body/3/consequent/0/argument/1-alt": {
+          "type": "attribute",
+          "hash": "822d49fc87e60859da3824d26f7d1ae1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "User Avatar"
+        },
+        "7/body/9/consequent/0/argument/1/1/1/3": {
+          "type": "element",
+          "hash": "f274229d32acae395486caa4924f9903",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea Tracker"
+        },
+        "8/body/10/argument/1/1/1/1/3/expression/right": {
+          "type": "element",
+          "hash": "f274229d32acae395486caa4924f9903",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea Tracker"
+        },
+        "8/body/10/argument/1/1/1/3/1/expression/alternate/1/3": {
+          "type": "element",
+          "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "8/body/10/argument/1/1/1/3/1/expression/alternate/3-label": {
+          "type": "attribute",
+          "hash": "f4f219abeb5a465ecb1c7efaf50246de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login"
+        },
+        "8/body/10/argument/1/1/1/3/1/expression/alternate/3/3": {
+          "type": "element",
+          "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "8/body/10/argument/1/1/1/3/1/expression/alternate/5-label": {
+          "type": "attribute",
+          "hash": "f4f219abeb5a465ecb1c7efaf50246de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login"
+        },
+        "8/body/10/argument/1/1/1/3/1/expression/consequent/1-label": {
+          "type": "attribute",
+          "hash": "104a3db3b671c04e167eafbe21e57881",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Home"
+        },
+        "8/body/10/argument/1/1/1/3/1/expression/consequent/3-label": {
+          "type": "attribute",
+          "hash": "d7878693f91303a438852d617f6d35df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "8/body/10/argument/1/1/1/3/1/expression/consequent/7/3": {
+          "type": "element",
+          "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "8/body/10/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/1/3": {
+          "type": "element",
+          "hash": "c530f458023f5ac128847b16c6f1dcfa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Joined <function:moment/>"
+        },
+        "8/body/10/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/3/3": {
+          "type": "element",
+          "hash": "8df6777277469c1fd88cc18dde2f1cc3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Settings"
+        },
+        "8/body/10/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "06efb815f8e1f5d09e63d262ba48b4e7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Sign Out"
+        },
+        "8/body/6/0/init/body/2/consequent/0/argument-alt": {
+          "type": "attribute",
+          "hash": "822d49fc87e60859da3824d26f7d1ae1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "User Avatar"
+        },
+        "8/body/7/0/init/body/2/consequent/1/argument/1-alt": {
+          "type": "attribute",
+          "hash": "d7878693f91303a438852d617f6d35df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "8/body/7/0/init/body/3/consequent/0/argument/1-alt": {
+          "type": "attribute",
+          "hash": "822d49fc87e60859da3824d26f7d1ae1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "User Avatar"
+        },
+        "8/body/8/consequent/0/argument/1/1/1/3": {
+          "type": "element",
+          "hash": "f274229d32acae395486caa4924f9903",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea Tracker"
+        },
+        "8/body/9/argument/1/1/1/1/3/expression/right": {
+          "type": "element",
+          "hash": "f274229d32acae395486caa4924f9903",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea Tracker"
+        },
+        "8/body/9/argument/1/1/1/3/1/expression/alternate/3/3": {
+          "type": "element",
+          "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "8/body/9/argument/1/1/1/3/1/expression/alternate/5-label": {
+          "type": "attribute",
+          "hash": "f4f219abeb5a465ecb1c7efaf50246de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login"
+        },
+        "8/body/9/argument/1/1/1/3/1/expression/consequent/1-label": {
+          "type": "attribute",
+          "hash": "104a3db3b671c04e167eafbe21e57881",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Home"
+        },
+        "8/body/9/argument/1/1/1/3/1/expression/consequent/3-label": {
+          "type": "attribute",
+          "hash": "d7878693f91303a438852d617f6d35df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "8/body/9/argument/1/1/1/3/1/expression/consequent/7/3": {
+          "type": "element",
+          "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "8/body/9/argument/1/1/1/3/1/expression/consequent/9/1/1/1/expression/consequent/1-alt": {
+          "type": "attribute",
+          "hash": "822d49fc87e60859da3824d26f7d1ae1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "User Avatar"
+        },
+        "8/body/9/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/1/3": {
+          "type": "element",
+          "hash": "c530f458023f5ac128847b16c6f1dcfa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Joined <function:moment/>"
+        },
+        "8/body/9/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/3/3": {
+          "type": "element",
+          "hash": "8df6777277469c1fd88cc18dde2f1cc3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Settings"
+        },
+        "8/body/9/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "06efb815f8e1f5d09e63d262ba48b4e7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Sign Out"
+        },
+        "8/body/9/consequent/0/argument/1/1/1/3": {
+          "type": "element",
+          "hash": "f274229d32acae395486caa4924f9903",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea Tracker"
+        }
+      }
+    },
+    "pages/Home.jsx": {
+      "scopes": {
+        "10/declaration/body/26/argument/1/1": {
+          "type": "element",
+          "hash": "bc1e5fcaed60b56c14dbb85816d7c75b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Your Creative <element:FlipWords></element:FlipWords>"
+        },
+        "10/declaration/body/26/argument/1/3": {
+          "type": "element",
+          "hash": "1a2e464091ded851794423a7bf3e503f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Capture, organize, and bring your brilliant ideas to life"
+        },
+        "10/declaration/body/26/argument/3/expression/alternate/1/1/3": {
+          "type": "element",
+          "hash": "771e0a32289f998ae66ca9cf7a72f8aa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Join now"
+        },
+        "10/declaration/body/26/argument/3/expression/alternate/1/1/5": {
+          "type": "element",
+          "hash": "da8e6654b18080997458060ee72a35e1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Join Idea Tracker"
+        },
+        "10/declaration/body/26/argument/3/expression/alternate/1/3": {
+          "type": "element",
+          "hash": "6630263a3abe398a1c2ea4d959830d94",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Get Started"
+        },
+        "10/declaration/body/26/argument/3/expression/alternate/3": {
+          "type": "element",
+          "hash": "eb7eeecb9832fb41e13942d3b9bfe6f2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login to start tracking your amazing ideas"
+        },
+        "10/declaration/body/26/argument/3/expression/consequent/1/1/expression/alternate/1/1": {
+          "type": "element",
+          "hash": "867cde997a2f10708ecdee9fe7de7f08",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "New Idea"
+        },
+        "10/declaration/body/26/argument/3/expression/consequent/1/1/expression/alternate/3/1-placeholder": {
+          "type": "attribute",
+          "hash": "d0abd69c81b4462ebc9b9ce22fbb5ebd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea title..."
+        },
+        "10/declaration/body/26/argument/3/expression/consequent/1/1/expression/alternate/5-placeholder": {
+          "type": "attribute",
+          "hash": "77122091e805382ec8185acace31d69e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Describe your idea..."
+        },
+        "10/declaration/body/26/argument/3/expression/consequent/1/1/expression/alternate/7/3-placeholder": {
+          "type": "attribute",
+          "hash": "95425547ea1e92e54819ea5d2acb6e1c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags (comma separated)"
+        },
+        "10/declaration/body/26/argument/3/expression/consequent/1/1/expression/alternate/9": {
+          "type": "element",
+          "hash": "2bfbdb590112205702d7fda1f2453665",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save Idea"
+        },
+        "10/declaration/body/26/argument/3/expression/consequent/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "7457579fef8ea58198d8c7f372825f61",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Add New Idea"
+        },
+        "10/declaration/body/26/argument/5/1/1/3-placeholder": {
+          "type": "attribute",
+          "hash": "cd6feb04f8c1923349550d916d1bcecc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Search ideas by title or description..."
+        },
+        "10/declaration/body/26/argument/5/1/3/3": {
+          "type": "element",
+          "hash": "acf5accc113ff3c1992688058576732c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Filters"
+        },
+        "10/declaration/body/26/argument/5/1/5/1/expression/right": {
+          "type": "element",
+          "hash": "a0263273cb9eb2a1f488bb148d97344c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Clear All"
+        },
+        "10/declaration/body/26/argument/5/3/1/expression/right/1/1/1/1": {
+          "type": "element",
+          "hash": "1c693071b6703517c420f67b2c60eca1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Category"
+        },
+        "10/declaration/body/26/argument/5/3/1/expression/right/1/1/1/3/1": {
+          "type": "element",
+          "hash": "27fa8d3b51cefab2c1888c08b3e59c06",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "All Categories"
+        },
+        "10/declaration/body/26/argument/5/3/1/expression/right/1/1/3/1": {
+          "type": "element",
+          "hash": "8084d24430eb94d3247bdf894a05fe1b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority"
+        },
+        "10/declaration/body/26/argument/5/3/1/expression/right/1/1/3/3/1": {
+          "type": "element",
+          "hash": "8f56c2971310ad64e9c6de1462ef0445",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "All Priorities"
+        },
+        "10/declaration/body/26/argument/5/3/1/expression/right/1/1/5/1": {
+          "type": "element",
+          "hash": "5e2bde1e8921552d717a7fe00111553e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags"
+        },
+        "10/declaration/body/26/argument/5/3/1/expression/right/1/1/5/3-placeholder": {
+          "type": "attribute",
+          "hash": "0097484dac30bacc43dc773c96fddfbe",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Filter by tags..."
+        },
+        "10/declaration/body/26/argument/9/1/1": {
+          "type": "element",
+          "hash": "ee9f66d4ad55e318b5e7053c53cb3119",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Ideas ({filteredIdeas.length})"
+        },
+        "10/declaration/body/26/argument/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/1": {
+          "type": "element",
+          "hash": "a64922530eb10daae650ba4c43a1646e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit Idea"
+        },
+        "10/declaration/body/26/argument/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "10/declaration/body/26/argument/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/9-placeholder": {
+          "type": "attribute",
+          "hash": "95425547ea1e92e54819ea5d2acb6e1c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags (comma separated)"
+        },
+        "11/declaration/body/30/argument/1/1": {
+          "type": "element",
+          "hash": "bc1e5fcaed60b56c14dbb85816d7c75b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Your Creative <element:FlipWords></element:FlipWords>"
+        },
+        "11/declaration/body/30/argument/1/3": {
+          "type": "element",
+          "hash": "1a2e464091ded851794423a7bf3e503f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Capture, organize, and bring your brilliant ideas to life"
+        },
+        "11/declaration/body/30/argument/11/expression/right/1/1/3/1": {
+          "type": "element",
+          "hash": "703fb782546ee10b1747c437b0a6edfe",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete Idea"
+        },
+        "11/declaration/body/30/argument/11/expression/right/1/1/3/3": {
+          "type": "element",
+          "hash": "c8ff304eb731db3d216916eff4b6062e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This action cannot be undone"
+        },
+        "11/declaration/body/30/argument/11/expression/right/1/3/1": {
+          "type": "element",
+          "hash": "b6a657fe1c12d75a4080782612ff94d7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Are you sure you want to delete <element:span>\"<expression/> \"</element:span> ?"
+        },
+        "11/declaration/body/30/argument/11/expression/right/1/5/1": {
+          "type": "element",
+          "hash": "5936f87dccc089542c7871a72ed1dacf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "11/declaration/body/30/argument/11/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "63d42bb73343bb4599cbf2893584b6e2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete"
+        },
+        "11/declaration/body/30/argument/3/expression/alternate/1/1/3": {
+          "type": "element",
+          "hash": "771e0a32289f998ae66ca9cf7a72f8aa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Join now"
+        },
+        "11/declaration/body/30/argument/3/expression/alternate/1/1/5": {
+          "type": "element",
+          "hash": "da8e6654b18080997458060ee72a35e1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Join Idea Tracker"
+        },
+        "11/declaration/body/30/argument/3/expression/alternate/1/3": {
+          "type": "element",
+          "hash": "6630263a3abe398a1c2ea4d959830d94",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Get Started"
+        },
+        "11/declaration/body/30/argument/3/expression/alternate/3": {
+          "type": "element",
+          "hash": "eb7eeecb9832fb41e13942d3b9bfe6f2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login to start tracking your amazing ideas"
+        },
+        "11/declaration/body/30/argument/3/expression/consequent/1/1/expression/alternate/1/1": {
+          "type": "element",
+          "hash": "867cde997a2f10708ecdee9fe7de7f08",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "New Idea"
+        },
+        "11/declaration/body/30/argument/3/expression/consequent/1/1/expression/alternate/3/1-placeholder": {
+          "type": "attribute",
+          "hash": "d0abd69c81b4462ebc9b9ce22fbb5ebd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea title..."
+        },
+        "11/declaration/body/30/argument/3/expression/consequent/1/1/expression/alternate/5-placeholder": {
+          "type": "attribute",
+          "hash": "77122091e805382ec8185acace31d69e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Describe your idea..."
+        },
+        "11/declaration/body/30/argument/3/expression/consequent/1/1/expression/alternate/7/3-placeholder": {
+          "type": "attribute",
+          "hash": "77e82da7c542757d727a4f9b8afdebc2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags (comma separated, max 10)"
+        },
+        "11/declaration/body/30/argument/3/expression/consequent/1/1/expression/alternate/9/1/expression/alternate": {
+          "type": "element",
+          "hash": "9ee87ef4e0cae6d28259e32f031ad616",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save Idea"
+        },
+        "11/declaration/body/30/argument/3/expression/consequent/1/1/expression/alternate/9/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "7cb2d8f012d57db8a62187b65ef164dc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Saving..."
+        },
+        "11/declaration/body/30/argument/3/expression/consequent/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "7457579fef8ea58198d8c7f372825f61",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Add New Idea"
+        },
+        "11/declaration/body/30/argument/5/1/1/3-placeholder": {
+          "type": "attribute",
+          "hash": "cd6feb04f8c1923349550d916d1bcecc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Search ideas by title or description..."
+        },
+        "11/declaration/body/30/argument/5/1/3/3": {
+          "type": "element",
+          "hash": "acf5accc113ff3c1992688058576732c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Filters"
+        },
+        "11/declaration/body/30/argument/5/1/5/1/expression/right": {
+          "type": "element",
+          "hash": "a0263273cb9eb2a1f488bb148d97344c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Clear All"
+        },
+        "11/declaration/body/30/argument/5/3/1/expression/right/1/1/1/1": {
+          "type": "element",
+          "hash": "1c693071b6703517c420f67b2c60eca1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Category"
+        },
+        "11/declaration/body/30/argument/5/3/1/expression/right/1/1/1/3/1": {
+          "type": "element",
+          "hash": "27fa8d3b51cefab2c1888c08b3e59c06",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "All Categories"
+        },
+        "11/declaration/body/30/argument/5/3/1/expression/right/1/1/3/1": {
+          "type": "element",
+          "hash": "8084d24430eb94d3247bdf894a05fe1b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority"
+        },
+        "11/declaration/body/30/argument/5/3/1/expression/right/1/1/3/3/1": {
+          "type": "element",
+          "hash": "8f56c2971310ad64e9c6de1462ef0445",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "All Priorities"
+        },
+        "11/declaration/body/30/argument/5/3/1/expression/right/1/1/5/1": {
+          "type": "element",
+          "hash": "5e2bde1e8921552d717a7fe00111553e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags"
+        },
+        "11/declaration/body/30/argument/5/3/1/expression/right/1/1/5/3-placeholder": {
+          "type": "attribute",
+          "hash": "0097484dac30bacc43dc773c96fddfbe",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Filter by tags..."
+        },
+        "11/declaration/body/30/argument/9/1/1": {
+          "type": "element",
+          "hash": "ee9f66d4ad55e318b5e7053c53cb3119",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Ideas ({filteredIdeas.length})"
+        },
+        "11/declaration/body/30/argument/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/1": {
+          "type": "element",
+          "hash": "a64922530eb10daae650ba4c43a1646e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit Idea"
+        },
+        "11/declaration/body/30/argument/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/alternate": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "11/declaration/body/30/argument/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "7cb2d8f012d57db8a62187b65ef164dc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Saving..."
+        },
+        "11/declaration/body/30/argument/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/9-placeholder": {
+          "type": "attribute",
+          "hash": "95425547ea1e92e54819ea5d2acb6e1c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags (comma separated)"
+        }
+      }
+    },
+    "pages/Login.jsx": {
+      "scopes": {
+        "6/declaration/body/10/argument/1/1/1": {
+          "type": "element",
+          "hash": "cd270068759114df4ac100290154f681",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Welcome to Idea Tracker"
+        },
+        "6/declaration/body/10/argument/1/1/3": {
+          "type": "element",
+          "hash": "1f098a0f2c03ed8b2ea0fb65393167e1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Professional idea management for developers"
+        },
+        "6/declaration/body/10/argument/1/3/1/1": {
+          "type": "element",
+          "hash": "69d8b4b96af1c9eab1f173ed3b5a9843",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Sign up or sign in with your preferred method"
+        },
+        "6/declaration/body/10/argument/1/3/1/3/1/3": {
+          "type": "element",
+          "hash": "6cc462fb53d90d404f48d5a6695c1de1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Google"
+        },
+        "6/declaration/body/10/argument/1/3/1/3/3/3": {
+          "type": "element",
+          "hash": "6e1cf3c00fa6fbe24afcc78ea3b5f3e4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "GitHub"
+        },
+        "6/declaration/body/10/argument/1/3/1/3/5/3": {
+          "type": "element",
+          "hash": "06ec7d95ab44931ed9d1925e4063d703",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Discord"
+        },
+        "6/declaration/body/10/argument/1/3/1/5/3/1": {
+          "type": "element",
+          "hash": "b715fa3165cc4c1405afb8801375290d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Or continue with email"
+        },
+        "6/declaration/body/10/argument/1/3/3/1/1": {
+          "type": "element",
+          "hash": "5c3003ba6efa6297fda2e4453d0f5ec6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Email"
+        },
+        "6/declaration/body/10/argument/1/3/3/1/3/3-placeholder": {
+          "type": "attribute",
+          "hash": "3519816a7851e0753d0f7d34bdcb8514",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "developer@appwrite.io"
+        },
+        "6/declaration/body/10/argument/1/3/3/3/1": {
+          "type": "element",
+          "hash": "8ed2948e0a0ef64c71c67e10f7338f57",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Password"
+        },
+        "6/declaration/body/10/argument/1/3/3/3/3/3-placeholder": {
+          "type": "attribute",
+          "hash": "043ecbb70c2bd2f8fc030152fa19afcb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Your secure password"
+        },
+        "6/declaration/body/10/argument/1/3/3/5/3": {
+          "type": "element",
+          "hash": "00800364db7cc4534a5fa4b4201838bf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Register"
+        },
+        "6/declaration/body/10/argument/1/3/5/1": {
+          "type": "element",
+          "hash": "e64d7d5c4170214cdf74814c1057fafc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "What you'll get:"
+        },
+        "6/declaration/body/10/argument/1/5/1": {
+          "type": "element",
+          "hash": "cb5636cca52a3bb4cfe4f6e4e9f7febd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "← Back to Ideas"
+        },
+        "7/declaration/body/16/argument/1/1/1": {
+          "type": "element",
+          "hash": "cd270068759114df4ac100290154f681",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Welcome to Idea Tracker"
+        },
+        "7/declaration/body/16/argument/1/1/3": {
+          "type": "element",
+          "hash": "1f098a0f2c03ed8b2ea0fb65393167e1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Professional idea management for developers"
+        },
+        "7/declaration/body/16/argument/1/3/1/1": {
+          "type": "element",
+          "hash": "69d8b4b96af1c9eab1f173ed3b5a9843",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Sign up or sign in with your preferred method"
+        },
+        "7/declaration/body/16/argument/1/3/1/3/1/3": {
+          "type": "element",
+          "hash": "6cc462fb53d90d404f48d5a6695c1de1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Google"
+        },
+        "7/declaration/body/16/argument/1/3/1/3/3/3": {
+          "type": "element",
+          "hash": "6e1cf3c00fa6fbe24afcc78ea3b5f3e4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "GitHub"
+        },
+        "7/declaration/body/16/argument/1/3/1/3/5/3": {
+          "type": "element",
+          "hash": "06ec7d95ab44931ed9d1925e4063d703",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Discord"
+        },
+        "7/declaration/body/16/argument/1/3/1/5/3/1": {
+          "type": "element",
+          "hash": "b715fa3165cc4c1405afb8801375290d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Or continue with email"
+        },
+        "7/declaration/body/16/argument/1/3/3/1/1": {
+          "type": "element",
+          "hash": "5c3003ba6efa6297fda2e4453d0f5ec6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Email"
+        },
+        "7/declaration/body/16/argument/1/3/3/1/3/3-placeholder": {
+          "type": "attribute",
+          "hash": "3515e7bb4f4a5abc4b7dc40206f2e9d3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "developer@example.com"
+        },
+        "7/declaration/body/16/argument/1/3/3/1/5/expression/right/1": {
+          "type": "element",
+          "hash": "4b7cf83223c2333933cda1dd2c012f5c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "⚠"
+        },
+        "7/declaration/body/16/argument/1/3/3/3/1": {
+          "type": "element",
+          "hash": "8ed2948e0a0ef64c71c67e10f7338f57",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Password"
+        },
+        "7/declaration/body/16/argument/1/3/3/3/3/3-placeholder": {
+          "type": "attribute",
+          "hash": "1ad06b76a292d66fe2666e0c9d1d07ce",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Minimum 8 characters"
+        },
+        "7/declaration/body/16/argument/1/3/3/3/5/expression/right/1": {
+          "type": "element",
+          "hash": "4b7cf83223c2333933cda1dd2c012f5c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "⚠"
+        },
+        "7/declaration/body/16/argument/1/3/3/5/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "8c7c297eaa8691114c8af70e53bb5fe6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Signing in..."
+        },
+        "7/declaration/body/16/argument/1/3/3/5/3": {
+          "type": "element",
+          "hash": "00800364db7cc4534a5fa4b4201838bf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Register"
+        },
+        "7/declaration/body/16/argument/1/3/5/1": {
+          "type": "element",
+          "hash": "e64d7d5c4170214cdf74814c1057fafc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "What you'll get:"
+        },
+        "7/declaration/body/16/argument/1/5/1": {
+          "type": "element",
+          "hash": "cb5636cca52a3bb4cfe4f6e4e9f7febd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "← Back to Ideas"
+        }
+      }
+    },
+    "pages/NotFound.jsx": {
+      "scopes": {
+        "2/declaration/body/2/argument/1/1/1": {
+          "type": "element",
+          "hash": "6a23ae86c761b727ee35cdc659696997",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "404"
+        },
+        "2/declaration/body/2/argument/1/3/1": {
+          "type": "element",
+          "hash": "65e951d15dd6afb12f946aa4c108e523",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Page Not Found"
+        },
+        "2/declaration/body/2/argument/1/3/3": {
+          "type": "element",
+          "hash": "4f8963ae2f7215507fb307c6945f1345",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "The page you're looking for doesn't exist."
+        },
+        "2/declaration/body/2/argument/1/5/1/3": {
+          "type": "element",
+          "hash": "104a3db3b671c04e167eafbe21e57881",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Home"
+        },
+        "2/declaration/body/2/argument/1/5/3/3": {
+          "type": "element",
+          "hash": "f541015a827e37cb3b1234e56bc2aa3c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Back"
+        }
+      }
+    },
+    "pages/Profile.jsx": {
+      "scopes": {
+        "7/declaration/body/4/consequent/0/argument/1/3": {
+          "type": "element",
+          "hash": "ca2b31f0693bfd00761fde43e3ec2b9f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Loading profile..."
+        },
+        "7/declaration/body/8/argument/1/1/1": {
+          "type": "element",
+          "hash": "955b66d0455e28c805cc462b8f8d1f11",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Your Profile"
+        },
+        "7/declaration/body/8/argument/1/1/1/1/1/1/expression/consequent/1-alt": {
+          "type": "attribute",
+          "hash": "d7878693f91303a438852d617f6d35df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "7/declaration/body/8/argument/1/1/1/3/1/3/3": {
+          "type": "element",
+          "hash": "10dc28fc78d697a0cfed77c86a0d3d87",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{productivityScore}% Productive"
+        },
+        "7/declaration/body/8/argument/1/1/1/3/3/1/1/3": {
+          "type": "element",
+          "hash": "03dc5c34e64f70db6410f30746800686",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Member since"
+        },
+        "7/declaration/body/8/argument/1/1/1/3/3/3/1/3": {
+          "type": "element",
+          "hash": "edcc089f3a17b1f8d40e9355e64588c7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Total ideas"
+        },
+        "7/declaration/body/8/argument/1/1/3": {
+          "type": "element",
+          "hash": "2a58635305c22fbe66f6705af7d27ea9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Overview of your creative contributions"
+        },
+        "7/declaration/body/8/argument/1/3/1/3/1": {
+          "type": "element",
+          "hash": "cb91d0b298a2a4637946c5f8f28a59ac",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Total Ideas"
+        },
+        "7/declaration/body/8/argument/1/3/3/3/1": {
+          "type": "element",
+          "hash": "fd4e44f3b1b2bba9ca45f3aef963d042",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Categories"
+        },
+        "7/declaration/body/8/argument/1/3/5/3/1": {
+          "type": "element",
+          "hash": "cb871988d5a76d4f8aa9e21d2cc84d00",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Ideas/Month"
+        },
+        "7/declaration/body/8/argument/1/5/1/1/1": {
+          "type": "element",
+          "hash": "de7ff2441f31fca736d5859acbefa6ce",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:PieChart></element:PieChart> Categories"
+        },
+        "7/declaration/body/8/argument/1/5/1/3/expression/alternate/3": {
+          "type": "element",
+          "hash": "6d1aefe63d5b1f93c69af8639b597c97",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No categories yet"
+        },
+        "7/declaration/body/8/argument/1/5/1/3/expression/consequent/1/expression/0/body/1/argument/1/3": {
+          "type": "element",
+          "hash": "4900c82b71a3f3cfe1fa00edbee050a0",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{percentage}% • {count}"
+        },
+        "7/declaration/body/8/argument/1/5/3/1": {
+          "type": "element",
+          "hash": "1aea6b326b371d3ff39dfdcc2ad289f2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Clock></element:Clock> Recent Ideas"
+        },
+        "7/declaration/body/8/argument/1/5/3/3/expression/alternate/3": {
+          "type": "element",
+          "hash": "ed165d3e5030ed151f12b10cb4cfd768",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No recent ideas"
+        },
+        "7/declaration/body/8/argument/1/5/3/3/expression/alternate/5": {
+          "type": "element",
+          "hash": "9c4ecb30767eab7c11f43121dee61fb5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Create your first idea"
+        },
+        "7/declaration/body/8/argument/1/5/3/3/expression/consequent/3/1": {
+          "type": "element",
+          "hash": "d42406857ecc8b4e086e1658465c275c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View all ideas"
+        },
+        "7/declaration/body/8/argument/3/1/1/3/1/3/3": {
+          "type": "element",
+          "hash": "10dc28fc78d697a0cfed77c86a0d3d87",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{productivityScore}% Productive"
+        },
+        "7/declaration/body/8/argument/3/1/1/3/3/1/1/3": {
+          "type": "element",
+          "hash": "03dc5c34e64f70db6410f30746800686",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Member since"
+        },
+        "7/declaration/body/8/argument/3/1/1/3/3/3/1/3": {
+          "type": "element",
+          "hash": "edcc089f3a17b1f8d40e9355e64588c7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Total ideas"
+        },
+        "7/declaration/body/8/argument/3/3/1/3/1": {
+          "type": "element",
+          "hash": "cb91d0b298a2a4637946c5f8f28a59ac",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Total Ideas"
+        },
+        "7/declaration/body/8/argument/3/3/3/3/1": {
+          "type": "element",
+          "hash": "fd4e44f3b1b2bba9ca45f3aef963d042",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Categories"
+        },
+        "7/declaration/body/8/argument/3/3/5/3/1": {
+          "type": "element",
+          "hash": "cb871988d5a76d4f8aa9e21d2cc84d00",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Ideas/Month"
+        },
+        "7/declaration/body/8/argument/3/5/1/1/1": {
+          "type": "element",
+          "hash": "de7ff2441f31fca736d5859acbefa6ce",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:PieChart></element:PieChart> Categories"
+        },
+        "7/declaration/body/8/argument/3/5/1/3/expression/alternate/3": {
+          "type": "element",
+          "hash": "6d1aefe63d5b1f93c69af8639b597c97",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No categories yet"
+        },
+        "7/declaration/body/8/argument/3/5/1/3/expression/consequent/1/expression/0/body/1/argument/1/3": {
+          "type": "element",
+          "hash": "4900c82b71a3f3cfe1fa00edbee050a0",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{percentage}% • {count}"
+        },
+        "7/declaration/body/8/argument/3/5/3/1": {
+          "type": "element",
+          "hash": "1aea6b326b371d3ff39dfdcc2ad289f2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Clock></element:Clock> Recent Ideas"
+        },
+        "7/declaration/body/8/argument/3/5/3/3/expression/alternate/3": {
+          "type": "element",
+          "hash": "ed165d3e5030ed151f12b10cb4cfd768",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No recent ideas"
+        },
+        "7/declaration/body/8/argument/3/5/3/3/expression/alternate/5": {
+          "type": "element",
+          "hash": "9c4ecb30767eab7c11f43121dee61fb5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Create your first idea"
+        },
+        "7/declaration/body/8/argument/3/5/3/3/expression/consequent/3/1": {
+          "type": "element",
+          "hash": "d42406857ecc8b4e086e1658465c275c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View all ideas"
+        }
+      }
+    }
+  }
+}
