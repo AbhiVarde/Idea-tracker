@@ -16,12 +16,13 @@ Click the card to view it live:
 </a>
 
 ## 🚀 Tech Stack
-
-- **Frontend**: [React](https://react.dev/) 
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) 
-- **Animation**: [Framer Motion](https://www.framer.com/motion/) 
-- **Backend**: [Appwrite](https://appwrite.io/) 
-- **Deployment**: [Appwrite Sites](https://appwrite.io/products/sites)
+- <img src="https://vitejs.dev/logo.svg" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Build Tool**: [Vite](https://vitejs.dev/)
+- <img src="https://react.dev/favicon.ico" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Frontend**: [React](https://react.dev/)
+- <img src="https://tailwindcss.com/favicons/favicon-32x32.png" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- <img src="https://app.framerstatic.com/favicon-light@2x-HMWCNIXJ.png" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Animation**: [Framer Motion](https://www.framer.com/motion/)
+- <img src="https://lingo.dev/favicon.ico" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Internationalization**: [Lingo.dev](https://lingo.dev/)
+- <img src="https://appwrite.io/images/logos/logo.svg" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Backend**: [Appwrite](https://appwrite.io/)
+- <img src="https://appwrite.io/images/logos/logo.svg" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Deployment**: [Appwrite Sites](https://appwrite.io/products/sites)
 
 ## ✨ Features
 
