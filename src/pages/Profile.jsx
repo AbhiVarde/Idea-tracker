@@ -269,7 +269,7 @@ export function Profile({ navigate }) {
                 Categories
               </h3>
               {topCategory && (
-                <div className="flex items-center space-x-1 bg-[#252525] rounded-full px-2 py-1">
+                <div className="flex items-center space-x-1 bg-[#0F0F0F] rounded-full px-2 py-1">
                   <Trophy className="w-3 h-3 text-[#FD366E]" />
                   <span className="text-xs text-white">{topCategory[0]}</span>
                 </div>
@@ -323,7 +323,7 @@ export function Profile({ navigate }) {
                 {stats.recentActivity.map((idea) => (
                   <motion.div
                     key={idea.$id}
-                    className="p-3 bg-[#252525] border border-gray-800 rounded-lg"
+                    className="p-3 bg-[#0F0F0F] border border-gray-800 rounded-lg"
                     whileHover={{ y: -2 }}
                   >
                     <div className="flex justify-between items-start">
