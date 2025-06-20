@@ -229,7 +229,9 @@ function Navbar({ navigate, currentPage }) {
                     onClick={() => navigate("profile")}
                   />
 
-                  <LanguageSwitcher />
+                  <div className="pl-1.5">
+                    <LanguageSwitcher />
+                  </div>
 
                   <motion.a
                     href="https://github.com/AbhiVarde/Idea-tracker"
@@ -326,7 +328,9 @@ function Navbar({ navigate, currentPage }) {
                 </>
               ) : (
                 <>
-                  <LanguageSwitcher />
+                  <div className="pl-1.5">
+                    <LanguageSwitcher />
+                  </div>
 
                   <motion.a
                     href="https://github.com/AbhiVarde/Idea-tracker"
