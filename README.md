@@ -1,6 +1,6 @@
 [![Deploy to Appwrite](https://img.shields.io/badge/Deploy%20to-Appwrite-f02e65?style=for-the-badge&logo=appwrite&logoColor=f02e65&labelColor=1d1d1d)](https://cloud.appwrite.io/console)
 
-#  Introducing Idea Tracker
+# 🪴 Introducing Idea Tracker
 
 **Professional idea management for developers.**
 
