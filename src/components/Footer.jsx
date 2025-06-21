@@ -74,7 +74,7 @@ function Footer() {
     },
     {
       name: "Framer Motion",
-      icon: <SiFramer className="w-5 h-5 text-white" />,
+      icon: <SiFramer className="w-5 h-5 text-gray-900 dark:text-white" />,
       url: "https://www.framer.com/motion",
     },
     {
@@ -88,7 +88,7 @@ function Footer() {
 
   return (
     <motion.footer
-      className="bg-[#000000]/50 backdrop-blur-sm sticky bottom-0 w-full"
+      className="bg-[#FFFFFF]/50 dark:bg-[#000000]/50 backdrop-blur-sm sticky bottom-0 w-full border-t border-gray-200/30 dark:border-gray-800/30"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
@@ -139,7 +139,7 @@ function Footer() {
         </motion.div>
 
         {/* Main Footer Content */}
-        <div className="flex flex-col lg:flex-row items-center justify-between text-sm text-gray-400 gap-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between text-sm text-gray-600 dark:text-gray-400 gap-4">
           <motion.div
             className="flex items-center flex-wrap gap-3 justify-center lg:justify-start"
             initial={{ x: -50, opacity: 0 }}
@@ -162,7 +162,7 @@ function Footer() {
                 whileTap={{ scale: 0.95 }}
               >
                 <div>{tech.icon}</div>
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
                   {tech.name}
                 </div>
               </motion.a>
@@ -199,8 +199,8 @@ function Footer() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <SiGithub className="w-5 h-5 text-white transition-all duration-300" />
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+            <SiGithub className="w-5 h-5 text-gray-700 dark:text-white transition-all duration-300" />
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
               View Code
             </div>
           </motion.a>

@@ -5,6 +5,7 @@ import { Profile } from "./pages/Profile";
 import { NotFound } from "./pages/NotFound";
 import { UserProvider } from "./lib/context/user";
 import { IdeasProvider } from "./lib/context/ideas";
+import { ThemeProvider } from "./lib/context/theme";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -76,43 +77,44 @@ function App() {
   }, [currentPage]);
 
   return (
-    <div className="min-h-screen bg-[#000000] text-white">
-      <UserProvider>
-        <IdeasProvider>
-          {currentPage !== "404" && (
-            <Navbar navigate={navigate} currentPage={currentPage} />
-          )}
+    <ThemeProvider>
+      <div className="min-h-screen bg-[#f4f4f7] dark:bg-[#000000] text-gray-900 dark:text-white transition-colors duration-300">
+        <UserProvider>
+          <IdeasProvider>
+            {currentPage !== "404" && (
+              <Navbar navigate={navigate} currentPage={currentPage} />
+            )}
 
-          <main className="container mx-auto px-4 py-4 sm:py-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentPage}
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                className="min-h-[calc(100vh-140px)]"
-              >
-                {currentPage === "login" && <Login navigate={navigate} />}
-                {currentPage === "profile" && <Profile navigate={navigate} />}
-                {currentPage === "home" && <Home navigate={navigate} />}
-                {currentPage === "404" && <NotFound navigate={navigate} />}
-              </motion.div>
-            </AnimatePresence>
-          </main>
+            <main className="container mx-auto px-4 py-4 sm:py-6">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentPage}
+                  initial="initial"
+                  animate="in"
+                  exit="out"
+                  variants={pageVariants}
+                  className="min-h-[calc(100vh-140px)]"
+                >
+                  {currentPage === "login" && <Login navigate={navigate} />}
+                  {currentPage === "profile" && <Profile navigate={navigate} />}
+                  {currentPage === "home" && <Home navigate={navigate} />}
+                  {currentPage === "404" && <NotFound navigate={navigate} />}
+                </motion.div>
+              </AnimatePresence>
+            </main>
 
-          {currentPage !== "404" && <Footer />}
+            {currentPage !== "404" && <Footer />}
 
-          {/* Sonner Toast Container */}
-          <Toaster
-            theme="dark"
-            visibleToasts={3}
-            position="top-right"
-            style={{ fontFamily: '"Poppins", sans-serif' }}
-          />
-        </IdeasProvider>
-      </UserProvider>
-    </div>
+            <Toaster
+              theme="system"
+              visibleToasts={3}
+              position="top-right"
+              style={{ fontFamily: '"Poppins", sans-serif' }}
+            />
+          </IdeasProvider>
+        </UserProvider>
+      </div>
+    </ThemeProvider>
   );
 }
 

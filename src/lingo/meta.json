@@ -582,6 +582,210 @@
           "skip": false,
           "overrides": {},
           "content": "Idea Tracker"
+        },
+        "9/body/10/argument/1/1/1/1/3/expression/right": {
+          "type": "element",
+          "hash": "f274229d32acae395486caa4924f9903",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea Tracker"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/alternate/1/13-label": {
+          "type": "attribute",
+          "hash": "f4f219abeb5a465ecb1c7efaf50246de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/alternate/1/17-label": {
+          "type": "attribute",
+          "hash": "f4f219abeb5a465ecb1c7efaf50246de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/alternate/1/7/3": {
+          "type": "element",
+          "hash": "2a69ec9ea1044c7fcab9cbc4f126796d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/alternate/1/9/3": {
+          "type": "element",
+          "hash": "2a69ec9ea1044c7fcab9cbc4f126796d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/alternate/11/3": {
+          "type": "element",
+          "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/alternate/13-label": {
+          "type": "attribute",
+          "hash": "f4f219abeb5a465ecb1c7efaf50246de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/alternate/3/3": {
+          "type": "element",
+          "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/alternate/5-label": {
+          "type": "attribute",
+          "hash": "f4f219abeb5a465ecb1c7efaf50246de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/consequent/1-label": {
+          "type": "attribute",
+          "hash": "104a3db3b671c04e167eafbe21e57881",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Home"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/consequent/3-label": {
+          "type": "attribute",
+          "hash": "d7878693f91303a438852d617f6d35df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/consequent/7/3": {
+          "type": "element",
+          "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View Code"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/1/3": {
+          "type": "element",
+          "hash": "c530f458023f5ac128847b16c6f1dcfa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Joined <function:moment/>"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/11/3": {
+          "type": "element",
+          "hash": "8df6777277469c1fd88cc18dde2f1cc3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Settings"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/15/3": {
+          "type": "element",
+          "hash": "06efb815f8e1f5d09e63d262ba48b4e7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Sign Out"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/3/3": {
+          "type": "element",
+          "hash": "8df6777277469c1fd88cc18dde2f1cc3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Settings"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "8df6777277469c1fd88cc18dde2f1cc3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Settings"
+        },
+        "9/body/10/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/7/3": {
+          "type": "element",
+          "hash": "06efb815f8e1f5d09e63d262ba48b4e7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Sign Out"
+        },
+        "9/body/7/0/init/body/2/consequent/1/argument/1-alt": {
+          "type": "attribute",
+          "hash": "d7878693f91303a438852d617f6d35df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Profile"
+        },
+        "9/body/7/0/init/body/3/consequent/0/argument/1-alt": {
+          "type": "attribute",
+          "hash": "822d49fc87e60859da3824d26f7d1ae1",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "User Avatar"
+        },
+        "9/body/9/consequent/0/argument/1/1/1/3": {
+          "type": "element",
+          "hash": "f274229d32acae395486caa4924f9903",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea Tracker"
+        }
+      }
+    },
+    "components/ThemeSelector.jsx": {
+      "scopes": {
+        "3/0/init/body/2/argument/1": {
+          "type": "element",
+          "hash": "fe6266294b041cab4384e47c3b23b408",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Theme"
+        },
+        "3/0/init/body/2/consequent/0/argument/1": {
+          "type": "element",
+          "hash": "4c75744728e7fe06f90c1b312ed80b1f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Theme"
+        },
+        "3/0/init/body/3/argument/1": {
+          "type": "element",
+          "hash": "fe6266294b041cab4384e47c3b23b408",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Theme"
+        },
+        "4/0/init/body/5/consequent/0/argument/1": {
+          "type": "element",
+          "hash": "4c75744728e7fe06f90c1b312ed80b1f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Theme"
         }
       }
     },
@@ -797,11 +1001,11 @@
         },
         "11/declaration/body/30/argument/1/3": {
           "type": "element",
-          "hash": "1a2e464091ded851794423a7bf3e503f",
+          "hash": "01a9d3389eb97ebbb51fdf69f8285e6e",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "Capture, organize, and bring your brilliant ideas to life"
+          "content": "Track ideas with clarity and bring them to life naturally."
         },
         "11/declaration/body/30/argument/11/expression/right/1/1/3/1": {
           "type": "element",
@@ -877,7 +1081,7 @@
         },
         "11/declaration/body/30/argument/3/expression/consequent/1/1/expression/alternate/1/1": {
           "type": "element",
-          "hash": "867cde997a2f10708ecdee9fe7de7f08",
+          "hash": "0826a931abcd3872b02933e3007839b0",
           "context": "",
           "skip": false,
           "overrides": {},
@@ -1377,7 +1581,7 @@
         },
         "7/declaration/body/8/argument/1/1/1/3/3/1/1/3": {
           "type": "element",
-          "hash": "03dc5c34e64f70db6410f30746800686",
+          "hash": "b95af6b0d922dc057d4f8ac489697b14",
           "context": "",
           "skip": false,
           "overrides": {},
@@ -1385,7 +1589,7 @@
         },
         "7/declaration/body/8/argument/1/1/1/3/3/3/1/3": {
           "type": "element",
-          "hash": "edcc089f3a17b1f8d40e9355e64588c7",
+          "hash": "bca3736b2ad20e1cb736a665b31095be",
           "context": "",
           "skip": false,
           "overrides": {},
@@ -1401,7 +1605,7 @@
         },
         "7/declaration/body/8/argument/1/3/1/3/1": {
           "type": "element",
-          "hash": "cb91d0b298a2a4637946c5f8f28a59ac",
+          "hash": "c9b8cba9e1ca4a3ed085f8709b4d5331",
           "context": "",
           "skip": false,
           "overrides": {},
@@ -1409,7 +1613,7 @@
         },
         "7/declaration/body/8/argument/1/3/3/3/1": {
           "type": "element",
-          "hash": "fd4e44f3b1b2bba9ca45f3aef963d042",
+          "hash": "23dbb4e7056dc8afeef9849141bff4a4",
           "context": "",
           "skip": false,
           "overrides": {},
@@ -1417,7 +1621,7 @@
         },
         "7/declaration/body/8/argument/1/3/5/3/1": {
           "type": "element",
-          "hash": "cb871988d5a76d4f8aa9e21d2cc84d00",
+          "hash": "ee3d11eb470ca4979b8e8e72d1c99c8e",
           "context": "",
           "skip": false,
           "overrides": {},
@@ -1433,7 +1637,7 @@
         },
         "7/declaration/body/8/argument/1/5/1/3/expression/alternate/3": {
           "type": "element",
-          "hash": "6d1aefe63d5b1f93c69af8639b597c97",
+          "hash": "703b42d9be29e2852ff1cc994520d56c",
           "context": "",
           "skip": false,
           "overrides": {},
@@ -1457,7 +1661,7 @@
         },
         "7/declaration/body/8/argument/1/5/3/3/expression/alternate/3": {
           "type": "element",
-          "hash": "ed165d3e5030ed151f12b10cb4cfd768",
+          "hash": "915d3fdec8a75b5bf16663d2c04be0a7",
           "context": "",
           "skip": false,
           "overrides": {},
