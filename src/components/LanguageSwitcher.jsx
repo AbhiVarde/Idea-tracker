@@ -2,11 +2,11 @@ import { LocaleSwitcher } from "lingo.dev/react/client";
 
 export function LanguageSwitcher() {
   return (
-    <div className="custom-locale-switcher">
+    <div className="language-switcher-container">
       <LocaleSwitcher
         locales={["en", "es", "fr", "ru", "de"]}
         defaultLocale="en"
-        className="lingo-switcher"
+        className="themed-language-switcher"
       />
     </div>
   );

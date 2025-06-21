@@ -334,12 +334,10 @@ function Navbar({ navigate, currentPage }) {
               ) : (
                 <>
                   <div className="flex items-center space-x-2">
-                    {/* Language switcher - always visible */}
                     <div className="pl-1.5">
                       <LanguageSwitcher />
                     </div>
 
-                    {/* GitHub icon - always visible */}
                     <motion.a
                       href="https://github.com/AbhiVarde/Idea-tracker"
                       target="_blank"
@@ -359,7 +357,6 @@ function Navbar({ navigate, currentPage }) {
                       <SiGithub className="w-5 h-5" />
                     </motion.a>
 
-                    {/* Theme selector - responsive behavior */}
                     <div className="hidden sm:block">
                       <ThemeSelector variant="navbar" />
                     </div>
@@ -367,7 +364,6 @@ function Navbar({ navigate, currentPage }) {
                       <ThemeSelector variant="mobile-dropdown" />
                     </div>
 
-                    {/* Login button */}
                     <NavButton
                       icon={LogIn}
                       label="Login"
@@ -417,7 +413,9 @@ function NavButton({
       transition={{ duration: 0.2 }}
     >
       <Icon className="w-4 h-4" />
-      {!compact && <span className="text-sm font-medium">{label}</span>}
+      {!compact && (
+        <span className="hidden sm:inline text-sm font-medium">{label}</span>
+      )}
     </motion.button>
   );
 }

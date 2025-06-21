@@ -9,15 +9,98 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.custom-locale-switcher .lingo-switcher {
-  background: transparent;
-  border: none;
-  color: #d1d5db;
+/* Language Switcher Light Theme Styles */
+.language-switcher-container .themed-language-switcher {
+  background: #ffffff;
+  border: 1px solid rgba(209, 213, 219, 0.5);
+  color: #374151;
   padding: 8px 12px;
-  border: 1px solid rgba(75, 85, 99, 0.3);
   border-radius: 10px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+}
+
+.language-switcher-container .themed-language-switcher:hover {
+  background: #f9fafb;
+  border-color: rgba(209, 213, 219, 0.8);
+  color: #111827;
+}
+
+.language-switcher-container .themed-language-switcher:focus {
+  border-color: #fd366e;
+  box-shadow: 0 0 0 2px rgba(253, 54, 110, 0.1);
+}
+
+/* Language Switcher Dark Theme Styles */
+.dark .language-switcher-container .themed-language-switcher {
+  background: transparent;
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  color: #d1d5db;
+}
+
+.dark .language-switcher-container .themed-language-switcher:hover {
+  background: rgba(31, 41, 55, 0.5);
+  border-color: rgba(75, 85, 99, 0.6);
+  color: #f3f4f6;
+}
+
+.dark .language-switcher-container .themed-language-switcher:focus {
+  border-color: #fd366e;
+  box-shadow: 0 0 0 2px rgba(253, 54, 110, 0.2);
+}
+
+/* Dropdown styles for both themes */
+.language-switcher-container .themed-language-switcher[aria-expanded="true"] {
+  border-color: #fd366e;
+}
+
+/* Light theme dropdown */
+.language-switcher-container .themed-language-switcher+div {
+  background: #ffffff;
+  border: 1px solid rgba(209, 213, 219, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin-top: 4px;
+}
+
+.language-switcher-container .themed-language-switcher+div button {
+  color: #374151;
+  padding: 8px 12px;
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+}
+
+.language-switcher-container .themed-language-switcher+div button:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* Dark theme dropdown */
+.dark .language-switcher-container .themed-language-switcher+div {
+  background: #111827;
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+.dark .language-switcher-container .themed-language-switcher+div button {
+  color: #d1d5db;
+}
+
+.dark .language-switcher-container .themed-language-switcher+div button:hover {
+  background: rgba(31, 41, 55, 0.8);
+  color: #f3f4f6;
+}
+
+/* Selected state for both themes */
+.language-switcher-container .themed-language-switcher+div button[aria-current="true"] {
+  color: #fd366e;
+  font-weight: 600;
+}
+
+.dark .language-switcher-container .themed-language-switcher+div button[aria-current="true"] {
+  color: #fd366e;
+  font-weight: 600;
 }

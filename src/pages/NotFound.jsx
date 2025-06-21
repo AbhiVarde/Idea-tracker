@@ -20,7 +20,7 @@ export function NotFound({ navigate }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#f4f4f7] dark:bg-[#000000] flex items-center justify-center px-4">
       <motion.div
         variants={staggerContainer}
         initial="initial"
@@ -47,10 +47,10 @@ export function NotFound({ navigate }) {
         </motion.div>
 
         <motion.div variants={fadeUpVariants} className="mb-8">
-          <h2 className="text-2xl font-medium text-white mb-3">
+          <h2 className="text-2xl font-medium text-gray-900 dark:text-white mb-3">
             Page Not Found
           </h2>
-          <p className="text-gray-400 leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
             The page you're looking for doesn't exist.
           </p>
         </motion.div>
@@ -73,7 +73,7 @@ export function NotFound({ navigate }) {
             onClick={() => window.history.back()}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="border border-gray-600 hover:border-gray-500 text-gray-300 hover:text-white px-6 py-2 rounded-xl font-medium flex items-center justify-center space-x-2 transition-all duration-200"
+            className="border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-6 py-2 rounded-xl font-medium flex items-center justify-center space-x-2 transition-all duration-200"
           >
             <ArrowLeft size={18} />
             <span>Back</span>

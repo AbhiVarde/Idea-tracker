@@ -11,9 +11,16 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("system");
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("app-theme");
+      if (savedTheme && ["light", "dark", "system"].includes(savedTheme)) {
+        return savedTheme;
+      }
+    }
+    return "system";
+  });
 
-  // Get system preference
   const getSystemTheme = () => {
     if (typeof window !== "undefined") {
       return window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -23,7 +30,6 @@ export const ThemeProvider = ({ children }) => {
     return "dark";
   };
 
-  // Get effective theme (resolves 'system' to actual theme)
   const getEffectiveTheme = () => {
     if (theme === "system") {
       return getSystemTheme();
@@ -31,15 +37,7 @@ export const ThemeProvider = ({ children }) => {
     return theme;
   };
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("app-theme");
-    if (savedTheme && ["light", "dark", "system"].includes(savedTheme)) {
-      setTheme(savedTheme);
-    }
-  }, []);
-
-  useEffect(() => {
-    const effectiveTheme = getEffectiveTheme();
+  const applyTheme = (effectiveTheme) => {
     const root = document.documentElement;
     const body = document.body;
 
@@ -56,7 +54,11 @@ export const ThemeProvider = ({ children }) => {
       body.style.backgroundColor = "#f4f4f7";
       body.style.color = "#1f2937";
     }
+  };
 
+  useEffect(() => {
+    const effectiveTheme = getEffectiveTheme();
+    applyTheme(effectiveTheme);
     localStorage.setItem("app-theme", theme);
   }, [theme]);
 
@@ -65,22 +67,7 @@ export const ThemeProvider = ({ children }) => {
       const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
       const handleChange = () => {
         const effectiveTheme = getEffectiveTheme();
-        const root = document.documentElement;
-        const body = document.body;
-
-        root.classList.remove("light", "dark");
-        body.classList.remove("light-theme", "dark-theme");
-
-        root.classList.add(effectiveTheme);
-        body.classList.add(`${effectiveTheme}-theme`);
-
-        if (effectiveTheme === "dark") {
-          body.style.backgroundColor = "#000000";
-          body.style.color = "#ffffff";
-        } else {
-          body.style.backgroundColor = "#f4f4f7";
-          body.style.color = "#1f2937";
-        }
+        applyTheme(effectiveTheme);
       };
 
       mediaQuery.addEventListener("change", handleChange);

@@ -1,4 +1,3 @@
-// ThemeSelector.jsx
 import { motion } from "framer-motion";
 import { Sun, Moon, Monitor, ChevronDown } from "lucide-react";
 import { useTheme } from "../lib/context/theme";
@@ -26,7 +25,6 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Dropdown variant (for logged-in users in settings dropdown)
   if (variant === "dropdown") {
     return (
       <div className="flex items-center justify-between px-2 py-1 mb-1 gap-2">
@@ -55,7 +53,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
     );
   }
 
-  // For mobile devices (small screens)
+  // For mobile devices
   if (variant === "mobile-dropdown") {
     const currentTheme = themes.find((t) => t.id === theme);
 
@@ -63,7 +61,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
       <div className="relative" ref={dropdownRef}>
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-1 p-1.5 rounded-lg bg-gray-100/80 dark:bg-gray-800/80"
+          className="flex items-center gap-1 p-2 rounded-lg bg-gray-100/80 dark:bg-gray-800/80"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -107,7 +105,6 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
     );
   }
 
-  // Default navbar variant (for non-logged-in users on larger screens)
   return (
     <div className="hidden sm:flex gap-1 p-1 bg-gray-100/80 dark:bg-gray-800/80 rounded-lg backdrop-blur-sm">
       {themes.map(({ id, label, icon: Icon }) => (
