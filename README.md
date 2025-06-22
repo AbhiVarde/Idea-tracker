@@ -42,6 +42,7 @@ Click the card to view it live:
 - 🥦 Social Login (Google, GitHub, Discord)
 - 🌾 Delete Account Functionality
 - 🫛 Upload Profile Picture
+- 🫒 Dark / Light / System Theme
 - 💚 Free & Open Source
 
 *Ready to turn your ideas into reality?*
