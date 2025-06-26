@@ -14,6 +14,20 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
     { id: "system", label: "System", icon: Monitor },
   ];
 
+  // Enhanced theme switching with View Transitions API
+  const handleThemeChange = (newTheme) => {
+    // Check if View Transitions API is supported
+    if (!document.startViewTransition) {
+      setTheme(newTheme);
+      return;
+    }
+
+    // Use View Transitions API for smooth theme switching
+    document.startViewTransition(() => {
+      setTheme(newTheme);
+    });
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -35,7 +49,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
           {themes.map(({ id, label, icon: Icon }) => (
             <motion.button
               key={id}
-              onClick={() => setTheme(id)}
+              onClick={() => handleThemeChange(id)}
               className={`flex items-center justify-center p-1.5 rounded-md transition-all duration-200 ${
                 theme === id
                   ? "bg-[#FD366E] text-white shadow-md ring-2 ring-[#FD366E]/20"
@@ -84,7 +98,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
               <motion.button
                 key={id}
                 onClick={() => {
-                  setTheme(id);
+                  handleThemeChange(id);
                   setIsOpen(false);
                 }}
                 className={`w-full flex items-center gap-2 px-3 py-2 text-sm ${
@@ -110,7 +124,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
       {themes.map(({ id, label, icon: Icon }) => (
         <motion.button
           key={id}
-          onClick={() => setTheme(id)}
+          onClick={() => handleThemeChange(id)}
           className={`flex items-center justify-center p-1.5 rounded-md transition-all duration-200 ${
             theme === id
               ? "bg-[#FD366E] text-white shadow-md"
