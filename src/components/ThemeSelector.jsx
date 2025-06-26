@@ -43,7 +43,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
     return (
       <div className="flex items-center justify-between px-2 py-1 mb-1 gap-2">
         <p className="text-sm text-gray-700 dark:text-gray-300 font-medium whitespace-nowrap">
-          Theme
+          {"Theme"}
         </p>
         <div className="flex gap-1">
           {themes.map(({ id, label, icon: Icon }) => (
@@ -58,6 +58,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               title={label}
+              aria-label={`Switch to ${label} theme`}
             >
               <Icon className="w-4 h-4" />
             </motion.button>
@@ -78,6 +79,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
           className="flex items-center gap-1 p-2 rounded-lg bg-gray-100/80 dark:bg-gray-800/80"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          aria-label="Select theme"
         >
           {currentTheme && <currentTheme.icon className="w-4 h-4" />}
           <ChevronDown
@@ -108,6 +110,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
                 }`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                aria-label={`Select ${label} theme`}
               >
                 <Icon className="w-4 h-4" />
                 <span>{label}</span>
@@ -133,6 +136,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           title={label}
+          aria-label={`Switch to ${label} theme`}
         >
           <Icon className="w-4 h-4" />
         </motion.button>
