@@ -43,6 +43,7 @@ Click the card to view it live:
 - 🌾 Delete Account Functionality
 - 🫛 Upload Profile Picture
 - 🫒 Dark / Light / System Theme
+- 🫑 Multilingual Support with Lingo.dev
 - 💚 Free & Open Source
 
 *Ready to turn your ideas into reality?*
