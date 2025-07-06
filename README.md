@@ -44,18 +44,18 @@ Click the card to view it live:
 - 🫛 Upload Profile Picture
 - 🫒 Dark / Light / System Theme
 - 🫑 Multilingual Support with Lingo.dev
+- 🤖 AI-Powered Idea Expansion with Gemini
 - 💚 Free & Open Source
 
 *Ready to turn your ideas into reality?*
 
 ## Getting Started
-
 ### Prerequisites
-
 - Node.js 16+ and npm
 
 ### Installation
 
+#### Main Branch (React)
 1. **Clone the repository**
    ```bash
    git clone https://github.com/AbhiVarde/idea-tracker.git
@@ -77,8 +77,32 @@ Click the card to view it live:
    http://localhost:3000
    ```
 
----
+#### Feature Branches (Vite + React)
+For branches with Vite configuration:
 
+1. **Clone and switch to desired branch**
+   ```bash
+   git clone https://github.com/AbhiVarde/idea-tracker.git
+   cd idea-tracker
+   git checkout [branch-name]
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   ```
+   http://localhost:5173
+   ```
+
+---
 💖 **Love Idea Tracker? Support with a one-time gift!**  
 From ☕ **$9** to keep development rolling, to 🚀 **$999** for a full promo of your work.  
 [Become a Sponsor →](https://github.com/sponsors/AbhiVarde)
@@ -86,9 +110,7 @@ From ☕ **$9** to keep development rolling, to 🚀 **$999** for a full promo o
 ---
 
 ## License
-
 Idea Tracker is licensed under the [MIT License](http://choosealicense.com/licenses/mit/). All rights reserved.
 
 ## Authors
-
 Idea Tracker is created and maintained by [Abhi Varde](https://www.abhivarde.in/).
