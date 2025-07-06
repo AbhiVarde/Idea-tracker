@@ -12,7 +12,7 @@ import {
   Settings,
 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
-import AccountSettings from "../components/AccountSettings";
+import AccountSettings from "./dialogs/AccountSettings";
 import moment from "moment";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import ThemeSelector from "./ThemeSelector";
@@ -338,6 +338,8 @@ function Navbar({ navigate, currentPage }) {
                       <LanguageSwitcher />
                     </div>
 
+                    <ThemeSelector variant="mobile-dropdown" />
+
                     <motion.a
                       href="https://github.com/AbhiVarde/Idea-tracker"
                       target="_blank"
@@ -356,13 +358,6 @@ function Navbar({ navigate, currentPage }) {
                     >
                       <SiGithub className="w-5 h-5" />
                     </motion.a>
-
-                    <div className="hidden sm:block">
-                      <ThemeSelector variant="navbar" />
-                    </div>
-                    <div className="sm:hidden">
-                      <ThemeSelector variant="mobile-dropdown" />
-                    </div>
 
                     <NavButton
                       icon={LogIn}

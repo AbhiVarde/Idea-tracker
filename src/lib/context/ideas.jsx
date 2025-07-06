@@ -10,6 +10,7 @@ import { databases } from "../appwrite";
 import { ID, Query } from "appwrite";
 import { toast } from "sonner";
 import { useUser } from "./user";
+import { expandIdea } from "../services/gemini";
 
 export const IDEAS_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 export const IDEAS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
@@ -90,12 +91,18 @@ export function IdeasProvider({ children }) {
     pendingOperationsRef.current.add(id);
 
     try {
+      // Debug: Log what we're trying to update
+      console.log("Updating document with:", updatedIdea);
+
       const response = await databases.updateDocument(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
         id,
         updatedIdea
       );
+
+      // Debug: Log the successful response
+      console.log("Update successful:", response);
 
       setIdeas((prev) =>
         prev.map((idea) => (idea.$id === id ? response : idea))
@@ -104,6 +111,8 @@ export function IdeasProvider({ children }) {
       toast.success("Idea updated successfully!");
       return response;
     } catch (err) {
+      // Debug: Log the full error
+      console.error("Update error details:", err);
       toast.error(getErrorMessage(err));
       throw err;
     } finally {
@@ -137,11 +146,59 @@ export function IdeasProvider({ children }) {
     }
   }
 
+  async function expandWithAI(idea) {
+    if (!user) {
+      toast.error("Please log in to expand ideas");
+      return;
+    }
+
+    try {
+      const result = await expandIdea(
+        idea.title,
+        idea.description,
+        idea.category,
+        idea.priority
+      );
+
+      if (result.success) {
+        const expandedAt = new Date().toISOString();
+
+        // Debug: Log the data being sent
+        console.log("Updating idea with:", {
+          aiExpansion: result.expansion,
+          expandedAt: expandedAt,
+        });
+
+        // Update the idea with AI expansion
+        const updateResponse = await update(idea.$id, {
+          aiExpansion: result.expansion,
+          expandedAt: expandedAt,
+        });
+
+        // Debug: Log the response from update
+        console.log("Update response:", updateResponse);
+
+        toast.success("Idea expanded successfully!");
+        return result.expansion;
+      } else {
+        throw new Error(result.error);
+      }
+    } catch (err) {
+      console.error("AI expansion error:", err);
+      toast.error("Failed to expand idea. Please try again.");
+      throw err;
+    }
+  }
+
   const fetchIdeas = useCallback(async () => {
     if (!user) return;
 
     try {
       setIsLoading(true);
+
+      // Debug: Log what we're querying
+      console.log("Fetching ideas for user:", user.$id);
+
       const response = await databases.listDocuments(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
@@ -152,10 +209,17 @@ export function IdeasProvider({ children }) {
         ]
       );
 
+      // Debug: Log the raw response
+      console.log("Raw ideas response:", response);
+      console.log("Ideas documents:", response.documents);
+
       const uniqueIdeas = response.documents.filter(
         (idea, index, self) =>
           index === self.findIndex((i) => i.$id === idea.$id)
       );
+
+      // Debug: Log the processed ideas
+      console.log("Processed ideas:", uniqueIdeas);
 
       setIdeas(uniqueIdeas);
       lastFetchTimeRef.current = new Date().toISOString();
@@ -237,6 +301,7 @@ export function IdeasProvider({ children }) {
     add,
     update,
     remove,
+    expandWithAI,
     isLoading,
     refresh: fetchIdeas,
   };

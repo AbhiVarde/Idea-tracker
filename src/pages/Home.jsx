@@ -2,6 +2,12 @@ import { useState } from "react";
 import { useUser } from "../lib/context/user";
 import { useIdeas } from "../lib/context/ideas";
 import { motion, AnimatePresence } from "framer-motion";
+import moment from "moment";
+import { toast } from "sonner";
+
+import FlipWords from "../components/FlipWords";
+import { AIExpansion } from "../components/dialogs/AIExpansion";
+
 import {
   Plus,
   Search,
@@ -14,11 +20,9 @@ import {
   PieChart,
   Edit3,
   ChevronDown,
+  Sparkles,
   AlertTriangle,
 } from "lucide-react";
-import moment from "moment";
-import FlipWords from "../components/FlipWords";
-import { toast } from "sonner";
 
 const CATEGORIES = [
   "Web App",
@@ -64,6 +68,14 @@ export function Home({ navigate }) {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+
+  const [aiModalOpen, setAiModalOpen] = useState(false);
+  const [selectedIdea, setSelectedIdea] = useState(null);
+
+  const handleAIExpansion = (idea) => {
+    setSelectedIdea(idea);
+    setAiModalOpen(true);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -285,107 +297,107 @@ export function Home({ navigate }) {
                 <span className="text-md font-medium">Add New Idea</span>
               </motion.button>
             ) : (
-              <motion.form
+              <motion.div
                 key="add-form"
-                onSubmit={handleSubmit}
-                className="space-y-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="flex justify-between items-center">
-                  <h2 className="text-2xl font-bold dark:text-white text-gray-900">
-                    New Idea
-                  </h2>
-                  <button
-                    type="button"
-                    onClick={() => setShowForm(false)}
-                    className="dark:text-gray-400 text-gray-600 hover:dark:text-white hover:text-gray-900 p-2 dark:hover:bg-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-2xl font-bold dark:text-white text-gray-900">
+                      New Idea
+                    </h2>
+                    <button
+                      type="button"
+                      onClick={() => setShowForm(false)}
+                      className="dark:text-gray-400 text-gray-600 hover:dark:text-white hover:text-gray-900 p-2 dark:hover:bg-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Idea title..."
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    maxLength={100}
-                    className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                    required
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      placeholder="Idea title..."
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      maxLength={100}
+                      className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                      required
+                    />
+                    <select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                    >
+                      {CATEGORIES.map((cat) => (
+                        <option
+                          key={cat}
+                          value={cat}
+                          className="dark:bg-[#000000] bg-white"
+                        >
+                          {cat}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <textarea
+                    placeholder="Describe your idea..."
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    rows={3}
+                    maxLength={500}
+                    className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
                   />
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <select
+                      value={priority}
+                      onChange={(e) => setPriority(e.target.value)}
+                      className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                    >
+                      {PRIORITIES.map((pri) => (
+                        <option
+                          key={pri}
+                          value={pri}
+                          className="dark:bg-[#000000] bg-white"
+                        >
+                          {pri}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="Tags (comma separated, max 10)"
+                      value={tags}
+                      onChange={(e) => setTags(e.target.value)}
+                      maxLength={200}
+                      className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                    />
+                  </div>
+
+                  <motion.button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#FD366E] hover:bg-[#FD366E]/90 disabled:bg-[#FD366E]/50 disabled:cursor-not-allowed text-white font-medium py-2 rounded-xl transition-all duration-300 shadow-lg shadow-[#FD366E]/20 flex items-center justify-center space-x-2"
+                    whileHover={!isSubmitting ? { scale: 1.02, y: -1 } : {}}
+                    whileTap={!isSubmitting ? { scale: 0.98 } : {}}
                   >
-                    {CATEGORIES.map((cat) => (
-                      <option
-                        key={cat}
-                        value={cat}
-                        className="dark:bg-[#000000] bg-white"
-                      >
-                        {cat}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <textarea
-                  placeholder="Describe your idea..."
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  rows={3}
-                  maxLength={500}
-                  className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
-                />
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <select
-                    value={priority}
-                    onChange={(e) => setPriority(e.target.value)}
-                    className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                  >
-                    {PRIORITIES.map((pri) => (
-                      <option
-                        key={pri}
-                        value={pri}
-                        className="dark:bg-[#000000] bg-white"
-                      >
-                        {pri}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="Tags (comma separated, max 10)"
-                    value={tags}
-                    onChange={(e) => setTags(e.target.value)}
-                    maxLength={200}
-                    className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                  />
-                </div>
-
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-[#FD366E] hover:bg-[#FD366E]/90 disabled:bg-[#FD366E]/50 disabled:cursor-not-allowed text-white font-medium py-2 rounded-xl transition-all duration-300 shadow-lg shadow-[#FD366E]/20 flex items-center justify-center space-x-2"
-                  whileHover={!isSubmitting ? { scale: 1.02, y: -1 } : {}}
-                  whileTap={!isSubmitting ? { scale: 0.98 } : {}}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      <span>Saving...</span>
-                    </>
-                  ) : (
-                    <span>Save Idea</span>
-                  )}
-                </motion.button>
-              </motion.form>
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        <span>Saving...</span>
+                      </>
+                    ) : (
+                      <span>Save Idea</span>
+                    )}
+                  </motion.button>
+                </form>
+              </motion.div>
             )}
           </AnimatePresence>
         </motion.section>
@@ -436,7 +448,7 @@ export function Home({ navigate }) {
               placeholder="Search ideas by title or description..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 rounded-xl pl-12 pr-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+              className="w-full dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl pl-12 pr-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
             />
             {searchTerm && (
               <motion.button
@@ -452,7 +464,7 @@ export function Home({ navigate }) {
 
           <motion.button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center space-x-2 dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 rounded-xl px-4 py-2 dark:text-white text-gray-900 hover:border-[#FD366E]/40 transition-all duration-200 group flex-shrink-0"
+            className="flex items-center space-x-2 dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl px-4 py-2 dark:text-white text-gray-900 transition-all duration-200 group flex-shrink-0"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -495,7 +507,7 @@ export function Home({ navigate }) {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden"
             >
-              <div className="dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 rounded-xl p-6 space-y-4">
+              <div className="dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl p-6 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -730,23 +742,51 @@ export function Home({ navigate }) {
                           {idea.title}
                         </h3>
                         {user.current?.$id === idea.userId && (
-                          <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <motion.button
-                              onClick={() => startEdit(idea)}
-                              className="text-blue-400 hover:text-blue-300"
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                            >
-                              <Edit3 className="w-5 h-5" />
-                            </motion.button>
-                            <motion.button
-                              onClick={() => setDeleteConfirm(idea.$id)}
-                              className="text-red-400 hover:text-red-300"
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                            >
-                              <Trash2 className="w-5 h-5" />
-                            </motion.button>
+                          <div className="flex space-x-2 duration-300">
+                            {/* Expand with AI */}
+                            <div className="relative group/expand">
+                              <motion.button
+                                onClick={() => handleAIExpansion(idea)}
+                                className="text-[#FD366E] hover:text-[#FD366E]/90"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                              >
+                                <Sparkles className="w-5 h-5" />
+                              </motion.button>
+                              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover/expand:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                                Expand with AI
+                              </div>
+                            </div>
+
+                            {/* Edit */}
+                            <div className="relative group/edit">
+                              <motion.button
+                                onClick={() => startEdit(idea)}
+                                className="text-blue-400 hover:text-blue-300"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                              >
+                                <Edit3 className="w-5 h-5" />
+                              </motion.button>
+                              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover/edit:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                                Edit
+                              </div>
+                            </div>
+
+                            {/* Delete */}
+                            <div className="relative group/delete">
+                              <motion.button
+                                onClick={() => setDeleteConfirm(idea.$id)}
+                                className="text-red-400 hover:text-red-300"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                              >
+                                <Trash2 className="w-5 h-5" />
+                              </motion.button>
+                              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover/delete:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                                Delete
+                              </div>
+                            </div>
                           </div>
                         )}
                       </div>
@@ -782,7 +822,7 @@ export function Home({ navigate }) {
                         </div>
                       )}
 
-                      <span className="flex items-center dark:text-gray-400 text-gray-600 gap-2">
+                      <span className="flex text-sm items-center dark:text-gray-400 text-gray-600 gap-2">
                         <Calendar className="w-4 h-4" />
                         {moment(idea.$createdAt).format("MMM D, YYYY")}
                       </span>
@@ -804,7 +844,7 @@ export function Home({ navigate }) {
           onClick={() => setDeleteConfirm(null)}
         >
           <motion.div
-            className="dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 rounded-2xl p-6 max-w-md w-full mx-4"
+            className="dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-2xl p-6 max-w-md w-full mx-4"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -860,6 +900,16 @@ export function Home({ navigate }) {
           </motion.div>
         </motion.div>
       )}
+
+      <AIExpansion
+        idea={selectedIdea}
+        isOpen={aiModalOpen}
+        onClose={() => {
+          setAiModalOpen(false);
+          setSelectedIdea(null);
+        }}
+        onExpand={ideas.expandWithAI}
+      />
     </div>
   );
 }

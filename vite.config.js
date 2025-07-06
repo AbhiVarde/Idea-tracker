@@ -6,14 +6,12 @@ export default defineConfig(() =>
   lingoCompiler.vite({
     sourceRoot: "src",
     sourceLocale: "en",
-    targetLocales: ["es", "fr", "ru", "de", "ja", "zh"],
+    targetLocales: ["es", "fr", "ru", "de"],
     models: {
-      "en:es": "groq:llama3-8b-8192",
-      "en:fr": "groq:llama3-8b-8192",
-      "en:de": "groq:llama3-8b-8192",
-      "en:ru": "groq:llama3-70b-8192", // Better for Cyrillic
-      "en:ja": "groq:llama3-70b-8192", // Better for Japanese
-      "en:zh": "groq:llama3-70b-8192", // Better for Chinese
+      "en:es": "groq:llama-3.1-8b-instant",
+      "en:fr": "groq:llama-3.3-70b-versatile",
+      "en:de": "groq:gemma2-9b-it",
+      "en:ru": "groq:llama3-70b-8192",
     },
   })({
     plugins: [react()],
@@ -59,6 +57,11 @@ export default defineConfig(() =>
       "process.env.GROQ_API_KEY": JSON.stringify(process.env.GROQ_API_KEY),
       "process.env.LINGODOTDEV_API_KEY": JSON.stringify(
         process.env.LINGODOTDEV_API_KEY
+      ),
+
+      // Google API keys
+      "process.env.VITE_GOOGLE_API_KEY": JSON.stringify(
+        process.env.VITE_GOOGLE_API_KEY
       ),
     },
     server: {

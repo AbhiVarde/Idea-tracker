@@ -76,7 +76,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
       <div className="relative" ref={dropdownRef}>
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-1 p-2 rounded-lg bg-gray-100/80 dark:bg-gray-800/80"
+          className="flex items-center gap-1 p-2 border dark:border-gray-800 rounded-lg bg-white dark:bg-black"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label="Select theme"
@@ -94,7 +94,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 mt-1 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+            className="absolute right-0 mt-1 w-32 bg-white dark:bg-black rounded-lg shadow-lg border border-gray-200 dark:border-gray-800 z-50"
           >
             {themes.map(({ id, label, icon: Icon }) => (
               <motion.button
@@ -106,7 +106,7 @@ const ThemeSelector = ({ variant = "dropdown" }) => {
                 className={`w-full flex items-center gap-2 px-3 py-2 text-sm ${
                   theme === id
                     ? "bg-[#FD366E]/10 text-[#FD366E] dark:text-[#FD366E]"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900"
                 }`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

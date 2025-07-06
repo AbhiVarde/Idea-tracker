@@ -387,7 +387,7 @@ export function Profile({ navigate }) {
                 </p>
                 <motion.button
                   onClick={() => navigate("home")}
-                  className="text-sm bg-[#FD366E] hover:bg-[#FD366E]/90 text-white px-4 py-2 rounded-lg"
+                  className="text-sm bg-[#FD366E] hover:bg-[#FD366E]/90 text-white px-2 py-1.5 rounded-lg"
                   whileHover={{ scale: 1.05 }}
                 >
                   Create your first idea

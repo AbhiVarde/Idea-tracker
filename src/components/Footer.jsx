@@ -94,7 +94,6 @@ function Footer() {
       transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
     >
       <div className="max-w-2xl mx-auto px-4 py-4 sm:py-6">
-        {/* Product Hunt Badge Section */}
         <motion.div
           className="flex justify-center mb-4"
           initial={{ y: 20, opacity: 0 }}
@@ -102,7 +101,7 @@ function Footer() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <motion.a
-            href="https://www.producthunt.com/products/sync-ui-2?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-sync&#0045;ui&#0045;2"
+            href="https://www.producthunt.com/products/sync-ui-2/launches/sync-ui-2"
             target="_blank"
             rel="noopener noreferrer"
             className="group"
@@ -112,13 +111,15 @@ function Footer() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-lg p-3 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="flex items-center space-x-3 text-white">
+            <div className="bg-gradient-to-r from-[#FD366E] via-[#FD366E] to-[#FD366E] dark:from-[#FD366E] dark:via-[#FD366E] dark:to-[#FD366E] rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300">
+              <div className="flex items-center space-x-3 text-white dark:text-white">
                 <div className="flex-shrink-0">
                   <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
-                    <span className="text-orange-500 font-bold text-lg">
-                      🚀
-                    </span>
+                    <img
+                      src="/syncui.png"
+                      alt="Sync UI"
+                      className="w-8 h-8 object-contain rounded-md"
+                    />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -127,11 +128,9 @@ function Footer() {
                     Animated UI kit for React devs
                   </p>
                 </div>
-                <div className="flex-shrink-0">
-                  <div className="text-right">
-                    <p className="text-xs font-medium">Vote on</p>
-                    <p className="text-sm font-bold">Product Hunt</p>
-                  </div>
+                <div className="flex-shrink-0 text-right">
+                  <p className="text-xs font-medium">Vote on</p>
+                  <p className="text-sm font-bold">Product Hunt</p>
                 </div>
               </div>
             </div>
