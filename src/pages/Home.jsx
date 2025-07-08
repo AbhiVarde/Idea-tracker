@@ -127,7 +127,6 @@ export function Home({ navigate }) {
       setDescription("");
       setTags("");
       setShowForm(false);
-      toast.success("Idea added successfully!");
     } catch (err) {
       console.error(err);
       toast.error("Failed to add idea. Please try again.");
@@ -198,7 +197,6 @@ export function Home({ navigate }) {
       });
 
       cancelEdit();
-      toast.success("Idea updated successfully!");
     } catch (err) {
       console.error(err);
       toast.error("Failed to update idea. Please try again.");
@@ -211,7 +209,6 @@ export function Home({ navigate }) {
     try {
       await ideas.remove(ideaId);
       setDeleteConfirm(null);
-      toast.success("Idea deleted successfully!");
     } catch (err) {
       console.error(err);
       toast.error("Failed to delete idea. Please try again.");

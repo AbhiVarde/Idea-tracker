@@ -91,18 +91,12 @@ export function IdeasProvider({ children }) {
     pendingOperationsRef.current.add(id);
 
     try {
-      // Debug: Log what we're trying to update
-      console.log("Updating document with:", updatedIdea);
-
       const response = await databases.updateDocument(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
         id,
         updatedIdea
       );
-
-      // Debug: Log the successful response
-      console.log("Update successful:", response);
 
       setIdeas((prev) =>
         prev.map((idea) => (idea.$id === id ? response : idea))
