@@ -399,7 +399,7 @@ function NavButton({
     <motion.button
       onClick={onClick}
       className={`flex items-center space-x-2 ${
-        compact ? "px-2 py-1" : "px-3 sm:px-4 py-2"
+        compact ? "p-2" : "px-3 sm:px-4 py-2"
       } rounded-lg transition-all duration-300 ${
         isActive || forceActiveStyle ? activeStyle : defaultStyle
       }`}

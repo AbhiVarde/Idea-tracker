@@ -10,7 +10,7 @@ export default defineConfig(() =>
     models: {
       "en:es": "groq:llama-3.1-8b-instant",
       "en:fr": "groq:llama-3.3-70b-versatile",
-      "en:de": "groq:gemma2-9b-it",
+      "en:de": "groq:llama-3.1-8b-instant",
       "en:ru": "groq:llama3-70b-8192",
     },
   })({
