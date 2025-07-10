@@ -1,7 +1,6 @@
 import { functions } from "../appwrite";
 
-const AI_EXPANSION_FUNCTION_ID =
-  "" || import.meta.env.VITE_APPWRITE_FUNCTION_ID;
+const AI_EXPANSION_FUNCTION_ID = import.meta.env.VITE_APPWRITE_FUNCTION_ID;
 
 export async function expandIdea(title, description, category, priority) {
   try {
