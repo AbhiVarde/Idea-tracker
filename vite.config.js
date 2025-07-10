@@ -32,6 +32,9 @@ export default defineConfig(() =>
       "process.env.VITE_APPWRITE_STORAGE_BUCKET_ID": JSON.stringify(
         process.env.VITE_APPWRITE_STORAGE_BUCKET_ID
       ),
+      "process.env.VITE_APPWRITE_FUNCTION_ID": JSON.stringify(
+        process.env.VITE_APPWRITE_FUNCTION_ID
+      ),
 
       // OAuth variables
       "process.env.VITE_GOOGLE_CLIENT_ID": JSON.stringify(
