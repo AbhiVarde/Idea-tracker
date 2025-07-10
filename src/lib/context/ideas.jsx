@@ -105,7 +105,6 @@ export function IdeasProvider({ children }) {
       toast.success("Idea updated successfully!");
       return response;
     } catch (err) {
-      // Debug: Log the full error
       console.error("Update error details:", err);
       toast.error(getErrorMessage(err));
       throw err;
@@ -157,22 +156,11 @@ export function IdeasProvider({ children }) {
       if (result.success) {
         const expandedAt = new Date().toISOString();
 
-        // Debug: Log the data being sent
-        console.log("Updating idea with:", {
+        await update(idea.$id, {
           aiExpansion: result.expansion,
           expandedAt: expandedAt,
         });
 
-        // Update the idea with AI expansion
-        const updateResponse = await update(idea.$id, {
-          aiExpansion: result.expansion,
-          expandedAt: expandedAt,
-        });
-
-        // Debug: Log the response from update
-        console.log("Update response:", updateResponse);
-
-        toast.success("Idea expanded successfully!");
         return result.expansion;
       } else {
         throw new Error(result.error);

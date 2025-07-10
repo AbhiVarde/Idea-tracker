@@ -31,7 +31,6 @@ export function AIExpansion({ idea, isOpen, onClose, onExpand }) {
     try {
       await navigator.clipboard.writeText(expansion);
       setCopied(true);
-      toast.success("Copied to clipboard!");
       setTimeout(() => setCopied(false), 2000);
     } catch {
       toast.error("Failed to copy");
