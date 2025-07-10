@@ -178,9 +178,6 @@ export function IdeasProvider({ children }) {
     try {
       setIsLoading(true);
 
-      // Debug: Log what we're querying
-      console.log("Fetching ideas for user:", user.$id);
-
       const response = await databases.listDocuments(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
@@ -191,17 +188,10 @@ export function IdeasProvider({ children }) {
         ]
       );
 
-      // Debug: Log the raw response
-      console.log("Raw ideas response:", response);
-      console.log("Ideas documents:", response.documents);
-
       const uniqueIdeas = response.documents.filter(
         (idea, index, self) =>
           index === self.findIndex((i) => i.$id === idea.$id)
       );
-
-      // Debug: Log the processed ideas
-      console.log("Processed ideas:", uniqueIdeas);
 
       setIdeas(uniqueIdeas);
       lastFetchTimeRef.current = new Date().toISOString();
@@ -217,7 +207,6 @@ export function IdeasProvider({ children }) {
   useEffect(() => {
     if (isInitialized && !loading) {
       if (user) {
-        console.log("User authenticated, fetching ideas...", user);
         fetchIdeas();
       } else {
         console.log("No user, clearing ideas");
