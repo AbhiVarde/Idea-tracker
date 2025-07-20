@@ -11,6 +11,7 @@ import { ID, Query } from "appwrite";
 import { toast } from "sonner";
 import { useUser } from "./user";
 import { expandIdea } from "../services/gemini";
+import { emailService } from "../services/emailService";
 
 export const IDEAS_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 export const IDEAS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
@@ -35,6 +36,48 @@ export function IdeasProvider({ children }) {
     return error?.message || "Something went wrong. Please try again.";
   };
 
+  // Add this function after getErrorMessage:
+  const fetchUserPreferences = useCallback(async (userId) => {
+    try {
+      const response = await databases.listDocuments(
+        IDEAS_DATABASE_ID,
+        IDEAS_COLLECTION_ID,
+        [Query.equal("userId", userId)]
+      );
+
+      if (response.documents.length > 0) {
+        // Look for preferences in the user document
+        const userDoc = response.documents.find(
+          (doc) => doc.userId === userId && doc.emailNotifications !== undefined
+        );
+        if (userDoc) {
+          return {
+            emailNotifications: userDoc.emailNotifications ?? true,
+            ideaAdded: userDoc.ideaAdded ?? true,
+            ideaExpanded: userDoc.ideaExpanded ?? true,
+            weeklySummary: userDoc.weeklySummary ?? true,
+          };
+        }
+      }
+
+      // Default preferences if none found
+      return {
+        emailNotifications: true,
+        ideaAdded: true,
+        ideaExpanded: true,
+        weeklySummary: true,
+      };
+    } catch (error) {
+      console.error("Failed to fetch user preferences:", error);
+      return {
+        emailNotifications: true,
+        ideaAdded: true,
+        ideaExpanded: true,
+        weeklySummary: true,
+      };
+    }
+  }, []);
+
   const addIdeaToState = useCallback((newIdea) => {
     setIdeas((prev) => {
       const existingIndex = prev.findIndex((idea) => idea.$id === newIdea.$id);
@@ -48,6 +91,64 @@ export function IdeasProvider({ children }) {
       }
     });
   }, []);
+
+  // Helper function to send email notifications with user preferences check
+  const sendNotificationEmail = async (type, ideaTitle = "", userId) => {
+    if (!user?.email || !user?.name) return;
+
+    try {
+      // Fetch user preferences from database
+      const userPreferences = await fetchUserPreferences(userId);
+
+      // Check if notifications are enabled
+      if (!userPreferences.emailNotifications) {
+        // console.log("Email notifications disabled for user");
+        return;
+      }
+
+      // Check specific notification type
+      const shouldSend = checkNotificationPreference(type, userPreferences);
+      if (!shouldSend) {
+        // console.log(`Notification ${type} skipped due to user preferences`);
+        return;
+      }
+
+      switch (type) {
+        case "ideaAdded":
+          await emailService.sendIdeaAddedNotification(
+            user.email,
+            user.name,
+            ideaTitle,
+            userId
+          );
+          break;
+        case "ideaExpanded":
+          await emailService.sendIdeaExpandedNotification(
+            user.email,
+            user.name,
+            ideaTitle,
+            userId
+          );
+          break;
+      }
+    } catch (error) {
+      console.error("Email notification failed:", error);
+    }
+  };
+
+  // Helper function to check if notification should be sent based on user preferences
+  const checkNotificationPreference = (type, preferences) => {
+    if (!preferences?.emailNotifications) return false;
+
+    switch (type) {
+      case "ideaAdded":
+        return preferences.ideaAdded;
+      case "ideaExpanded":
+        return preferences.ideaExpanded;
+      default:
+        return true;
+    }
+  };
 
   async function add(idea) {
     if (!user) {
@@ -73,6 +174,10 @@ export function IdeasProvider({ children }) {
       addIdeaToState(response);
 
       toast.success("Idea added successfully!");
+
+      // Send email notification in background
+      sendNotificationEmail("ideaAdded", idea.title, user.$id);
+
       return response;
     } catch (err) {
       toast.error(getErrorMessage(err));
@@ -160,6 +265,9 @@ export function IdeasProvider({ children }) {
           aiExpansion: result.expansion,
           expandedAt: expandedAt,
         });
+
+        // Send email notification for AI expansion
+        sendNotificationEmail("ideaExpanded", idea.title, user.$id);
 
         return result.expansion;
       } else {

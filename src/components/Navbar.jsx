@@ -1,6 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { useUser } from "../lib/context/user";
 import { motion, AnimatePresence } from "framer-motion";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import AccountSettings from "./dialogs/AccountSettings";
+import NotificationPreferences from "./dialogs/NotificationPreferences";
+import ThemeSelector from "./ThemeSelector";
+import moment from "moment";
 import {
   Home,
   User,
@@ -10,17 +15,15 @@ import {
   Sparkles,
   ChevronDown,
   Settings,
+  Bell,
 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
-import AccountSettings from "./dialogs/AccountSettings";
-import moment from "moment";
-import { LanguageSwitcher } from "./LanguageSwitcher";
-import ThemeSelector from "./ThemeSelector";
 
 function Navbar({ navigate, currentPage }) {
   const user = useUser();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
   const dropdownRef = useRef(null);
 
   const handleLogout = async () => {
@@ -37,6 +40,11 @@ function Navbar({ navigate, currentPage }) {
 
   const openSettings = () => {
     setShowSettings(true);
+    setShowUserDropdown(false);
+  };
+
+  const openNotifications = () => {
+    setShowNotifications(true);
     setShowUserDropdown(false);
   };
 
@@ -307,6 +315,16 @@ function Navbar({ navigate, currentPage }) {
                             <ThemeSelector variant="dropdown" />
 
                             <motion.button
+                              onClick={openNotifications}
+                              className="w-full flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/60 rounded-lg transition-colors duration-200 ease-in-out"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <Bell className="w-4 h-4" />
+                              <span className="text-sm">Notifications</span>
+                            </motion.button>
+
+                            <motion.button
                               onClick={openSettings}
                               className="w-full flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/60 rounded-lg transition-colors duration-200 ease-in-out"
                               whileHover={{ scale: 1.02 }}
@@ -378,6 +396,12 @@ function Navbar({ navigate, currentPage }) {
       <AccountSettings
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
+      />
+
+      <NotificationPreferences
+        isOpen={showNotifications}
+        onClose={() => setShowNotifications(false)}
+        user={user}
       />
     </>
   );
