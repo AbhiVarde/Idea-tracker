@@ -15,10 +15,6 @@ export default {
         },
         "3/body/1/argument/1/1/1/1/1/1/1/1-alt": {
           content: {
-            de: "Sincronizar UI",
-            en: "Sync UI",
-            es: "Sincronizar UI",
-            fr: "UI Sync",
             ru: "Синхронизация UI",
           },
           hash: "09500e317cc273bda513a4d4f4a145c8",
@@ -28,7 +24,7 @@ export default {
             de: "Sincronizar UI",
             en: "Sync UI",
             es: "Sincronizar UI",
-            fr: "UI Sync",
+            fr: "Sync UI",
             ru: "Синхронизация UI",
           },
           hash: "09500e317cc273bda513a4d4f4a145c8",
@@ -119,10 +115,6 @@ export default {
         },
         "10/body/12/argument/1/1/1/3/1/expression/alternate/1/7-label": {
           content: {
-            de: "Iniciar sesión",
-            en: "Login",
-            es: "Iniciar sesión",
-            fr: "Connexion",
             ru: "Войти",
           },
           hash: "f4f219abeb5a465ecb1c7efaf50246de",
@@ -160,7 +152,8 @@ export default {
         "10/body/12/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/1/3":
           {
             content: {
-              fr: "Rejoint <function:moment/>",
+              es: "Notificaciones",
+              fr: "Inscrit le <function:moment/>",
               ru: "Присоединился <function:moment/>",
             },
             hash: "c530f458023f5ac128847b16c6f1dcfa",
@@ -168,9 +161,6 @@ export default {
         "10/body/12/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/5/3":
           {
             content: {
-              de: "Benachrichtigungen",
-              en: "Notifications",
-              es: "Notificaciones",
               fr: "Notifications",
               ru: "Уведомления",
             },
@@ -179,8 +169,6 @@ export default {
         "10/body/12/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/7/3":
           {
             content: {
-              de: "Einstellungen",
-              en: "Settings",
               es: "Configuración",
               fr: "Paramètres",
               ru: "Настройки",
@@ -190,8 +178,6 @@ export default {
         "10/body/12/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/9/3":
           {
             content: {
-              de: "Abmelden",
-              en: "Sign Out",
               es: "Cerrar sesión",
               fr: "Déconnexion",
               ru: "Выйти",
@@ -330,15 +316,10 @@ export default {
             },
             hash: "4c84596262378c92950819a157a17a06",
           },
-        "6/0/init/body/14/argument/1/1/5/1/5": {
+        "6/0/init/body/14/argument/1/1/5/5": {
           content: {
-            de: "Mitglied seit <function:moment/>",
-            en: "Member since <function:moment/>",
-            es: "Miembro desde <function:moment/>",
-            fr: "Membre depuis <function:moment/>",
             ru: "Член с <function:moment/>",
           },
-          hash: "519ea4fe2e1329e27bab07f85a2036bf",
         },
         "6/0/init/body/14/argument/1/1/5/5/1/3": {
           content: {
@@ -420,7 +401,7 @@ export default {
             de: "Notificaciones",
             en: "Notifications",
             es: "Notificaciones",
-            fr: "Préférences de notification",
+            fr: "Notifications",
             ru: "Уведомления",
           },
           hash: "9b469e7d5e3b34cbf27e6f30704fb068",
@@ -485,7 +466,7 @@ export default {
             de: "Únete ahora",
             en: "Join now",
             es: "Únete ahora",
-            fr: "Rejoignez-nous",
+            fr: "Inscrivez-vous",
             ru: "Присоединиться",
           },
           hash: "771e0a32289f998ae66ca9cf7a72f8aa",
@@ -495,17 +476,13 @@ export default {
             de: "Únete a Ideas Tracker",
             en: "Join Idea Tracker",
             es: "Únete a Idea Tracker",
-            fr: "Rejoignez le suivi d'idées",
+            fr: "Inscrivez-vous au Suivi d'idées",
             ru: "Присоединиться к трекеру идей",
           },
           hash: "7ee80a07313b8e39e471b9409397461b",
         },
         "12/declaration/body/32/argument/1/3/expression/alternate/1/3": {
           content: {
-            de: "Comienza",
-            en: "Get Started",
-            es: "Comienza",
-            fr: "Commencez",
             ru: "Начать",
           },
           hash: "e93eaeedbad5df95c8cd88af4c5d106b",
@@ -523,10 +500,6 @@ export default {
         "12/declaration/body/32/argument/1/3/expression/consequent/1/1/expression/alternate/1/1/1":
           {
             content: {
-              de: "Nueva Idea",
-              en: "New Idea",
-              es: "Nueva idea",
-              fr: "Nouvelle idée",
               ru: "Новая идея",
             },
             hash: "a3721f15ec1ab56fb6879ef2dd26de81",
@@ -607,16 +580,6 @@ export default {
           },
           hash: "cd6feb04f8c1923349550d916d1bcecc",
         },
-        "12/declaration/body/32/argument/1/5/1/3/3": {
-          content: {
-            de: "Filter",
-            en: "Filters",
-            es: "Filtros",
-            fr: "Filtres",
-            ru: "Фильтры",
-          },
-          hash: "acf5accc113ff3c1992688058576732c",
-        },
         "12/declaration/body/32/argument/1/5/3/1/expression/right/1/1/1/1": {
           content: {
             de: "Categoría",
@@ -678,6 +641,11 @@ export default {
             },
             hash: "0097484dac30bacc43dc773c96fddfbe",
           },
+        "12/declaration/body/32/argument/1/5/3/3": {
+          content: {
+            ru: "Фильтры",
+          },
+        },
         "12/declaration/body/32/argument/1/9/1/1": {
           content: {
             de: "Ideas ({filteredIdeas.length})",
@@ -824,7 +792,7 @@ export default {
             de: "Bienvenido a Ideas Tracker",
             en: "Welcome to Idea Tracker",
             es: "Bienvenido a Idea Tracker",
-            fr: "Bienvenue sur le suivi d'idées",
+            fr: "Bienvenue sur le Suivi d'idées",
             ru: "Добро пожаловать в трекер идей",
           },
           hash: "cd270068759114df4ac100290154f681",
@@ -889,178 +857,14 @@ export default {
           },
           hash: "b715fa3165cc4c1405afb8801375290d",
         },
-        "7/declaration/body/16/argument/1/3/3/1/1": {
-          content: {
-            de: "E-Mail",
-            en: "Email",
-            es: "Correo electrónico",
-            fr: "Adresse e-mail",
-            ru: "Электронная почта",
-          },
-          hash: "5c3003ba6efa6297fda2e4453d0f5ec6",
-        },
-        "7/declaration/body/16/argument/1/3/3/1/3/3-placeholder": {
-          content: {
-            de: "developer@example.com",
-            en: "developer@example.com",
-            es: "developer@example.com",
-            fr: "développeur@example.com",
-            ru: "разработчик@example.com",
-          },
-          hash: "3515e7bb4f4a5abc4b7dc40206f2e9d3",
-        },
-        "7/declaration/body/16/argument/1/3/3/1/5/expression/right/1": {
-          content: {
-            de: "⚠",
-            en: "⚠",
-            es: "⚠",
-            fr: "⚠",
-            ru: "⚠",
-          },
-          hash: "4b7cf83223c2333933cda1dd2c012f5c",
-        },
-        "7/declaration/body/16/argument/1/3/3/3/1": {
-          content: {
-            de: "Passwort",
-            en: "Password",
-            es: "Contraseña",
-            fr: "Mot de passe",
-            ru: "Пароль",
-          },
-          hash: "8ed2948e0a0ef64c71c67e10f7338f57",
-        },
-        "7/declaration/body/16/argument/1/3/3/3/3/3-placeholder": {
-          content: {
-            de: "Mindestens 8 Zeichen",
-            en: "Minimum 8 characters",
-            es: "Mínimo 8 caracteres",
-            fr: "Minimum 8 caractères",
-            ru: "Минимум 8 символов",
-          },
-          hash: "1ad06b76a292d66fe2666e0c9d1d07ce",
-        },
-        "7/declaration/body/16/argument/1/3/3/3/5/expression/right/1": {
-          content: {
-            de: "⚠",
-            en: "⚠",
-            es: "⚠",
-            fr: "⚠",
-            ru: "⚠",
-          },
-          hash: "4b7cf83223c2333933cda1dd2c012f5c",
-        },
-        "7/declaration/body/16/argument/1/3/3/5/1/1/expression/consequent/3": {
-          content: {
-            de: "Anmeldung...",
-            en: "Signing in...",
-            es: "Iniciando sesión...",
-            fr: "Connexion en cours...",
-            ru: "Вход...",
-          },
-          hash: "8c7c297eaa8691114c8af70e53bb5fe6",
-        },
-        "7/declaration/body/16/argument/1/3/3/5/3": {
-          content: {
-            de: "Registrieren",
-            en: "Register",
-            es: "Registrarse",
-            fr: "Inscription",
-            ru: "Зарегистрироваться",
-          },
-          hash: "00800364db7cc4534a5fa4b4201838bf",
-        },
-        "7/declaration/body/16/argument/1/3/5/1": {
-          content: {
-            de: "Was du bekommst:",
-            en: "What you'll get:",
-            es: "Lo que obtendrás:",
-            fr: "Ce que vous obtiendrez :",
-            ru: "Что вы получите:",
-          },
-          hash: "e64d7d5c4170214cdf74814c1057fafc",
-        },
-        "7/declaration/body/16/argument/1/5/1": {
-          content: {
-            de: "← Zurück zu Ideen",
-            en: "← Back to Ideas",
-            es: "← Volver a Ideas",
-            fr: "← Retour aux Idées",
-            ru: "← Назад к идеям",
-          },
-          hash: "cb5636cca52a3bb4cfe4f6e4e9f7febd",
-        },
-      },
-    },
-    "pages/NotFound.jsx": {
-      entries: {
-        "2/declaration/body/2/argument/1/1/1": {
-          content: {
-            de: 404,
-            en: "404",
-            es: 404,
-            fr: 404,
-            ru: 404,
-          },
-          hash: "6a23ae86c761b727ee35cdc659696997",
-        },
-        "2/declaration/body/2/argument/1/3/1": {
-          content: {
-            de: "Seite nicht gefunden",
-            en: "Page Not Found",
-            es: "Página no encontrada",
-            fr: "Page non trouvée",
-            ru: "Страница не найдена",
-          },
-          hash: "65e951d15dd6afb12f946aa4c108e523",
-        },
-        "2/declaration/body/2/argument/1/3/3": {
-          content: {
-            de: "Die von Ihnen gesuchte Seite existiert nicht.",
-            en: "The page you're looking for doesn't exist.",
-            es: "La página que estás buscando no existe.",
-            fr: "La page que vous recherchez n'existe pas.",
-            ru: "Страница, которую вы ищете, не существует.",
-          },
-          hash: "4f8963ae2f7215507fb307c6945f1345",
-        },
-        "2/declaration/body/2/argument/1/5/1/3": {
-          content: {
-            de: "Inicio",
-            en: "Home",
-            es: "Inicio",
-            fr: "Accueil",
-            ru: "Домой",
-          },
-          hash: "104a3db3b671c04e167eafbe21e57881",
-        },
-        "2/declaration/body/2/argument/1/5/3/3": {
-          content: {
-            de: "Zurück",
-            en: "Back",
-            es: "Atrás",
-            fr: "Retour",
-            ru: "Назад",
-          },
-          hash: "f541015a827e37cb3b1234e56bc2aa3c",
-        },
       },
     },
     "pages/Profile.jsx": {
       entries: {
-        "7/declaration/body/4/consequent/0/argument/1/3": {
-          content: {
-            de: "Lade Profil...",
-            en: "Loading profile...",
-            es: "Cargando perfil...",
-            fr: "Chargement du profil...",
-            ru: "Загрузка профиля...",
-          },
-          hash: "ca2b31f0693bfd00761fde43e3ec2b9f",
-        },
         "7/declaration/body/8/argument/1/1/1/1/1/1/expression/consequent/1-alt":
           {
             content: {
-              de: "Perfil",
+              de: "Profil",
               en: "Profile",
               es: "Perfil",
               fr: "Profil",
