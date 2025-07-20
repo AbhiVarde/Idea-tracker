@@ -45,6 +45,7 @@ Click the card to view it live:
 - 🫒 Dark / Light / System Theme
 - 🫑 Multilingual Support with Lingo.dev
 - 🤖 AI-Powered Idea Expansion with Gemini
+- 📧 Email Notifications & Weekly Summaries
 - 💚 Free & Open Source
 
 *Ready to turn your ideas into reality?*
