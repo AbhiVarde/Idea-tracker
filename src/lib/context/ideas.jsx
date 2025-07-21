@@ -244,9 +244,26 @@ export function IdeasProvider({ children }) {
     }
   }
 
+  const checkDailyExpansionLimit = (ideas, userId) => {
+    const today = new Date().toDateString();
+    const todayExpansions = ideas.filter(
+      (idea) =>
+        idea.userId === userId &&
+        idea.expandedAt &&
+        new Date(idea.expandedAt).toDateString() === today
+    );
+    return todayExpansions.length >= 3;
+  };
+
   async function expandWithAI(idea) {
     if (!user) {
       toast.error("Please log in to expand ideas");
+      return;
+    }
+
+    // Check daily limit
+    if (checkDailyExpansionLimit(ideas, user.$id)) {
+      toast.error("Daily limit reached! You can expand 3 ideas per day.");
       return;
     }
 
