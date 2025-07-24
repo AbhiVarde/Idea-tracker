@@ -11,7 +11,7 @@
           "overrides": {},
           "content": "Lingo"
         },
-        "3/body/1/argument/1/1/1/1/1/1/1/1-alt": {
+        "3/body/1/argument/1/1/1/1/1/1/1-alt": {
           "type": "attribute",
           "hash": "09500e317cc273bda513a4d4f4a145c8",
           "context": "",
@@ -19,7 +19,7 @@
           "overrides": {},
           "content": "Sync UI"
         },
-        "3/body/1/argument/1/1/1/1/1/3/1": {
+        "3/body/1/argument/1/1/1/1/1/1/3/1": {
           "type": "element",
           "hash": "09500e317cc273bda513a4d4f4a145c8",
           "context": "",
@@ -27,29 +27,21 @@
           "overrides": {},
           "content": "Sync UI"
         },
-        "3/body/1/argument/1/1/1/1/1/3/3": {
+        "3/body/1/argument/1/1/1/1/1/1/3/3": {
           "type": "element",
-          "hash": "87a2bd855267dcb0a32aed3155564001",
+          "hash": "7071af12ad8a19618a1ad00f0e79ee67",
           "context": "",
           "skip": false,
           "overrides": {},
           "content": "Animated UI kit for React devs"
         },
-        "3/body/1/argument/1/1/1/1/1/5/1": {
+        "3/body/1/argument/1/1/1/1/1/3/3": {
           "type": "element",
-          "hash": "9fe825c1e203bcf918d677a04cf7d41c",
+          "hash": "650128534b940136e797140a52b83ff2",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "Vote on"
-        },
-        "3/body/1/argument/1/1/1/1/1/5/3": {
-          "type": "element",
-          "hash": "39add2ddd39cfb9274bf69a59469aa98",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Product Hunt"
+          "content": "60+"
         },
         "3/body/1/argument/1/5/1/1": {
           "type": "element",
