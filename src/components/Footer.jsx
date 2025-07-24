@@ -1,13 +1,12 @@
 import { motion } from "framer-motion";
 import {
   SiAppwrite,
-  SiVite,
   SiReact,
   SiTailwindcss,
   SiFramer,
   SiGithub,
 } from "react-icons/si";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 
 function Footer() {
   const techStack = [
@@ -101,36 +100,34 @@ function Footer() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <motion.a
-            href="https://www.producthunt.com/products/sync-ui-2/launches/sync-ui-2"
+            href="https://syncui.design"
             target="_blank"
             rel="noopener noreferrer"
             className="group"
             whileHover={{
-              scale: 1.05,
+              scale: 1.03,
               transition: { type: "spring", stiffness: 300, damping: 20 },
             }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.97 }}
           >
-            <div className="bg-gradient-to-r from-[#FD366E] via-[#FD366E] to-[#FD366E] dark:from-[#FD366E] dark:via-[#FD366E] dark:to-[#FD366E] rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300">
-              <div className="flex items-center space-x-3 text-white dark:text-white">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
-                    <img
-                      src="/syncui.png"
-                      alt="Sync UI"
-                      className="w-8 h-8 object-contain rounded-md"
-                    />
+            <div className="bg-gradient-to-r from-[#FD366E] via-[#FD366E] to-[#FD366E] dark:from-[#FD366E] dark:via-[#FD366E] dark:to-[#FD366E] rounded-xl p-3 shadow-sm hover:shadow-md transition-all duration-300 max-w-sm w-full">
+              <div className="flex items-center gap-4 text-white">
+                <div className="flex items-center gap-2">
+                  <img
+                    src="/syncui.png"
+                    alt="Sync UI"
+                    className="w-8 h-8 rounded-md object-contain"
+                  />
+                  <div className="flex flex-col text-sm flex-1 truncate">
+                    <span className="font-semibold truncate">Sync UI</span>
+                    <span className="opacity-90 truncate">
+                      Animated UI kit for React devs
+                    </span>
                   </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold truncate">Sync UI</p>
-                  <p className="text-xs opacity-90 truncate">
-                    Animated UI kit for React devs
-                  </p>
-                </div>
-                <div className="flex-shrink-0 text-right">
-                  <p className="text-xs font-medium">Vote on</p>
-                  <p className="text-sm font-bold">Product Hunt</p>
+                <div className="flex items-center gap-1 text-md text-white">
+                  <Github className="w-5 h-5" />
+                  <span className="leading-none">60+</span>
                 </div>
               </div>
             </div>
