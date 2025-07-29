@@ -6,15 +6,6 @@
 
 Idea Tracker is a clean and efficient tool for managing your ideas with ease. Built for developers who value simplicity, privacy, and speed.
 
-## 🌩️ Appwrite Cloud Beta
-
-Proud to be a part of the **Appwrite Cloud Public Beta**!  
-Click the card to view it live:
-
-<a href="https://cloud.appwrite.io/card/653e053411ff36b703e7" target="_blank">
-  <img width="350" src="https://cloud.appwrite.io/v1/cards/cloud?userId=653e053411ff36b703e7" alt="Appwrite Cloud Card" />
-</a>
-
 ## 🚀 Tech Stack
 - <img src="https://vitejs.dev/logo.svg" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Build Tool**: [Vite](https://vitejs.dev/)
 - <img src="https://react.dev/favicon.ico" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Frontend**: [React](https://react.dev/)
