@@ -8,7 +8,7 @@ export default defineConfig(() =>
     sourceLocale: "en",
     targetLocales: ["es", "fr", "de", "ru"],
     models: {
-      "en:es": "groq:llama-3.1-8b-instant",
+      "en:es": "groq:llama3-8b-8192",
       "en:fr": "groq:llama-3.3-70b-versatile",
       "en:de": "groq:llama3-70b-8192",
       "en:ru": "groq:llama3-70b-8192",

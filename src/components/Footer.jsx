@@ -114,7 +114,7 @@ function Footer() {
               <div className="flex items-center gap-4 text-white">
                 <div className="flex items-center gap-2">
                   <img
-                    src="/syncui.png"
+                    src="/images/syncui.png"
                     alt="Sync UI"
                     className="w-8 h-8 rounded-md object-contain"
                   />

@@ -1,6 +1,66 @@
 {
   "version": 0.1,
   "files": {
+    "components/AnnouncementBar.jsx": {
+      "scopes": {
+        "3/body/6/argument/1/1/1/1/1/1": {
+          "type": "element",
+          "hash": "36ec11b729d6796f24f144c147dd8425",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "🎉"
+        },
+        "3/body/6/argument/1/1/1/1/1/3": {
+          "type": "element",
+          "hash": "85e67b30d64fdf631b87a458a3c05113",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Featured by Appwrite - Monthly Community Recognition"
+        },
+        "3/body/6/argument/5/1/expression/right/1/1/3/1/1/1": {
+          "type": "element",
+          "hash": "36ec11b729d6796f24f144c147dd8425",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "🎉"
+        },
+        "3/body/6/argument/5/1/expression/right/1/1/3/1/1/3": {
+          "type": "element",
+          "hash": "cf30aa3fa48dd0e32099859730f48f87",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Featured by Appwrite"
+        },
+        "3/body/6/argument/5/1/expression/right/1/1/3/1/3": {
+          "type": "element",
+          "hash": "437eac2708e3ece9862ca840d8535cdd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Community Recognition"
+        },
+        "3/body/6/argument/5/1/expression/right/1/1/3/1/5": {
+          "type": "element",
+          "hash": "f078b1e315d6d5922b8f703bd67fcd19",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Our Idea Tracker has been selected as part of Appwrite's Monthly Community Recognition program."
+        },
+        "3/body/6/argument/5/1/expression/right/1/1/3/3/1-alt": {
+          "type": "attribute",
+          "hash": "83edb2582968daf541b7317d5d5aa867",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Appwrite Community Recognition"
+        }
+      }
+    },
     "components/Footer.jsx": {
       "scopes": {
         "3/body/0/0/init/5/1/value-alt": {
@@ -79,7 +139,7 @@
     },
     "components/Navbar.jsx": {
       "scopes": {
-        "10/body/11/consequent/0/argument/1/1/1/3": {
+        "11/body/11/consequent/0/argument/1/1/1/3": {
           "type": "element",
           "hash": "f274229d32acae395486caa4924f9903",
           "context": "",
@@ -87,7 +147,7 @@
           "overrides": {},
           "content": "Idea Tracker"
         },
-        "10/body/12/argument/1/1/1/3/1/expression/alternate/1/7-label": {
+        "11/body/12/argument/3/1/1/3/1/expression/alternate/1/7-label": {
           "type": "attribute",
           "hash": "f4f219abeb5a465ecb1c7efaf50246de",
           "context": "",
@@ -95,7 +155,7 @@
           "overrides": {},
           "content": "Login"
         },
-        "10/body/12/argument/1/1/1/3/1/expression/consequent/1-label": {
+        "11/body/12/argument/3/1/1/3/1/expression/consequent/1-label": {
           "type": "attribute",
           "hash": "104a3db3b671c04e167eafbe21e57881",
           "context": "",
@@ -103,7 +163,7 @@
           "overrides": {},
           "content": "Home"
         },
-        "10/body/12/argument/1/1/1/3/1/expression/consequent/3-label": {
+        "11/body/12/argument/3/1/1/3/1/expression/consequent/3-label": {
           "type": "attribute",
           "hash": "d7878693f91303a438852d617f6d35df",
           "context": "",
@@ -111,7 +171,7 @@
           "overrides": {},
           "content": "Profile"
         },
-        "10/body/12/argument/1/1/1/3/1/expression/consequent/7/3": {
+        "11/body/12/argument/3/1/1/3/1/expression/consequent/7/3": {
           "type": "element",
           "hash": "7a3b8fd02d8284f148cb3a42d8c8983b",
           "context": "",
@@ -119,7 +179,7 @@
           "overrides": {},
           "content": "View Code"
         },
-        "10/body/12/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/1/3": {
+        "11/body/12/argument/3/1/1/3/1/expression/consequent/9/3/1/expression/right/1/1/3": {
           "type": "element",
           "hash": "c530f458023f5ac128847b16c6f1dcfa",
           "context": "",
@@ -127,7 +187,7 @@
           "overrides": {},
           "content": "Joined <function:moment/>"
         },
-        "10/body/12/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/5/3": {
+        "11/body/12/argument/3/1/1/3/1/expression/consequent/9/3/1/expression/right/1/5/3": {
           "type": "element",
           "hash": "c52df856139b50dbb1cae7bfb1cf73bb",
           "context": "",
@@ -135,7 +195,7 @@
           "overrides": {},
           "content": "Notifications"
         },
-        "10/body/12/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/7/3": {
+        "11/body/12/argument/3/1/1/3/1/expression/consequent/9/3/1/expression/right/1/7/3": {
           "type": "element",
           "hash": "8df6777277469c1fd88cc18dde2f1cc3",
           "context": "",
@@ -143,7 +203,7 @@
           "overrides": {},
           "content": "Settings"
         },
-        "10/body/12/argument/1/1/1/3/1/expression/consequent/9/3/1/expression/right/1/9/3": {
+        "11/body/12/argument/3/1/1/3/1/expression/consequent/9/3/1/expression/right/1/9/3": {
           "type": "element",
           "hash": "06efb815f8e1f5d09e63d262ba48b4e7",
           "context": "",
@@ -151,7 +211,7 @@
           "overrides": {},
           "content": "Sign Out"
         },
-        "10/body/9/0/init/body/2/consequent/1/argument/1-alt": {
+        "11/body/9/0/init/body/2/consequent/1/argument/1-alt": {
           "type": "attribute",
           "hash": "d7878693f91303a438852d617f6d35df",
           "context": "",
@@ -159,7 +219,7 @@
           "overrides": {},
           "content": "Profile"
         },
-        "10/body/9/0/init/body/3/consequent/0/argument/1-alt": {
+        "11/body/9/0/init/body/3/consequent/0/argument/1-alt": {
           "type": "attribute",
           "hash": "822d49fc87e60859da3824d26f7d1ae1",
           "context": "",

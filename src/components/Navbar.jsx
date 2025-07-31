@@ -18,6 +18,7 @@ import {
   Bell,
 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
+import AnnouncementBar from "./AnnouncementBar";
 
 function Navbar({ navigate, currentPage }) {
   const user = useUser();
@@ -195,11 +196,13 @@ function Navbar({ navigate, currentPage }) {
 
   return (
     <>
+      <AnnouncementBar />
+
       <motion.nav
         className="bg-[#FFFFFF]/50 dark:bg-[#000000]/50 backdrop-blur-sm sticky top-0 z-50"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0 }}
       >
         <div className="max-w-2xl mx-auto px-2 sm:px-4 py-1.5 sm:py-3">
           <div className="flex flex-row sm:items-center justify-between gap-2 sm:gap-0 py-2 sm:py-0">
