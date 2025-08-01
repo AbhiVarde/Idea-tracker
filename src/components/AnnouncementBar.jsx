@@ -31,16 +31,14 @@ function AnnouncementBar() {
         className="bg-gradient-to-r from-[#FD366E] to-[#ff4d7a] text-white cursor-pointer"
         onClick={handleClick}
       >
-        <div className="max-w-4xl mx-auto px-4 py-1">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center justify-center w-full">
-              <div className="flex items-center space-x-2 text-sm font-medium">
-                <span>🎉</span>
-                <span>
-                  Featured by Appwrite - Monthly Community Recognition
-                </span>
-                <ExternalLink className="w-3.5 h-3.5 opacity-90" />
-              </div>
+        <div className="max-w-2xl mx-auto px-4 py-1">
+          <div className="flex items-center justify-between w-full space-x-2">
+            <div className="flex items-center space-x-2 text-sm font-medium truncate">
+              <span>🎉</span>
+              <span className="truncate">
+                Featured by Appwrite – Monthly Community Recognition
+              </span>
+              <ExternalLink className="w-3.5 h-3.5 opacity-90 flex-shrink-0" />
             </div>
 
             <motion.button
@@ -72,7 +70,7 @@ function AnnouncementBar() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-hidden"
+              className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
@@ -86,7 +84,7 @@ function AnnouncementBar() {
                 </motion.button>
 
                 <div className="p-6">
-                  <div className="text-center mb-4">
+                  <div className="text-center mb-5">
                     <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#FD366E] to-[#ff4d7a] text-white px-3 py-1.5 rounded-full text-sm font-medium mb-3">
                       <span>🎉</span>
                       <span>Featured by Appwrite</span>
@@ -100,7 +98,7 @@ function AnnouncementBar() {
                     </p>
                   </div>
 
-                  <div className="rounded-lg overflow-hidden shadow-md mb-4">
+                  <div className="rounded-xl overflow-hidden shadow-lg">
                     <img
                       src="/images/appwrite-feature.png"
                       alt="Appwrite Community Recognition"
