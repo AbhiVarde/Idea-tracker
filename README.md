@@ -8,9 +8,10 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
 
 ## 🏆 Featured by Appwrite
 
-*Honored to be featured in Appwrite's Monthly Community Recognition for July 2025.*
+*Honored to be featured in Appwrite's Monthly Community Recognition for July 2025.*  
+[Read the official blog post →](https://appwrite.io/blog/post/product-update-july-2025)
 
-<img width="400"  alt="appwrite-feature" src="https://github.com/user-attachments/assets/b2b49e8f-3e3c-4e86-bd24-9b0ebb809210" />
+<img width="400" alt="appwrite-feature" src="https://github.com/user-attachments/assets/b2b49e8f-3e3c-4e86-bd24-9b0ebb809210" />
 
 ## 🚀 Tech Stack
 - <img src="https://vitejs.dev/logo.svg" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Build Tool**: [Vite](https://vitejs.dev/)
