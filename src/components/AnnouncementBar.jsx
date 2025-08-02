@@ -29,9 +29,12 @@ function AnnouncementBar() {
 
   return (
     <>
-      <div
+      <motion.div
         className="bg-gradient-to-r from-[#FD366E] to-[#ff4d7a] text-white cursor-pointer"
         onClick={handleClick}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="max-w-2xl mx-auto px-4 py-1">
           <div className="flex items-center justify-between w-full space-x-2">
@@ -55,7 +58,7 @@ function AnnouncementBar() {
             </motion.button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <AnimatePresence mode="wait">
         {showModal && (
@@ -63,15 +66,15 @@ function AnnouncementBar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.1, ease: "easeOut" }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
             className="fixed inset-0 bg-black/70 z-[70] flex items-center justify-center p-4"
             onClick={closeModal}
           >
             <motion.div
-              initial={{ scale: 0.99, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.99, opacity: 0 }}
-              transition={{ duration: 0.1, ease: "easeOut" }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
               className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-md w-full"
               onClick={(e) => e.stopPropagation()}
             >
