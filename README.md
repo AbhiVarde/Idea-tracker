@@ -6,14 +6,11 @@
 
 Idea Tracker is a clean and efficient tool for managing your ideas with ease. Built for developers who value simplicity, privacy, and speed.
 
-## 🌩️ Appwrite Cloud Beta
+## 🏆 Featured by Appwrite
 
-Proud to be a part of the **Appwrite Cloud Public Beta**!  
-Click the card to view it live:
+*Honored to be featured in Appwrite's Monthly Community Recognition for July 2025.*
 
-<a href="https://cloud.appwrite.io/card/653e053411ff36b703e7" target="_blank">
-  <img width="350" src="https://cloud.appwrite.io/v1/cards/cloud?userId=653e053411ff36b703e7" alt="Appwrite Cloud Card" />
-</a>
+<img width="400"  alt="appwrite-feature" src="https://github.com/user-attachments/assets/b2b49e8f-3e3c-4e86-bd24-9b0ebb809210" />
 
 ## 🚀 Tech Stack
 - <img src="https://vitejs.dev/logo.svg" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Build Tool**: [Vite](https://vitejs.dev/)
@@ -103,12 +100,18 @@ For branches with Vite configuration:
    http://localhost:5173
    ```
 
----
 💖 **Love Idea Tracker? Support with a one-time gift!**  
 From ☕ **$9** to keep development rolling, to 🚀 **$999** for a full promo of your work.  
 [Become a Sponsor →](https://github.com/sponsors/AbhiVarde)
 
----
+## 🌩️ Appwrite Cloud Beta
+
+Proud to be a part of the **Appwrite Cloud Public Beta**!  
+Click the card to view it live:
+
+<a href="https://cloud.appwrite.io/card/653e053411ff36b703e7" target="_blank">
+  <img width="350" src="https://cloud.appwrite.io/v1/cards/cloud?userId=653e053411ff36b703e7" alt="Appwrite Cloud Card" />
+</a>
 
 ## License
 Idea Tracker is licensed under the [MIT License](http://choosealicense.com/licenses/mit/). All rights reserved.
