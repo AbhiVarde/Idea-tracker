@@ -5,6 +5,7 @@ import { X, ExternalLink } from "lucide-react";
 function AnnouncementBar() {
   const [isVisible, setIsVisible] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   if (!isVisible) return null;
 
@@ -14,6 +15,7 @@ function AnnouncementBar() {
 
   const closeModal = () => {
     setShowModal(false);
+    setImageLoaded(false);
   };
 
   const dismissBanner = (e) => {
@@ -21,13 +23,13 @@ function AnnouncementBar() {
     setIsVisible(false);
   };
 
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
   return (
     <>
-      <motion.div
-        initial={{ y: -40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: -40, opacity: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+      <div
         className="bg-gradient-to-r from-[#FD366E] to-[#ff4d7a] text-white cursor-pointer"
         onClick={handleClick}
       >
@@ -43,42 +45,43 @@ function AnnouncementBar() {
 
             <motion.button
               onClick={dismissBanner}
-              className="flex-shrink-0 p-1.5 hover:bg-white/15 rounded-full transition-colors duration-200"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="flex-shrink-0 p-1.5 hover:bg-white/15 rounded-full transition-colors duration-100"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.1 }}
               aria-label="Dismiss announcement"
             >
               <X className="w-4 h-4" />
             </motion.button>
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Modal */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {showModal && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[70] flex items-center justify-center p-4"
+            transition={{ duration: 0.1, ease: "easeOut" }}
+            className="fixed inset-0 bg-black/70 z-[70] flex items-center justify-center p-4"
             onClick={closeModal}
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
+              initial={{ scale: 0.99, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-y-auto"
+              exit={{ scale: 0.99, opacity: 0 }}
+              transition={{ duration: 0.1, ease: "easeOut" }}
+              className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-md w-full"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
                 <motion.button
                   onClick={closeModal}
-                  className="absolute top-3 right-3 z-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors duration-200"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="absolute top-3 right-3 z-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors duration-100"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.1 }}
                 >
                   <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                 </motion.button>
@@ -98,12 +101,24 @@ function AnnouncementBar() {
                     </p>
                   </div>
 
-                  <div className="rounded-xl overflow-hidden shadow-lg">
-                    <img
+                  <div className="rounded-xl overflow-hidden shadow-lg relative">
+                    {!imageLoaded && (
+                      <div className="w-full h-[380px] bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                        <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
+                      </div>
+                    )}
+
+                    <motion.img
                       src="/images/appwrite-feature.png"
                       alt="Appwrite Community Recognition"
                       className="w-full h-full object-cover"
-                      loading="lazy"
+                      style={{ display: imageLoaded ? "block" : "none" }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: imageLoaded ? 1 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      loading="eager"
+                      onLoad={handleImageLoad}
+                      onError={() => setImageLoaded(true)}
                     />
                   </div>
                 </div>
