@@ -23,7 +23,12 @@ export function useIdeas() {
 }
 
 export function IdeasProvider({ children }) {
-  const { current: user, isInitialized, loading } = useUser();
+  const {
+    current: user,
+    isInitialized,
+    loading,
+    getProfilePictureUrl,
+  } = useUser();
   const [ideas, setIdeas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const lastFetchTimeRef = useRef(null);
@@ -167,6 +172,10 @@ export function IdeasProvider({ children }) {
         {
           ...idea,
           userId: user.$id,
+          userName: user.name || "",
+          userEmail: user.email || "",
+          userProfilePicture:
+            getProfilePictureUrl(user.prefs.profilePictureId) || "",
         }
       );
 
@@ -196,11 +205,19 @@ export function IdeasProvider({ children }) {
     pendingOperationsRef.current.add(id);
 
     try {
+      const finalUpdatedIdea = {
+        ...updatedIdea,
+        userName: user.name || "",
+        userEmail: user.email || "",
+        userProfilePicture:
+          getProfilePictureUrl(user.prefs.profilePictureId) || "",
+      };
+
       const response = await databases.updateDocument(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
         id,
-        updatedIdea
+        finalUpdatedIdea
       );
 
       setIdeas((prev) =>
@@ -297,6 +314,46 @@ export function IdeasProvider({ children }) {
     }
   }
 
+  async function toggleLike(ideaId) {
+    if (!user) {
+      toast.error("Please log in to like ideas");
+      return;
+    }
+
+    try {
+      // Get current idea
+      const currentIdea = ideas.find((idea) => idea.$id === ideaId);
+      if (!currentIdea) return;
+
+      const likedBy = currentIdea.likedBy || [];
+      const hasLiked = likedBy.includes(user.$id);
+
+      let newLikedBy;
+      let newLikes;
+
+      if (hasLiked) {
+        // Unlike
+        newLikedBy = likedBy.filter((id) => id !== user.$id);
+        newLikes = Math.max(0, (currentIdea.likes || 0) - 1);
+      } else {
+        // Like
+        newLikedBy = [...likedBy, user.$id];
+        newLikes = (currentIdea.likes || 0) + 1;
+      }
+
+      await update(ideaId, {
+        likes: newLikes,
+        likedBy: newLikedBy,
+      });
+
+      return !hasLiked; // Return new like status
+    } catch (err) {
+      console.error("Toggle like error:", err);
+      toast.error("Failed to update like. Please try again.");
+      throw err;
+    }
+  }
+
   const fetchIdeas = useCallback(async () => {
     if (!user) return;
 
@@ -328,6 +385,30 @@ export function IdeasProvider({ children }) {
       setIsLoading(false);
     }
   }, [user]);
+
+  const fetchPublicIdeas = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await databases.listDocuments(
+        IDEAS_DATABASE_ID,
+        IDEAS_COLLECTION_ID,
+        [
+          Query.equal("isPublic", true),
+          Query.orderDesc("$createdAt"),
+          Query.limit(50),
+        ]
+      );
+
+      return response.documents;
+    } catch (err) {
+      console.error("Fetch public ideas error:", err);
+      toast.error(getErrorMessage(err));
+      return [];
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (isInitialized && !loading) {
@@ -398,6 +479,8 @@ export function IdeasProvider({ children }) {
     update,
     remove,
     expandWithAI,
+    toggleLike,
+    fetchPublicIdeas,
     isLoading,
     refresh: fetchIdeas,
   };

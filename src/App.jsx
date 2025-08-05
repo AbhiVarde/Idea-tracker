@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
+import { Discover } from "./pages/Discover";
 import { Profile } from "./pages/Profile";
 import { NotFound } from "./pages/NotFound";
 import { UserProvider } from "./lib/context/user";
@@ -11,7 +12,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Toaster } from "sonner";
 
-const validRoutes = ["/", "/login", "/profile"];
+const validRoutes = ["/", "/login", "/profile", "/discover"];
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -27,6 +28,7 @@ function AppContent() {
 
     if (path === "/login") setCurrentPage("login");
     else if (path === "/profile") setCurrentPage("profile");
+    else if (path === "/discover") setCurrentPage("discover");
     else setCurrentPage("home");
 
     const handlePopState = () => {
@@ -38,6 +40,7 @@ function AppContent() {
 
       if (path === "/login") setCurrentPage("login");
       else if (path === "/profile") setCurrentPage("profile");
+      else if (path === "/discover") setCurrentPage("discover");
       else setCurrentPage("home");
     };
 
@@ -100,6 +103,7 @@ function AppContent() {
                 {currentPage === "login" && <Login navigate={navigate} />}
                 {currentPage === "profile" && <Profile navigate={navigate} />}
                 {currentPage === "home" && <Home navigate={navigate} />}
+                {currentPage === "discover" && <Discover navigate={navigate} />}
                 {currentPage === "404" && <NotFound navigate={navigate} />}
               </motion.div>
             </AnimatePresence>

@@ -22,6 +22,8 @@ import {
   ChevronDown,
   Sparkles,
   AlertTriangle,
+  Github,
+  Check,
 } from "lucide-react";
 
 const CATEGORIES = [
@@ -65,6 +67,11 @@ export function Home({ navigate }) {
   const [editPriority, setEditPriority] = useState("");
   const [editTags, setEditTags] = useState("");
 
+  const [isPublic, setIsPublic] = useState(true);
+  const [githubUrl, setGithubUrl] = useState("");
+  const [editIsPublic, setEditIsPublic] = useState(false);
+  const [editGithubUrl, setEditGithubUrl] = useState("");
+
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -82,6 +89,7 @@ export function Home({ navigate }) {
 
     const trimmedTitle = title.trim();
     const trimmedDescription = description.trim();
+    const trimmedGithubUrl = githubUrl.trim();
 
     if (!trimmedTitle) {
       toast.error("Please enter a title for your idea");
@@ -100,6 +108,12 @@ export function Home({ navigate }) {
 
     if (trimmedDescription.length > 500) {
       toast.error("Description must be less than 500 characters");
+      return;
+    }
+
+    // Validate GitHub URL if provided
+    if (trimmedGithubUrl && !trimmedGithubUrl.includes("github.com")) {
+      toast.error("Please enter a valid GitHub URL");
       return;
     }
 
@@ -121,11 +135,17 @@ export function Home({ navigate }) {
         category,
         priority,
         tags: processedTags,
+        isPublic: isPublic,
+        githubUrl: trimmedGithubUrl || null,
+        likes: 0,
+        likedBy: [],
       });
 
       setTitle("");
       setDescription("");
       setTags("");
+      setIsPublic(false);
+      setGithubUrl("");
       setShowForm(false);
     } catch (err) {
       console.error(err);
@@ -142,6 +162,8 @@ export function Home({ navigate }) {
     setEditCategory(idea.category);
     setEditPriority(idea.priority);
     setEditTags(idea.tags || "");
+    setEditIsPublic(idea.isPublic || false);
+    setEditGithubUrl(idea.githubUrl || "");
   };
 
   const cancelEdit = () => {
@@ -151,11 +173,14 @@ export function Home({ navigate }) {
     setEditCategory("");
     setEditPriority("");
     setEditTags("");
+    setEditIsPublic(false);
+    setEditGithubUrl("");
   };
 
   const saveEdit = async (ideaId) => {
     const trimmedTitle = editTitle.trim();
     const trimmedDescription = editDescription.trim();
+    const trimmedGithubUrl = editGithubUrl.trim();
 
     if (!trimmedTitle) {
       toast.error("Please enter a title for your idea");
@@ -177,6 +202,12 @@ export function Home({ navigate }) {
       return;
     }
 
+    // Validate GitHub URL if provided
+    if (trimmedGithubUrl && !trimmedGithubUrl.includes("github.com")) {
+      toast.error("Please enter a valid GitHub URL");
+      return;
+    }
+
     setIsUpdating(true);
 
     try {
@@ -194,6 +225,8 @@ export function Home({ navigate }) {
         category: editCategory,
         priority: editPriority,
         tags: processedTags,
+        isPublic: editIsPublic,
+        githubUrl: trimmedGithubUrl || null,
       });
 
       cancelEdit();
@@ -313,66 +346,113 @@ export function Home({ navigate }) {
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        placeholder="Idea title..."
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        maxLength={100}
-                        className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                        required
-                      />
-                      <select
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                      >
-                        {CATEGORIES.map((cat) => (
-                          <option
-                            key={cat}
-                            value={cat}
-                            className="dark:bg-[#000000] bg-white"
-                          >
-                            {cat}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <div className="space-y-3">
+                      {/* Title + Category */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <input
+                          type="text"
+                          placeholder="Idea title..."
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                          maxLength={100}
+                          className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                          required
+                        />
 
-                    <textarea
-                      placeholder="Describe your idea..."
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      rows={3}
-                      maxLength={500}
-                      className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
-                    />
+                        <select
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value)}
+                          className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                        >
+                          {CATEGORIES.map((cat) => (
+                            <option
+                              key={cat}
+                              value={cat}
+                              className="dark:bg-[#000000] bg-white"
+                            >
+                              {cat}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <select
-                        value={priority}
-                        onChange={(e) => setPriority(e.target.value)}
-                        className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                      >
-                        {PRIORITIES.map((pri) => (
-                          <option
-                            key={pri}
-                            value={pri}
-                            className="dark:bg-[#000000] bg-white"
-                          >
-                            {pri}
-                          </option>
-                        ))}
-                      </select>
-                      <input
-                        type="text"
-                        placeholder="Tags (comma separated, max 10)"
-                        value={tags}
-                        onChange={(e) => setTags(e.target.value)}
-                        maxLength={200}
-                        className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                      {/* Description */}
+                      <textarea
+                        placeholder="Describe your idea..."
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        rows={3}
+                        maxLength={500}
+                        className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent resize-none transition-all duration-200"
                       />
+
+                      {/* Priority + GitHub */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <select
+                          value={priority}
+                          onChange={(e) => setPriority(e.target.value)}
+                          className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                        >
+                          {PRIORITIES.map((pri) => (
+                            <option
+                              key={pri}
+                              value={pri}
+                              className="dark:bg-[#000000] bg-white"
+                            >
+                              {pri}
+                            </option>
+                          ))}
+                        </select>
+
+                        <div className="relative">
+                          <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
+                          <input
+                            type="url"
+                            placeholder="GitHub URL (optional)"
+                            value={githubUrl}
+                            onChange={(e) => setGithubUrl(e.target.value)}
+                            className="w-full text-sm pl-10 pr-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Tags + Toggle */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <input
+                          type="text"
+                          placeholder="Tags (comma separated)"
+                          value={tags}
+                          onChange={(e) => setTags(e.target.value)}
+                          maxLength={200}
+                          className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                        />
+
+                        <div className="flex items-center justify-between px-3 py-2 dark:bg-gray-800/50 bg-gray-50 rounded-lg border-[0.5px] dark:border-gray-700 border-gray-200">
+                          <span className="text-sm dark:text-white text-gray-900">
+                            {isPublic ? "Public" : "Private"}
+                          </span>
+                          <button
+                            onClick={() => setIsPublic(!isPublic)}
+                            className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ${
+                              isPublic
+                                ? "bg-[#FD366E]"
+                                : "bg-gray-300 dark:bg-gray-600"
+                            } cursor-pointer`}
+                            aria-pressed={isPublic}
+                            aria-label="Toggle idea visibility"
+                          >
+                            <span
+                              className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform duration-200 ${
+                                isPublic ? "translate-x-5" : "translate-x-1"
+                              }`}
+                            >
+                              {isPublic && (
+                                <Check className="w-2 h-2 text-[#FD366E] absolute inset-0 m-auto" />
+                              )}
+                            </span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
 
                     <motion.button
@@ -680,67 +760,126 @@ export function Home({ navigate }) {
                           </div>
                         </div>
 
-                        <input
-                          type="text"
-                          value={editTitle}
-                          onChange={(e) => setEditTitle(e.target.value)}
-                          className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                        />
+                        <div className="space-y-4">
+                          {/* Title and Category Row */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input
+                              type="text"
+                              value={editTitle}
+                              onChange={(e) => setEditTitle(e.target.value)}
+                              maxLength={100}
+                              placeholder="Idea title..."
+                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                            />
 
-                        <textarea
-                          value={editDescription}
-                          onChange={(e) => setEditDescription(e.target.value)}
-                          rows={3}
-                          className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
-                        />
+                            <select
+                              value={editCategory}
+                              onChange={(e) => setEditCategory(e.target.value)}
+                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                            >
+                              {CATEGORIES.map((cat) => (
+                                <option
+                                  key={cat}
+                                  value={cat}
+                                  className="dark:bg-black bg-white"
+                                >
+                                  {cat}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <select
-                            value={editCategory}
-                            onChange={(e) => setEditCategory(e.target.value)}
-                            className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                          >
-                            {CATEGORIES.map((cat) => (
-                              <option
-                                key={cat}
-                                value={cat}
-                                className="dark:bg-[#000000] bg-white"
+                          {/* Description */}
+                          <textarea
+                            value={editDescription}
+                            onChange={(e) => setEditDescription(e.target.value)}
+                            rows={3}
+                            maxLength={500}
+                            placeholder="Describe your idea..."
+                            className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent resize-none transition-all duration-200"
+                          />
+
+                          {/* Priority and GitHub URL Row */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <select
+                              value={editPriority}
+                              onChange={(e) => setEditPriority(e.target.value)}
+                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                            >
+                              {PRIORITIES.map((pri) => (
+                                <option
+                                  key={pri}
+                                  value={pri}
+                                  className="dark:bg-black bg-white"
+                                >
+                                  {pri}
+                                </option>
+                              ))}
+                            </select>
+
+                            <div className="relative">
+                              <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
+                              <input
+                                type="url"
+                                placeholder="GitHub URL (optional)"
+                                value={editGithubUrl}
+                                onChange={(e) =>
+                                  setEditGithubUrl(e.target.value)
+                                }
+                                className="w-full text-sm pl-10 pr-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Tags and Public Toggle Row */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input
+                              type="text"
+                              placeholder="Tags (comma separated)"
+                              value={editTags}
+                              onChange={(e) => setEditTags(e.target.value)}
+                              maxLength={200}
+                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                            />
+
+                            <div className="flex items-center justify-between px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200">
+                              <span className="text-sm dark:text-white text-gray-900">
+                                {editIsPublic ? "Public" : "Private"}
+                              </span>
+                              <button
+                                onClick={() => setEditIsPublic(!editIsPublic)}
+                                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ${
+                                  editIsPublic
+                                    ? "bg-[#FD366E]"
+                                    : "bg-gray-300 dark:bg-gray-600"
+                                } cursor-pointer`}
+                                aria-pressed={editIsPublic}
+                                aria-label="Toggle idea visibility"
                               >
-                                {cat}
-                              </option>
-                            ))}
-                          </select>
-                          <select
-                            value={editPriority}
-                            onChange={(e) => setEditPriority(e.target.value)}
-                            className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                          >
-                            {PRIORITIES.map((pri) => (
-                              <option
-                                key={pri}
-                                value={pri}
-                                className="dark:bg-[#000000] bg-white"
-                              >
-                                {pri}
-                              </option>
-                            ))}
-                          </select>
+                                <span
+                                  className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform duration-200 ${
+                                    editIsPublic
+                                      ? "translate-x-5"
+                                      : "translate-x-1"
+                                  }`}
+                                >
+                                  {editIsPublic && (
+                                    <Check className="w-2 h-2 text-[#FD366E] absolute inset-0 m-auto" />
+                                  )}
+                                </span>
+                              </button>
+                            </div>
+                          </div>
                         </div>
-
-                        <input
-                          type="text"
-                          placeholder="Tags (comma separated)"
-                          value={editTags}
-                          onChange={(e) => setEditTags(e.target.value)}
-                          className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                        />
                       </motion.div>
                     ) : (
                       <>
-                        <div className="flex items-start justify-between mb-3">
-                          <h3 className="text-lg md:text-xl font-semibold dark:text-white text-gray-900 group-hover:text-[#FD366E] transition-colors line-clamp-2">
+                        {/* Title + Actions */}
+                        <div className="flex items-start justify-between gap-4 mb-4">
+                          <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white group-hover:text-[#FD366E] transition-colors line-clamp-2">
                             {idea.title}
                           </h3>
+
                           {user.current?.$id === idea.userId && (
                             <div className="flex space-x-2 duration-300">
                               {/* Expand with AI */}
@@ -791,14 +930,17 @@ export function Home({ navigate }) {
                           )}
                         </div>
 
-                        <p className="dark:text-gray-400 text-gray-600 mb-3 text-sm leading-relaxed line-clamp-4">
+                        {/* Description */}
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 leading-relaxed line-clamp-4">
                           {idea.description}
                         </p>
 
-                        <div className="flex flex-wrap gap-2 mb-3">
-                          <span className="bg-[#FD366E]/10 dark:text-white text-gray-900 px-3 py-1 rounded-full text-xs border border-[#FD366E]/30">
+                        {/* Labels */}
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          <span className="bg-[#FD366E]/10 text-[#FD366E] dark:text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30">
                             {idea.category}
                           </span>
+
                           <span
                             className={`px-3 py-1 rounded-full text-xs border ${getPriorityColor(
                               idea.priority
@@ -806,14 +948,25 @@ export function Home({ navigate }) {
                           >
                             {idea.priority}
                           </span>
+
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs border ${
+                              idea.isPublic
+                                ? "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30"
+                                : "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/30"
+                            }`}
+                          >
+                            {idea.isPublic ? "Public" : "Private"}
+                          </span>
                         </div>
 
+                        {/* Tags */}
                         {idea.tags && (
                           <div className="flex flex-wrap gap-2 mb-4">
-                            {idea.tags?.split(",")?.map((tag, i) => (
+                            {idea.tags.split(",").map((tag, i) => (
                               <span
                                 key={i}
-                                className="dark:bg-gray-800/50 bg-gray-100 dark:text-gray-300 text-gray-700 px-2 py-1 rounded-md text-xs flex items-center"
+                                className="flex items-center text-xs px-2 py-1 rounded-md bg-gray-100 text-gray-700 dark:bg-gray-800/50 dark:text-gray-300"
                               >
                                 <Tag className="w-3 h-3 mr-1" />
                                 {tag.trim()}
@@ -822,10 +975,26 @@ export function Home({ navigate }) {
                           </div>
                         )}
 
-                        <span className="flex text-sm items-center dark:text-gray-400 text-gray-600 gap-2">
-                          <Calendar className="w-4 h-4" />
-                          {moment(idea.$createdAt).format("MMM D, YYYY")}
-                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center mb-3">
+                          {/* GitHub */}
+                          {idea.githubUrl && (
+                            <a
+                              href={idea.githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 text-[#FD366E] hover:text-[#FD366E]/80 text-sm"
+                            >
+                              <Github className="w-4 h-4" />
+                              View on GitHub
+                            </a>
+                          )}
+
+                          {/* Created Date */}
+                          <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2 sm:justify-end">
+                            <Calendar className="w-4 h-4" />
+                            {moment(idea.$createdAt).format("MMM D, YYYY")}
+                          </div>
+                        </div>
                       </>
                     )}
                   </motion.div>
