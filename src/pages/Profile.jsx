@@ -223,7 +223,7 @@ export function Profile({ navigate }) {
               <p className="text-gray-600 dark:text-gray-400 text-xs">
                 Total Ideas
               </p>
-              <p className="text-gray-900 dark:text-white font-bold">
+              <p className="text-gray-900 dark:text-white font-medium">
                 {stats.totalIdeas}
               </p>
             </div>
@@ -236,7 +236,7 @@ export function Profile({ navigate }) {
               <p className="text-gray-600 dark:text-gray-400 text-xs">
                 Categories
               </p>
-              <p className="text-gray-900 dark:text-white font-bold">
+              <p className="text-gray-900 dark:text-white font-medium">
                 {Object.keys(stats.categories).length}
               </p>
             </div>
@@ -249,7 +249,7 @@ export function Profile({ navigate }) {
               <p className="text-gray-600 dark:text-gray-400 text-xs">
                 Ideas/Month
               </p>
-              <p className="text-gray-900 dark:text-white font-bold">
+              <p className="text-gray-900 dark:text-white font-medium">
                 {stats.totalIdeas > 0
                   ? Math.round(
                       stats.totalIdeas /
@@ -275,7 +275,7 @@ export function Profile({ navigate }) {
         >
           <div className="bg-white dark:bg-[#000000] border border-gray-200 dark:border-gray-800 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white flex items-center">
                 <PieChart className="w-5 h-5 mr-2 text-[#FD366E]" />
                 Categories
               </h3>
@@ -330,7 +330,7 @@ export function Profile({ navigate }) {
           </div>
 
           <div className="bg-white dark:bg-[#000000] border border-gray-200 dark:border-gray-800 rounded-2xl p-5">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center mb-4">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white flex items-center mb-4">
               <Clock className="w-5 h-5 mr-2 text-[#FD366E]" />
               Recent Ideas
             </h3>

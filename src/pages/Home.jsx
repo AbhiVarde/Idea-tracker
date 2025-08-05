@@ -290,7 +290,7 @@ export function Home({ navigate }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold dark:text-white text-gray-900 mb-3 tracking-wide">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-medium dark:text-white text-gray-900 mb-3 tracking-wide">
             Your Creative{" "}
             <FlipWords
               words={WORDS}
@@ -334,7 +334,7 @@ export function Home({ navigate }) {
                 >
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="flex justify-between items-center">
-                      <h2 className="text-2xl font-bold dark:text-white text-gray-900">
+                      <h2 className="text-2xl font-medium dark:text-white text-gray-900">
                         New Idea
                       </h2>
                       <button
@@ -563,7 +563,7 @@ export function Home({ navigate }) {
                     <motion.span
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="bg-[#FD366E] text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1.5 ml-1"
+                      className="bg-[#FD366E] text-white text-xs font-medium rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1.5 ml-1"
                     >
                       {activeFiltersCount}
                     </motion.span>
@@ -676,8 +676,8 @@ export function Home({ navigate }) {
 
         {/* Ideas List */}
         <section>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold dark:text-white text-gray-900">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-medium dark:text-white text-gray-900">
               Ideas ({filteredIdeas.length})
             </h2>
           </div>
@@ -714,7 +714,7 @@ export function Home({ navigate }) {
                 {filteredIdeas.map((idea, index) => (
                   <motion.div
                     key={idea.$id}
-                    className="dark:bg-[#000000] bg-white rounded-2xl p-5 dark:border-gray-800 border-gray-200 border hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
+                    className="dark:bg-[#000000] bg-white rounded-2xl p-4 dark:border-gray-800 border-gray-200 border hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -875,8 +875,8 @@ export function Home({ navigate }) {
                     ) : (
                       <>
                         {/* Title + Actions */}
-                        <div className="flex items-start justify-between gap-4 mb-4">
-                          <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white group-hover:text-[#FD366E] transition-colors line-clamp-2">
+                        <div className="flex items-start justify-between gap-4 mb-2.5">
+                          <h3 className="text-lg md:text-xl font-medium text-gray-900 dark:text-white group-hover:text-[#FD366E] transition-colors line-clamp-2">
                             {idea.title}
                           </h3>
 
@@ -931,12 +931,12 @@ export function Home({ navigate }) {
                         </div>
 
                         {/* Description */}
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 leading-relaxed line-clamp-4">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2.5 leading-relaxed line-clamp-4">
                           {idea.description}
                         </p>
 
                         {/* Labels */}
-                        <div className="flex flex-wrap gap-2 mb-4">
+                        <div className="flex flex-wrap gap-2 mb-2.5">
                           <span className="bg-[#FD366E]/10 text-[#FD366E] dark:text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30">
                             {idea.category}
                           </span>
@@ -962,7 +962,7 @@ export function Home({ navigate }) {
 
                         {/* Tags */}
                         {idea.tags && (
-                          <div className="flex flex-wrap gap-2 mb-4">
+                          <div className="flex flex-wrap gap-2 mb-2.5">
                             {idea.tags.split(",").map((tag, i) => (
                               <span
                                 key={i}

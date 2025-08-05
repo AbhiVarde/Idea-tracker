@@ -95,13 +95,21 @@ function AnnouncementBar() {
                       <span>🎉</span>
                       <span>Featured by Appwrite</span>
                     </div>
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                    <h2 className="text-xl font-medium text-gray-900 dark:text-white mb-2">
                       Community Recognition
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">
                       Our Idea Tracker has been selected as part of Appwrite's
                       Monthly Community Recognition program.
                     </p>
+                    <a
+                      href="https://appwrite.io/blog/post/product-update-july-2025"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-[#FD366E] hover:underline font-medium"
+                    >
+                      Read the official blog post →
+                    </a>
                   </div>
 
                   <div className="rounded-xl overflow-hidden shadow-lg relative">

@@ -249,7 +249,7 @@ const NotificationPreferences = ({ isOpen, onClose }) => {
             <div className="w-12 h-12 bg-[#FD366E]/10 rounded-full flex items-center justify-center mx-auto mb-3">
               <Bell className="w-6 h-6 text-[#FD366E]" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            <h2 className="text-xl font-medium text-gray-900 dark:text-white mb-2">
               Notifications
             </h2>
             <p className="text-gray-600 dark:text-gray-400 text-sm">
