@@ -169,7 +169,7 @@ function Navbar({ navigate, currentPage }) {
           <div className="flex flex-row sm:items-center justify-between gap-2 sm:gap-0 py-4 sm:py-0">
             <motion.button
               onClick={() => navigate("home")}
-              className="flex items-center space-x-3 text-gray-900 dark:text-white font-bold text-xl"
+              className="flex items-center space-x-3 text-gray-900 dark:text-white font-medium text-xl"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2 }}
