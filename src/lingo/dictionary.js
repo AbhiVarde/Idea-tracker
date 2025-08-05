@@ -26,6 +26,9 @@ export default {
         "3/body/8/argument/3/1/expression/right/1/1/3/1/1/1": {
           content: {
             de: "🎉",
+            en: "🎉",
+            es: "🎉",
+            fr: "🎉",
             ru: "🎉",
           },
           hash: "36ec11b729d6796f24f144c147dd8425",
@@ -33,6 +36,9 @@ export default {
         "3/body/8/argument/3/1/expression/right/1/1/3/1/1/3": {
           content: {
             de: "Vorgestellt von Appwrite",
+            en: "Featured by Appwrite",
+            es: "Destacado por Appwrite",
+            fr: "Présenté par Appwrite",
             ru: "Признан Appwrite",
           },
           hash: "cf30aa3fa48dd0e32099859730f48f87",
@@ -114,6 +120,8 @@ export default {
         "3/body/1/argument/1/1/1/1/1/3/3": {
           content: {
             de: "60+",
+            en: "60+",
+            es: "60+",
             fr: "60+",
             ru: "60+",
           },
@@ -399,13 +407,22 @@ export default {
             },
             hash: "4c84596262378c92950819a157a17a06",
           },
-        "6/0/init/body/14/argument/1/1/5/5": {
+        "6/0/init/body/14/argument/1/1/5/1/5": {
           content: {
+            de: "Mitglied seit <function:moment/>",
+            en: "Member since <function:moment/>",
+            es: "Miembro desde <function:moment/>",
+            fr: "Membre depuis <function:moment/>",
             ru: "Член с <function:moment/>",
           },
+          hash: "519ea4fe2e1329e27bab07f85a2036bf",
         },
         "6/0/init/body/14/argument/1/1/5/5/1/3": {
           content: {
+            de: "Konto löschen",
+            en: "Delete Account",
+            es: "Eliminar cuenta",
+            fr: "Supprimer le compte",
             ru: "Удалить аккаунт",
           },
           hash: "af4cedd627b62eba652c8b06c837707a",
@@ -488,6 +505,8 @@ export default {
         "9/0/init/body/15/argument/1/1/3/5": {
           content: {
             de: "Verwalten Sie Ihre Benachrichtigungseinstellungen",
+            en: "Manage your notification preferences",
+            es: "Gestiona tus preferencias de notificaciones",
             fr: "Gérez vos préférences de notification",
             ru: "Управляйте предпочтениями уведомлений",
           },
@@ -614,6 +633,10 @@ export default {
         },
         "12/declaration/body/36/argument/1/3/expression/alternate/1/3": {
           content: {
+            de: "Loslegen",
+            en: "Get Started",
+            es: "Empezar",
+            fr: "Commencer",
             ru: "Начать",
           },
           hash: "e93eaeedbad5df95c8cd88af4c5d106b",
@@ -632,6 +655,8 @@ export default {
           {
             content: {
               de: "Neue Idee",
+              en: "New Idea",
+              es: "Nueva idea",
               fr: "Nouvelle idée",
               ru: "Новая идея",
             },
@@ -641,6 +666,8 @@ export default {
           {
             content: {
               de: "GitHub-URL (optional)",
+              en: "GitHub URL (optional)",
+              es: "URL de GitHub (opcional)",
               fr: "URL GitHub (facultatif)",
               ru: "URL GitHub (необязательно)",
             },
@@ -650,6 +677,8 @@ export default {
           {
             content: {
               de: "Schlüsselwörter (durch Kommas getrennt)",
+              en: "Tags (comma separated)",
+              es: "Etiquetas (separadas por comas)",
               fr: "Étiquettes (séparées par des virgules)",
               ru: "Теги (через запятую)",
             },
@@ -659,6 +688,8 @@ export default {
           {
             content: {
               de: "Ideen-Sichtbarkeit umschalten",
+              en: "Toggle idea visibility",
+              es: "Alternar visibilidad de la idea",
               fr: "Basculer la visibilité de l'idée",
               ru: "Переключить видимость идеи",
             },
@@ -668,6 +699,8 @@ export default {
           {
             content: {
               de: "Ideen-Titel...",
+              en: "Idea title...",
+              es: "Título de la idea...",
               fr: "Titre de l'idée...",
               ru: "Заголовок идеи...",
             },
@@ -677,6 +710,8 @@ export default {
           {
             content: {
               de: "Beschreiben Sie Ihre Idee...",
+              en: "Describe your idea...",
+              es: "Describe tu idea...",
               fr: "Décrivez votre idée...",
               ru: "Опишите вашу идею...",
             },
@@ -724,6 +759,16 @@ export default {
             ru: "Поиск идей по заголовку или описанию...",
           },
           hash: "cd6feb04f8c1923349550d916d1bcecc",
+        },
+        "12/declaration/body/36/argument/1/5/1/3/3": {
+          content: {
+            de: "Filter",
+            en: "Filters",
+            es: "Filtros",
+            fr: "Filtres",
+            ru: "Фильтры",
+          },
+          hash: "acf5accc113ff3c1992688058576732c",
         },
         "12/declaration/body/36/argument/1/5/3/1/expression/right/1/1/1/1": {
           content: {
@@ -786,11 +831,6 @@ export default {
             },
             hash: "0097484dac30bacc43dc773c96fddfbe",
           },
-        "12/declaration/body/36/argument/1/5/3/3": {
-          content: {
-            ru: "Фильтры",
-          },
-        },
         "12/declaration/body/36/argument/1/9/1/1": {
           content: {
             de: "Ideen ({filteredIdeas.length})",
@@ -801,13 +841,237 @@ export default {
           },
           hash: "2f5ac9c8d6d350b156d9108ec5d341d6",
         },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/17/3/expression/right":
+          {
+            content: {
+              de: "<element:Github></element:Github> Auf GitHub anzeigen",
+              en: "<element:Github></element:Github> View on GitHub",
+              es: "<element:Github></element:Github> Ver en GitHub",
+              fr: "<element:Github></element:Github> Voir sur GitHub",
+              ru: "<element:Github></element:Github> Просмотреть на GitHub",
+            },
+            hash: "d43da3c4d08cc0a4a234980eed4ede91",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/11/3":
+          {
+            content: {
+              de: "Löschen",
+              en: "Delete",
+              es: "Eliminar",
+              fr: "Supprimer",
+              ru: "Удалить",
+            },
+            hash: "57e524cb226075959bda5325cf3e6af3",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/3/3":
+          {
+            content: {
+              de: "Mit KI erweitern",
+              en: "Expand with AI",
+              es: "Expandir con IA",
+              fr: "Étendre avec l'IA",
+              ru: "Расширить с помощью ИИ",
+            },
+            hash: "f79184ba60edb9238926bb3e85e4d188",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/7/3":
+          {
+            content: {
+              de: "Bearbeiten",
+              en: "Edit",
+              es: "Editar",
+              fr: "Éditer",
+              ru: "Редактировать",
+            },
+            hash: "cb3334d81b5c59b864d88b73aa694617",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/1":
+          {
+            content: {
+              de: "Idee bearbeiten",
+              en: "Edit Idea",
+              es: "Editar idea",
+              fr: "Éditer l'idée",
+              ru: "Редактировать идею",
+            },
+            hash: "8662ae6135bd08a0dbf7d6e0300b7304",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/alternate":
+          {
+            content: {
+              de: "Speichern",
+              en: "Save",
+              es: "Guardar",
+              fr: "Enregistrer",
+              ru: "Сохранить",
+            },
+            hash: "f7a2929f33bc420195e59ac5a8bcd454",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/consequent/3":
+          {
+            content: {
+              de: "Speichern...",
+              en: "Saving...",
+              es: "Guardando...",
+              fr: "Enregistrement en cours...",
+              ru: "Сохранение...",
+            },
+            hash: "7cb2d8f012d57db8a62187b65ef164dc",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/11/3/3-placeholder":
+          {
+            content: {
+              de: "GitHub-URL (optional)",
+              en: "GitHub URL (optional)",
+              es: "URL de GitHub (opcional)",
+              fr: "URL GitHub (facultatif)",
+              ru: "URL GitHub (необязательно)",
+            },
+            hash: "b6b3262243193f9bb58cb8a4c2787464",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/1-placeholder":
+          {
+            content: {
+              de: "Schlüsselwörter (durch Kommas getrennt)",
+              en: "Tags (comma separated)",
+              es: "Etiquetas (separadas por comas)",
+              fr: "Étiquettes (séparées par des virgules)",
+              ru: "Теги (через запятую)",
+            },
+            hash: "95425547ea1e92e54819ea5d2acb6e1c",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/3/3-aria-label":
+          {
+            content: {
+              de: "Ideen-Sichtbarkeit umschalten",
+              en: "Toggle idea visibility",
+              es: "Alternar visibilidad de la idea",
+              fr: "Basculer la visibilité de l'idée",
+              ru: "Переключить видимость идеи",
+            },
+            hash: "552bfded7136252e62bc96870e372ae4",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/3/1-placeholder":
+          {
+            content: {
+              de: "Ideen-Titel...",
+              en: "Idea title...",
+              es: "Título de la idea...",
+              fr: "Titre de l'idée...",
+              ru: "Заголовок идеи...",
+            },
+            hash: "d0abd69c81b4462ebc9b9ce22fbb5ebd",
+          },
+        "12/declaration/body/36/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/7-placeholder":
+          {
+            content: {
+              de: "Beschreiben Sie Ihre Idee...",
+              en: "Describe your idea...",
+              es: "Describe tu idea...",
+              fr: "Décrivez votre idée...",
+              ru: "Опишите вашу идею...",
+            },
+            hash: "77122091e805382ec8185acace31d69e",
+          },
+        "12/declaration/body/36/argument/3/expression/right/1/1/3/1": {
+          content: {
+            de: "Idee löschen",
+            en: "Delete Idea",
+            es: "Eliminar idea",
+            fr: "Supprimer l'idée",
+            ru: "Удалить идею",
+          },
+          hash: "703fb782546ee10b1747c437b0a6edfe",
+        },
+        "12/declaration/body/36/argument/3/expression/right/1/1/3/3": {
+          content: {
+            de: "Diese Aktion kann nicht rückgängig gemacht werden",
+            en: "This action cannot be undone",
+            es: "Esta acción no puede ser deshecha",
+            fr: "Cette action ne peut pas être annulée",
+            ru: "Данное действие нельзя отменить",
+          },
+          hash: "c8ff304eb731db3d216916eff4b6062e",
+        },
+        "12/declaration/body/36/argument/3/expression/right/1/3/1": {
+          content: {
+            de: 'Sind Sie sicher, dass Sie <element:span>"<expression/> "</element:span> löschen möchten?',
+            en: 'Are you sure you want to delete <element:span>"<expression/> "</element:span> ?',
+            es: '¿Estás seguro de que deseas eliminar <element:span>"<expression/> "</element:span> ?',
+            fr: 'Êtes-vous sûr de vouloir supprimer <element:span>"<expression/> "</element:span> ?',
+            ru: 'Вы уверены, что хотите удалить <element:span>"<expression/> "</element:span> ?',
+          },
+          hash: "b6a657fe1c12d75a4080782612ff94d7",
+        },
+        "12/declaration/body/36/argument/3/expression/right/1/5/1": {
+          content: {
+            de: "Abbrechen",
+            en: "Cancel",
+            es: "Cancelar",
+            fr: "Annuler",
+            ru: "Отмена",
+          },
+          hash: "5936f87dccc089542c7871a72ed1dacf",
+        },
+        "12/declaration/body/36/argument/3/expression/right/1/5/3": {
+          content: {
+            de: "Löschen",
+            en: "Delete",
+            es: "Eliminar",
+            fr: "Supprimer",
+            ru: "Удалить",
+          },
+          hash: "63d42bb73343bb4599cbf2893584b6e2",
+        },
       },
     },
     "pages/Login.jsx": {
       entries: {
+        "7/declaration/body/16/argument/1/1/1": {
+          content: {
+            de: "Willkommen bei Idea Tracker",
+            en: "Welcome to Idea Tracker",
+            es: "Bienvenido a Tracker de ideas",
+            fr: "Bienvenue sur Idea Tracker",
+            ru: "Добро пожаловать в Idea Tracker",
+          },
+          hash: "cd270068759114df4ac100290154f681",
+        },
+        "7/declaration/body/16/argument/1/1/3": {
+          content: {
+            de: "Professionelles Ideenmanagement für Entwickler",
+            en: "Professional idea management for developers",
+            es: "Gestión de ideas profesional para desarrolladores",
+            fr: "Gestion professionnelle d'idées pour les développeurs",
+            ru: "Профессиональное управление идеями для разработчиков",
+          },
+          hash: "1f098a0f2c03ed8b2ea0fb65393167e1",
+        },
+        "7/declaration/body/16/argument/1/3/1/1": {
+          content: {
+            de: "Registrieren oder anmelden mit Ihrem bevorzugten Verfahren",
+            en: "Sign up or sign in with your preferred method",
+            es: "Regístrate o inicia sesión con tu método preferido",
+            fr: "Inscrivez-vous ou connectez-vous avec votre méthode préférée",
+            ru: "Зарегистрируйтесь или войдите с помощью предпочитаемого метода",
+          },
+          hash: "69d8b4b96af1c9eab1f173ed3b5a9843",
+        },
+        "7/declaration/body/16/argument/1/3/1/3/1/3": {
+          content: {
+            de: "Google",
+            en: "Google",
+            es: "Google",
+            fr: "Google",
+            ru: "Google",
+          },
+          hash: "6cc462fb53d90d404f48d5a6695c1de1",
+        },
         "7/declaration/body/16/argument/1/3/1/3/3/3": {
           content: {
             de: "GitHub",
+            en: "GitHub",
+            es: "GitHub",
             fr: "GitHub",
             ru: "GitHub",
           },
@@ -1102,12 +1366,6 @@ export default {
               ru: "{percentage}% • {count}",
             },
             hash: "4900c82b71a3f3cfe1fa00edbee050a0",
-          },
-        "7/declaration/body/8/argument/1/5/1/3/expression/consequent/1/expression/0/body/1/argument/1/5":
-          {
-            content: {
-              ru: "{percentage}% • {count}",
-            },
           },
         "7/declaration/body/8/argument/1/5/3/1": {
           content: {

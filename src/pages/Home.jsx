@@ -332,9 +332,9 @@ export function Home({ navigate }) {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <h2 className="text-2xl font-medium dark:text-white text-gray-900">
+                      <h2 className="text-xl font-medium dark:text-white text-gray-900">
                         New Idea
                       </h2>
                       <button

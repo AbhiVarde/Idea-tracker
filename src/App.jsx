@@ -81,7 +81,7 @@ function AppContent() {
 
   return (
     <div
-      className="min-h-screen bg-[#f4f4f7] dark:bg-[#000000] text-gray-900 dark:text-white transition-colors duration-300"
+      className="min-h-screen bg-[#f4f4f7] dark:bg-[#000000] text-gray-900 dark:text-white transition-colors duration-300 flex flex-col"
       data-theme={theme}
     >
       <UserProvider>
@@ -90,7 +90,9 @@ function AppContent() {
             <Navbar navigate={navigate} currentPage={currentPage} />
           )}
 
-          <main className="container mx-auto p-4">
+          <main
+            className={`flex-grow ${currentPage !== "404" ? "container mx-auto p-4" : ""}`}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentPage}
@@ -98,13 +100,17 @@ function AppContent() {
                 animate="in"
                 exit="out"
                 variants={pageVariants}
-                className="min-h-[calc(100vh-140px)]"
+                className="h-full"
               >
                 {currentPage === "login" && <Login navigate={navigate} />}
                 {currentPage === "profile" && <Profile navigate={navigate} />}
                 {currentPage === "home" && <Home navigate={navigate} />}
                 {currentPage === "discover" && <Discover navigate={navigate} />}
-                {currentPage === "404" && <NotFound navigate={navigate} />}
+                {currentPage === "404" && (
+                  <div className="h-full flex items-center justify-center">
+                    <NotFound navigate={navigate} />
+                  </div>
+                )}
               </motion.div>
             </AnimatePresence>
           </main>
