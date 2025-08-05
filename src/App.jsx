@@ -90,7 +90,7 @@ function AppContent() {
             <Navbar navigate={navigate} currentPage={currentPage} />
           )}
 
-          <main className="container mx-auto px-4 py-4 sm:py-6">
+          <main className="container mx-auto p-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentPage}
