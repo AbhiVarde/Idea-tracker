@@ -334,7 +334,7 @@ export function Home({ navigate }) {
                 >
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <h2 className="text-xl font-medium dark:text-white text-gray-900">
+                      <h2 className="text-lg font-medium dark:text-white text-gray-900">
                         New Idea
                       </h2>
                       <button
@@ -731,7 +731,7 @@ export function Home({ navigate }) {
                         className="space-y-4"
                       >
                         <div className="flex items-center justify-between mb-4">
-                          <h3 className="text-lg font-semibold dark:text-white text-gray-900">
+                          <h3 className="text-lg font-medium dark:text-white text-gray-900">
                             Edit Idea
                           </h3>
                           <div className="flex space-x-2">
@@ -876,7 +876,7 @@ export function Home({ navigate }) {
                       <>
                         {/* Title + Actions */}
                         <div className="flex items-start justify-between gap-4 mb-2.5">
-                          <h3 className="text-lg md:text-xl font-medium text-gray-900 dark:text-white group-hover:text-[#FD366E] transition-colors line-clamp-2">
+                          <h3 className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-[#FD366E] transition-colors line-clamp-2">
                             {idea.title}
                           </h3>
 
