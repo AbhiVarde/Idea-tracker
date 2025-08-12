@@ -3,7 +3,7 @@ import { useUser } from "../lib/context/user";
 import { useIdeas } from "../lib/context/ideas";
 import { motion, AnimatePresence } from "framer-motion";
 import moment from "moment";
-import { Tag, Calendar, Heart, Github, Compass } from "lucide-react";
+import { Heart, Github, Compass } from "lucide-react";
 
 const CATEGORIES = [
   "Web App",
@@ -54,26 +54,17 @@ export function Discover({ navigate }) {
     }
 
     try {
-      await toggleLike(ideaId);
-      const updatedIdeas = await fetchPublicIdeas();
-      setPublicIdeas(updatedIdeas);
+      await toggleLike(ideaId, publicIdeas, setPublicIdeas);
     } catch (error) {
       console.error("Failed to toggle like:", error);
     }
   };
 
-  const getAvatarContent = (userEmail, userName) => {
+  const getAvatarContent = (userName) => {
     if (userName) {
       return userName
         .split(" ")
         .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2);
-    } else if (userEmail) {
-      const emailParts = userEmail.split("@")[0].split(".");
-      return emailParts
-        .map((part) => part[0])
         .join("")
         .toUpperCase()
         .slice(0, 2);
@@ -168,7 +159,7 @@ export function Discover({ navigate }) {
                 {filteredIdeas.map((idea, index) => (
                   <motion.div
                     key={idea.$id}
-                    className="bg-white dark:bg-black border dark:border-gray-800 border-gray-200 rounded-xl p-4 hover:shadow-sm transition"
+                    className="bg-white dark:bg-black border dark:border-gray-800 border-gray-200 rounded-xl p-4 hover:shadow-sm transition flex flex-col"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2, delay: index * 0.02 }}
@@ -184,15 +175,15 @@ export function Discover({ navigate }) {
                           />
                         ) : (
                           <div className="w-7 h-7 rounded-full bg-[#FD366E] text-white text-xs font-medium flex items-center justify-center">
-                            {getAvatarContent(idea.userEmail, idea.userName)}
+                            {getAvatarContent(idea.userName)}
                           </div>
                         )}
                         <div className="leading-tight">
                           <p className="text-sm font-medium text-gray-900 dark:text-white">
                             {idea.userName || "Anonymous"}
                           </p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400 truncate w-[140px]">
-                            {idea.userEmail || "No email"}
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {moment(idea.$createdAt).format("MMM D")}
                           </p>
                         </div>
                       </div>
@@ -218,22 +209,22 @@ export function Discover({ navigate }) {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1 line-clamp-2">
+                    <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1 break-words break-all min-w-0 leading-snug line-clamp-2">
                       {idea.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-3">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 break-words break-all min-w-0 leading-snug line-clamp-3">
                       {idea.description}
                     </p>
 
                     {/* Footer */}
-                    <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2 border-t border-gray-100 dark:border-gray-800">
-                      <span className="bg-[#FD366E]/10 text-[#FD366E] px-2 py-0.5 rounded-full">
+                    <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2 border-t border-gray-100 dark:border-gray-800 gap-2 min-w-0">
+                      <span className="bg-[#FD366E]/10 text-[#FD366E] px-2 py-0.5 rounded-full truncate break-words break-all min-w-0 max-w-[50%]">
                         {idea.category}
                       </span>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 shrink-0">
                         {idea.githubUrl && (
                           <a
                             href={idea.githubUrl}
@@ -241,13 +232,9 @@ export function Discover({ navigate }) {
                             rel="noopener noreferrer"
                             className="text-[#FD366E] hover:underline flex items-center gap-1"
                           >
-                            <Github className="w-4 h-4" />
+                            <Github className="w-4 h-4 shrink-0" />
                           </a>
                         )}
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-3.5 h-3.5" />
-                          {moment(idea.$createdAt).format("MMM D, YYYY")}
-                        </span>
                       </div>
                     </div>
                   </motion.div>

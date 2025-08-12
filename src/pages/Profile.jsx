@@ -343,12 +343,12 @@ export function Profile({ navigate }) {
                     className="p-3 bg-gray-50 dark:bg-[#0F0F0F] border border-gray-200 dark:border-gray-800 rounded-lg"
                     whileHover={{ y: -2 }}
                   >
-                    <div className="flex justify-between items-start">
-                      <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+                    <div className="flex justify-between items-start gap-2 min-w-0">
+                      <h4 className="font-medium text-gray-900 dark:text-white text-sm break-words break-all min-w-0">
                         {idea.title}
                       </h4>
                       <span
-                        className={`text-xs px-2 py-0.5 rounded-full ${
+                        className={`text-xs px-2 py-0.5 rounded-full shrink-0 ${
                           idea.priority === "High"
                             ? "bg-red-500/20 text-red-600 dark:text-red-300"
                             : idea.priority === "Medium"
@@ -359,11 +359,12 @@ export function Profile({ navigate }) {
                         {idea.priority || "Medium"}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center mt-2">
-                      <span className="text-xs text-gray-600 dark:text-gray-400">
+
+                    <div className="flex justify-between items-center mt-2 gap-2 min-w-0">
+                      <span className="text-xs text-gray-600 dark:text-gray-400 shrink-0">
                         {moment(idea.$createdAt).format("MMM D, YYYY")}
                       </span>
-                      <span className="text-xs bg-[#fd366e0a] border border-[#FD366E]/20 text-[#FD366E] px-2 py-0.5 rounded">
+                      <span className="text-xs bg-[#fd366e0a] border border-[#FD366E]/20 text-[#FD366E] px-2 py-0.5 rounded break-words break-all min-w-0">
                         {idea.category || "Web App"}
                       </span>
                     </div>

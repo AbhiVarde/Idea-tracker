@@ -173,7 +173,7 @@ export function IdeasProvider({ children }) {
           ...idea,
           userId: user.$id,
           userName: user.name || "",
-          userEmail: user.email || "",
+          // userEmail: user.email || "",
           userProfilePicture:
             getProfilePictureUrl(user.prefs.profilePictureId) || "",
         }
@@ -208,7 +208,7 @@ export function IdeasProvider({ children }) {
       const finalUpdatedIdea = {
         ...updatedIdea,
         userName: user.name || "",
-        userEmail: user.email || "",
+        // userEmail: user.email || "",
         userProfilePicture:
           getProfilePictureUrl(user.prefs.profilePictureId) || "",
       };
@@ -314,15 +314,19 @@ export function IdeasProvider({ children }) {
     }
   }
 
-  async function toggleLike(ideaId) {
+  async function toggleLike(
+    ideaId,
+    externalIdeas = null,
+    setExternalIdeas = null
+  ) {
     if (!user) {
       toast.error("Please log in to like ideas");
       return;
     }
 
     try {
-      // Get current idea
-      const currentIdea = ideas.find((idea) => idea.$id === ideaId);
+      const targetIdeas = externalIdeas || ideas;
+      const currentIdea = targetIdeas.find((idea) => idea.$id === ideaId);
       if (!currentIdea) return;
 
       const likedBy = currentIdea.likedBy || [];
@@ -341,12 +345,39 @@ export function IdeasProvider({ children }) {
         newLikes = (currentIdea.likes || 0) + 1;
       }
 
-      await update(ideaId, {
-        likes: newLikes,
-        likedBy: newLikedBy,
-      });
+      // Update database
+      await databases.updateDocument(
+        IDEAS_DATABASE_ID,
+        IDEAS_COLLECTION_ID,
+        ideaId,
+        {
+          likes: newLikes,
+          likedBy: newLikedBy,
+        }
+      );
 
-      return !hasLiked; // Return new like status
+      // Update appropriate state based on context
+      if (externalIdeas && setExternalIdeas) {
+        // Update external state (for public ideas in Discover)
+        setExternalIdeas((prev) =>
+          prev.map((idea) =>
+            idea.$id === ideaId
+              ? { ...idea, likes: newLikes, likedBy: newLikedBy }
+              : idea
+          )
+        );
+      } else {
+        // Update internal state (for user's own ideas in Home)
+        setIdeas((prev) =>
+          prev.map((idea) =>
+            idea.$id === ideaId
+              ? { ...idea, likes: newLikes, likedBy: newLikedBy }
+              : idea
+          )
+        );
+      }
+
+      return !hasLiked;
     } catch (err) {
       console.error("Toggle like error:", err);
       toast.error("Failed to update like. Please try again.");

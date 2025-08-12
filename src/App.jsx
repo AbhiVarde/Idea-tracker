@@ -17,12 +17,14 @@ const validRoutes = ["/", "/login", "/profile", "/discover"];
 function AppContent() {
   const [currentPage, setCurrentPage] = useState("home");
   const { theme } = useTheme();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const path = window.location.pathname;
 
     if (!validRoutes.includes(path)) {
       setCurrentPage("404");
+      setLoading(false);
       return;
     }
 
@@ -45,6 +47,9 @@ function AppContent() {
     };
 
     window.addEventListener("popstate", handlePopState);
+
+    setLoading(false);
+
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
@@ -78,6 +83,20 @@ function AppContent() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
+
+  if (loading) {
+    return (
+      <div
+        className="min-h-screen bg-[#f4f4f7] dark:bg-[#000000] flex flex-col items-center justify-center text-gray-900 dark:text-white"
+        data-theme={theme}
+      >
+        <div className="w-6 h-6 border-2 border-[#FD366E]/30 border-t-[#FD366E] rounded-full animate-spin mb-3"></div>
+        <p className="text-sm opacity-80">
+          Hang tight… warming up your ideas ✨
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div

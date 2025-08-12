@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "../lib/context/user";
 import { useIdeas } from "../lib/context/ideas";
 import { motion, AnimatePresence } from "framer-motion";
@@ -67,7 +67,7 @@ export function Home({ navigate }) {
   const [editPriority, setEditPriority] = useState("");
   const [editTags, setEditTags] = useState("");
 
-  const [isPublic, setIsPublic] = useState(true);
+  const [isPublic, setIsPublic] = useState(false);
   const [githubUrl, setGithubUrl] = useState("");
   const [editIsPublic, setEditIsPublic] = useState(false);
   const [editGithubUrl, setEditGithubUrl] = useState("");
@@ -78,6 +78,18 @@ export function Home({ navigate }) {
 
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [selectedIdea, setSelectedIdea] = useState(null);
+
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        if (deleteConfirm) setDeleteConfirm(null);
+        if (aiModalOpen) setAiModalOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [deleteConfirm, aiModalOpen]);
 
   const handleAIExpansion = (idea) => {
     setSelectedIdea(idea);
@@ -106,6 +118,12 @@ export function Home({ navigate }) {
       return;
     }
 
+    // Validate description length
+    if (trimmedDescription.length < 10 && trimmedDescription.length > 0) {
+      toast.error("Description must be at least 10 characters if provided");
+      return;
+    }
+
     if (trimmedDescription.length > 500) {
       toast.error("Description must be less than 500 characters");
       return;
@@ -117,6 +135,30 @@ export function Home({ navigate }) {
       return;
     }
 
+    // Validate GitHub URL length
+    if (trimmedGithubUrl.length > 200) {
+      toast.error("GitHub URL must be less than 200 characters");
+      return;
+    }
+
+    // Validate individual tags
+    const tagArray = tags
+      ?.split(",")
+      ?.map((tag) => tag.trim())
+      ?.filter(Boolean);
+    if (tagArray?.some((tag) => tag.length > 20)) {
+      toast.error("Each tag must be 20 characters or less");
+      return;
+    }
+    if (tagArray?.some((tag) => tag.length < 2 && tag.length > 0)) {
+      toast.error("Each tag must be at least 2 characters");
+      return;
+    }
+    if (tagArray?.length > 5) {
+      toast.error("Maximum 5 tags allowed");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -125,7 +167,7 @@ export function Home({ navigate }) {
         ?.map((tag) => tag.trim())
         ?.filter(Boolean)
         ?.filter((tag) => tag.length <= 20)
-        ?.slice(0, 10)
+        ?.slice(0, 5)
         ?.join(",");
 
       await ideas.add({
@@ -155,6 +197,97 @@ export function Home({ navigate }) {
     }
   };
 
+  const saveEdit = async (ideaId) => {
+    const trimmedTitle = editTitle.trim();
+    const trimmedDescription = editDescription.trim();
+    const trimmedGithubUrl = editGithubUrl.trim();
+
+    if (!trimmedTitle) {
+      toast.error("Please enter a title for your idea");
+      return;
+    }
+
+    if (trimmedTitle.length < 3) {
+      toast.error("Title must be at least 3 characters long");
+      return;
+    }
+
+    if (trimmedTitle.length > 100) {
+      toast.error("Title must be less than 100 characters");
+      return;
+    }
+
+    // Validate description length
+    if (trimmedDescription.length < 10 && trimmedDescription.length > 0) {
+      toast.error("Description must be at least 10 characters if provided");
+      return;
+    }
+
+    if (trimmedDescription.length > 500) {
+      toast.error("Description must be less than 500 characters");
+      return;
+    }
+
+    // Validate GitHub URL if provided
+    if (trimmedGithubUrl && !trimmedGithubUrl.includes("github.com")) {
+      toast.error("Please enter a valid GitHub URL");
+      return;
+    }
+
+    // Validate GitHub URL length
+    if (trimmedGithubUrl.length > 200) {
+      toast.error("GitHub URL must be less than 200 characters");
+      return;
+    }
+
+    // Validate individual tags
+    const tagArray = editTags
+      ?.split(",")
+      ?.map((tag) => tag.trim())
+      ?.filter(Boolean);
+    if (tagArray?.some((tag) => tag.length > 20)) {
+      toast.error("Each tag must be 20 characters or less");
+      return;
+    }
+    if (tagArray?.some((tag) => tag.length < 2 && tag.length > 0)) {
+      toast.error("Each tag must be at least 2 characters");
+      return;
+    }
+    if (tagArray?.length > 5) {
+      toast.error("Maximum 5 tags allowed");
+      return;
+    }
+
+    setIsUpdating(true);
+
+    try {
+      const processedTags = editTags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter(Boolean)
+        .filter((tag) => tag.length <= 20)
+        .slice(0, 5)
+        .join(",");
+
+      await ideas.update(ideaId, {
+        title: trimmedTitle,
+        description: trimmedDescription,
+        category: editCategory,
+        priority: editPriority,
+        tags: processedTags,
+        isPublic: editIsPublic,
+        githubUrl: trimmedGithubUrl || null,
+      });
+
+      cancelEdit();
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update idea. Please try again.");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   const startEdit = (idea) => {
     setEditingId(idea.$id);
     setEditTitle(idea.title);
@@ -177,67 +310,6 @@ export function Home({ navigate }) {
     setEditGithubUrl("");
   };
 
-  const saveEdit = async (ideaId) => {
-    const trimmedTitle = editTitle.trim();
-    const trimmedDescription = editDescription.trim();
-    const trimmedGithubUrl = editGithubUrl.trim();
-
-    if (!trimmedTitle) {
-      toast.error("Please enter a title for your idea");
-      return;
-    }
-
-    if (trimmedTitle.length < 3) {
-      toast.error("Title must be at least 3 characters long");
-      return;
-    }
-
-    if (trimmedTitle.length > 100) {
-      toast.error("Title must be less than 100 characters");
-      return;
-    }
-
-    if (trimmedDescription.length > 500) {
-      toast.error("Description must be less than 500 characters");
-      return;
-    }
-
-    // Validate GitHub URL if provided
-    if (trimmedGithubUrl && !trimmedGithubUrl.includes("github.com")) {
-      toast.error("Please enter a valid GitHub URL");
-      return;
-    }
-
-    setIsUpdating(true);
-
-    try {
-      const processedTags = editTags
-        .split(",")
-        .map((tag) => tag.trim())
-        .filter(Boolean)
-        .filter((tag) => tag.length <= 20)
-        .slice(0, 10)
-        .join(",");
-
-      await ideas.update(ideaId, {
-        title: trimmedTitle,
-        description: trimmedDescription,
-        category: editCategory,
-        priority: editPriority,
-        tags: processedTags,
-        isPublic: editIsPublic,
-        githubUrl: trimmedGithubUrl || null,
-      });
-
-      cancelEdit();
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to update idea. Please try again.");
-    } finally {
-      setIsUpdating(false);
-    }
-  };
-
   const handleDelete = async (ideaId) => {
     try {
       await ideas.remove(ideaId);
@@ -249,23 +321,26 @@ export function Home({ navigate }) {
   };
 
   const filteredIdeas = ideas.current.filter((idea) => {
-    if (!user.current || idea.userId !== user.current.$id) {
+    if (!user?.current || !idea?.userId || idea.userId !== user.current.$id) {
       return false;
     }
 
     const matchesSearch =
-      idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      idea.description.toLowerCase().includes(searchTerm.toLowerCase());
+      (idea?.title || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (idea?.description || "")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
     const matchesCategory =
-      filterCategory === "All" || idea.category === filterCategory;
+      filterCategory === "All" || idea?.category === filterCategory;
 
     const matchesPriority =
-      filterPriority === "All" || idea.priority === filterPriority;
+      filterPriority === "All" || idea?.priority === filterPriority;
 
     const matchesTags =
       !filterTags ||
-      (idea.tags && idea.tags.toLowerCase().includes(filterTags.toLowerCase()));
+      (idea?.tags &&
+        idea.tags.toLowerCase().includes(filterTags.toLowerCase()));
 
     return matchesSearch && matchesCategory && matchesPriority && matchesTags;
   });
@@ -355,6 +430,7 @@ export function Home({ navigate }) {
                           value={title}
                           onChange={(e) => setTitle(e.target.value)}
                           maxLength={100}
+                          minLength={3}
                           className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
                           required
                         />
@@ -378,11 +454,12 @@ export function Home({ navigate }) {
 
                       {/* Description */}
                       <textarea
-                        placeholder="Describe your idea..."
+                        placeholder="Describe your idea (min 10 chars)..."
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         rows={3}
                         maxLength={500}
+                        minLength={10}
                         className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent resize-none transition-all duration-200"
                       />
 
@@ -408,9 +485,10 @@ export function Home({ navigate }) {
                           <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
                           <input
                             type="url"
-                            placeholder="GitHub URL (optional)"
+                            placeholder="GitHub URL (max 200 chars)"
                             value={githubUrl}
                             onChange={(e) => setGithubUrl(e.target.value)}
+                            maxLength={200}
                             className="w-full text-sm pl-10 pr-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
                           />
                         </div>
@@ -420,13 +498,12 @@ export function Home({ navigate }) {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         <input
                           type="text"
-                          placeholder="Tags (comma separated)"
+                          placeholder="Tags (max 5, 20 chars each)"
                           value={tags}
                           onChange={(e) => setTags(e.target.value)}
                           maxLength={200}
                           className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
                         />
-
                         <div className="flex items-center justify-between px-3 py-2 dark:bg-gray-800/50 bg-gray-50 rounded-lg border-[0.5px] dark:border-gray-700 border-gray-200">
                           <span className="text-sm dark:text-white text-gray-900">
                             {isPublic ? "Public" : "Private"}
@@ -678,7 +755,7 @@ export function Home({ navigate }) {
         <section>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-medium dark:text-white text-gray-900">
-              Ideas ({filteredIdeas.length})
+              Ideas ({filteredIdeas?.length || 0})
             </h2>
           </div>
 
@@ -722,7 +799,6 @@ export function Home({ navigate }) {
                   >
                     {editingId === idea.$id ? (
                       <motion.div
-                        layout
                         key="editing"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -731,10 +807,10 @@ export function Home({ navigate }) {
                         className="space-y-4"
                       >
                         <div className="flex items-center justify-between mb-4">
-                          <h3 className="text-lg font-medium dark:text-white text-gray-900">
+                          <h3 className="text-lg font-medium dark:text-white text-gray-900 break-words min-w-0 flex-1 mr-4">
                             Edit Idea
                           </h3>
-                          <div className="flex space-x-2">
+                          <div className="flex space-x-2 flex-shrink-0">
                             <motion.button
                               onClick={() => saveEdit(idea.$id)}
                               disabled={isUpdating}
@@ -768,6 +844,7 @@ export function Home({ navigate }) {
                               value={editTitle}
                               onChange={(e) => setEditTitle(e.target.value)}
                               maxLength={100}
+                              minLength={3}
                               placeholder="Idea title..."
                               className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
                             />
@@ -795,7 +872,8 @@ export function Home({ navigate }) {
                             onChange={(e) => setEditDescription(e.target.value)}
                             rows={3}
                             maxLength={500}
-                            placeholder="Describe your idea..."
+                            minLength={10}
+                            placeholder="Describe your idea (min 10 chars)..."
                             className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent resize-none transition-all duration-200"
                           />
 
@@ -821,11 +899,12 @@ export function Home({ navigate }) {
                               <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
                               <input
                                 type="url"
-                                placeholder="GitHub URL (optional)"
+                                placeholder="GitHub URL (max 200 chars)"
                                 value={editGithubUrl}
                                 onChange={(e) =>
                                   setEditGithubUrl(e.target.value)
                                 }
+                                maxLength={200}
                                 className="w-full text-sm pl-10 pr-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
                               />
                             </div>
@@ -835,7 +914,7 @@ export function Home({ navigate }) {
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <input
                               type="text"
-                              placeholder="Tags (comma separated)"
+                              placeholder="Tags (max 5, 20 chars each)"
                               value={editTags}
                               onChange={(e) => setEditTags(e.target.value)}
                               maxLength={200}
@@ -873,27 +952,28 @@ export function Home({ navigate }) {
                         </div>
                       </motion.div>
                     ) : (
-                      <>
+                      <div className="min-w-0">
                         {/* Title + Actions */}
-                        <div className="flex items-start justify-between gap-4 mb-2.5">
-                          <h3 className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-[#FD366E] transition-colors line-clamp-2">
+                        <div className="flex items-start gap-4 mb-2.5">
+                          <h3 className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-[#FD366E] transition-colors break-words break-all min-w-0 flex-1 leading-tight">
                             {idea.title}
                           </h3>
 
                           {user.current?.$id === idea.userId && (
-                            <div className="flex space-x-2 duration-300">
+                            <div className="flex space-x-2 flex-shrink-0 relative">
                               {/* Expand with AI */}
                               <div className="relative group/expand">
                                 <motion.button
                                   onClick={() => handleAIExpansion(idea)}
-                                  className="text-[#FD366E] hover:text-[#FD366E]/90"
+                                  className="text-[#FD366E] hover:text-[#FD366E]/90 p-1 rounded-md hover:bg-[#FD366E]/10 transition-colors"
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
                                 >
                                   <Sparkles className="w-5 h-5" />
                                 </motion.button>
-                                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover/expand:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/expand:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
                                   Expand with AI
+                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
                                 </div>
                               </div>
 
@@ -901,14 +981,15 @@ export function Home({ navigate }) {
                               <div className="relative group/edit">
                                 <motion.button
                                   onClick={() => startEdit(idea)}
-                                  className="text-blue-400 hover:text-blue-300"
+                                  className="text-blue-400 hover:text-blue-300 p-1 rounded-md hover:bg-blue-400/10 transition-colors"
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
                                 >
                                   <Edit3 className="w-5 h-5" />
                                 </motion.button>
-                                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover/edit:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/edit:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
                                   Edit
+                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
                                 </div>
                               </div>
 
@@ -916,14 +997,15 @@ export function Home({ navigate }) {
                               <div className="relative group/delete">
                                 <motion.button
                                   onClick={() => setDeleteConfirm(idea.$id)}
-                                  className="text-red-500 hover:text-red-400"
+                                  className="text-red-500 hover:text-red-400 p-1 rounded-md hover:bg-red-500/10 transition-colors"
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
                                 >
                                   <Trash2 className="w-5 h-5" />
                                 </motion.button>
-                                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover/delete:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/delete:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
                                   Delete
+                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
                                 </div>
                               </div>
                             </div>
@@ -931,18 +1013,18 @@ export function Home({ navigate }) {
                         </div>
 
                         {/* Description */}
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2.5 leading-relaxed line-clamp-4">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2.5 leading-relaxed break-words break-all">
                           {idea.description}
                         </p>
 
                         {/* Labels */}
                         <div className="flex flex-wrap gap-2 mb-2.5">
-                          <span className="bg-[#FD366E]/10 text-[#FD366E] dark:text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30">
+                          <span className="bg-[#FD366E]/10 text-[#FD366E] dark:text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30 break-words break-all">
                             {idea.category}
                           </span>
 
                           <span
-                            className={`px-3 py-1 rounded-full text-xs border ${getPriorityColor(
+                            className={`px-3 py-1 rounded-full text-xs border break-words break-all ${getPriorityColor(
                               idea.priority
                             )}`}
                           >
@@ -950,7 +1032,7 @@ export function Home({ navigate }) {
                           </span>
 
                           <span
-                            className={`px-3 py-1 rounded-full text-xs border ${
+                            className={`px-3 py-1 rounded-full text-xs border break-words break-all ${
                               idea.isPublic
                                 ? "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30"
                                 : "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/30"
@@ -961,41 +1043,51 @@ export function Home({ navigate }) {
                         </div>
 
                         {/* Tags */}
-                        {idea.tags && (
+                        {idea?.tags && (
                           <div className="flex flex-wrap gap-2 mb-2.5">
-                            {idea.tags.split(",").map((tag, i) => (
-                              <span
-                                key={i}
-                                className="flex items-center text-xs px-2 py-1 rounded-md bg-gray-100 text-gray-700 dark:bg-gray-800/50 dark:text-gray-300"
-                              >
-                                <Tag className="w-3 h-3 mr-1" />
-                                {tag.trim()}
-                              </span>
-                            ))}
+                            {idea.tags.split(",").map((tag, i) => {
+                              const trimmedTag = tag?.trim();
+                              if (!trimmedTag) return null;
+                              return (
+                                <span
+                                  key={i}
+                                  className="flex items-center text-xs px-2 py-1 rounded-md bg-gray-100 text-gray-700 dark:bg-gray-800/50 dark:text-gray-300 max-w-full"
+                                >
+                                  <Tag className="w-3 h-3 mr-1 flex-shrink-0" />
+                                  <span className="break-words break-all truncate max-w-32">
+                                    {trimmedTag}
+                                  </span>
+                                </span>
+                              );
+                            })}
                           </div>
                         )}
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center mb-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center pt-1.5 border-t border-gray-100 dark:border-gray-800">
                           {/* GitHub */}
                           {idea.githubUrl && (
                             <a
                               href={idea.githubUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-2 text-[#FD366E] hover:text-[#FD366E]/80 text-sm"
+                              className="flex items-center gap-2 text-[#FD366E] hover:text-[#FD366E]/80 text-sm min-w-0"
                             >
-                              <Github className="w-4 h-4" />
-                              View on GitHub
+                              <Github className="w-4 h-4 flex-shrink-0" />
+                              <span className="truncate break-all">
+                                View on GitHub
+                              </span>
                             </a>
                           )}
 
                           {/* Created Date */}
                           <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2 sm:justify-end">
-                            <Calendar className="w-4 h-4" />
-                            {moment(idea.$createdAt).format("MMM D, YYYY")}
+                            <Calendar className="w-4 h-4 flex-shrink-0" />
+                            <span className="whitespace-nowrap">
+                              {moment(idea.$createdAt).format("MMM D, YYYY")}
+                            </span>
                           </div>
                         </div>
-                      </>
+                      </div>
                     )}
                   </motion.div>
                 ))}
@@ -1037,12 +1129,10 @@ export function Home({ navigate }) {
             <div className="mb-6">
               <p className="dark:text-gray-300 text-gray-700">
                 Are you sure you want to delete{" "}
-                <span className="font-medium dark:text-white text-gray-900">
+                <span className="font-medium dark:text-white text-gray-900 break-words">
                   "
-                  {
-                    filteredIdeas.find((idea) => idea.$id === deleteConfirm)
-                      ?.title
-                  }
+                  {filteredIdeas?.find((idea) => idea?.$id === deleteConfirm)
+                    ?.title || "Unknown"}
                   "
                 </span>
                 ?

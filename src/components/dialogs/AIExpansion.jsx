@@ -15,6 +15,17 @@ export function AIExpansion({ idea, isOpen, onClose, onExpand }) {
     }
   }, [isOpen, idea?.aiExpansion]);
 
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [isOpen, onClose]);
+
   const handleExpand = async () => {
     setIsExpanding(true);
     try {
@@ -167,7 +178,7 @@ export function AIExpansion({ idea, isOpen, onClose, onExpand }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl w-full max-w-md max-h-[90vh] overflow-hidden shadow-xl"
+          className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl w-full max-w-md max-h-[90vh] overflow-hidden shadow-xl break-words"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-800">
@@ -180,7 +191,7 @@ export function AIExpansion({ idea, isOpen, onClose, onExpand }) {
                   <h2 className="text-base font-semibold text-gray-900 dark:text-white">
                     AI Expansion by Gemini
                   </h2>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 truncate max-w-[180px]">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 truncate max-w-[180px] break-words">
                     {idea?.title || "Untitled Idea"}
                   </p>
                 </div>
@@ -213,7 +224,7 @@ export function AIExpansion({ idea, isOpen, onClose, onExpand }) {
             </div>
           </div>
 
-          <div className="px-4 py-5 overflow-y-auto max-h-[calc(90vh-100px)]">
+          <div className="px-4 py-5 overflow-y-auto max-h-[calc(90vh-100px)] break-words overflow-wrap-anywhere">
             {!expansion ? (
               <div className="text-center py-10">
                 <div className="w-14 h-14 bg-[#FD366E] rounded-full flex items-center justify-center mx-auto mb-4">

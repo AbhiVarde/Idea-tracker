@@ -75,18 +75,18 @@ function AnnouncementBar() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.15, ease: "easeOut" }}
-              className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-md w-full"
+              className="bg-white dark:bg-black rounded-2xl shadow-2xl max-w-md w-full border-[0.5px] dark:border-gray-700 border-gray-200"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
                 <motion.button
                   onClick={closeModal}
-                  className="absolute top-3 right-3 z-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors duration-100"
+                  className="absolute top-3 right-3 z-10 p-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-full transition-colors duration-100"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.1 }}
                 >
-                  <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                  <X className="w-4 h-4 text-black dark:text-white" />
                 </motion.button>
 
                 <div className="p-6">
