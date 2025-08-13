@@ -34,6 +34,9 @@ export function IdeasProvider({ children }) {
   const lastFetchTimeRef = useRef(null);
   const pendingOperationsRef = useRef(new Set());
 
+  const emailDebounceRef = useRef(null);
+  const pendingNotificationsRef = useRef([]);
+
   const getErrorMessage = (error) => {
     if (error?.code === 401) return "Please log in to continue";
     if (error?.code === 404) return "Database or collection not found";
@@ -41,28 +44,23 @@ export function IdeasProvider({ children }) {
     return error?.message || "Something went wrong. Please try again.";
   };
 
-  // Add this function after getErrorMessage:
   const fetchUserPreferences = useCallback(async (userId) => {
     try {
+      // Look for a dedicated preferences document
       const response = await databases.listDocuments(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
-        [Query.equal("userId", userId)]
+        [Query.equal("userId", userId), Query.equal("type", "user_preferences")]
       );
 
       if (response.documents.length > 0) {
-        // Look for preferences in the user document
-        const userDoc = response.documents.find(
-          (doc) => doc.userId === userId && doc.emailNotifications !== undefined
-        );
-        if (userDoc) {
-          return {
-            emailNotifications: userDoc.emailNotifications ?? true,
-            ideaAdded: userDoc.ideaAdded ?? true,
-            ideaExpanded: userDoc.ideaExpanded ?? true,
-            weeklySummary: userDoc.weeklySummary ?? true,
-          };
-        }
+        const prefsDoc = response.documents[0];
+        return {
+          emailNotifications: prefsDoc.emailNotifications ?? true,
+          ideaAdded: prefsDoc.ideaAdded ?? true,
+          ideaExpanded: prefsDoc.ideaExpanded ?? true,
+          weeklySummary: prefsDoc.weeklySummary ?? true,
+        };
       }
 
       // Default preferences if none found
@@ -98,7 +96,7 @@ export function IdeasProvider({ children }) {
   }, []);
 
   // Helper function to send email notifications with user preferences check
-  const sendNotificationEmail = async (type, ideaTitle = "", userId) => {
+  const sendBatchedNotificationEmail = async (type, ideaTitle = "", userId) => {
     if (!user?.email || !user?.name) return;
 
     try {
@@ -107,34 +105,75 @@ export function IdeasProvider({ children }) {
 
       // Check if notifications are enabled
       if (!userPreferences.emailNotifications) {
-        // console.log("Email notifications disabled for user");
         return;
       }
 
       // Check specific notification type
       const shouldSend = checkNotificationPreference(type, userPreferences);
       if (!shouldSend) {
-        // console.log(`Notification ${type} skipped due to user preferences`);
         return;
       }
 
-      switch (type) {
-        case "ideaAdded":
-          await emailService.sendIdeaAddedNotification(
-            user.email,
-            user.name,
-            ideaTitle,
-            userId
-          );
-          break;
-        case "ideaExpanded":
-          await emailService.sendIdeaExpandedNotification(
-            user.email,
-            user.name,
-            ideaTitle,
-            userId
-          );
-          break;
+      if (type === "ideaAdded") {
+        // Add to pending notifications
+        pendingNotificationsRef.current.push({
+          type,
+          ideaTitle,
+          userId,
+          timestamp: new Date(),
+        });
+
+        // Clear existing debounce
+        if (emailDebounceRef.current) {
+          clearTimeout(emailDebounceRef.current);
+        }
+
+        // Set new debounce - send email after 5 minutes of inactivity
+        emailDebounceRef.current = setTimeout(
+          async () => {
+            const notifications = pendingNotificationsRef.current;
+            pendingNotificationsRef.current = [];
+
+            if (notifications.length === 0) return;
+
+            // If only one notification, send normal email
+            if (notifications.length === 1) {
+              await emailService.sendIdeaAddedNotification(
+                user.email,
+                user.name,
+                notifications[0].ideaTitle,
+                userId
+              );
+            } else {
+              // Send batch notification
+              const ideaTitles = notifications
+                .map((n) => n.ideaTitle)
+                .slice(0, 5); // Show max 5 titles
+              const remainingCount = Math.max(0, notifications.length - 5);
+
+              await emailService.sendBatchIdeaNotification(
+                user.email,
+                user.name,
+                ideaTitles,
+                remainingCount,
+                userId
+              );
+            }
+          },
+          5 * 60 * 1000
+        ); // 5 minutes
+      } else {
+        // For other types (like ideaExpanded), send immediately
+        switch (type) {
+          case "ideaExpanded":
+            await emailService.sendIdeaExpandedNotification(
+              user.email,
+              user.name,
+              ideaTitle,
+              userId
+            );
+            break;
+        }
       }
     } catch (error) {
       console.error("Email notification failed:", error);
@@ -173,7 +212,6 @@ export function IdeasProvider({ children }) {
           ...idea,
           userId: user.$id,
           userName: user.name || "",
-          // userEmail: user.email || "",
           userProfilePicture:
             getProfilePictureUrl(user.prefs.profilePictureId) || "",
         }
@@ -184,8 +222,8 @@ export function IdeasProvider({ children }) {
 
       toast.success("Idea added successfully!");
 
-      // Send email notification in background
-      sendNotificationEmail("ideaAdded", idea.title, user.$id);
+      // Send batched email notification in background
+      sendBatchedNotificationEmail("ideaAdded", idea.title, user.$id);
 
       return response;
     } catch (err) {
@@ -503,6 +541,14 @@ export function IdeasProvider({ children }) {
       currentPendingOperations.clear();
     };
   }, [user, isInitialized, addIdeaToState]);
+
+  useEffect(() => {
+    return () => {
+      if (emailDebounceRef.current) {
+        clearTimeout(emailDebounceRef.current);
+      }
+    };
+  }, []);
 
   const contextValue = {
     current: ideas,

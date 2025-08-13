@@ -113,7 +113,10 @@ const NotificationPreferences = ({ isOpen, onClose }) => {
       const existing = await databases.listDocuments(
         DATABASE_ID,
         COLLECTION_ID,
-        [Query.equal("userId", user.$id)]
+        [
+          Query.equal("userId", user.$id),
+          Query.equal("type", "user_preferences"),
+        ]
       );
 
       const timestamp = new Date().toISOString();
@@ -137,6 +140,7 @@ const NotificationPreferences = ({ isOpen, onClose }) => {
           ID.unique(),
           {
             userId: user.$id,
+            type: "user_preferences",
             ...preferences,
             createdAt: timestamp,
             updatedAt: timestamp,
