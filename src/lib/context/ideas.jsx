@@ -338,8 +338,7 @@ export function IdeasProvider({ children }) {
           expandedAt: expandedAt,
         });
 
-        // Send email notification for AI expansion
-        sendNotificationEmail("ideaExpanded", idea.title, user.$id);
+        sendBatchedNotificationEmail("ideaExpanded", idea.title, user.$id);
 
         return result.expansion;
       } else {
