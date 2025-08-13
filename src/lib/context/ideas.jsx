@@ -15,6 +15,7 @@ import { emailService } from "../services/emailService";
 
 export const IDEAS_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 export const IDEAS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
+const PREFERENCES_COLLECTION_ID = "user-preferences"; // New collection ID
 
 const IdeasContext = createContext();
 
@@ -46,11 +47,11 @@ export function IdeasProvider({ children }) {
 
   const fetchUserPreferences = useCallback(async (userId) => {
     try {
-      // Look for a dedicated preferences document
+      // Look for preferences in the new collection
       const response = await databases.listDocuments(
         IDEAS_DATABASE_ID,
-        IDEAS_COLLECTION_ID,
-        [Query.equal("userId", userId), Query.equal("type", "user_preferences")]
+        PREFERENCES_COLLECTION_ID,
+        [Query.equal("userId", userId), Query.limit(1)]
       );
 
       if (response.documents.length > 0) {
