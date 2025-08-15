@@ -34,9 +34,32 @@ export function IdeasProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const lastFetchTimeRef = useRef(null);
   const pendingOperationsRef = useRef(new Set());
+  const previousUserIdRef = useRef(null);
 
   const emailDebounceRef = useRef(null);
   const pendingNotificationsRef = useRef([]);
+
+  // Clear state when user changes or logs out
+  useEffect(() => {
+    const currentUserId = user?.$id;
+
+    if (previousUserIdRef.current !== currentUserId) {
+      // User changed or logged out - clear all state
+      setIdeas([]);
+      setIsLoading(false);
+      lastFetchTimeRef.current = null;
+      pendingOperationsRef.current.clear();
+      pendingNotificationsRef.current = [];
+
+      // Clear email debounce
+      if (emailDebounceRef.current) {
+        clearTimeout(emailDebounceRef.current);
+        emailDebounceRef.current = null;
+      }
+
+      previousUserIdRef.current = currentUserId;
+    }
+  }, [user?.$id]);
 
   const getErrorMessage = (error) => {
     if (error?.code === 401) return "Please log in to continue";

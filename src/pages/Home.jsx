@@ -509,6 +509,7 @@ export function Home({ navigate }) {
                             {isPublic ? "Public" : "Private"}
                           </span>
                           <button
+                            type="button"
                             onClick={() => setIsPublic(!isPublic)}
                             className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ${
                               isPublic
@@ -926,6 +927,7 @@ export function Home({ navigate }) {
                                 {editIsPublic ? "Public" : "Private"}
                               </span>
                               <button
+                                type="button"
                                 onClick={() => setEditIsPublic(!editIsPublic)}
                                 className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ${
                                   editIsPublic
@@ -1013,37 +1015,49 @@ export function Home({ navigate }) {
                         </div>
 
                         {/* Description */}
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2.5 leading-relaxed break-words break-all">
-                          {idea.description}
-                        </p>
+                        {idea.description && (
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2.5 leading-relaxed break-words break-all">
+                            {idea.description}
+                          </p>
+                        )}
 
                         {/* Labels */}
-                        <div className="flex flex-wrap gap-2 mb-2.5">
-                          <span className="bg-[#FD366E]/10 text-[#FD366E] dark:text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30 break-words break-all">
-                            {idea.category}
-                          </span>
+                        {(idea.category ||
+                          idea.priority ||
+                          typeof idea.isPublic !== "undefined") && (
+                          <div className="flex flex-wrap gap-2 mb-2.5">
+                            {idea.category && (
+                              <span className="bg-[#FD366E]/10 text-[#FD366E] dark:text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30 break-words break-all">
+                                {idea.category}
+                              </span>
+                            )}
 
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs border break-words break-all ${getPriorityColor(
-                              idea.priority
-                            )}`}
-                          >
-                            {idea.priority}
-                          </span>
+                            {idea.priority && (
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs border break-words break-all ${getPriorityColor(
+                                  idea.priority
+                                )}`}
+                              >
+                                {idea.priority}
+                              </span>
+                            )}
 
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs border break-words break-all ${
-                              idea.isPublic
-                                ? "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30"
-                                : "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/30"
-                            }`}
-                          >
-                            {idea.isPublic ? "Public" : "Private"}
-                          </span>
-                        </div>
+                            {typeof idea.isPublic !== "undefined" && (
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs border break-words break-all ${
+                                  idea.isPublic
+                                    ? "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30"
+                                    : "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/30"
+                                }`}
+                              >
+                                {idea.isPublic ? "Public" : "Private"}
+                              </span>
+                            )}
+                          </div>
+                        )}
 
                         {/* Tags */}
-                        {idea?.tags && (
+                        {idea?.tags && idea.tags.trim() && (
                           <div className="flex flex-wrap gap-2 mb-2.5">
                             {idea.tags.split(",").map((tag, i) => {
                               const trimmedTag = tag?.trim();
@@ -1063,30 +1077,46 @@ export function Home({ navigate }) {
                           </div>
                         )}
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center pt-1.5 border-t border-gray-100 dark:border-gray-800">
-                          {/* GitHub */}
-                          {idea.githubUrl && (
-                            <a
-                              href={idea.githubUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-2 text-[#FD366E] hover:text-[#FD366E]/80 text-sm min-w-0"
-                            >
-                              <Github className="w-4 h-4 flex-shrink-0" />
-                              <span className="truncate break-all">
-                                View on GitHub
-                              </span>
-                            </a>
-                          )}
+                        {/* Bottom section */}
+                        {(idea.githubUrl || idea.$createdAt) && (
+                          <div className="pt-1.5 border-t border-gray-100 dark:border-gray-800">
+                            {/* Use flex layout instead of grid for better control */}
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                              {/* GitHub */}
+                              {idea.githubUrl && (
+                                <a
+                                  href={idea.githubUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-2 text-[#FD366E] hover:text-[#FD366E]/80 text-sm min-w-0 order-1 sm:order-none"
+                                >
+                                  <Github className="w-4 h-4 flex-shrink-0" />
+                                  <span className="truncate break-all">
+                                    View on GitHub
+                                  </span>
+                                </a>
+                              )}
 
-                          {/* Created Date */}
-                          <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2 sm:justify-end">
-                            <Calendar className="w-4 h-4 flex-shrink-0" />
-                            <span className="whitespace-nowrap">
-                              {moment(idea.$createdAt).format("MMM D, YYYY")}
-                            </span>
+                              {/* Created Date - Always show if available */}
+                              {idea.$createdAt && (
+                                <div
+                                  className={`flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2 order-2 sm:order-none ${
+                                    !idea.githubUrl
+                                      ? "sm:justify-start"
+                                      : "sm:justify-end"
+                                  }`}
+                                >
+                                  <Calendar className="w-4 h-4 flex-shrink-0" />
+                                  <span className="whitespace-nowrap">
+                                    {moment(idea.$createdAt).format(
+                                      "MMM D, YYYY"
+                                    )}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     )}
                   </motion.div>

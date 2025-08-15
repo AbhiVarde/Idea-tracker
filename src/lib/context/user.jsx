@@ -295,7 +295,64 @@ export function UserProvider({ children }) {
     }
   };
 
-  // Delete account
+  // Helper function to delete all user data from collections
+  const deleteAllUserData = async (userId) => {
+    const collectionsToClean = [
+      {
+        id: import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+        name: "ideas",
+      },
+      {
+        id: "user-preferences",
+        name: "preferences",
+      },
+    ];
+
+    const deletionPromises = [];
+
+    for (const collection of collectionsToClean) {
+      try {
+        // Get all documents for this user
+        const userDocuments = await databases.listDocuments(
+          import.meta.env.VITE_APPWRITE_DATABASE_ID,
+          collection.id,
+          [Query.equal("userId", userId)]
+        );
+
+        // Add deletion promises for all documents
+        userDocuments.documents.forEach((doc) => {
+          deletionPromises.push(
+            databases
+              .deleteDocument(
+                import.meta.env.VITE_APPWRITE_DATABASE_ID,
+                collection.id,
+                doc.$id
+              )
+              .catch((error) => {
+                console.warn(
+                  `Error deleting ${collection.name} document ${doc.$id}:`,
+                  error
+                );
+              })
+          );
+        });
+
+        console.log(
+          `Found ${userDocuments.documents.length} ${collection.name} documents to delete`
+        );
+      } catch (error) {
+        console.warn(`Error fetching ${collection.name} documents:`, error);
+      }
+    }
+
+    // Execute all deletions in parallel
+    if (deletionPromises.length > 0) {
+      await Promise.allSettled(deletionPromises);
+      console.log(`Completed deletion of ${deletionPromises.length} documents`);
+    }
+  };
+
+  // Delete account with complete data removal
   const deleteAccount = async () => {
     try {
       const currentUser = await account.get();
@@ -312,32 +369,25 @@ export function UserProvider({ children }) {
         }
       }
 
-      try {
-        const userDocuments = await databases.listDocuments(
-          import.meta.env.VITE_APPWRITE_DATABASE_ID,
-          import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-          [Query.equal("userId", currentUser.$id)]
-        );
+      // Delete all user data from database collections
+      await deleteAllUserData(currentUser.$id);
 
-        if (userDocuments.documents.length > 0) {
-          const deletePromises = userDocuments.documents.map((doc) =>
-            databases.deleteDocument(
-              import.meta.env.VITE_APPWRITE_DATABASE_ID,
-              import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-              doc.$id
-            )
-          );
-          await Promise.all(deletePromises);
-        }
-      } catch (docError) {
-        console.warn("Error deleting user documents:", docError);
-      }
-
+      // Mark account as deleted in localStorage
       markAccountAsDeleted(currentUser.email);
 
-      // Logout user
+      // Delete all sessions to log out
       await account.deleteSessions();
+
+      // Clear local state
       setUser(null);
+
+      // Clear any cached data
+      localStorage.removeItem("user");
+      localStorage.removeItem("ideas");
+
+      // Note: We cannot delete the actual Appwrite user account from client-side
+      // The user account will remain in Appwrite but all associated data is removed
+      // and the account is marked as deleted locally
 
       return true;
     } catch (error) {
@@ -366,6 +416,12 @@ export function UserProvider({ children }) {
           setLoading(true);
           await account.createSession(userId, secret);
           const loggedIn = await account.get();
+
+          // Clear any "deleted" status for OAuth logins since they create new sessions
+          if (isAccountDeleted(loggedIn.email)) {
+            removeFromDeletedAccounts(loggedIn.email);
+          }
+
           setUser(loggedIn);
 
           window.history.replaceState(

@@ -866,6 +866,17 @@ export default {
             },
             hash: "cdf49b4f3ea3bf5d776900b15440c849",
           },
+        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/19/expression/right/3/3/expression/right/3":
+          {
+            content: {
+              de: "Auf GitHub ansehen",
+              en: "View on GitHub",
+              es: "Ver en GitHub",
+              fr: "Voir sur GitHub",
+              ru: "Просмотреть на GitHub",
+            },
+            hash: "0643dd657cc7ce37d0c147d04f8ea2f0",
+          },
         "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/11/3":
           {
             content: {
