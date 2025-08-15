@@ -7,7 +7,7 @@ import {
   useCallback,
 } from "react";
 import { databases } from "../appwrite";
-import { ID, Query } from "appwrite";
+import { ID, Query, Permission, Role } from "appwrite";
 import { toast } from "sonner";
 import { useUser } from "./user";
 import { expandIdea } from "../services/gemini";
@@ -15,7 +15,7 @@ import { emailService } from "../services/emailService";
 
 export const IDEAS_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 export const IDEAS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
-const PREFERENCES_COLLECTION_ID = "user-preferences"; // New collection ID
+const PREFERENCES_COLLECTION_ID = "user-preferences";
 
 const IdeasContext = createContext();
 
@@ -32,6 +32,12 @@ export function IdeasProvider({ children }) {
   } = useUser();
   const [ideas, setIdeas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [customCategories, setCustomCategories] = useState([]);
+  const [pagination, setPagination] = useState({
+    offset: 0,
+    limit: 25,
+    hasMore: true,
+  });
   const lastFetchTimeRef = useRef(null);
   const pendingOperationsRef = useRef(new Set());
   const previousUserIdRef = useRef(null);
@@ -47,6 +53,8 @@ export function IdeasProvider({ children }) {
       // User changed or logged out - clear all state
       setIdeas([]);
       setIsLoading(false);
+      setCustomCategories([]);
+      setPagination({ offset: 0, limit: 25, hasMore: true });
       lastFetchTimeRef.current = null;
       pendingOperationsRef.current.clear();
       pendingNotificationsRef.current = [];
@@ -84,6 +92,7 @@ export function IdeasProvider({ children }) {
           ideaAdded: prefsDoc.ideaAdded ?? true,
           ideaExpanded: prefsDoc.ideaExpanded ?? true,
           weeklySummary: prefsDoc.weeklySummary ?? true,
+          customCategories: prefsDoc.customCategories || [],
         };
       }
 
@@ -93,6 +102,7 @@ export function IdeasProvider({ children }) {
         ideaAdded: true,
         ideaExpanded: true,
         weeklySummary: true,
+        customCategories: [],
       };
     } catch (error) {
       console.error("Failed to fetch user preferences:", error);
@@ -101,9 +111,110 @@ export function IdeasProvider({ children }) {
         ideaAdded: true,
         ideaExpanded: true,
         weeklySummary: true,
+        customCategories: [],
       };
     }
   }, []);
+
+  // Load custom categories
+  useEffect(() => {
+    if (user?.$id) {
+      fetchUserPreferences(user.$id).then((prefs) => {
+        setCustomCategories(prefs.customCategories || []);
+      });
+    }
+  }, [user?.$id, fetchUserPreferences]);
+
+  const addCustomCategory = async (categoryName) => {
+    if (!user?.$id || !categoryName.trim()) return;
+
+    const trimmedName = categoryName.trim();
+    if (customCategories.includes(trimmedName)) {
+      toast.error("Category already exists");
+      return;
+    }
+
+    try {
+      const newCategories = [...customCategories, trimmedName];
+
+      // Try to update existing preferences
+      const existingPrefs = await databases.listDocuments(
+        IDEAS_DATABASE_ID,
+        PREFERENCES_COLLECTION_ID,
+        [Query.equal("userId", user.$id), Query.limit(1)]
+      );
+
+      if (existingPrefs.documents.length > 0) {
+        await databases.updateDocument(
+          IDEAS_DATABASE_ID,
+          PREFERENCES_COLLECTION_ID,
+          existingPrefs.documents[0].$id,
+          { customCategories: newCategories }
+        );
+      } else {
+        await databases.createDocument(
+          IDEAS_DATABASE_ID,
+          PREFERENCES_COLLECTION_ID,
+          ID.unique(),
+          {
+            userId: user.$id,
+            customCategories: newCategories,
+            emailNotifications: true,
+            ideaAdded: true,
+            ideaExpanded: true,
+            weeklySummary: true,
+          },
+          [
+            Permission.read(Role.user(user.$id)),
+            Permission.update(Role.user(user.$id)),
+            Permission.delete(Role.user(user.$id)),
+          ]
+        );
+      }
+
+      setCustomCategories(newCategories);
+      toast.success("Category added successfully!");
+      return true;
+    } catch (error) {
+      console.error("Failed to add category:", error);
+      toast.error("Failed to add category");
+      return false;
+    }
+  };
+
+  const removeCustomCategory = async (categoryName) => {
+    if (!user?.$id || !categoryName) return;
+
+    try {
+      const newCategories = customCategories.filter(
+        (cat) => cat !== categoryName
+      );
+
+      // Update database
+      const existingPrefs = await databases.listDocuments(
+        IDEAS_DATABASE_ID,
+        PREFERENCES_COLLECTION_ID,
+        [Query.equal("userId", user.$id), Query.limit(1)]
+      );
+
+      if (existingPrefs.documents.length > 0) {
+        await databases.updateDocument(
+          IDEAS_DATABASE_ID,
+          PREFERENCES_COLLECTION_ID,
+          existingPrefs.documents[0].$id,
+          { customCategories: newCategories }
+        );
+      }
+
+      setCustomCategories(newCategories);
+      toast.success("Category removed successfully!");
+      return true;
+    } catch (error) {
+      console.error("Failed to remove category:", error);
+      toast.error("Failed to remove category");
+      return false;
+    }
+  };
 
   const addIdeaToState = useCallback((newIdea) => {
     setIdeas((prev) => {
@@ -114,7 +225,7 @@ export function IdeasProvider({ children }) {
         updated[existingIndex] = newIdea;
         return updated;
       } else {
-        return [newIdea, ...prev].slice(0, 50);
+        return [newIdea, ...prev];
       }
     });
   }, []);
@@ -228,6 +339,17 @@ export function IdeasProvider({ children }) {
     pendingOperationsRef.current.add(tempId);
 
     try {
+      const permissions = [
+        Permission.read(Role.user(user.$id)),
+        Permission.update(Role.user(user.$id)),
+        Permission.delete(Role.user(user.$id)),
+      ];
+
+      // Add public read permission if idea is public
+      if (idea.isPublic) {
+        permissions.push(Permission.read(Role.any()));
+      }
+
       const response = await databases.createDocument(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
@@ -238,7 +360,9 @@ export function IdeasProvider({ children }) {
           userName: user.name || "",
           userProfilePicture:
             getProfilePictureUrl(user.prefs.profilePictureId) || "",
-        }
+          status: "active",
+        },
+        permissions // Use the permissions array
       );
 
       // Always update state immediately for better UX
@@ -270,7 +394,6 @@ export function IdeasProvider({ children }) {
       const finalUpdatedIdea = {
         ...updatedIdea,
         userName: user.name || "",
-        // userEmail: user.email || "",
         userProfilePicture:
           getProfilePictureUrl(user.prefs.profilePictureId) || "",
       };
@@ -295,6 +418,10 @@ export function IdeasProvider({ children }) {
     } finally {
       pendingOperationsRef.current.delete(id);
     }
+  }
+
+  async function markAsComplete(id) {
+    return await update(id, { status: "completed" });
   }
 
   async function remove(id) {
@@ -446,37 +573,56 @@ export function IdeasProvider({ children }) {
     }
   }
 
-  const fetchIdeas = useCallback(async () => {
-    if (!user) return;
+  const fetchIdeas = useCallback(
+    async (loadMore = false) => {
+      if (!user) return;
 
-    try {
-      setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-      const response = await databases.listDocuments(
-        IDEAS_DATABASE_ID,
-        IDEAS_COLLECTION_ID,
-        [
-          Query.equal("userId", user.$id),
-          Query.orderDesc("$createdAt"),
-          Query.limit(50),
-        ]
-      );
+        const currentOffset = loadMore ? pagination.offset : 0;
 
-      const uniqueIdeas = response.documents.filter(
-        (idea, index, self) =>
-          index === self.findIndex((i) => i.$id === idea.$id)
-      );
+        const response = await databases.listDocuments(
+          IDEAS_DATABASE_ID,
+          IDEAS_COLLECTION_ID,
+          [
+            Query.equal("userId", user.$id),
+            Query.orderDesc("$createdAt"),
+            Query.limit(pagination.limit),
+            Query.offset(currentOffset),
+          ]
+        );
 
-      setIdeas(uniqueIdeas);
-      lastFetchTimeRef.current = new Date().toISOString();
-    } catch (err) {
-      console.error("Fetch ideas error:", err);
-      toast.error(getErrorMessage(err));
-      setIdeas([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [user]);
+        const uniqueIdeas = response.documents.filter(
+          (idea, index, self) =>
+            index === self.findIndex((i) => i.$id === idea.$id)
+        );
+
+        if (loadMore) {
+          setIdeas((prev) => [...prev, ...uniqueIdeas]);
+        } else {
+          setIdeas(uniqueIdeas);
+        }
+
+        setPagination((prev) => ({
+          ...prev,
+          offset: loadMore
+            ? currentOffset + uniqueIdeas.length
+            : uniqueIdeas.length,
+          hasMore: uniqueIdeas.length === pagination.limit,
+        }));
+
+        lastFetchTimeRef.current = new Date().toISOString();
+      } catch (err) {
+        console.error("Fetch ideas error:", err);
+        toast.error(getErrorMessage(err));
+        if (!loadMore) setIdeas([]);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [user, pagination.limit]
+  );
 
   const fetchPublicIdeas = useCallback(async () => {
     try {
@@ -488,7 +634,7 @@ export function IdeasProvider({ children }) {
         [
           Query.equal("isPublic", true),
           Query.orderDesc("$createdAt"),
-          Query.limit(50),
+          Query.limit(100),
         ]
       );
 
@@ -501,6 +647,68 @@ export function IdeasProvider({ children }) {
       setIsLoading(false);
     }
   }, []);
+
+  const searchIdeas = useCallback(
+    async (searchTerm, filters = {}) => {
+      if (!user || !searchTerm.trim()) return [];
+
+      try {
+        const queries = [
+          Query.equal("userId", user.$id),
+          Query.orderDesc("$createdAt"),
+          Query.limit(50),
+        ];
+
+        // Add search query - this will search across title, description, and tags
+        if (searchTerm.trim()) {
+          queries.push(Query.search("title", searchTerm.trim()));
+        }
+
+        // Add filters
+        if (filters.category && filters.category !== "All") {
+          queries.push(Query.equal("category", filters.category));
+        }
+        if (filters.priority && filters.priority !== "All") {
+          queries.push(Query.equal("priority", filters.priority));
+        }
+        if (filters.status && filters.status !== "All") {
+          queries.push(Query.equal("status", filters.status));
+        }
+
+        const response = await databases.listDocuments(
+          IDEAS_DATABASE_ID,
+          IDEAS_COLLECTION_ID,
+          queries
+        );
+
+        let results = response.documents;
+
+        // Client-side filtering for description and tags (since Appwrite doesn't support multiple search queries)
+        if (searchTerm.trim()) {
+          const searchLower = searchTerm.toLowerCase();
+          results = results.filter(
+            (idea) =>
+              idea.title?.toLowerCase().includes(searchLower) ||
+              idea.description?.toLowerCase().includes(searchLower) ||
+              idea.tags?.toLowerCase().includes(searchLower)
+          );
+        }
+
+        // Filter by tags if specified
+        if (filters.tags?.trim()) {
+          results = results.filter((idea) =>
+            idea.tags?.toLowerCase().includes(filters.tags.toLowerCase())
+          );
+        }
+
+        return results;
+      } catch (err) {
+        console.error("Search ideas error:", err);
+        return [];
+      }
+    },
+    [user]
+  );
 
   useEffect(() => {
     if (isInitialized && !loading) {
@@ -535,7 +743,7 @@ export function IdeasProvider({ children }) {
           setIdeas((prev) => {
             const exists = prev.some((idea) => idea.$id === payload.$id);
             if (!exists) {
-              return [payload, ...prev].slice(0, 50);
+              return [payload, ...prev];
             }
             return prev;
           });
@@ -578,11 +786,18 @@ export function IdeasProvider({ children }) {
     add,
     update,
     remove,
+    markAsComplete,
     expandWithAI,
     toggleLike,
     fetchPublicIdeas,
+    searchIdeas,
     isLoading,
     refresh: fetchIdeas,
+    loadMore: () => fetchIdeas(true),
+    hasMore: pagination.hasMore,
+    customCategories,
+    addCustomCategory,
+    removeCustomCategory,
   };
 
   return (

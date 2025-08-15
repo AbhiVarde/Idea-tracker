@@ -263,7 +263,7 @@ const AccountSettings = ({ isOpen, onClose }) => {
             <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 rounded-xl p-4">
               <div className="flex items-center space-x-2 mb-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400" />
-                <h3 className="text-red-600 dark:text-red-400 font-semibold">
+                <h3 className="text-red-600 dark:text-red-400 font-medium">
                   Delete Account
                 </h3>
               </div>

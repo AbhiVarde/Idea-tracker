@@ -54,7 +54,7 @@ export function AIExpansion({ idea, isOpen, onClose, onExpand }) {
     let formatted = text
       .replace(
         /\*\*(.*?)\*\*/g,
-        '<strong class="font-semibold text-gray-800 dark:text-gray-100">$1</strong>'
+        '<strong class="font-medium text-gray-800 dark:text-gray-100">$1</strong>'
       )
       .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
       .replace(
@@ -98,7 +98,7 @@ export function AIExpansion({ idea, isOpen, onClose, onExpand }) {
         elements.push(
           <h3
             key={`h3-${i}`}
-            className="text-lg font-semibold my-3 text-[#FD366E]"
+            className="text-lg font-medium my-3 text-[#FD366E]"
           >
             {trimmed.slice(3)}
           </h3>
@@ -138,7 +138,7 @@ export function AIExpansion({ idea, isOpen, onClose, onExpand }) {
         elements.push(
           <p
             key={`bold-${i}`}
-            className="text-sm font-semibold text-gray-800 dark:text-gray-200 my-2"
+            className="text-sm font-medium text-gray-800 dark:text-gray-200 my-2"
           >
             {trimmed.replace(/\*\*/g, "")}
           </p>
@@ -188,7 +188,7 @@ export function AIExpansion({ idea, isOpen, onClose, onExpand }) {
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-base font-semibold text-gray-900 dark:text-white">
+                  <h2 className="text-base font-medium text-gray-900 dark:text-white">
                     AI Expansion by Gemini
                   </h2>
                   <p className="text-xs text-gray-600 dark:text-gray-400 truncate max-w-[180px] break-words">
@@ -230,7 +230,7 @@ export function AIExpansion({ idea, isOpen, onClose, onExpand }) {
                 <div className="w-14 h-14 bg-[#FD366E] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Sparkles className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1">
                   Want next steps?
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-5 max-w-xs mx-auto">

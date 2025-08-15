@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useUser } from "../lib/context/user";
 import { useIdeas } from "../lib/context/ideas";
 import { motion, AnimatePresence } from "framer-motion";
-import moment from "moment";
-import { toast } from "sonner";
-
 import FlipWords from "../components/FlipWords";
 import { AIExpansion } from "../components/dialogs/AIExpansion";
-
+import { CustomCategory } from "../components/dialogs/CustomCategory";
+import { DeleteIdea } from "../components/dialogs/DeleteIdea";
+import moment from "moment";
+import { toast } from "sonner";
 import {
   Plus,
   Search,
@@ -21,12 +21,13 @@ import {
   Edit3,
   ChevronDown,
   Sparkles,
-  AlertTriangle,
   Github,
   Check,
+  CheckCircle2,
+  RotateCcw,
 } from "lucide-react";
 
-const CATEGORIES = [
+const DEFAULT_CATEGORIES = [
   "Web App",
   "Mobile App",
   "AI/ML",
@@ -36,6 +37,7 @@ const CATEGORIES = [
   "Other",
 ];
 const PRIORITIES = ["Low", "Medium", "High"];
+const STATUSES = ["All", "Active", "Completed"];
 const WORDS = [
   "Ideas Hub",
   "Vision Board",
@@ -51,13 +53,14 @@ export function Home({ navigate }) {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("Web App");
+  const [category, setCategory] = useState(DEFAULT_CATEGORIES[0]);
   const [priority, setPriority] = useState("Medium");
   const [tags, setTags] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
   const [filterPriority, setFilterPriority] = useState("All");
+  const [filterStatus, setFilterStatus] = useState("All");
   const [filterTags, setFilterTags] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -79,17 +82,68 @@ export function Home({ navigate }) {
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [selectedIdea, setSelectedIdea] = useState(null);
 
+  const [searchState, setSearchState] = useState({
+    results: [],
+    isSearching: false,
+  });
+
+  // Custom categories
+  const [showCategoryForm, setShowCategoryForm] = useState(false);
+  const [newCategory, setNewCategory] = useState("");
+
+  // Get all available categories
+  const allCategories = [...DEFAULT_CATEGORIES, ...ideas.customCategories];
+
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") {
         if (deleteConfirm) setDeleteConfirm(null);
         if (aiModalOpen) setAiModalOpen(false);
+        if (showCategoryForm) setShowCategoryForm(false);
       }
     };
 
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
-  }, [deleteConfirm, aiModalOpen]);
+  }, [deleteConfirm, aiModalOpen, showCategoryForm]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      handleSearch();
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm, filterCategory, filterPriority, filterStatus, filterTags]);
+
+  useEffect(() => {
+    if (allCategories.length > 0 && !category) {
+      setCategory(allCategories[0]);
+    }
+  }, [allCategories, category]);
+
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      setSearchState({ results: [], isSearching: false });
+      return;
+    }
+
+    setSearchState((prev) => ({ ...prev, isSearching: true }));
+
+    try {
+      const results = await ideas.searchIdeas(searchTerm, {
+        category: filterCategory,
+        priority: filterPriority,
+        status: filterStatus,
+        tags: filterTags,
+      });
+
+      setSearchState({ results, isSearching: false });
+    } catch (error) {
+      console.error("Search failed:", error);
+      toast.error("Search failed");
+      setSearchState((prev) => ({ ...prev, isSearching: false }));
+    }
+  };
 
   const handleAIExpansion = (idea) => {
     setSelectedIdea(idea);
@@ -320,6 +374,26 @@ export function Home({ navigate }) {
     }
   };
 
+  const handleMarkComplete = async (ideaId) => {
+    try {
+      await ideas.markAsComplete(ideaId);
+      toast.success("Idea marked as completed!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to mark idea as complete");
+    }
+  };
+
+  const handleMarkActive = async (ideaId) => {
+    try {
+      await ideas.update(ideaId, { status: "active" });
+      toast.success("Idea marked as active!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to mark idea as active");
+    }
+  };
+
   const filteredIdeas = ideas.current.filter((idea) => {
     if (!user?.current || !idea?.userId || idea.userId !== user.current.$id) {
       return false;
@@ -337,12 +411,23 @@ export function Home({ navigate }) {
     const matchesPriority =
       filterPriority === "All" || idea?.priority === filterPriority;
 
+    const matchesStatus =
+      filterStatus === "All" ||
+      (filterStatus === "Active" && (idea?.status || "active") === "active") ||
+      (filterStatus === "Completed" && idea?.status === "completed");
+
     const matchesTags =
       !filterTags ||
       (idea?.tags &&
         idea.tags.toLowerCase().includes(filterTags.toLowerCase()));
 
-    return matchesSearch && matchesCategory && matchesPriority && matchesTags;
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesPriority &&
+      matchesStatus &&
+      matchesTags
+    );
   });
 
   const getPriorityColor = (priority) => {
@@ -354,6 +439,100 @@ export function Home({ navigate }) {
       default:
         return "bg-green-500/10 dark:text-green-400 text-green-600 border-green-500/30";
     }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "completed":
+        return "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30";
+      default:
+        return "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30";
+    }
+  };
+
+  const CategorySelect = ({
+    value,
+    onChange,
+    onAddCategory,
+    onRemoveCategory,
+    allCategories,
+    showAddButton = true,
+    disabled = false,
+  }) => {
+    // Get custom categories (categories that are not in DEFAULT_CATEGORIES)
+    const customCategories = allCategories.filter(
+      (cat) => !DEFAULT_CATEGORIES.includes(cat)
+    );
+
+    // Check if the current value is a custom category AND custom categories exist
+    const isCustomCategory =
+      value && customCategories.length > 0 && customCategories.includes(value);
+
+    const handleDeleteCategory = async (categoryToDelete) => {
+      await onRemoveCategory(categoryToDelete);
+      // If the deleted category was currently selected, set to first default category
+      if (value === categoryToDelete) {
+        onChange(DEFAULT_CATEGORIES[0]);
+      }
+    };
+
+    return (
+      <div className="relative flex items-center gap-2">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+          className="flex-1 text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+        >
+          {allCategories.map((cat) => (
+            <option
+              key={cat}
+              value={cat}
+              className="dark:bg-[#000000] bg-white"
+            >
+              {cat}
+            </option>
+          ))}
+        </select>
+
+        {showAddButton && (
+          <div className="relative group/add">
+            <motion.button
+              type="button"
+              onClick={onAddCategory}
+              className="p-1 rounded-md text-green-500 hover:bg-green-500/10 transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Plus className="w-4 h-4" />
+            </motion.button>
+            <div className="absolute -top-9 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/add:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
+              Add category
+              <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+            </div>
+          </div>
+        )}
+
+        {/* Show trash icon only for custom categories */}
+        {isCustomCategory && (
+          <div className="relative group/delete">
+            <motion.button
+              type="button"
+              onClick={() => handleDeleteCategory(value)}
+              className="p-1 rounded-md text-red-500 hover:bg-red-500/10 transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Trash2 className="w-4 h-4" />
+            </motion.button>
+            <div className="absolute -top-9 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/delete:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
+              Delete category
+              <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -377,6 +556,7 @@ export function Home({ navigate }) {
             Track ideas with clarity and bring them to life naturally.
           </p>
         </motion.div>
+
         {user.current ? (
           <motion.section
             className="dark:bg-[#000000] bg-white rounded-2xl p-4 dark:border-gray-800 border-gray-200 border"
@@ -434,22 +614,14 @@ export function Home({ navigate }) {
                           className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
                           required
                         />
-
-                        <select
+                        <CategorySelect
                           value={category}
-                          onChange={(e) => setCategory(e.target.value)}
-                          className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
-                        >
-                          {CATEGORIES.map((cat) => (
-                            <option
-                              key={cat}
-                              value={cat}
-                              className="dark:bg-[#000000] bg-white"
-                            >
-                              {cat}
-                            </option>
-                          ))}
-                        </select>
+                          onChange={setCategory}
+                          onAddCategory={() => setShowCategoryForm(true)}
+                          onRemoveCategory={ideas.removeCustomCategory}
+                          allCategories={allCategories}
+                          showAddButton={true}
+                        />
                       </div>
 
                       {/* Description */}
@@ -587,6 +759,7 @@ export function Home({ navigate }) {
           </motion.section>
         )}
 
+        {/* Search & Filters List */}
         <motion.section
           className="space-y-4"
           initial={{ opacity: 0, y: 20 }}
@@ -599,30 +772,22 @@ export function Home({ navigate }) {
 
               <input
                 type="text"
-                placeholder="Search ideas by title or description..."
+                placeholder="Search ideas by title, description, or tags..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl pl-12 pr-12 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
               />
 
-              <div className="absolute right-4 top-2.5">
-                <AnimatePresence>
-                  {searchTerm && (
-                    <motion.button
-                      key="clear-button"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
-                      onClick={() => setSearchTerm("")}
-                      className="text-gray-500 dark:text-gray-400 hover:text-[#FD366E] transition-colors duration-200 w-5 h-5"
-                    >
-                      <X className="w-5 h-5" />
-                    </motion.button>
-                  )}
-                </AnimatePresence>
-              </div>
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-[#FD366E] transition-colors duration-200 w-5 h-5 flex items-center justify-center"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
             </div>
+
             <motion.button
               onClick={() => setShowFilters(!showFilters)}
               className="flex items-center space-x-2 dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl px-4 py-2 dark:text-white text-gray-900 transition-all duration-200 group flex-shrink-0 relative"
@@ -636,6 +801,7 @@ export function Home({ navigate }) {
                   const activeFiltersCount =
                     (filterCategory !== "All" ? 1 : 0) +
                     (filterPriority !== "All" ? 1 : 0) +
+                    (filterStatus !== "All" ? 1 : 0) +
                     (filterTags ? 1 : 0);
                   return activeFiltersCount > 0 ? (
                     <motion.span
@@ -666,7 +832,7 @@ export function Home({ navigate }) {
                 className="overflow-hidden"
               >
                 <div className="dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl p-6 space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -686,7 +852,7 @@ export function Home({ navigate }) {
                         >
                           All Categories
                         </option>
-                        {CATEGORIES.map((cat) => (
+                        {allCategories.map((cat) => (
                           <option
                             key={cat}
                             value={cat}
@@ -724,6 +890,31 @@ export function Home({ navigate }) {
                             className="dark:bg-[#000000] bg-white"
                           >
                             {pri}
+                          </option>
+                        ))}
+                      </select>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.17 }}
+                    >
+                      <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
+                        Status
+                      </label>
+                      <select
+                        value={filterStatus}
+                        onChange={(e) => setFilterStatus(e.target.value)}
+                        className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                      >
+                        {STATUSES.map((status) => (
+                          <option
+                            key={status}
+                            value={status}
+                            className="dark:bg-[#000000] bg-white"
+                          >
+                            {status}
                           </option>
                         ))}
                       </select>
@@ -775,6 +966,7 @@ export function Home({ navigate }) {
                   {searchTerm ||
                   filterCategory !== "All" ||
                   filterPriority !== "All" ||
+                  filterStatus !== "All" ||
                   filterTags
                     ? "No ideas match your filters"
                     : "No ideas yet. Create your first one!"}
@@ -850,21 +1042,15 @@ export function Home({ navigate }) {
                               className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
                             />
 
-                            <select
+                            <CategorySelect
                               value={editCategory}
-                              onChange={(e) => setEditCategory(e.target.value)}
-                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
-                            >
-                              {CATEGORIES.map((cat) => (
-                                <option
-                                  key={cat}
-                                  value={cat}
-                                  className="dark:bg-black bg-white"
-                                >
-                                  {cat}
-                                </option>
-                              ))}
-                            </select>
+                              onChange={setEditCategory}
+                              onAddCategory={() => setShowCategoryForm(true)}
+                              onRemoveCategory={ideas.removeCustomCategory}
+                              allCategories={allCategories}
+                              showAddButton={true}
+                              disabled={isUpdating}
+                            />
                           </div>
 
                           {/* Description */}
@@ -963,6 +1149,35 @@ export function Home({ navigate }) {
 
                           {user.current?.$id === idea.userId && (
                             <div className="flex space-x-2 flex-shrink-0 relative">
+                              {/* Mark Complete/Active */}
+                              <div className="relative group/status">
+                                {idea.status === "completed" ? (
+                                  <motion.button
+                                    onClick={() => handleMarkActive(idea.$id)}
+                                    className="text-green-500 hover:text-green-400 p-1 rounded-md hover:bg-green-500/10 transition-colors"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                  >
+                                    <RotateCcw className="w-5 h-5" />
+                                  </motion.button>
+                                ) : (
+                                  <motion.button
+                                    onClick={() => handleMarkComplete(idea.$id)}
+                                    className="text-gray-500 hover:text-green-500 p-1 rounded-md hover:bg-green-500/10 transition-colors"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                  >
+                                    <CheckCircle2 className="w-5 h-5" />
+                                  </motion.button>
+                                )}
+                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/status:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
+                                  {idea.status === "completed"
+                                    ? "Mark as Active"
+                                    : "Mark as Complete"}
+                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
+                                </div>
+                              </div>
+
                               {/* Expand with AI */}
                               <div className="relative group/expand">
                                 <motion.button
@@ -1024,6 +1239,7 @@ export function Home({ navigate }) {
                         {/* Labels */}
                         {(idea.category ||
                           idea.priority ||
+                          idea.status ||
                           typeof idea.isPublic !== "undefined") && (
                           <div className="flex flex-wrap gap-2 mb-2.5">
                             {idea.category && (
@@ -1039,6 +1255,18 @@ export function Home({ navigate }) {
                                 )}`}
                               >
                                 {idea.priority}
+                              </span>
+                            )}
+
+                            {idea.status && (
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs border break-words break-all ${getStatusColor(
+                                  idea.status
+                                )}`}
+                              >
+                                {idea.status === "completed"
+                                  ? "Completed"
+                                  : "Active"}
                               </span>
                             )}
 
@@ -1080,7 +1308,6 @@ export function Home({ navigate }) {
                         {/* Bottom section */}
                         {(idea.githubUrl || idea.$createdAt) && (
                           <div className="pt-1.5 border-t border-gray-100 dark:border-gray-800">
-                            {/* Use flex layout instead of grid for better control */}
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                               {/* GitHub */}
                               {idea.githubUrl && (
@@ -1097,7 +1324,7 @@ export function Home({ navigate }) {
                                 </a>
                               )}
 
-                              {/* Created Date - Always show if available */}
+                              {/* Created Date */}
                               {idea.$createdAt && (
                                 <div
                                   className={`flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2 order-2 sm:order-none ${
@@ -1121,76 +1348,65 @@ export function Home({ navigate }) {
                     )}
                   </motion.div>
                 ))}
+
+                {/* Load More Button */}
+                {ideas.hasMore && (
+                  <motion.div
+                    className="flex justify-center mt-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <motion.button
+                      onClick={() => ideas.loadMore()}
+                      disabled={ideas.isLoading}
+                      className="bg-[#FD366E] hover:bg-[#FD366E]/90 disabled:bg-[#FD366E]/50 text-white font-medium px-6 py-2 rounded-xl transition-all duration-300 shadow-lg shadow-[#FD366E]/20 flex items-center space-x-2"
+                      whileHover={
+                        !ideas.isLoading ? { scale: 1.02, y: -1 } : {}
+                      }
+                      whileTap={!ideas.isLoading ? { scale: 0.98 } : {}}
+                    >
+                      {ideas.isLoading ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                          <span>Loading...</span>
+                        </>
+                      ) : (
+                        <span>Load More</span>
+                      )}
+                    </motion.button>
+                  </motion.div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
         </section>
       </div>
 
-      {deleteConfirm && (
-        <motion.div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setDeleteConfirm(null)}
-        >
-          <motion.div
-            className="dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-2xl p-6 max-w-md w-full mx-4"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-red-300/30 rounded-full flex items-center justify-center">
-                <AlertTriangle className="w-5 h-5 text-red-500" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold dark:text-white text-gray-900">
-                  Delete Idea
-                </h3>
-                <p className="dark:text-gray-400 text-gray-600 text-sm">
-                  This action cannot be undone
-                </p>
-              </div>
-            </div>
+      {/* Custom Category Modal */}
+      <CustomCategory
+        isOpen={showCategoryForm}
+        onClose={() => setShowCategoryForm(false)}
+        newCategory={newCategory}
+        setNewCategory={setNewCategory}
+        onSubmit={async () => {
+          if (!newCategory.trim()) return;
+          const success = await ideas.addCustomCategory(newCategory.trim());
+          if (success) {
+            const trimmedCategory = newCategory.trim();
+            setNewCategory("");
+            setShowCategoryForm(false);
 
-            <div className="mb-6">
-              <p className="dark:text-gray-300 text-gray-700">
-                Are you sure you want to delete{" "}
-                <span className="font-medium dark:text-white text-gray-900 break-words">
-                  "
-                  {filteredIdeas?.find((idea) => idea?.$id === deleteConfirm)
-                    ?.title || "Unknown"}
-                  "
-                </span>
-                ?
-              </p>
-            </div>
+            if (editingId) {
+              setEditCategory(trimmedCategory);
+            } else {
+              setCategory(trimmedCategory);
+            }
+          }
+        }}
+      />
 
-            <div className="flex space-x-3">
-              <motion.button
-                onClick={() => setDeleteConfirm(null)}
-                className="flex-1 dark:bg-gray-800 bg-gray-200 hover:dark:bg-gray-900 hover:bg-gray-300 dark:text-white text-gray-900 py-2 px-4 rounded-xl transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Cancel
-              </motion.button>
-              <motion.button
-                onClick={() => handleDelete(deleteConfirm)}
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Delete
-              </motion.button>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-
+      {/* AI Expansion Modal */}
       <AIExpansion
         idea={selectedIdea}
         isOpen={aiModalOpen}
@@ -1199,6 +1415,16 @@ export function Home({ navigate }) {
           setSelectedIdea(null);
         }}
         onExpand={ideas.expandWithAI}
+      />
+
+      {/* Delete Idea Modal */}
+      <DeleteIdea
+        isOpen={!!deleteConfirm}
+        onClose={() => setDeleteConfirm(null)}
+        ideaTitle={
+          filteredIdeas?.find((idea) => idea?.$id === deleteConfirm)?.title
+        }
+        onDelete={() => handleDelete(deleteConfirm)}
       />
     </>
   );

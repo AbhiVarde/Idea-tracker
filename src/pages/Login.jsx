@@ -139,7 +139,7 @@ export function Login({ navigate }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-white mb-2">
             Welcome to Idea Tracker
           </h1>
           <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
