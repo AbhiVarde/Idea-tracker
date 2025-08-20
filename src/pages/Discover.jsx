@@ -3,7 +3,7 @@ import { useUser } from "../lib/context/user";
 import { useIdeas } from "../lib/context/ideas";
 import { motion, AnimatePresence } from "framer-motion";
 import moment from "moment";
-import { Heart, Github, Compass } from "lucide-react";
+import { Heart, Github, Compass, Globe } from "lucide-react";
 
 const CATEGORIES = [
   "Web App",
@@ -260,12 +260,23 @@ export function Discover({ navigate }) {
                       </span>
 
                       <div className="flex items-center gap-2 shrink-0">
+                        {idea.previewUrl && (
+                          <a
+                            href={idea.previewUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
+                          >
+                            <Globe className="w-4 h-4 shrink-0" />
+                          </a>
+                        )}
+
                         {idea.githubUrl && (
                           <a
                             href={idea.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[#FD366E] hover:underline flex items-center gap-1"
+                            className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
                           >
                             <Github className="w-4 h-4 shrink-0" />
                           </a>

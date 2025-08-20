@@ -25,6 +25,7 @@ import {
   Check,
   CheckCircle2,
   RotateCcw,
+  Globe,
 } from "lucide-react";
 
 const DEFAULT_CATEGORIES = [
@@ -71,9 +72,12 @@ export function Home({ navigate }) {
   const [editTags, setEditTags] = useState("");
 
   const [isPublic, setIsPublic] = useState(false);
-  const [githubUrl, setGithubUrl] = useState("");
   const [editIsPublic, setEditIsPublic] = useState(false);
+
+  const [githubUrl, setGithubUrl] = useState("");
   const [editGithubUrl, setEditGithubUrl] = useState("");
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [editPreviewUrl, setEditPreviewUrl] = useState("");
 
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -156,6 +160,7 @@ export function Home({ navigate }) {
     const trimmedTitle = title.trim();
     const trimmedDescription = description.trim();
     const trimmedGithubUrl = githubUrl.trim();
+    const trimmedPreviewUrl = previewUrl.trim();
 
     if (!trimmedTitle) {
       toast.error("Please enter a title for your idea");
@@ -192,6 +197,20 @@ export function Home({ navigate }) {
     // Validate GitHub URL length
     if (trimmedGithubUrl.length > 200) {
       toast.error("GitHub URL must be less than 200 characters");
+      return;
+    }
+
+    // Validate Preview URL if provided
+    if (trimmedPreviewUrl && !trimmedPreviewUrl.startsWith("http")) {
+      toast.error(
+        "Please enter a valid preview URL (must start with http/https)"
+      );
+      return;
+    }
+
+    // Validate Preview URL length
+    if (trimmedPreviewUrl.length > 200) {
+      toast.error("Preview URL must be less than 200 characters");
       return;
     }
 
@@ -233,6 +252,7 @@ export function Home({ navigate }) {
         tags: processedTags,
         isPublic: isPublic,
         githubUrl: trimmedGithubUrl || null,
+        previewUrl: trimmedPreviewUrl || null,
         likes: 0,
         likedBy: [],
       });
@@ -242,6 +262,7 @@ export function Home({ navigate }) {
       setTags("");
       setIsPublic(false);
       setGithubUrl("");
+      setPreviewUrl("");
       setShowForm(false);
     } catch (err) {
       console.error(err);
@@ -255,6 +276,7 @@ export function Home({ navigate }) {
     const trimmedTitle = editTitle.trim();
     const trimmedDescription = editDescription.trim();
     const trimmedGithubUrl = editGithubUrl.trim();
+    const trimmedPreviewUrl = editPreviewUrl.trim();
 
     if (!trimmedTitle) {
       toast.error("Please enter a title for your idea");
@@ -291,6 +313,20 @@ export function Home({ navigate }) {
     // Validate GitHub URL length
     if (trimmedGithubUrl.length > 200) {
       toast.error("GitHub URL must be less than 200 characters");
+      return;
+    }
+
+    // Validate Preview URL if provided
+    if (trimmedPreviewUrl && !trimmedPreviewUrl.startsWith("http")) {
+      toast.error(
+        "Please enter a valid preview URL (must start with http/https)"
+      );
+      return;
+    }
+
+    // Validate Preview URL length
+    if (trimmedPreviewUrl.length > 200) {
+      toast.error("Preview URL must be less than 200 characters");
       return;
     }
 
@@ -331,6 +367,7 @@ export function Home({ navigate }) {
         tags: processedTags,
         isPublic: editIsPublic,
         githubUrl: trimmedGithubUrl || null,
+        previewUrl: trimmedPreviewUrl || null,
       });
 
       cancelEdit();
@@ -351,6 +388,7 @@ export function Home({ navigate }) {
     setEditTags(idea.tags || "");
     setEditIsPublic(idea.isPublic || false);
     setEditGithubUrl(idea.githubUrl || "");
+    setEditPreviewUrl(idea.previewUrl || "");
   };
 
   const cancelEdit = () => {
@@ -362,6 +400,7 @@ export function Home({ navigate }) {
     setEditTags("");
     setEditIsPublic(false);
     setEditGithubUrl("");
+    setEditPreviewUrl("");
   };
 
   const handleDelete = async (ideaId) => {
@@ -635,8 +674,8 @@ export function Home({ navigate }) {
                         className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent resize-none transition-all duration-200"
                       />
 
-                      {/* Priority + GitHub */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {/* Priority + GitHub + Preview */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                         <select
                           value={priority}
                           onChange={(e) => setPriority(e.target.value)}
@@ -652,6 +691,18 @@ export function Home({ navigate }) {
                             </option>
                           ))}
                         </select>
+
+                        <div className="relative">
+                          <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
+                          <input
+                            type="url"
+                            placeholder="Preview URL (max 200 chars)"
+                            value={previewUrl}
+                            onChange={(e) => setPreviewUrl(e.target.value)}
+                            maxLength={200}
+                            className="w-full text-sm pl-10 pr-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                          />
+                        </div>
 
                         <div className="relative">
                           <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
@@ -1064,8 +1115,8 @@ export function Home({ navigate }) {
                             className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent resize-none transition-all duration-200"
                           />
 
-                          {/* Priority and GitHub URL Row */}
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {/* Priority + GitHub URL + Preview URL Row */}
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <select
                               value={editPriority}
                               onChange={(e) => setEditPriority(e.target.value)}
@@ -1081,6 +1132,20 @@ export function Home({ navigate }) {
                                 </option>
                               ))}
                             </select>
+
+                            <div className="relative">
+                              <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
+                              <input
+                                type="url"
+                                placeholder="Preview URL (max 200 chars)"
+                                value={editPreviewUrl}
+                                onChange={(e) =>
+                                  setEditPreviewUrl(e.target.value)
+                                }
+                                maxLength={200}
+                                className="w-full text-sm pl-10 pr-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                              />
+                            </div>
 
                             <div className="relative">
                               <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
@@ -1306,29 +1371,43 @@ export function Home({ navigate }) {
                         )}
 
                         {/* Bottom section */}
-                        {(idea.githubUrl || idea.$createdAt) && (
+                        {(idea.previewUrl ||
+                          idea.githubUrl ||
+                          idea.$createdAt) && (
                           <div className="pt-1.5 border-t border-gray-100 dark:border-gray-800">
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                              {/* GitHub */}
-                              {idea.githubUrl && (
-                                <a
-                                  href={idea.githubUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center gap-2 text-[#FD366E] hover:text-[#FD366E]/80 text-sm min-w-0 order-1 sm:order-none"
-                                >
-                                  <Github className="w-4 h-4 flex-shrink-0" />
-                                  <span className="truncate break-all">
-                                    View on GitHub
-                                  </span>
-                                </a>
+                              {/* Preview and GitHub Links */}
+                              {(idea.previewUrl || idea.githubUrl) && (
+                                <div className="flex items-center gap-4 min-w-0 order-1 sm:order-none">
+                                  {idea.previewUrl && (
+                                    <a
+                                      href={idea.previewUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
+                                    >
+                                      <Globe className="w-5 h-5" />
+                                    </a>
+                                  )}
+
+                                  {idea.githubUrl && (
+                                    <a
+                                      href={idea.githubUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
+                                    >
+                                      <Github className="w-5 h-5" />
+                                    </a>
+                                  )}
+                                </div>
                               )}
 
                               {/* Created Date */}
                               {idea.$createdAt && (
                                 <div
                                   className={`flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2 order-2 sm:order-none ${
-                                    !idea.githubUrl
+                                    !(idea.previewUrl || idea.githubUrl)
                                       ? "sm:justify-start"
                                       : "sm:justify-end"
                                   }`}
