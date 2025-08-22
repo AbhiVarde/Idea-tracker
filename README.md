@@ -8,12 +8,13 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
 
 ## 🏆 Featured by Appwrite
 
-*Honored to be featured in Appwrite's Monthly Community Recognition for July 2025.*  
+_Honored to be featured in Appwrite's Monthly Community Recognition for July 2025._  
 [Read the official blog post →](https://appwrite.io/blog/post/product-update-july-2025)
 
 <img width="400" alt="appwrite-feature" src="https://github.com/user-attachments/assets/b2b49e8f-3e3c-4e86-bd24-9b0ebb809210" />
 
 ## 🚀 Tech Stack
+
 - <img src="https://vitejs.dev/logo.svg" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Build Tool**: [Vite](https://vitejs.dev/)
 - <img src="https://react.dev/favicon.ico" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Frontend**: [React](https://react.dev/)
 - <img src="https://tailwindcss.com/favicons/favicon-32x32.png" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Styling**: [Tailwind CSS](https://tailwindcss.com/)
@@ -25,16 +26,18 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
 ## ✨ Features
 
 ### Core Features
+
 - 🔐 Secure authentication with session management
 - 📝 Full CRUD operations for idea management
 - 🛡️ Privacy-first - users can only manage their own ideas
 - ⚡ Real-time sync across all devices
 
-###  Extended Features  
+### Extended Features
+
 - 🍀 Organized by Category & Priority
 - 🪴 Edit Your Ideas Anytime
-- 🥬 Color-coded Tags 
-- 🥒 Smart Search & Filtering 
+- 🥬 Color-coded Tags
+- 🥒 Smart Search & Filtering
 - 🌱 Personal Dashboard
 - 🧩 Smooth UI & Animations
 - 🥦 Social Login (Google, GitHub, Discord)
@@ -44,32 +47,38 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
 - 🫑 Multilingual Support with Lingo.dev
 - 🤖 AI-Powered Idea Expansion with Gemini
 - 📧 Email Notifications & Weekly Summaries
-- 🥝 Discover & interact with public ideas (like/dislike, GitHub links)
+- 🥝 Discover & interact with public ideas (like/dislike, GitHub/Preview links)
 - 🌳 Custom categories (add/remove categories per idea)
 - 🍏 Mark as complete/seen (track progress visually)
 - 💚 Free & Open Source
 
-*Ready to turn your ideas into reality?*
+_Ready to turn your ideas into reality?_
 
 ## Getting Started
+
 ### Prerequisites
+
 - Node.js 16+ and npm
 
 ### Installation
 
 #### Main Branch (React)
+
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/AbhiVarde/idea-tracker.git
    cd idea-tracker
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Start the development server**
+
    ```bash
    npm start
    ```
@@ -80,9 +89,11 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
    ```
 
 #### Feature Branches (Vite + React)
+
 For branches with Vite configuration:
 
 1. **Clone and switch to desired branch**
+
    ```bash
    git clone https://github.com/AbhiVarde/idea-tracker.git
    cd idea-tracker
@@ -90,11 +101,13 @@ For branches with Vite configuration:
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Start the development server**
+
    ```bash
    npm run dev
    ```
@@ -118,7 +131,9 @@ Click the card to view it live:
 </a>
 
 ## License
+
 Idea Tracker is licensed under the [MIT License](http://choosealicense.com/licenses/mit/). All rights reserved.
 
 ## Authors
+
 Idea Tracker is created and maintained by [Abhi Varde](https://www.abhivarde.in/).
