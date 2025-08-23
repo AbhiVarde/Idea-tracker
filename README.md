@@ -44,7 +44,7 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
 - 🫑 Multilingual Support with Lingo.dev
 - 🤖 AI-Powered Idea Expansion with Gemini
 - 📧 Email Notifications & Weekly Summaries
-- 🥝 Discover & interact with public ideas (like/dislike, GitHub/Preview links)
+- 🥝 Discover & interact with public ideas (like/dislike, GitHub & Preview links)
 - 🌳 Custom categories (add/remove categories per idea)
 - 🍏 Mark as complete/seen (track progress visually)
 - 💚 Free & Open Source
