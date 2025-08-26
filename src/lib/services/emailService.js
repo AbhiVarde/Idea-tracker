@@ -78,7 +78,6 @@ class EmailService {
     });
   }
 
-  // New method for batch idea notifications
   async sendBatchIdeaNotification(
     userEmail,
     userName,
@@ -93,10 +92,36 @@ class EmailService {
     });
   }
 
-  async sendWeeklySummary(userEmail, userName, ideaCount, expandedCount) {
+  // Helper to get week start date (Monday)
+  getWeekStartDate() {
+    const now = new Date();
+    const day = now.getDay();
+    const diff = now.getDate() - day + (day === 0 ? -6 : 1); // Monday
+    const weekStart = new Date(now.setDate(diff));
+    weekStart.setHours(0, 0, 0, 0);
+    return weekStart;
+  }
+
+  // Filter ideas from this week only
+  getThisWeekIdeas(ideas) {
+    const weekStart = this.getWeekStartDate();
+    return ideas.filter((idea) => new Date(idea.$createdAt) >= weekStart);
+  }
+
+  async sendWeeklySummary(userEmail, userName, userId, allIdeas = []) {
+    // Filter to only this week's ideas
+    const thisWeekIdeas = this.getThisWeekIdeas(allIdeas);
+
+    const ideaCount = thisWeekIdeas.length;
+    const expandedCount = thisWeekIdeas.filter(
+      (idea) =>
+        idea.expandedAt && new Date(idea.expandedAt) >= this.getWeekStartDate()
+    ).length;
+
     return await this.sendNotification("weeklySummary", userEmail, userName, {
       ideaCount,
       expandedCount,
+      userId,
     });
   }
 }
