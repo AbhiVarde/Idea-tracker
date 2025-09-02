@@ -8,10 +8,15 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
 
 ## 🏆 Featured by Appwrite
 
-*Honored to be featured in Appwrite's Monthly Community Recognition for July 2025.*  
+_Honored to be featured in Appwrite's Monthly Community Recognition for July 2025._  
 [Read the official blog post →](https://appwrite.io/blog/post/product-update-july-2025)
 
 <img width="400" alt="appwrite-feature" src="https://github.com/user-attachments/assets/b2b49e8f-3e3c-4e86-bd24-9b0ebb809210" />
+
+## 📖 Project Journey
+
+Want to know how this project came to life? Read about the complete development journey from concept to recognition:  
+[**My Idea Tracker Journey with Appwrite: From Hello World to Hoodie** →](https://dev.to/abhivarde/my-idea-tracker-journey-with-appwrite-from-hello-world-to-hoodie-4p6e)
 
 ## 🚀 Tech Stack
 
@@ -25,16 +30,18 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
 ## ✨ Features
 
 ### Core Features
+
 - 🔐 Secure authentication with session management
 - 📝 Full CRUD operations for idea management
 - 🛡️ Privacy-first - users can only manage their own ideas
 - ⚡ Real-time sync across all devices
 
-### Extended Features  
+### Extended Features
+
 - 🍀 Organized by Category & Priority
 - 🪴 Edit Your Ideas Anytime
-- 🥬 Color-coded Tags 
-- 🥒 Smart Search & Filtering 
+- 🥬 Color-coded Tags
+- 🥒 Smart Search & Filtering
 - 🌱 Personal Dashboard
 - 🧩 Smooth UI & Animations
 - 🥦 Social Login (Google, GitHub, Discord)
@@ -49,7 +56,7 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
 - 🍏 Mark as complete/seen (track progress visually)
 - 💚 Free & Open Source
 
-*Ready to turn your ideas into reality?*
+_Ready to turn your ideas into reality?_
 
 ## Getting Started
 
@@ -102,6 +109,7 @@ Open [http://localhost:5173](http://localhost:5173) and start managing your idea
 5. Open Pull Request
 
 **Development Guidelines:**
+
 - Follow existing code patterns
 - Test idea management scenarios thoroughly
 - Maintain responsive design
