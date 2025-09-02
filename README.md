@@ -13,6 +13,11 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
 
 <img width="400" alt="appwrite-feature" src="https://github.com/user-attachments/assets/b2b49e8f-3e3c-4e86-bd24-9b0ebb809210" />
 
+## 📖 Project Journey
+
+Want to know how this project came to life? Read about the complete development journey from concept to recognition:  
+[**My Idea Tracker Journey with Appwrite: From Hello World to Hoodie** →](https://dev.to/abhivarde/my-idea-tracker-journey-with-appwrite-from-hello-world-to-hoodie-4p6e)
+
 ## 🚀 Tech Stack
 
 - **Build Tool**: Vite
