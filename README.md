@@ -8,36 +8,33 @@ Idea Tracker is a clean and efficient tool for managing your ideas with ease. Bu
 
 ## 🏆 Featured by Appwrite
 
-_Honored to be featured in Appwrite's Monthly Community Recognition for July 2025._  
+*Honored to be featured in Appwrite's Monthly Community Recognition for July 2025.*  
 [Read the official blog post →](https://appwrite.io/blog/post/product-update-july-2025)
 
 <img width="400" alt="appwrite-feature" src="https://github.com/user-attachments/assets/b2b49e8f-3e3c-4e86-bd24-9b0ebb809210" />
 
 ## 🚀 Tech Stack
 
-- <img src="https://vitejs.dev/logo.svg" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Build Tool**: [Vite](https://vitejs.dev/)
-- <img src="https://react.dev/favicon.ico" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Frontend**: [React](https://react.dev/)
-- <img src="https://tailwindcss.com/favicons/favicon-32x32.png" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- <img src="https://app.framerstatic.com/favicon-light@2x-HMWCNIXJ.png" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Animation**: [Framer Motion](https://www.framer.com/motion/)
-- <img src="https://lingo.dev/favicon.ico" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Internationalization**: [Lingo.dev](https://lingo.dev/)
-- <img src="https://appwrite.io/images/logos/logo.svg" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Backend**: [Appwrite](https://appwrite.io/)
-- <img src="https://appwrite.io/images/logos/logo.svg" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" /> **Deployment**: [Appwrite Sites](https://appwrite.io/products/sites)
+- **Build Tool**: Vite
+- **Frontend**: React, Tailwind CSS
+- **Animation**: Framer Motion
+- **Internationalization**: Lingo.dev
+- **Backend**: Appwrite (NoSQL)
+- **Deployment**: Appwrite Sites
 
 ## ✨ Features
 
 ### Core Features
-
 - 🔐 Secure authentication with session management
 - 📝 Full CRUD operations for idea management
 - 🛡️ Privacy-first - users can only manage their own ideas
 - ⚡ Real-time sync across all devices
 
-### Extended Features
-
+### Extended Features  
 - 🍀 Organized by Category & Priority
 - 🪴 Edit Your Ideas Anytime
-- 🥬 Color-coded Tags
-- 🥒 Smart Search & Filtering
+- 🥬 Color-coded Tags 
+- 🥒 Smart Search & Filtering 
 - 🌱 Personal Dashboard
 - 🧩 Smooth UI & Animations
 - 🥦 Social Login (Google, GitHub, Discord)
@@ -52,72 +49,67 @@ _Honored to be featured in Appwrite's Monthly Community Recognition for July 202
 - 🍏 Mark as complete/seen (track progress visually)
 - 💚 Free & Open Source
 
-_Ready to turn your ideas into reality?_
+*Ready to turn your ideas into reality?*
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 16+ and npm
+- Appwrite account and project
 
-### Installation
+### Quick Start
 
 #### Main Branch (React)
 
-1. **Clone the repository**
+```bash
+# Clone repository
+git clone https://github.com/AbhiVarde/idea-tracker.git
+cd idea-tracker
 
-   ```bash
-   git clone https://github.com/AbhiVarde/idea-tracker.git
-   cd idea-tracker
-   ```
+# Install dependencies
+npm install
 
-2. **Install dependencies**
+# Start development server
+npm start
+```
 
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server**
-
-   ```bash
-   npm start
-   ```
-
-4. **Open your browser**
-   ```
-   http://localhost:3000
-   ```
+Open [http://localhost:3000](http://localhost:3000) and start managing your ideas.
 
 #### Feature Branches (Vite + React)
 
-For branches with Vite configuration:
+```bash
+# Clone and switch to desired branch
+git clone https://github.com/AbhiVarde/idea-tracker.git
+cd idea-tracker
+git checkout [branch-name]
 
-1. **Clone and switch to desired branch**
+# Install dependencies
+npm install
 
-   ```bash
-   git clone https://github.com/AbhiVarde/idea-tracker.git
-   cd idea-tracker
-   git checkout [branch-name]
-   ```
+# Start development server
+npm run dev
+```
 
-2. **Install dependencies**
+Open [http://localhost:5173](http://localhost:5173) and start managing your ideas.
 
-   ```bash
-   npm install
-   ```
+## 🤝 Contributing
 
-3. **Start the development server**
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
 
-   ```bash
-   npm run dev
-   ```
+**Development Guidelines:**
+- Follow existing code patterns
+- Test idea management scenarios thoroughly
+- Maintain responsive design
+- Keep commits focused and descriptive
 
-4. **Open your browser**
-   ```
-   http://localhost:5173
-   ```
+## 💖 Support
 
-💖 **Love Idea Tracker? Support with a one-time gift!**  
+**Love Idea Tracker? Support with a one-time gift!**  
 From ☕ **$9** to keep development rolling, to 🚀 **$999** for a full promo of your work.  
 [Become a Sponsor →](https://github.com/sponsors/AbhiVarde)
 
