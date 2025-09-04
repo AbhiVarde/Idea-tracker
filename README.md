@@ -6,9 +6,11 @@
 
 Idea Tracker is a clean and efficient tool for managing your ideas with ease. Built for developers who value simplicity, privacy, and speed.
 
+<img width="1200" height="630" alt="og-image" src="./public/og-image.png" />
+
 ## 🏆 Featured by Appwrite
 
-*Honored to be featured in Appwrite's Monthly Community Recognition for July 2025.*  
+_Honored to be featured in Appwrite's Monthly Community Recognition for July 2025._  
 [Read the official blog post →](https://appwrite.io/blog/post/product-update-july-2025)
 
 <img width="400" alt="appwrite-feature" src="https://github.com/user-attachments/assets/b2b49e8f-3e3c-4e86-bd24-9b0ebb809210" />
@@ -30,16 +32,18 @@ Want to know how this project came to life? Read about the complete development 
 ## ✨ Features
 
 ### Core Features
+
 - 🔐 Secure authentication with session management
 - 📝 Full CRUD operations for idea management
 - 🛡️ Privacy-first - users can only manage their own ideas
 - ⚡ Real-time sync across all devices
 
-### Extended Features  
+### Extended Features
+
 - 🍀 Organized by Category & Priority
 - 🪴 Edit Your Ideas Anytime
-- 🥬 Color-coded Tags 
-- 🥒 Smart Search & Filtering 
+- 🥬 Color-coded Tags
+- 🥒 Smart Search & Filtering
 - 🌱 Personal Dashboard
 - 🧩 Smooth UI & Animations
 - 🥦 Social Login (Google, GitHub, Discord)
@@ -54,7 +58,7 @@ Want to know how this project came to life? Read about the complete development 
 - 🍏 Mark as complete/seen (track progress visually)
 - 💚 Free & Open Source
 
-*Ready to turn your ideas into reality?*
+_Ready to turn your ideas into reality?_
 
 ## Getting Started
 
@@ -107,6 +111,7 @@ Open [http://localhost:5173](http://localhost:5173) and start managing your idea
 5. Open Pull Request
 
 **Development Guidelines:**
+
 - Follow existing code patterns
 - Test idea management scenarios thoroughly
 - Maintain responsive design
@@ -114,9 +119,18 @@ Open [http://localhost:5173](http://localhost:5173) and start managing your idea
 
 ## 💖 Support
 
-**Love Idea Tracker? Support with a one-time gift!**  
-From ☕ **$9** to keep development rolling, to 🚀 **$999** for a full promo of your work.  
-[Become a Sponsor →](https://github.com/sponsors/AbhiVarde)
+**Love Idea Tracker? Help me keep building!**
+
+💚 **$5 / month - Monthly Supporter**  
+Get recognition in the GitHub README under Supporters.  
+
+🌟 **$19 / month - Monthly Sponsor**  
+Support growth and get recognition both in the GitHub README **and** on my portfolio (abhivarde.in).  
+
+🚀 **$49 / month - Featured Sponsor**  
+Premium support with **extra visibility**: README + Portfolio + **promotion on Sync UI**.  
+
+[👉 Become a Sponsor](https://github.com/sponsors/AbhiVarde)
 
 ## 🌩️ Appwrite Cloud Beta
 
