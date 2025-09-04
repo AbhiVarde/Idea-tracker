@@ -6,6 +6,8 @@
 
 Idea Tracker is a clean and efficient tool for managing your ideas with ease. Built for developers who value simplicity, privacy, and speed.
 
+<img width="1200" height="630" alt="og-image" src="./public/og-image.png" />
+
 ## 🏆 Featured by Appwrite
 
 _Honored to be featured in Appwrite's Monthly Community Recognition for July 2025._  
@@ -117,9 +119,18 @@ Open [http://localhost:5173](http://localhost:5173) and start managing your idea
 
 ## 💖 Support
 
-**Love Idea Tracker? Support with a one-time gift!**  
-From ☕ **$9** to keep development rolling, to 🚀 **$999** for a full promo of your work.  
-[Become a Sponsor →](https://github.com/sponsors/AbhiVarde)
+**Love Idea Tracker? Help me keep building!**
+
+💚 **$5 / month - Monthly Supporter**  
+Get recognition in the GitHub README under Supporters.  
+
+🌟 **$19 / month - Monthly Sponsor**  
+Support growth and get recognition both in the GitHub README **and** on my portfolio (abhivarde.in).  
+
+🚀 **$49 / month - Featured Sponsor**  
+Premium support with **extra visibility**: README + Portfolio + **promotion on Sync UI**.  
+
+[👉 Become a Sponsor](https://github.com/sponsors/AbhiVarde)
 
 ## 🌩️ Appwrite Cloud Beta
 
