@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useUser } from "../lib/context/user";
+import { useUser } from "../../lib/context/user";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trash2, AlertTriangle, X, Camera, Upload, UserX } from "lucide-react";
 import { toast } from "sonner";
@@ -123,7 +123,7 @@ const AccountSettings = ({ isOpen, onClose }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="bg-white dark:bg-[#000000] border border-gray-200 dark:border-gray-800 rounded-2xl p-6 w-full max-w-sm relative"
+          className="bg-white dark:bg-[#000000] dark:border-gray-800 border-gray-200 border rounded-2xl p-6 w-full max-w-sm relative"
           onClick={(e) => e.stopPropagation()}
         >
           <button

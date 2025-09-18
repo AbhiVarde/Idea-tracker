@@ -18,7 +18,7 @@ export const ThemeProvider = ({ children }) => {
         return savedTheme;
       }
     }
-    return "system";
+    return "light";
   });
 
   const getSystemTheme = () => {
@@ -27,7 +27,7 @@ export const ThemeProvider = ({ children }) => {
         ? "dark"
         : "light";
     }
-    return "dark";
+    return "light";
   };
 
   const getEffectiveTheme = () => {

@@ -10,6 +10,7 @@ import { databases } from "../appwrite";
 import { ID, Query } from "appwrite";
 import { toast } from "sonner";
 import { useUser } from "./user";
+import { expandIdea } from "../services/gemini";
 
 export const IDEAS_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 export const IDEAS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
@@ -104,6 +105,7 @@ export function IdeasProvider({ children }) {
       toast.success("Idea updated successfully!");
       return response;
     } catch (err) {
+      console.error("Update error details:", err);
       toast.error(getErrorMessage(err));
       throw err;
     } finally {
@@ -137,11 +139,45 @@ export function IdeasProvider({ children }) {
     }
   }
 
+  async function expandWithAI(idea) {
+    if (!user) {
+      toast.error("Please log in to expand ideas");
+      return;
+    }
+
+    try {
+      const result = await expandIdea(
+        idea.title,
+        idea.description,
+        idea.category,
+        idea.priority
+      );
+
+      if (result.success) {
+        const expandedAt = new Date().toISOString();
+
+        await update(idea.$id, {
+          aiExpansion: result.expansion,
+          expandedAt: expandedAt,
+        });
+
+        return result.expansion;
+      } else {
+        throw new Error(result.error);
+      }
+    } catch (err) {
+      console.error("AI expansion error:", err);
+      toast.error("Failed to expand idea. Please try again.");
+      throw err;
+    }
+  }
+
   const fetchIdeas = useCallback(async () => {
     if (!user) return;
 
     try {
       setIsLoading(true);
+
       const response = await databases.listDocuments(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
@@ -171,7 +207,6 @@ export function IdeasProvider({ children }) {
   useEffect(() => {
     if (isInitialized && !loading) {
       if (user) {
-        console.log("User authenticated, fetching ideas...", user);
         fetchIdeas();
       } else {
         console.log("No user, clearing ideas");
@@ -237,6 +272,7 @@ export function IdeasProvider({ children }) {
     add,
     update,
     remove,
+    expandWithAI,
     isLoading,
     refresh: fetchIdeas,
   };

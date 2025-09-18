@@ -12,7 +12,7 @@ import {
   Settings,
 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
-import AccountSettings from "../components/AccountSettings";
+import AccountSettings from "./dialogs/AccountSettings";
 import moment from "moment";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import ThemeSelector from "./ThemeSelector";
@@ -193,7 +193,7 @@ function Navbar({ navigate, currentPage }) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className="max-w-2xl mx-auto px-6 sm:px-4 py-1.5 sm:py-3">
+        <div className="max-w-2xl mx-auto px-2 sm:px-4 py-1.5 sm:py-3">
           <div className="flex flex-row sm:items-center justify-between gap-2 sm:gap-0 py-2 sm:py-0">
             <motion.button
               onClick={() => navigate("home")}
@@ -338,6 +338,8 @@ function Navbar({ navigate, currentPage }) {
                       <LanguageSwitcher />
                     </div>
 
+                    <ThemeSelector variant="mobile-dropdown" />
+
                     <motion.a
                       href="https://github.com/AbhiVarde/Idea-tracker"
                       target="_blank"
@@ -356,13 +358,6 @@ function Navbar({ navigate, currentPage }) {
                     >
                       <SiGithub className="w-5 h-5" />
                     </motion.a>
-
-                    <div className="hidden sm:block">
-                      <ThemeSelector variant="navbar" />
-                    </div>
-                    <div className="sm:hidden">
-                      <ThemeSelector variant="mobile-dropdown" />
-                    </div>
 
                     <NavButton
                       icon={LogIn}
@@ -404,7 +399,7 @@ function NavButton({
     <motion.button
       onClick={onClick}
       className={`flex items-center space-x-2 ${
-        compact ? "p-2" : "px-4 py-2"
+        compact ? "p-2" : "px-3 sm:px-4 py-2"
       } rounded-lg transition-all duration-300 ${
         isActive || forceActiveStyle ? activeStyle : defaultStyle
       }`}
