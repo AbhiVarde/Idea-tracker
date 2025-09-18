@@ -1578,11 +1578,11 @@ export default {
       entries: {
         "5/declaration/body/3/consequent/0/argument/1/3": {
           content: {
-            de: "Wird geladen...",
+            de: "Lade...",
             en: "Loading...",
             es: "Cargando...",
-            fr: "Chargement...",
-            ru: "Загрузка...",
+            fr: "Chargement…",
+            ru: "Загрузка…",
           },
           hash: "82b4ea7ed1439094d7c4be13aaba9a66",
         },
@@ -1598,13 +1598,13 @@ export default {
         },
         "5/declaration/body/4/argument/1/5": {
           content: {
-            de: "Überprüfen Sie Ihren Posteingang unter <element:strong>{user.email}</element:strong> und verifizieren Sie, um Idea Tracker fortzusetzen.",
-            en: "Check your inbox at <element:strong>{user.email}</element:strong> and verify to continue Idea Tracker.",
-            es: "Revisa tu bandeja de entrada en <element:strong>{user.email}</element:strong> y verifícalo para continuar con Idea Tracker.",
-            fr: "Consultez votre boîte de réception à <element:strong>{user.email}</element:strong> et vérifiez pour continuer sur Idea Tracker.",
-            ru: "Проверьте свой почтовый ящик по адресу <element:strong>{user.email}</element:strong> и подтвердите для продолжения работы с Idea Tracker.",
+            de: "Überprüfen Sie Ihren Posteingang unter <element:strong>{user.email}</element:strong> und verifizieren Sie Ihre E-Mail-Adresse, um Idea Tracker weiterhin nutzen zu können.",
+            en: "Check your inbox at <element:strong>{user.email}</element:strong> and verify your email to continue using Idea Tracker.",
+            es: "Revisa tu bandeja de entrada en <element:strong>{user.email}</element:strong> y verifica tu correo electrónico para continuar usando Idea Tracker.",
+            fr: "Consultez votre boîte de réception à <element:strong>{user.email}</element:strong> et vérifiez votre adresse électronique pour continuer à utiliser Idea Tracker.",
+            ru: "Проверьте свой почтовый ящик <element:strong>{user.email}</element:strong> и подтвердите адрес электронной почты, чтобы продолжить использование Idea Tracker.",
           },
-          hash: "b837fd217983b3fe36a5aaf56178d47b",
+          hash: "ad8cc9146625b586f630a1b753627e66",
         },
         "5/declaration/body/4/argument/1/7/1/expression/alternate": {
           content: {

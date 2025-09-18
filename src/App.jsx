@@ -32,8 +32,7 @@ function AppContent() {
     if (path === "/login") setCurrentPage("login");
     else if (path === "/profile") setCurrentPage("profile");
     else if (path === "/discover") setCurrentPage("discover");
-    else if (path === "/verify-email")
-      setCurrentPage("home"); // Redirect to home after verification
+    else if (path === "/verify-email") setCurrentPage("home");
     else setCurrentPage("home");
 
     const handlePopState = () => {
@@ -42,7 +41,6 @@ function AppContent() {
         setCurrentPage("404");
         return;
       }
-
       if (path === "/login") setCurrentPage("login");
       else if (path === "/profile") setCurrentPage("profile");
       else if (path === "/discover") setCurrentPage("discover");
@@ -51,7 +49,6 @@ function AppContent() {
     };
 
     window.addEventListener("popstate", handlePopState);
-
     setLoading(false);
 
     return () => window.removeEventListener("popstate", handlePopState);
@@ -91,14 +88,6 @@ function AppContent() {
   function InnerContent({ currentPage, navigate }) {
     const userContext = useUser();
 
-    // Add debug logging to see which condition is causing the issue
-    console.log("Debug - Loading states:", {
-      loading: userContext.loading,
-      isInitialized: userContext.isInitialized,
-      userDataLoaded: userContext.userDataLoaded,
-      user: userContext.current ? "exists" : "null",
-    });
-
     if (
       userContext.loading ||
       !userContext.isInitialized ||
@@ -114,9 +103,7 @@ function AppContent() {
       );
     }
 
-    // Check for verification BEFORE checking if user exists
     if (userContext.current && !userContext.isUserVerified()) {
-      console.log("Showing verification page for:", userContext.current.email);
       return <VerificationPage />;
     }
 
@@ -126,7 +113,9 @@ function AppContent() {
           <Navbar navigate={navigate} currentPage={currentPage} />
         )}
         <main
-          className={`flex-grow ${currentPage !== "404" ? "container mx-auto p-4" : ""}`}
+          className={`flex-grow ${
+            currentPage !== "404" ? "container mx-auto p-4" : ""
+          }`}
         >
           <AnimatePresence mode="wait">
             <motion.div
