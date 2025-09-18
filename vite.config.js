@@ -8,10 +8,10 @@ export default defineConfig(() =>
     sourceLocale: "en",
     targetLocales: ["es", "fr", "de", "ru"],
     models: {
-      "en:es": "openrouter:qwen/qwen-2.5-72b-instruct",
-      "en:fr": "openrouter:deepseek/deepseek-r1-distill-llama-70b",
-      "en:de": "openrouter:meta-llama/llama-3.1-405b-instruct",
-      "en:ru": "openrouter:microsoft/wizardlm-2-8x22b",
+      "en:es": "google:gemini-1.5-flash",
+      "en:fr": "google:gemini-1.5-flash",
+      "en:de": "google:gemini-1.5-flash",
+      "en:ru": "google:gemini-1.5-flash",
     },
     includePattern: "**/*.{js,jsx}",
     excludePattern: "**/node_modules/**",
@@ -39,6 +39,9 @@ export default defineConfig(() =>
       "process.env.VITE_APPWRITE_FUNCTION_ID": JSON.stringify(
         process.env.VITE_APPWRITE_FUNCTION_ID
       ),
+      "process.env.VITE_APPWRITE_EMAIL_FUNCTION_ID": JSON.stringify(
+        process.env.VITE_APPWRITE_EMAIL_FUNCTION_ID
+      ),
       "process.env.VITE_GOOGLE_CLIENT_ID": JSON.stringify(
         process.env.VITE_GOOGLE_CLIENT_ID
       ),
@@ -58,6 +61,7 @@ export default defineConfig(() =>
         process.env.VITE_DISCORD_CLIENT_SECRET
       ),
       "process.env.GROQ_API_KEY": JSON.stringify(process.env.GROQ_API_KEY),
+      "process.env.GOOGLE_API_KEY": JSON.stringify(process.env.GOOGLE_API_KEY),
       "process.env.OPENROUTER_API_KEY": JSON.stringify(
         process.env.OPENROUTER_API_KEY
       ),
