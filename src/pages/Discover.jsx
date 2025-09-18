@@ -3,7 +3,7 @@ import { useUser } from "../lib/context/user";
 import { useIdeas } from "../lib/context/ideas";
 import { motion, AnimatePresence } from "framer-motion";
 import moment from "moment";
-import { Heart, Github, Compass } from "lucide-react";
+import { Heart, Github, Compass, Globe } from "lucide-react";
 
 const CATEGORIES = [
   "Web App",
@@ -14,6 +14,23 @@ const CATEGORIES = [
   "Game",
   "Other",
 ];
+
+const getCategoryCount = (category, ideas) => {
+  if (category === "All") return ideas.length;
+  if (category === "Other") {
+    const defaultCategories = [
+      "Web App",
+      "Mobile App",
+      "AI/ML",
+      "API",
+      "Tool",
+      "Game",
+    ];
+    return ideas.filter((idea) => !defaultCategories.includes(idea.category))
+      .length;
+  }
+  return ideas.filter((idea) => idea.category === category).length;
+};
 
 export function Discover({ navigate }) {
   const { current: currentUser } = useUser();
@@ -42,9 +59,23 @@ export function Discover({ navigate }) {
 
   // Filter ideas by category
   const filteredIdeas = publicIdeas.filter((idea) => {
-    const matchesCategory =
-      filterCategory === "All" || idea.category === filterCategory;
-    return matchesCategory;
+    if (filterCategory === "All") {
+      return true;
+    } else if (filterCategory === "Other") {
+      // Show ideas with categories not in the default list
+      const defaultCategories = [
+        "Web App",
+        "Mobile App",
+        "AI/ML",
+        "API",
+        "Tool",
+        "Game",
+      ];
+      return !defaultCategories.includes(idea.category);
+    } else {
+      // Show ideas matching the selected default category
+      return idea.category === filterCategory;
+    }
   });
 
   const handleLike = async (ideaId) => {
@@ -98,10 +129,12 @@ export function Discover({ navigate }) {
               onChange={(e) => setFilterCategory(e.target.value)}
               className="dark:bg-[#000000] bg-white border dark:border-gray-800 border-gray-200 rounded-lg px-3 py-2 text-sm dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] transition-all"
             >
-              <option value="All">All Categories</option>
+              <option value="All">
+                All Categories ({getCategoryCount("All", publicIdeas)})
+              </option>
               {CATEGORIES.map((cat) => (
                 <option key={cat} value={cat}>
-                  {cat}
+                  {cat} ({getCategoryCount(cat, publicIdeas)})
                 </option>
               ))}
             </select>
@@ -142,9 +175,11 @@ export function Discover({ navigate }) {
               >
                 <Compass className="w-6 h-6 dark:text-gray-600 text-gray-400 mx-auto mb-2" />
                 <p className="text-sm sm:text-base dark:text-gray-400 text-gray-600">
-                  {filterCategory !== "All"
-                    ? "No public ideas match your filters"
-                    : "No public ideas yet"}
+                  {filterCategory === "Other"
+                    ? "No custom category ideas found"
+                    : filterCategory !== "All"
+                      ? `No ideas found in ${filterCategory} category`
+                      : "No public ideas yet"}
                 </p>
               </motion.div>
             ) : (
@@ -225,12 +260,23 @@ export function Discover({ navigate }) {
                       </span>
 
                       <div className="flex items-center gap-2 shrink-0">
+                        {idea.previewUrl && (
+                          <a
+                            href={idea.previewUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
+                          >
+                            <Globe className="w-4 h-4 shrink-0" />
+                          </a>
+                        )}
+
                         {idea.githubUrl && (
                           <a
                             href={idea.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[#FD366E] hover:underline flex items-center gap-1"
+                            className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
                           >
                             <Github className="w-4 h-4 shrink-0" />
                           </a>

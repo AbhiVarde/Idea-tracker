@@ -134,16 +134,17 @@ function Footer() {
           </motion.a>
         </motion.div>
 
-        {/* Main Footer Content */}
-        <div className="flex flex-col lg:flex-row items-center justify-between text-sm text-gray-600 dark:text-gray-400 gap-4">
-          <motion.div
-            className="flex items-center flex-wrap gap-3 justify-center lg:justify-start"
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <span>Built with</span>
-            {techStack.map((tech) => (
+        {/* Main Footer Content - Single Clean Row */}
+        <motion.div
+          className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-sm text-gray-600 dark:text-gray-400"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          {/* Left Section - Tech Stack */}
+          <div className="flex items-center flex-wrap gap-2 justify-center sm:justify-start">
+            <span className="flex items-center gap-1">Built with 💚</span>
+            {techStack.map((tech, index) => (
               <motion.a
                 key={tech.name}
                 href={tech.url}
@@ -151,13 +152,13 @@ function Footer() {
                 rel="noopener noreferrer"
                 className="group relative"
                 whileHover={{
-                  scale: 1.15,
-                  y: -2,
-                  transition: { type: "spring", stiffness: 300, damping: 20 },
+                  scale: 1.1,
+                  y: -1,
+                  transition: { type: "spring", stiffness: 400, damping: 25 },
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div>{tech.icon}</div>
+                {tech.icon}
                 <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
                   {tech.name}
                 </div>
@@ -168,39 +169,47 @@ function Footer() {
               href="https://abhivarde.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-1 text-[#FD366E] transition-colors duration-300 font-medium group"
+              className="flex items-center gap-1 text-[#FD366E] font-medium hover:text-[#FD366E]/80 transition-colors duration-200"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              abhivarde.in
+              <ExternalLink className="w-3 h-3" />
+            </motion.a>
+          </div>
+
+          {/* Right Section - Actions */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            <motion.a
+              href="https://github.com/AbhiVarde/Idea-tracker"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative"
               whileHover={{
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 300, damping: 20 },
+                scale: 1.1,
+                y: -1,
+                transition: { type: "spring", stiffness: 400, damping: 25 },
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <span>abhivarde.in</span>
-              <ExternalLink className="w-3 h-3 opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+              <SiGithub className="w-5 h-5 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200" />
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                View Code
+              </div>
             </motion.a>
-          </motion.div>
 
-          <motion.a
-            href="https://github.com/AbhiVarde/Idea-tracker"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative hidden sm:block"
-            initial={{ x: 50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            whileHover={{
-              scale: 1.15,
-              y: -2,
-              transition: { type: "spring", stiffness: 300, damping: 20 },
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <SiGithub className="w-5 h-5 text-gray-700 dark:text-white transition-all duration-300" />
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
-              View Code
-            </div>
-          </motion.a>
-        </div>
+            <motion.a
+              href="https://github.com/sponsors/AbhiVarde"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FD366E] font-medium hover:underline underline-offset-4 transition-colors duration-200 whitespace-nowrap"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              💚 Sponsor
+            </motion.a>
+          </div>
+        </motion.div>
       </div>
     </motion.footer>
   );

@@ -5,11 +5,11 @@ export default {
       entries: {
         "14/body/7/consequent/0/argument/3": {
           content: {
-            de: "Einen Moment Geduld... Ihre Ideen werden aufgewärmt ✨",
+            de: "Einen Moment bitte… Ihre Ideen werden aufgewärmt ✨",
             en: "Hang tight… warming up your ideas ✨",
-            es: "Agarra, calentando tus ideas ✨",
-            fr: "Accrochez-vous... vos idées sont en réchauffe ✨",
-            ru: "Подождите… прогреваем ваши идеи ✨",
+            es: "Agarra fuerte… calentando tus ideas ✨",
+            fr: "Accrochez-vous… réchauffage de vos idées ✨",
+            ru: "Подождите... прогрев ваших идей ✨",
           },
           hash: "ac45bb927964ed2b150cf98cf91690d7",
         },
@@ -33,7 +33,7 @@ export default {
             en: "Featured by Appwrite – Monthly Community Recognition",
             es: "Destacado por Appwrite – Reconocimiento Mensual de la Comunidad",
             fr: "Mis en avant par Appwrite – Reconnaissance mensuelle de la communauté",
-            ru: "Рекомендуется Appwrite – ежемесячное признание сообщества",
+            ru: "Отмеченное приложением Appwrite – ежемесячное признание сообщества",
           },
           hash: "1811f387efe02873ca4196524f8e3a60",
         },
@@ -69,21 +69,21 @@ export default {
         },
         "3/body/8/argument/3/1/expression/right/1/1/3/1/5": {
           content: {
-            de: "Unsere Idea Tracker wurde als Teil des monatlichen Community-Anerkennungsprogramms von Appwrite ausgewählt.",
+            de: "Unser Idea Tracker wurde als Teil des monatlichen Community-Anerkennungsprogramms von Appwrite ausgewählt.",
             en: "Our Idea Tracker has been selected as part of Appwrite's Monthly Community Recognition program.",
             es: "Nuestro Seguimiento de Ideas ha sido seleccionado como parte del programa de Reconocimiento Mensual de la Comunidad de Appwrite.",
-            fr: "Notre suivi d'idées a été sélectionné dans le cadre du programme de reconnaissance mensuelle de la communauté d'Appwrite.",
+            fr: "Notre Suivi d'idées a été sélectionné dans le cadre du programme de reconnaissance mensuelle de la communauté d'Appwrite.",
             ru: "Наш трекер идей был выбран в рамках программы ежемесячного признания сообщества Appwrite.",
           },
           hash: "f078b1e315d6d5922b8f703bd67fcd19",
         },
         "3/body/8/argument/3/1/expression/right/1/1/3/1/7": {
           content: {
-            de: "Offiziellen Blogbeitrag lesen →",
+            de: "Den offiziellen Blogbeitrag lesen →",
             en: "Read the official blog post →",
-            es: "Leer el artículo oficial →",
+            es: "Leer el post oficial →",
             fr: "Lire l'article du blog officiel →",
-            ru: "Читать официальную блог-запись →",
+            ru: "Читать официальную запись в блоге →",
           },
           hash: "a689313f344963f37d747adf71de235d",
         },
@@ -106,7 +106,7 @@ export default {
             de: "Sync UI",
             en: "Sync UI",
             es: "Sync UI",
-            fr: "Interface synchro",
+            fr: "Sync UI",
             ru: "Sync UI",
           },
           hash: "09500e317cc273bda513a4d4f4a145c8",
@@ -116,7 +116,7 @@ export default {
             de: "Sync UI",
             en: "Sync UI",
             es: "Sync UI",
-            fr: "Interface synchro",
+            fr: "Sync UI",
             ru: "Sync UI",
           },
           hash: "09500e317cc273bda513a4d4f4a145c8",
@@ -126,8 +126,8 @@ export default {
             de: "Animiertes UI-Kit für React-Entwickler",
             en: "Animated UI kit for React devs",
             es: "Kit de UI animado para desarrolladores de React",
-            fr: "Kit d'interface animée pour les développeurs React",
-            ru: "Анимированный UI-набор для разработчиков React",
+            fr: "Kit d'interface utilisateur animé pour les développeurs React",
+            ru: "Интерактивный набор элементов управления для разработчиков React",
           },
           hash: "7071af12ad8a19618a1ad00f0e79ee67",
         },
@@ -136,22 +136,22 @@ export default {
             de: "60+",
             en: "60+",
             es: "60+",
-            fr: "Plus de 60+",
+            fr: "Construit avec ❤",
             ru: "60+",
           },
           hash: "650128534b940136e797140a52b83ff2",
         },
-        "3/body/1/argument/1/5/1/1": {
+        "3/body/1/argument/1/5/3/1": {
           content: {
-            de: "Erstellt mit",
-            en: "Built with",
-            es: "Construido con",
-            fr: "Construit avec",
-            ru: "Создано с помощью",
+            de: "Entwickelt mit 💚",
+            en: "Built with 💚",
+            es: "Construido con 💚",
+            fr: "Construit avec 💚",
+            ru: "Создано с 💚",
           },
-          hash: "daa64d7fb8b9ff0e8084dcef7bf9fb3f",
+          hash: "c425bfd389002960a41b97a9d4606944",
         },
-        "3/body/1/argument/1/5/1/5": {
+        "3/body/1/argument/1/5/3/5": {
           content: {
             de: "von",
             en: "by",
@@ -161,17 +161,17 @@ export default {
           },
           hash: "4bfd9ca52df95a588eb1829ede67aedb",
         },
-        "3/body/1/argument/1/5/1/7/1": {
+        "3/body/1/argument/1/5/3/7": {
           content: {
-            de: "abhivarde.in",
-            en: "abhivarde.in",
-            es: "abhivarde.in",
-            fr: "abhivarde.in",
-            ru: "abhivarde.in",
+            de: "abhivarde.in<element:ExternalLink></element:ExternalLink>",
+            en: "abhivarde.in<element:ExternalLink></element:ExternalLink>",
+            es: "abhivarde.in<element:ExternalLink></element:ExternalLink>",
+            fr: "abhivarde.in<element:ExternalLink></element:ExternalLink>",
+            ru: "abhivarde.in<element:ExternalLink></element:ExternalLink>",
           },
-          hash: "054afe9c3fa465bdc9886e15f44f990c",
+          hash: "eb3539b8dcde2db09e063fcc0cc532ef",
         },
-        "3/body/1/argument/1/5/3/3": {
+        "3/body/1/argument/1/5/7/1/3": {
           content: {
             de: "Code anzeigen",
             en: "View Code",
@@ -179,7 +179,17 @@ export default {
             fr: "Voir le code",
             ru: "Просмотреть код",
           },
-          hash: "8e2c21de85774504ebd69310fd7e7c95",
+          hash: "ffdfe5f3a1a352cdf0e7df22ea436fbb",
+        },
+        "3/body/1/argument/1/5/7/3": {
+          content: {
+            de: "💚 Sponsoren",
+            en: "💚 Sponsor",
+            es: "💚 Patrocinar",
+            fr: "💚 Soutenir",
+            ru: "💚 Стать спонсором",
+          },
+          hash: "60c51009a8ae55a39a2aa0d011a5710b",
         },
       },
     },
@@ -200,7 +210,7 @@ export default {
             de: "Anmeldung",
             en: "Login",
             es: "Iniciar sesión",
-            fr: "Se connecter",
+            fr: "Connexion",
             ru: "Войти",
           },
           hash: "f4f219abeb5a465ecb1c7efaf50246de",
@@ -221,7 +231,7 @@ export default {
               de: "Beigetreten <function:moment/>",
               en: "Joined <function:moment/>",
               es: "Unido <function:moment/>",
-              fr: "Inscrit <function:moment/>",
+              fr: "Rejoint <function:moment/>",
               ru: "Присоединился <function:moment/>",
             },
             hash: "c530f458023f5ac128847b16c6f1dcfa",
@@ -254,7 +264,7 @@ export default {
               de: "Abmelden",
               en: "Sign Out",
               es: "Cerrar sesión",
-              fr: "Se déconnecter",
+              fr: "Déconnexion",
               ru: "Выйти",
             },
             hash: "06efb815f8e1f5d09e63d262ba48b4e7",
@@ -263,7 +273,7 @@ export default {
           content: {
             de: "Entdecken",
             en: "Discover",
-            es: "Descubre",
+            es: "Descubrir",
             fr: "Découvrir",
             ru: "Исследовать",
           },
@@ -283,7 +293,7 @@ export default {
           content: {
             de: "Code anzeigen",
             en: "View Code",
-            es: "Ver código",
+            es: "Ver Código",
             fr: "Voir le code",
             ru: "Просмотреть код",
           },
@@ -303,7 +313,7 @@ export default {
           content: {
             de: "Benutzer-Symbol",
             en: "User Avatar",
-            es: "Avatar de usuario",
+            es: "Avatar de Usuario",
             fr: "Avatar de l'utilisateur",
             ru: "Аватар пользователя",
           },
@@ -317,7 +327,7 @@ export default {
           content: {
             de: "KI-Erweiterung von Gemini",
             en: "AI Expansion by Gemini",
-            es: "Expansión de IA por Gemini",
+            es: "Expansión AI por Gemini",
             fr: "Extension IA par Gemini",
             ru: "Расширение AI от Gemini",
           },
@@ -336,7 +346,7 @@ export default {
           },
         "5/declaration/body/11/argument/1/1/3/1/expression/consequent/3": {
           content: {
-            de: "Weitere Schritte?",
+            de: "Möchten Sie nächste Schritte?",
             en: "Want next steps?",
             es: "¿Quieres los siguientes pasos?",
             fr: "Voulez-vous les prochaines étapes ?",
@@ -348,9 +358,9 @@ export default {
           content: {
             de: "Entdecken Sie KI-generierte Pläne, Funktionen und Technologiestacks, die auf Ihre Idee zugeschnitten sind.",
             en: "Explore AI generated plans, features and tech stacks tailored to your idea.",
-            es: "Explora planes, características y tecnologías generadas por IA adaptadas a tu idea.",
-            fr: "Explorez des plans, fonctionnalités et piles technologiques générés par IA adaptés à votre idée.",
-            ru: "Исследуйте планы, функции и технологические стеки, сгенерированные AI, специально адаптированные под вашу идею.",
+            es: "Explora planes, características y tecnologías generadas por IA, adaptadas a tu idea.",
+            fr: "Explorez les plans, fonctionnalités et piles technologiques générés par IA adaptés à votre idée.",
+            ru: "Исследуйте планы, функции и технологические стэки, сгенерированные AI, специально адаптированные под вашу идею.",
           },
           hash: "725934ae35fd7cb1a9917b85067b09ea",
         },
@@ -371,7 +381,7 @@ export default {
               de: "Erweitern...",
               en: "Expanding...",
               es: "Expandiendo...",
-              fr: "Extension en cours...",
+              fr: "En cours d'extension...",
               ru: "Расширение...",
             },
             hash: "9ce2e493ef9343beba751dfa9c58bb23",
@@ -384,8 +394,8 @@ export default {
           content: {
             de: "Kontoeinstellungen",
             en: "Account Settings",
-            es: "Configuración de la cuenta",
-            fr: "Paramètres du compte",
+            es: "Configuración de Cuenta",
+            fr: "Gérez vos préférences de compte",
             ru: "Настройки аккаунта",
           },
           hash: "da761b03817a816a0a44dcf5b5857996",
@@ -396,7 +406,7 @@ export default {
             en: "Manage your account preferences",
             es: "Administra las preferencias de tu cuenta",
             fr: "Gérez vos préférences de compte",
-            ru: "Управление предпочтениями вашего аккаунта",
+            ru: "Управление предпочтениями вашей учетной записи",
           },
           hash: "d5aa5327f02c54a26ab21490b3e25f4a",
         },
@@ -415,7 +425,7 @@ export default {
             content: {
               de: "Foto entfernen",
               en: "Remove Photo",
-              es: "Eliminar foto",
+              es: "Eliminar Foto",
               fr: "Supprimer la photo",
               ru: "Удалить фотографию",
             },
@@ -435,7 +445,7 @@ export default {
           content: {
             de: "Konto löschen",
             en: "Delete Account",
-            es: "Eliminar cuenta",
+            es: "Eliminar Cuenta",
             fr: "Supprimer le compte",
             ru: "Удалить аккаунт",
           },
@@ -447,7 +457,7 @@ export default {
             en: "This will permanently delete your account and all your ideas. This action cannot be undone.",
             es: "Esta acción eliminará permanentemente tu cuenta y todas tus ideas. Esta acción no se puede deshacer.",
             fr: "Cela supprimera définitivement votre compte et toutes vos idées. Cette action ne peut être annulée.",
-            ru: "Это действие приведет к необратимому удалению вашего аккаунта и всех ваших идей. Это действие не может быть отменено.",
+            ru: "Это действие приведет к постоянному удалению вашего аккаунта и всех ваших идей. Это действие нельзя будет отменить.",
           },
           hash: "1cd5910f4813d1b397f04cfaa0a6b57c",
         },
@@ -486,11 +496,109 @@ export default {
           content: {
             de: "Konto löschen",
             en: "Delete Account",
-            es: "Eliminar cuenta",
+            es: "Eliminar Cuenta",
             fr: "Supprimer le compte",
             ru: "Удалить аккаунт",
           },
           hash: "f5f7b88ff3122fb0d3a330e2b99d7e3d",
+        },
+      },
+    },
+    "components/dialogs/CustomCategory.jsx": {
+      entries: {
+        "3/declaration/body/2/argument/1/1/1/1/1": {
+          content: {
+            de: "Benutzerdefinierte Kategorie hinzufügen",
+            en: "Add Custom Category",
+            es: "Agregar Categoría Personalizada",
+            fr: "Ajouter une catégorie personnalisée",
+            ru: "Добавить пользовательскую категорию",
+          },
+          hash: "2b34d0995cc326d984e545784f2a7fd5",
+        },
+        "3/declaration/body/2/argument/1/1/1/3-placeholder": {
+          content: {
+            de: "Kategoriename eingeben...",
+            en: "Enter category name...",
+            es: "Ingresa el nombre de la categoría...",
+            fr: "Entrez le nom de la catégorie...",
+            ru: "Введите название категории...",
+          },
+          hash: "f2cfffba1f01d55a94ef7867f610e637",
+        },
+        "3/declaration/body/2/argument/1/1/1/5/1": {
+          content: {
+            de: "Abbrechen",
+            en: "Cancel",
+            es: "Cancelar",
+            fr: "Annuler",
+            ru: "Отменить",
+          },
+          hash: "5936f87dccc089542c7871a72ed1dacf",
+        },
+        "3/declaration/body/2/argument/1/1/1/5/3": {
+          content: {
+            de: "Hinzufügen und Auswählen",
+            en: "Add & Select",
+            es: "Agregar y Seleccionar",
+            fr: "Ajouter et sélectionner",
+            ru: "Добавить и выбрать",
+          },
+          hash: "b11f2fba9997d31ab1b84dd9519e49b5",
+        },
+      },
+    },
+    "components/dialogs/DeleteIdea.jsx": {
+      entries: {
+        "3/declaration/body/2/argument/1/1/1/3/1": {
+          content: {
+            de: "Idee löschen",
+            en: "Delete Idea",
+            es: "Eliminar Idea",
+            fr: "Supprimer l'idée",
+            ru: "Удалить идею",
+          },
+          hash: "27c56a6ecea8c41d992f77108d343a3f",
+        },
+        "3/declaration/body/2/argument/1/1/1/3/3": {
+          content: {
+            de: "Diese Aktion kann nicht rückgängig gemacht werden",
+            en: "This action cannot be undone",
+            es: "Esta acción no se puede deshacer",
+            fr: "Cette action ne peut être annulée",
+            ru: "Это действие нельзя будет отменить",
+          },
+          hash: "04f85139d8d93223c157d1ea7b64b721",
+        },
+        "3/declaration/body/2/argument/1/1/3/1": {
+          content: {
+            de: 'Möchten Sie wirklich "<element:span><expression/></element:span>" löschen?',
+            en: 'Are you sure you want to delete <element:span>"<expression/>"</element:span> ?',
+            es: '¿Estás seguro de que quieres eliminar <element:span>"<expression/>"</element:span> ?',
+            fr: 'Êtes-vous sûr de vouloir supprimer <element:span>"<expression/>"</element:span> ?',
+            ru: 'Вы уверены, что хотите удалить <element:span>"<expression/>"</element:span>?',
+          },
+          hash: "24f42a97bbe9038bff5bee3795df8b93",
+        },
+        "3/declaration/body/2/argument/1/1/5/1": {
+          content: {
+            de: "Abbrechen",
+            en: "Cancel",
+            es: "Cancelar",
+            fr: "Annuler",
+            ru: "Отмена",
+          },
+          hash: "07296eb8d91ad98e1b60cd7ab0def914",
+        },
+        "3/declaration/body/2/argument/1/1/5/3": {
+          content: {
+            de: "Löschen",
+            en: "Delete",
+            es: "Eliminar",
+            fr: "Supprimer",
+            ru: "Удалить",
+          },
+          hash: "8568ef0f71bc34a3fed5c37520fd4c7f",
         },
       },
     },
@@ -522,7 +630,7 @@ export default {
             en: "Manage your notification preferences",
             es: "Administra tus preferencias de notificación",
             fr: "Gérez vos préférences de notification",
-            ru: "Управление предпочтениями уведомлений",
+            ru: "Управление вашими предпочтениями уведомлений",
           },
           hash: "26bdf8bf9d5bc59d98690de07ec03393",
         },
@@ -551,47 +659,57 @@ export default {
     },
     "pages/Discover.jsx": {
       entries: {
-        "7/declaration/body/9/argument/1/3/1/1": {
+        "8/declaration/body/9/argument/1/3/1/1": {
           content: {
             de: "<element:Compass></element:Compass> Ideen entdecken",
             en: "<element:Compass></element:Compass> Discover Ideas",
             es: "<element:Compass></element:Compass> Descubre Ideas",
             fr: "<element:Compass></element:Compass> Découvrir des idées",
-            ru: "<element:Compass></element:Compass> Открыть идеи",
+            ru: "<element:Compass></element:Compass> Исследовать идеи",
           },
           hash: "84ae6be3b5bcbdc3a9521a7cb50c41a6",
         },
-        "7/declaration/body/9/argument/1/3/1/3": {
+        "8/declaration/body/9/argument/1/3/1/3": {
           content: {
-            de: "Entdecken Sie großartige öffentliche Ideen aus der Community",
+            de: "Entdecken Sie erstaunliche öffentliche Ideen aus der Community",
             en: "Explore amazing public ideas from the community",
             es: "Explora ideas públicas increíbles de la comunidad",
-            fr: "Explorez des idées incroyables de la communauté",
-            ru: "Исследуйте удивительные публичные идеи сообщества",
+            fr: "Explorez des idées publiques incroyables de la communauté",
+            ru: "Изучите удивительные общедоступные идеи сообщества",
           },
           hash: "48000132e7af9c8ff20c4e4a684a664a",
         },
-        "7/declaration/body/9/argument/1/3/3/1/1": {
+        "8/declaration/body/9/argument/1/3/3/1/1": {
           content: {
-            de: "Alle Kategorien",
-            en: "All Categories",
-            es: "Todas las categorías",
-            fr: "Toutes les catégories",
-            ru: "Все категории",
+            de: "Alle Kategorien (<function:getCategoryCount/>)",
+            en: "All Categories (<function:getCategoryCount/>)",
+            es: "Todas las Categorías (<function:getCategoryCount/>)",
+            fr: "Toutes les catégories (<function:getCategoryCount/>)",
+            ru: "Все категории (<function:getCategoryCount/>)",
           },
-          hash: "2547e684d62a4710bdfbb9415a9970d0",
+          hash: "06c429ecf54a4fee7f0138b1e8f9d175",
         },
-        "7/declaration/body/9/argument/1/7/3/1": {
+        "8/declaration/body/9/argument/1/3/3/1/3/expression/0/body": {
+          content: {
+            de: "{cat} (<function:getCategoryCount/>)",
+            en: "{cat} (<function:getCategoryCount/>)",
+            es: "{cat} (<function:getCategoryCount/>)",
+            fr: "{cat} (<function:getCategoryCount/>)",
+            ru: "{cat} (<function:getCategoryCount/>)",
+          },
+          hash: "edcf4ab97364ace38731e4170c209934",
+        },
+        "8/declaration/body/9/argument/1/7/3/1": {
           content: {
             de: "Öffentliche Ideen ({filteredIdeas.length})",
             en: "Public Ideas ({filteredIdeas.length})",
-            es: "Ideas públicas ({filteredIdeas.length})",
+            es: "Ideas Públicas ({filteredIdeas.length})",
             fr: "Idées publiques ({filteredIdeas.length})",
-            ru: "Публичные идеи ({filteredIdeas.length})",
+            ru: "Общедоступные идеи ({filteredIdeas.length})",
           },
           hash: "e6c1208f6ddc7591fe64b8c209877607",
         },
-        "7/declaration/body/9/argument/1/7/5/1/expression/consequent/3": {
+        "8/declaration/body/9/argument/1/7/5/1/expression/consequent/3": {
           content: {
             de: "Ideen werden geladen...",
             en: "Loading ideas...",
@@ -605,247 +723,47 @@ export default {
     },
     "pages/Home.jsx": {
       entries: {
-        "12/declaration/body/37/argument/1/1/1": {
+        "15/declaration/body/48/0/init/body/3/argument/3/expression/right/3": {
+          content: {
+            de: "Kategorie hinzufügen<element:div></element:div>",
+            en: "Add category<element:div></element:div>",
+            es: "Agregar categoría<element:div></element:div>",
+            fr: "Ajouter une catégorie<element:div></element:div>",
+            ru: "Добавить категорию<element:div></element:div>",
+          },
+          hash: "dc6f84ae27b6defbe6f3b8b9a7c14faa",
+        },
+        "15/declaration/body/48/0/init/body/3/argument/7/expression/right/3": {
+          content: {
+            de: "Kategorie löschen<element:div></element:div>",
+            en: "Delete category<element:div></element:div>",
+            es: "Eliminar categoría<element:div></element:div>",
+            fr: "Supprimer la catégorie<element:div></element:div>",
+            ru: "Удалить категорию<element:div></element:div>",
+          },
+          hash: "bf43b93831ef8516df96951502927c94",
+        },
+        "15/declaration/body/49/argument/1/1/1": {
           content: {
             de: "Ihre kreative <element:FlipWords></element:FlipWords>",
             en: "Your Creative <element:FlipWords></element:FlipWords>",
-            es: "Tu Creatividad <element:FlipWords></element:FlipWords>",
-            fr: "Votre créativité <element:FlipWords></element:FlipWords>",
-            ru: "Ваше творческое <element:FlipWords></element:FlipWords>",
+            es: "Tus Ideas Creativas <element:FlipWords></element:FlipWords>",
+            fr: "Votre Créativité <element:FlipWords></element:FlipWords>",
+            ru: "Ваша креативность <element:FlipWords></element:FlipWords>",
           },
           hash: "e0e7353ce31f34d87517b9e3b2869d3c",
         },
-        "12/declaration/body/37/argument/1/1/3": {
+        "15/declaration/body/49/argument/1/1/3": {
           content: {
-            de: "Verfolgen Sie Ideen mit Klarheit und bringen Sie sie auf natürliche Weise zum Leben.",
+            de: "Verfolgen Sie Ideen mit Klarheit und bringen Sie sie natürlich zum Leben.",
             en: "Track ideas with clarity and bring them to life naturally.",
-            es: "Seguimiento de ideas con claridad y llevándolas a la vida de manera natural.",
+            es: "Seguimiento de ideas con claridad y tráelas a la vida de manera natural.",
             fr: "Suivre des idées avec clarté et les concrétiser naturellement.",
-            ru: "Отслеживайте идеи с ясностью и оживляйте их естественным образом.",
+            ru: "Отслеживайте идеи с ясностью и приводите их в жизнь естественным образом.",
           },
           hash: "dc0941c0e0604d7c3f9bd792cea8f507",
         },
-        "12/declaration/body/37/argument/1/3/expression/alternate/1/1/3": {
-          content: {
-            de: "Jetzt beitreten",
-            en: "Join now",
-            es: "Únete ahora",
-            fr: "Rejoindre maintenant",
-            ru: "Присоединяйтесь сейчас",
-          },
-          hash: "771e0a32289f998ae66ca9cf7a72f8aa",
-        },
-        "12/declaration/body/37/argument/1/3/expression/alternate/1/1/5": {
-          content: {
-            de: "Idea Tracker beitreten",
-            en: "Join Idea Tracker",
-            es: "Únete a Seguimiento de Ideas",
-            fr: "Rejoindre le Suivi d'idées",
-            ru: "Присоединиться к трекеру идей",
-          },
-          hash: "7ee80a07313b8e39e471b9409397461b",
-        },
-        "12/declaration/body/37/argument/1/3/expression/alternate/1/3": {
-          content: {
-            de: "Loslegen",
-            en: "Get Started",
-            es: "Comenzar",
-            fr: "Commencer",
-            ru: "Начать работу",
-          },
-          hash: "e93eaeedbad5df95c8cd88af4c5d106b",
-        },
-        "12/declaration/body/37/argument/1/3/expression/alternate/3": {
-          content: {
-            de: "Melden Sie sich an, um Ihre großartigen Ideen zu verfolgen",
-            en: "Login to start tracking your amazing ideas",
-            es: "Inicia sesión para comenzar a seguir tus ideas increíbles",
-            fr: "Se connecter pour commencer à suivre vos idées incroyables",
-            ru: "Войдите, чтобы начать отслеживать ваши удивительные идеи",
-          },
-          hash: "f7ccbab2fce754df910731f52b954bd7",
-        },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/1/1":
-          {
-            content: {
-              de: "Neue Idee",
-              en: "New Idea",
-              es: "Nueva idea",
-              fr: "Nouvelle idée",
-              ru: "Новая идея",
-            },
-            hash: "a3721f15ec1ab56fb6879ef2dd26de81",
-          },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/11/3/3-placeholder":
-          {
-            content: {
-              de: "GitHub-URL (max. 200 Zeichen)",
-              en: "GitHub URL (max 200 chars)",
-              es: "URL de GitHub (máx. 200 caracteres)",
-              fr: "URL GitHub (max 200 caractères)",
-              ru: "URL GitHub (не более 200 символов)",
-            },
-            hash: "648a7ed4d8ce0dc3f1441ef2ec066f9a",
-          },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/1-placeholder":
-          {
-            content: {
-              de: "Tags (max. 5, je 20 Zeichen)",
-              en: "Tags (max 5, 20 chars each)",
-              es: "Etiquetas (máx. 5, 20 caracteres cada una)",
-              fr: "Étiquettes (max 5, 20 caractères chacune)",
-              ru: "Теги (не более 5, по 20 символов каждый)",
-            },
-            hash: "ee92a438db86847f895525e2b4b30dc2",
-          },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/3/3-aria-label":
-          {
-            content: {
-              de: "Sichtbarkeit der Idee umschalten",
-              en: "Toggle idea visibility",
-              es: "Alternar visibilidad de la idea",
-              fr: "Basculer la visibilité de l'idée",
-              ru: "Переключить видимость идеи",
-            },
-            hash: "552bfded7136252e62bc96870e372ae4",
-          },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/3/1-placeholder":
-          {
-            content: {
-              de: "Titel der Idee...",
-              en: "Idea title...",
-              es: "Título de la idea...",
-              fr: "Titre de l'idée...",
-              ru: "Заголовок идеи...",
-            },
-            hash: "d0abd69c81b4462ebc9b9ce22fbb5ebd",
-          },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/7-placeholder":
-          {
-            content: {
-              de: "Beschreiben Sie Ihre Idee (min. 10 Zeichen)...",
-              en: "Describe your idea (min 10 chars)...",
-              es: "Describe tu idea (mín. 10 caracteres)...",
-              fr: "Décrivez votre idée (min 10 caractères)...",
-              ru: "Опишите вашу идею (не менее 10 символов)...",
-            },
-            hash: "8c844bd6e2d2c9c81890a4f8b486bf4d",
-          },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/alternate":
-          {
-            content: {
-              de: "Idee speichern",
-              en: "Save Idea",
-              es: "Guardar idea",
-              fr: "Sauvegarder l'idée",
-              ru: "Сохранить идею",
-            },
-            hash: "9ee87ef4e0cae6d28259e32f031ad616",
-          },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/consequent/3":
-          {
-            content: {
-              de: "Wird gespeichert...",
-              en: "Saving...",
-              es: "Guardando...",
-              fr: "Sauvegarde en cours...",
-              ru: "Сохранение...",
-            },
-            hash: "7cb2d8f012d57db8a62187b65ef164dc",
-          },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/consequent/3":
-          {
-            content: {
-              de: "Neue Idee hinzufügen",
-              en: "Add New Idea",
-              es: "Agregar nueva idea",
-              fr: "Ajouter une nouvelle idée",
-              ru: "Добавить новую идею",
-            },
-            hash: "7457579fef8ea58198d8c7f372825f61",
-          },
-        "12/declaration/body/37/argument/1/5/1/1/3-placeholder": {
-          content: {
-            de: "Ideen nach Titel oder Beschreibung suchen...",
-            en: "Search ideas by title or description...",
-            es: "Buscar ideas por título o descripción...",
-            fr: "Rechercher des idées par titre ou description...",
-            ru: "Поиск идей по заголовку или описанию...",
-          },
-          hash: "cd6feb04f8c1923349550d916d1bcecc",
-        },
-        "12/declaration/body/37/argument/1/5/1/3/3": {
-          content: {
-            de: "Filter",
-            en: "Filters",
-            es: "Filtros",
-            fr: "Filtres",
-            ru: "Фильтры",
-          },
-          hash: "acf5accc113ff3c1992688058576732c",
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/1/1": {
-          content: {
-            de: "Kategorie",
-            en: "Category",
-            es: "Categoría",
-            fr: "Catégorie",
-            ru: "Категория",
-          },
-          hash: "8cd10d9d3417a39aeab511ea55048d6e",
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/1/3/1": {
-          content: {
-            de: "Alle Kategorien",
-            en: "All Categories",
-            es: "Todas las categorías",
-            fr: "Toutes les catégories",
-            ru: "Все категории",
-          },
-          hash: "70694a376046a6580bad8ca2fa35bf39",
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/3/1": {
-          content: {
-            de: "Priorität",
-            en: "Priority",
-            es: "Prioridad",
-            fr: "Priorité",
-            ru: "Приоритет",
-          },
-          hash: "18b192b994a3619e8ac97184a232a2ab",
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/3/3/1": {
-          content: {
-            de: "Alle Prioritäten",
-            en: "All Priorities",
-            es: "Todas las prioridades",
-            fr: "Toutes les priorités",
-            ru: "Все приоритеты",
-          },
-          hash: "d0bcc95400c926ee4bacac1fc95bc8ea",
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/5/1": {
-          content: {
-            de: "Tags",
-            en: "Tags",
-            es: "Etiquetas",
-            fr: "Étiquettes",
-            ru: "Теги",
-          },
-          hash: "a2e4379316b9f736fa8add2360d7d04a",
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/5/3-placeholder":
-          {
-            content: {
-              de: "Nach Tags filtern...",
-              en: "Filter by tags...",
-              es: "Filtrar por etiquetas...",
-              fr: "Filtrer par étiquettes...",
-              ru: "Фильтровать по тегам...",
-            },
-            hash: "0097484dac30bacc43dc773c96fddfbe",
-          },
-        "12/declaration/body/37/argument/1/9/1/1": {
+        "15/declaration/body/49/argument/1/11/1/1": {
           content: {
             de: "Ideen (<expression/>)",
             en: "Ideas (<expression/>)",
@@ -855,7 +773,7 @@ export default {
           },
           hash: "2f5ac9c8d6d350b156d9108ec5d341d6",
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/17/3/expression/right/3":
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/19/expression/right/1/3/expression/right/3":
           {
             content: {
               de: "Auf GitHub anzeigen",
@@ -864,42 +782,9 @@ export default {
               fr: "Voir sur GitHub",
               ru: "Просмотреть на GitHub",
             },
-            hash: "cdf49b4f3ea3bf5d776900b15440c849",
-          },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/19/expression/right/3/3/expression/right/3":
-          {
-            content: {
-              de: "Auf GitHub ansehen",
-              en: "View on GitHub",
-              es: "Ver en GitHub",
-              fr: "Voir sur GitHub",
-              ru: "Просмотреть на GitHub",
-            },
             hash: "0643dd657cc7ce37d0c147d04f8ea2f0",
           },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/11/3":
-          {
-            content: {
-              de: "Löschen<element:div></element:div>",
-              en: "Delete<element:div></element:div>",
-              es: "Eliminar<element:div></element:div>",
-              fr: "Supprimer<element:div></element:div>",
-              ru: "Удалить<element:div></element:div>",
-            },
-            hash: "59b68913033e83af3705fcfc98dcf026",
-          },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/3/3":
-          {
-            content: {
-              de: "Mit KI erweitern<element:div></element:div>",
-              en: "Expand with AI<element:div></element:div>",
-              es: "Expandir con IA<element:div></element:div>",
-              fr: "Étendre avec l'IA<element:div></element:div>",
-              ru: "Расширить с помощью AI<element:div></element:div>",
-            },
-            hash: "57a2318b30963fdecd221c0d742f84cc",
-          },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/7/3":
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/11/3":
           {
             content: {
               de: "Bearbeiten<element:div></element:div>",
@@ -910,18 +795,40 @@ export default {
             },
             hash: "1a67da82566e0894fbf43beb976d5e17",
           },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/1":
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/15/3":
+          {
+            content: {
+              de: "Löschen<element:div></element:div>",
+              en: "Delete<element:div></element:div>",
+              es: "Eliminar<element:div></element:div>",
+              fr: "Supprimer<element:div></element:div>",
+              ru: "Удалить<element:div></element:div>",
+            },
+            hash: "59b68913033e83af3705fcfc98dcf026",
+          },
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/7/3":
+          {
+            content: {
+              de: "Mit KI erweitern<element:div></element:div>",
+              en: "Expand with AI<element:div></element:div>",
+              es: "Expandir con IA<element:div></element:div>",
+              fr: "Étendre avec IA<element:div></element:div>",
+              ru: "Расширить с помощью AI<element:div></element:div>",
+            },
+            hash: "57a2318b30963fdecd221c0d742f84cc",
+          },
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/1":
           {
             content: {
               de: "Idee bearbeiten",
               en: "Edit Idea",
-              es: "Editar idea",
+              es: "Editar Idea",
               fr: "Éditer l'idée",
               ru: "Редактировать идею",
             },
             hash: "8662ae6135bd08a0dbf7d6e0300b7304",
           },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/alternate":
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/alternate":
           {
             content: {
               de: "Speichern",
@@ -932,7 +839,7 @@ export default {
             },
             hash: "f7a2929f33bc420195e59ac5a8bcd454",
           },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/consequent/3":
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/consequent/3":
           {
             content: {
               de: "Wird gespeichert...",
@@ -943,29 +850,29 @@ export default {
             },
             hash: "7cb2d8f012d57db8a62187b65ef164dc",
           },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/11/3/3-placeholder":
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/11/3/3-placeholder":
           {
             content: {
               de: "GitHub-URL (max. 200 Zeichen)",
               en: "GitHub URL (max 200 chars)",
-              es: "URL de GitHub (máx. 200 caracteres)",
+              es: "URL de GitHub (máx 200 caracteres)",
               fr: "URL GitHub (max 200 caractères)",
               ru: "URL GitHub (не более 200 символов)",
             },
             hash: "648a7ed4d8ce0dc3f1441ef2ec066f9a",
           },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/1-placeholder":
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/1-placeholder":
           {
             content: {
               de: "Tags (max. 5, je 20 Zeichen)",
               en: "Tags (max 5, 20 chars each)",
-              es: "Etiquetas (máx. 5, 20 caracteres cada una)",
+              es: "Etiquetas (máx 5, 20 caracteres cada una)",
               fr: "Étiquettes (max 5, 20 caractères chacune)",
               ru: "Теги (не более 5, по 20 символов каждый)",
             },
             hash: "ee92a438db86847f895525e2b4b30dc2",
           },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/3/3-aria-label":
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/3/3-aria-label":
           {
             content: {
               de: "Sichtbarkeit der Idee umschalten",
@@ -976,7 +883,7 @@ export default {
             },
             hash: "552bfded7136252e62bc96870e372ae4",
           },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/3/1-placeholder":
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/3/1-placeholder":
           {
             content: {
               de: "Titel der Idee...",
@@ -987,78 +894,725 @@ export default {
             },
             hash: "d0abd69c81b4462ebc9b9ce22fbb5ebd",
           },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/7-placeholder":
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/7-placeholder":
           {
             content: {
               de: "Beschreiben Sie Ihre Idee (min. 10 Zeichen)...",
               en: "Describe your idea (min 10 chars)...",
-              es: "Describe tu idea (mín. 10 caracteres)...",
+              es: "Describe tu idea (mín 10 caracteres)...",
               fr: "Décrivez votre idée (min 10 caractères)...",
               ru: "Опишите вашу идею (не менее 10 символов)...",
             },
             hash: "8c844bd6e2d2c9c81890a4f8b486bf4d",
           },
-        "12/declaration/body/37/argument/3/expression/right/1/1/3/1": {
-          content: {
-            de: "Idee löschen",
-            en: "Delete Idea",
-            es: "Eliminar idea",
-            fr: "Supprimer l'idée",
-            ru: "Удалить идею",
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/5/expression/right/1/1/expression/alternate":
+          {
+            content: {
+              de: "Mehr laden",
+              en: "Load More",
+              es: "Cargar Más",
+              fr: "Charger plus",
+              ru: "Загрузить еще",
+            },
+            hash: "14b146dc55d3aea3c927e75d37d1f124",
           },
-          hash: "703fb782546ee10b1747c437b0a6edfe",
-        },
-        "12/declaration/body/37/argument/3/expression/right/1/1/3/3": {
-          content: {
-            de: "Diese Aktion kann nicht rückgängig gemacht werden",
-            en: "This action cannot be undone",
-            es: "Esta acción no se puede deshacer",
-            fr: "Cette action ne peut être annulée",
-            ru: "Это действие не может быть отменено",
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/5/expression/right/1/1/expression/consequent/3":
+          {
+            content: {
+              de: "Wird geladen...",
+              en: "Loading...",
+              es: "Cargando...",
+              fr: "Chargement...",
+              ru: "Загрузка...",
+            },
+            hash: "82b4ea7ed1439094d7c4be13aaba9a66",
           },
-          hash: "c8ff304eb731db3d216916eff4b6062e",
-        },
-        "12/declaration/body/37/argument/3/expression/right/1/3/1": {
+        "15/declaration/body/49/argument/1/3/expression/alternate/1/1/3": {
           content: {
-            de: 'Möchten Sie wirklich <element:span>"<expression/> "</element:span> löschen?',
-            en: 'Are you sure you want to delete <element:span>"<expression/> "</element:span> ?',
-            es: '¿Estás seguro de que quieres eliminar <element:span>"<expression/> "</element:span> ?',
-            fr: 'Êtes-vous sûr de vouloir supprimer <element:span>"<expression/> "</element:span> ?',
-            ru: 'Вы уверены, что хотите удалить <element:span>"<expression/> "</element:span> ?',
+            de: "Jetzt beitreten",
+            en: "Join now",
+            es: "Únete ahora",
+            fr: "Rejoindre maintenant",
+            ru: "Присоединяйтесь сейчас",
           },
-          hash: "b6a657fe1c12d75a4080782612ff94d7",
+          hash: "771e0a32289f998ae66ca9cf7a72f8aa",
         },
-        "12/declaration/body/37/argument/3/expression/right/1/5/1": {
+        "15/declaration/body/49/argument/1/3/expression/alternate/1/1/5": {
           content: {
-            de: "Abbrechen",
-            en: "Cancel",
-            es: "Cancelar",
-            fr: "Annuler",
-            ru: "Отменить",
+            de: "Idea Tracker beitreten",
+            en: "Join Idea Tracker",
+            es: "Únete a Idea Tracker",
+            fr: "Rejoindre le Suivi d'idées",
+            ru: "Присоединиться к трекеру идей",
           },
-          hash: "5936f87dccc089542c7871a72ed1dacf",
+          hash: "7ee80a07313b8e39e471b9409397461b",
         },
-        "12/declaration/body/37/argument/3/expression/right/1/5/3": {
+        "15/declaration/body/49/argument/1/3/expression/alternate/1/3": {
           content: {
-            de: "Löschen",
-            en: "Delete",
-            es: "Eliminar",
-            fr: "Supprimer",
-            ru: "Удалить",
+            de: "Loslegen",
+            en: "Get Started",
+            es: "Empezar",
+            fr: "Commencer",
+            ru: "Начать",
           },
-          hash: "63d42bb73343bb4599cbf2893584b6e2",
+          hash: "e93eaeedbad5df95c8cd88af4c5d106b",
         },
+        "15/declaration/body/49/argument/1/3/expression/alternate/3": {
+          content: {
+            de: "Melden Sie sich an, um Ihre fantastischen Ideen zu verfolgen",
+            en: "Login to start tracking your amazing ideas",
+            es: "Inicia sesión para empezar a seguir tus ideas increíbles",
+            fr: "Connectez-vous pour commencer à suivre vos idées incroyables",
+            ru: "Войдите, чтобы начать отслеживать ваши удивительные идеи",
+          },
+          hash: "f7ccbab2fce754df910731f52b954bd7",
+        },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/1/1":
+          {
+            content: {
+              de: "Neue Idee",
+              en: "New Idea",
+              es: "Nueva Idea",
+              fr: "Nouvelle idée",
+              ru: "Новая идея",
+            },
+            hash: "a3721f15ec1ab56fb6879ef2dd26de81",
+          },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/11/3/3-placeholder":
+          {
+            content: {
+              de: "GitHub-URL (max. 200 Zeichen)",
+              en: "GitHub URL (max 200 chars)",
+              es: "URL de GitHub (máx 200 caracteres)",
+              fr: "URL GitHub (max 200 caractères)",
+              ru: "URL GitHub (не более 200 символов)",
+            },
+            hash: "648a7ed4d8ce0dc3f1441ef2ec066f9a",
+          },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/1-placeholder":
+          {
+            content: {
+              de: "Tags (max. 5, je 20 Zeichen)",
+              en: "Tags (max 5, 20 chars each)",
+              es: "Etiquetas (máx 5, 20 caracteres cada una)",
+              fr: "Étiquettes (max 5, 20 caractères chacune)",
+              ru: "Теги (не более 5, по 20 символов каждый)",
+            },
+            hash: "ee92a438db86847f895525e2b4b30dc2",
+          },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/3/3-aria-label":
+          {
+            content: {
+              de: "Sichtbarkeit der Idee umschalten",
+              en: "Toggle idea visibility",
+              es: "Alternar visibilidad de la idea",
+              fr: "Basculer la visibilité de l'idée",
+              ru: "Переключить видимость идеи",
+            },
+            hash: "552bfded7136252e62bc96870e372ae4",
+          },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/3/1-placeholder":
+          {
+            content: {
+              de: "Titel der Idee...",
+              en: "Idea title...",
+              es: "Título de la idea...",
+              fr: "Titre de l'idée...",
+              ru: "Заголовок идеи...",
+            },
+            hash: "d0abd69c81b4462ebc9b9ce22fbb5ebd",
+          },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/7-placeholder":
+          {
+            content: {
+              de: "Beschreiben Sie Ihre Idee (min. 10 Zeichen)...",
+              en: "Describe your idea (min 10 chars)...",
+              es: "Describe tu idea (mín 10 caracteres)...",
+              fr: "Décrivez votre idée (min 10 caractères)...",
+              ru: "Опишите вашу идею (не менее 10 символов)...",
+            },
+            hash: "8c844bd6e2d2c9c81890a4f8b486bf4d",
+          },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/alternate":
+          {
+            content: {
+              de: "Idee speichern",
+              en: "Save Idea",
+              es: "Guardar Idea",
+              fr: "Sauvegarder l'idée",
+              ru: "Сохранить идею",
+            },
+            hash: "9ee87ef4e0cae6d28259e32f031ad616",
+          },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/consequent/3":
+          {
+            content: {
+              de: "Wird gespeichert...",
+              en: "Saving...",
+              es: "Guardando...",
+              fr: "Sauvegarde en cours...",
+              ru: "Сохранение...",
+            },
+            hash: "7cb2d8f012d57db8a62187b65ef164dc",
+          },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/consequent/3":
+          {
+            content: {
+              de: "Neue Idee hinzufügen",
+              en: "Add New Idea",
+              es: "Agregar Nueva Idea",
+              fr: "Ajouter une nouvelle idée",
+              ru: "Добавить новую идею",
+            },
+            hash: "7457579fef8ea58198d8c7f372825f61",
+          },
+        "15/declaration/body/49/argument/1/7/1/1/3-placeholder": {
+          content: {
+            de: "Ideen nach Titel, Beschreibung oder Tags suchen...",
+            en: "Search ideas by title, description, or tags...",
+            es: "Buscar ideas por título, descripción o etiquetas...",
+            fr: "Rechercher des idées par titre, description ou étiquettes...",
+            ru: "Поиск идей по заголовку, описанию или тегам...",
+          },
+          hash: "3f41d75e3fa6517e95a1b621dd03989b",
+        },
+        "15/declaration/body/49/argument/1/7/1/3/3": {
+          content: {
+            de: "Filter",
+            en: "Filters",
+            es: "Filtros",
+            fr: "Filtres",
+            ru: "Фильтры",
+          },
+          hash: "acf5accc113ff3c1992688058576732c",
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/1/1": {
+          content: {
+            de: "Kategorie",
+            en: "Category",
+            es: "Categoría",
+            fr: "Catégorie",
+            ru: "Категория",
+          },
+          hash: "8cd10d9d3417a39aeab511ea55048d6e",
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/1/3/1": {
+          content: {
+            de: "Alle Kategorien",
+            en: "All Categories",
+            es: "Todas las categorías",
+            fr: "Toutes les catégories",
+            ru: "Все категории",
+          },
+          hash: "70694a376046a6580bad8ca2fa35bf39",
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/3/1": {
+          content: {
+            de: "Priorität",
+            en: "Priority",
+            es: "Prioridad",
+            fr: "Priorité",
+            ru: "Приоритет",
+          },
+          hash: "18b192b994a3619e8ac97184a232a2ab",
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/3/3/1": {
+          content: {
+            de: "Alle Prioritäten",
+            en: "All Priorities",
+            es: "Todas las prioridades",
+            fr: "Toutes les priorités",
+            ru: "Все приоритеты",
+          },
+          hash: "d0bcc95400c926ee4bacac1fc95bc8ea",
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/5/1": {
+          content: {
+            de: "Status",
+            en: "Status",
+            es: "Estado",
+            fr: "Statut",
+            ru: "Статус",
+          },
+          hash: "388e763d08ae139d0c47a1dbdb48752d",
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/7/1": {
+          content: {
+            de: "Tags",
+            en: "Tags",
+            es: "Etiquetas",
+            fr: "Étiquettes",
+            ru: "Теги",
+          },
+          hash: "a2e4379316b9f736fa8add2360d7d04a",
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/7/3-placeholder":
+          {
+            content: {
+              de: "Nach Tags filtern...",
+              en: "Filter by tags...",
+              es: "Filtrar por etiquetas...",
+              fr: "Filtrer par étiquettes...",
+              ru: "Фильтр по тегам...",
+            },
+            hash: "0097484dac30bacc43dc773c96fddfbe",
+          },
+        "15/declaration/body/50/0/init/body/3/argument/3/expression/right/3": {
+          content: {
+            de: "Kategorie hinzufügen<element:div></element:div>",
+            en: "Add category<element:div></element:div>",
+            es: "Agregar categoría<element:div></element:div>",
+            fr: "Ajouter une catégorie<element:div></element:div>",
+            ru: "Добавить категорию<element:div></element:div>",
+          },
+          hash: "dc6f84ae27b6defbe6f3b8b9a7c14faa",
+        },
+        "15/declaration/body/50/0/init/body/3/argument/7/expression/right/3": {
+          content: {
+            de: "Kategorie löschen<element:div></element:div>",
+            en: "Delete category<element:div></element:div>",
+            es: "Eliminar categoría<element:div></element:div>",
+            fr: "Supprimer la catégorie<element:div></element:div>",
+            ru: "Удалить категорию<element:div></element:div>",
+          },
+          hash: "bf43b93831ef8516df96951502927c94",
+        },
+        "15/declaration/body/51/argument/1/1/1": {
+          content: {
+            de: "Ihre kreative <element:FlipWords></element:FlipWords>",
+            en: "Your Creative <element:FlipWords></element:FlipWords>",
+            es: "Tus Ideas Creativas <element:FlipWords></element:FlipWords>",
+            fr: "Votre Créativité <element:FlipWords></element:FlipWords>",
+            ru: "Ваша креативность <element:FlipWords></element:FlipWords>",
+          },
+          hash: "e0e7353ce31f34d87517b9e3b2869d3c",
+        },
+        "15/declaration/body/51/argument/1/1/3": {
+          content: {
+            de: "Verfolgen Sie Ideen mit Klarheit und bringen Sie sie natürlich zum Leben.",
+            en: "Track ideas with clarity and bring them to life naturally.",
+            es: "Seguimiento de ideas con claridad y tráelas a la vida de manera natural.",
+            fr: "Suivre des idées avec clarté et les concrétiser naturellement.",
+            ru: "Отслеживайте идеи с ясностью и приводите их в жизнь естественным образом.",
+          },
+          hash: "dc0941c0e0604d7c3f9bd792cea8f507",
+        },
+        "15/declaration/body/51/argument/1/11/1/1": {
+          content: {
+            de: "Ideen (<expression/>)",
+            en: "Ideas (<expression/>)",
+            es: "Ideas (<expression/>)",
+            fr: "Idées (<expression/>)",
+            ru: "Идеи (<expression/>)",
+          },
+          hash: "2f5ac9c8d6d350b156d9108ec5d341d6",
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/11/3":
+          {
+            content: {
+              de: "Bearbeiten<element:div></element:div>",
+              en: "Edit<element:div></element:div>",
+              es: "Editar<element:div></element:div>",
+              fr: "Éditer<element:div></element:div>",
+              ru: "Редактировать<element:div></element:div>",
+            },
+            hash: "1a67da82566e0894fbf43beb976d5e17",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/15/3":
+          {
+            content: {
+              de: "Löschen<element:div></element:div>",
+              en: "Delete<element:div></element:div>",
+              es: "Eliminar<element:div></element:div>",
+              fr: "Supprimer<element:div></element:div>",
+              ru: "Удалить<element:div></element:div>",
+            },
+            hash: "59b68913033e83af3705fcfc98dcf026",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/7/3":
+          {
+            content: {
+              de: "Mit KI erweitern<element:div></element:div>",
+              en: "Expand with AI<element:div></element:div>",
+              es: "Expandir con IA<element:div></element:div>",
+              fr: "Étendre avec IA<element:div></element:div>",
+              ru: "Расширить с помощью AI<element:div></element:div>",
+            },
+            hash: "57a2318b30963fdecd221c0d742f84cc",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/1":
+          {
+            content: {
+              de: "Idee bearbeiten",
+              en: "Edit Idea",
+              es: "Editar Idea",
+              fr: "Éditer l'idée",
+              ru: "Редактировать идею",
+            },
+            hash: "8662ae6135bd08a0dbf7d6e0300b7304",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/alternate":
+          {
+            content: {
+              de: "Speichern",
+              en: "Save",
+              es: "Guardar",
+              fr: "Sauvegarder",
+              ru: "Сохранить",
+            },
+            hash: "f7a2929f33bc420195e59ac5a8bcd454",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/consequent/3":
+          {
+            content: {
+              de: "Wird gespeichert...",
+              en: "Saving...",
+              es: "Guardando...",
+              fr: "Sauvegarde en cours...",
+              ru: "Сохранение...",
+            },
+            hash: "7cb2d8f012d57db8a62187b65ef164dc",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/11/3/3-placeholder":
+          {
+            content: {
+              de: "Vorschau-URL (max. 200 Zeichen)",
+              en: "Preview URL (max 200 chars)",
+              es: "URL de vista previa (máx. 200 caracteres)",
+              fr: "URL de prévisualisation (max 200 caractères)",
+              ru: "URL для предварительного просмотра (не более 200 символов)",
+            },
+            hash: "d29c076e0ae3e3401aa7158ecb074f1e",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/11/5/3-placeholder":
+          {
+            content: {
+              de: "GitHub-URL (max. 200 Zeichen)",
+              en: "GitHub URL (max 200 chars)",
+              es: "URL de GitHub (máx 200 caracteres)",
+              fr: "URL GitHub (max 200 caractères)",
+              ru: "URL GitHub (не более 200 символов)",
+            },
+            hash: "648a7ed4d8ce0dc3f1441ef2ec066f9a",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/1-placeholder":
+          {
+            content: {
+              de: "Tags (max. 5, je 20 Zeichen)",
+              en: "Tags (max 5, 20 chars each)",
+              es: "Etiquetas (máx 5, 20 caracteres cada una)",
+              fr: "Étiquettes (max 5, 20 caractères chacune)",
+              ru: "Теги (не более 5, по 20 символов каждый)",
+            },
+            hash: "ee92a438db86847f895525e2b4b30dc2",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/3/3-aria-label":
+          {
+            content: {
+              de: "Sichtbarkeit der Idee umschalten",
+              en: "Toggle idea visibility",
+              es: "Alternar visibilidad de la idea",
+              fr: "Basculer la visibilité de l'idée",
+              ru: "Переключить видимость идеи",
+            },
+            hash: "552bfded7136252e62bc96870e372ae4",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/3/1-placeholder":
+          {
+            content: {
+              de: "Titel der Idee...",
+              en: "Idea title...",
+              es: "Título de la idea...",
+              fr: "Titre de l'idée...",
+              ru: "Заголовок идеи...",
+            },
+            hash: "d0abd69c81b4462ebc9b9ce22fbb5ebd",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/7-placeholder":
+          {
+            content: {
+              de: "Beschreiben Sie Ihre Idee (min. 10 Zeichen)...",
+              en: "Describe your idea (min 10 chars)...",
+              es: "Describe tu idea (mín 10 caracteres)...",
+              fr: "Décrivez votre idée (min 10 caractères)...",
+              ru: "Опишите вашу идею (не менее 10 символов)...",
+            },
+            hash: "8c844bd6e2d2c9c81890a4f8b486bf4d",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/5/expression/right/1/1/expression/alternate":
+          {
+            content: {
+              de: "Mehr laden",
+              en: "Load More",
+              es: "Cargar Más",
+              fr: "Charger plus",
+              ru: "Загрузить еще",
+            },
+            hash: "14b146dc55d3aea3c927e75d37d1f124",
+          },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/5/expression/right/1/1/expression/consequent/3":
+          {
+            content: {
+              de: "Wird geladen...",
+              en: "Loading...",
+              es: "Cargando...",
+              fr: "Chargement...",
+              ru: "Загрузка...",
+            },
+            hash: "82b4ea7ed1439094d7c4be13aaba9a66",
+          },
+        "15/declaration/body/51/argument/1/3/expression/alternate/1/1/3": {
+          content: {
+            de: "Jetzt beitreten",
+            en: "Join now",
+            es: "Únete ahora",
+            fr: "Rejoindre maintenant",
+            ru: "Присоединяйтесь сейчас",
+          },
+          hash: "771e0a32289f998ae66ca9cf7a72f8aa",
+        },
+        "15/declaration/body/51/argument/1/3/expression/alternate/1/1/5": {
+          content: {
+            de: "Idea Tracker beitreten",
+            en: "Join Idea Tracker",
+            es: "Únete a Idea Tracker",
+            fr: "Rejoindre le Suivi d'idées",
+            ru: "Присоединиться к трекеру идей",
+          },
+          hash: "7ee80a07313b8e39e471b9409397461b",
+        },
+        "15/declaration/body/51/argument/1/3/expression/alternate/1/3": {
+          content: {
+            de: "Loslegen",
+            en: "Get Started",
+            es: "Empezar",
+            fr: "Commencer",
+            ru: "Начать",
+          },
+          hash: "e93eaeedbad5df95c8cd88af4c5d106b",
+        },
+        "15/declaration/body/51/argument/1/3/expression/alternate/3": {
+          content: {
+            de: "Melden Sie sich an, um Ihre fantastischen Ideen zu verfolgen",
+            en: "Login to start tracking your amazing ideas",
+            es: "Inicia sesión para empezar a seguir tus ideas increíbles",
+            fr: "Connectez-vous pour commencer à suivre vos idées incroyables",
+            ru: "Войдите, чтобы начать отслеживать ваши удивительные идеи",
+          },
+          hash: "f7ccbab2fce754df910731f52b954bd7",
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/1/1":
+          {
+            content: {
+              de: "Neue Idee",
+              en: "New Idea",
+              es: "Nueva Idea",
+              fr: "Nouvelle idée",
+              ru: "Новая идея",
+            },
+            hash: "a3721f15ec1ab56fb6879ef2dd26de81",
+          },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/11/3/3-placeholder":
+          {
+            content: {
+              de: "Vorschau-URL (max. 200 Zeichen)",
+              en: "Preview URL (max 200 chars)",
+              es: "URL de vista previa (máx. 200 caracteres)",
+              fr: "URL de prévisualisation (max 200 caractères)",
+              ru: "URL для предварительного просмотра (не более 200 символов)",
+            },
+            hash: "d29c076e0ae3e3401aa7158ecb074f1e",
+          },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/11/5/3-placeholder":
+          {
+            content: {
+              de: "GitHub-URL (max. 200 Zeichen)",
+              en: "GitHub URL (max 200 chars)",
+              es: "URL de GitHub (máx 200 caracteres)",
+              fr: "URL GitHub (max 200 caractères)",
+              ru: "URL GitHub (не более 200 символов)",
+            },
+            hash: "648a7ed4d8ce0dc3f1441ef2ec066f9a",
+          },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/1-placeholder":
+          {
+            content: {
+              de: "Tags (max. 5, je 20 Zeichen)",
+              en: "Tags (max 5, 20 chars each)",
+              es: "Etiquetas (máx 5, 20 caracteres cada una)",
+              fr: "Étiquettes (max 5, 20 caractères chacune)",
+              ru: "Теги (не более 5, по 20 символов каждый)",
+            },
+            hash: "ee92a438db86847f895525e2b4b30dc2",
+          },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/3/3-aria-label":
+          {
+            content: {
+              de: "Sichtbarkeit der Idee umschalten",
+              en: "Toggle idea visibility",
+              es: "Alternar visibilidad de la idea",
+              fr: "Basculer la visibilité de l'idée",
+              ru: "Переключить видимость идеи",
+            },
+            hash: "552bfded7136252e62bc96870e372ae4",
+          },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/3/1-placeholder":
+          {
+            content: {
+              de: "Titel der Idee...",
+              en: "Idea title...",
+              es: "Título de la idea...",
+              fr: "Titre de l'idée...",
+              ru: "Заголовок идеи...",
+            },
+            hash: "d0abd69c81b4462ebc9b9ce22fbb5ebd",
+          },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/7-placeholder":
+          {
+            content: {
+              de: "Beschreiben Sie Ihre Idee (min. 10 Zeichen)...",
+              en: "Describe your idea (min 10 chars)...",
+              es: "Describe tu idea (mín 10 caracteres)...",
+              fr: "Décrivez votre idée (min 10 caractères)...",
+              ru: "Опишите вашу идею (не менее 10 символов)...",
+            },
+            hash: "8c844bd6e2d2c9c81890a4f8b486bf4d",
+          },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/alternate":
+          {
+            content: {
+              de: "Idee speichern",
+              en: "Save Idea",
+              es: "Guardar Idea",
+              fr: "Sauvegarder l'idée",
+              ru: "Сохранить идею",
+            },
+            hash: "9ee87ef4e0cae6d28259e32f031ad616",
+          },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/consequent/3":
+          {
+            content: {
+              de: "Wird gespeichert...",
+              en: "Saving...",
+              es: "Guardando...",
+              fr: "Sauvegarde en cours...",
+              ru: "Сохранение...",
+            },
+            hash: "7cb2d8f012d57db8a62187b65ef164dc",
+          },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/consequent/3":
+          {
+            content: {
+              de: "Neue Idee hinzufügen",
+              en: "Add New Idea",
+              es: "Agregar Nueva Idea",
+              fr: "Ajouter une nouvelle idée",
+              ru: "Добавить новую идею",
+            },
+            hash: "7457579fef8ea58198d8c7f372825f61",
+          },
+        "15/declaration/body/51/argument/1/7/1/1/3-placeholder": {
+          content: {
+            de: "Ideen nach Titel, Beschreibung oder Tags suchen...",
+            en: "Search ideas by title, description, or tags...",
+            es: "Buscar ideas por título, descripción o etiquetas...",
+            fr: "Rechercher des idées par titre, description ou étiquettes...",
+            ru: "Поиск идей по заголовку, описанию или тегам...",
+          },
+          hash: "3f41d75e3fa6517e95a1b621dd03989b",
+        },
+        "15/declaration/body/51/argument/1/7/1/3/3": {
+          content: {
+            de: "Filter",
+            en: "Filters",
+            es: "Filtros",
+            fr: "Filtres",
+            ru: "Фильтры",
+          },
+          hash: "acf5accc113ff3c1992688058576732c",
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/1/1": {
+          content: {
+            de: "Kategorie",
+            en: "Category",
+            es: "Categoría",
+            fr: "Catégorie",
+            ru: "Категория",
+          },
+          hash: "8cd10d9d3417a39aeab511ea55048d6e",
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/1/3/1": {
+          content: {
+            de: "Alle Kategorien",
+            en: "All Categories",
+            es: "Todas las categorías",
+            fr: "Toutes les catégories",
+            ru: "Все категории",
+          },
+          hash: "70694a376046a6580bad8ca2fa35bf39",
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/3/1": {
+          content: {
+            de: "Priorität",
+            en: "Priority",
+            es: "Prioridad",
+            fr: "Priorité",
+            ru: "Приоритет",
+          },
+          hash: "18b192b994a3619e8ac97184a232a2ab",
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/3/3/1": {
+          content: {
+            de: "Alle Prioritäten",
+            en: "All Priorities",
+            es: "Todas las prioridades",
+            fr: "Toutes les priorités",
+            ru: "Все приоритеты",
+          },
+          hash: "d0bcc95400c926ee4bacac1fc95bc8ea",
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/5/1": {
+          content: {
+            de: "Status",
+            en: "Status",
+            es: "Estado",
+            fr: "Statut",
+            ru: "Статус",
+          },
+          hash: "388e763d08ae139d0c47a1dbdb48752d",
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/7/1": {
+          content: {
+            de: "Tags",
+            en: "Tags",
+            es: "Etiquetas",
+            fr: "Étiquettes",
+            ru: "Теги",
+          },
+          hash: "a2e4379316b9f736fa8add2360d7d04a",
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/7/3-placeholder":
+          {
+            content: {
+              de: "Nach Tags filtern...",
+              en: "Filter by tags...",
+              es: "Filtrar por etiquetas...",
+              fr: "Filtrer par étiquettes...",
+              ru: "Фильтр по тегам...",
+            },
+            hash: "0097484dac30bacc43dc773c96fddfbe",
+          },
       },
     },
     "pages/Login.jsx": {
       entries: {
         "7/declaration/body/16/argument/1/1/1": {
           content: {
-            de: "Willkommen beim Idea Tracker",
+            de: "Willkommen beim Ideen-Tracker",
             en: "Welcome to Idea Tracker",
-            es: "Bienvenido a Seguimiento de Ideas",
-            fr: "Bienvenue sur le Suivi d'idées",
-            ru: "Добро пожаловать в трекер идей",
+            es: "Bienvenido a Idea Tracker",
+            fr: "Bienvenue sur Idea Tracker",
+            ru: "Добро пожаловать в Трекер Идей",
           },
           hash: "cd270068759114df4ac100290154f681",
         },
@@ -1074,7 +1628,7 @@ export default {
         },
         "7/declaration/body/16/argument/1/3/1/1": {
           content: {
-            de: "Registrieren oder anmelden Sie sich mit Ihrer bevorzugten Methode",
+            de: "Registrieren oder anmelden mit Ihrer bevorzugten Methode",
             en: "Sign up or sign in with your preferred method",
             es: "Regístrate o inicia sesión con tu método preferido",
             fr: "Inscrivez-vous ou connectez-vous avec votre méthode préférée",
@@ -1117,8 +1671,8 @@ export default {
             de: "Oder mit E-Mail fortfahren",
             en: "Or continue with email",
             es: "O continúa con correo electrónico",
-            fr: "Ou continuer avec l'email",
-            ru: "Или продолжите с помощью электронной почты",
+            fr: "Ou continuez avec l'email",
+            ru: "Или продолжите с использованием электронной почты",
           },
           hash: "b715fa3165cc4c1405afb8801375290d",
         },
@@ -1127,7 +1681,7 @@ export default {
             de: "E-Mail",
             en: "Email",
             es: "Correo electrónico",
-            fr: "Courriel",
+            fr: "Email",
             ru: "Электронная почта",
           },
           hash: "5c3003ba6efa6297fda2e4453d0f5ec6",
@@ -1168,7 +1722,7 @@ export default {
             en: "Minimum 8 characters",
             es: "Mínimo 8 caracteres",
             fr: "Minimum 8 caractères",
-            ru: "Не менее 8 символов",
+            ru: "Минимум 8 символов",
           },
           hash: "1ad06b76a292d66fe2666e0c9d1d07ce",
         },
@@ -1280,17 +1834,7 @@ export default {
     },
     "pages/Profile.jsx": {
       entries: {
-        "7/declaration/body/4/consequent/0/argument/1/3": {
-          content: {
-            de: "Profil wird geladen...",
-            en: "Loading profile...",
-            es: "Cargando perfil...",
-            fr: "Chargement du profil...",
-            ru: "Загрузка профиля...",
-          },
-          hash: "ca2b31f0693bfd00761fde43e3ec2b9f",
-        },
-        "7/declaration/body/8/argument/1/1/1/1/1/1/expression/consequent/1-alt":
+        "7/declaration/body/13/argument/1/1/1/1/1/1/expression/consequent/1-alt":
           {
             content: {
               de: "Profil",
@@ -1301,17 +1845,17 @@ export default {
             },
             hash: "d7878693f91303a438852d617f6d35df",
           },
-        "7/declaration/body/8/argument/1/1/1/3/1/3/3": {
+        "7/declaration/body/13/argument/1/1/1/3/1/3/3": {
           content: {
             de: "{productivityScore}% Produktiv",
             en: "{productivityScore}% Productive",
             es: "{productivityScore}% Productivo",
             fr: "{productivityScore}% Productif",
-            ru: "{productivityScore}% Продуктивности",
+            ru: "{productivityScore}% Продуктивность",
           },
           hash: "10dc28fc78d697a0cfed77c86a0d3d87",
         },
-        "7/declaration/body/8/argument/1/1/1/3/3/1/1/3": {
+        "7/declaration/body/13/argument/1/1/1/3/3/1/1/3": {
           content: {
             de: "Mitglied seit",
             en: "Member since",
@@ -1321,27 +1865,47 @@ export default {
           },
           hash: "b95af6b0d922dc057d4f8ac489697b14",
         },
-        "7/declaration/body/8/argument/1/1/1/3/3/3/1/3": {
+        "7/declaration/body/13/argument/1/1/1/3/3/3/1/3": {
           content: {
-            de: "Gesamtideen",
-            en: "Total ideas",
-            es: "Ideas totales",
-            fr: "Total d'idées",
-            ru: "Всего идей",
+            de: "Abschlussrate",
+            en: "Completion rate",
+            es: "Tasa de cumplimiento",
+            fr: "Taux d'achèvement",
+            ru: "Коэффициент выполнения",
           },
-          hash: "bca3736b2ad20e1cb736a665b31095be",
+          hash: "0900575e128b815af91735f5c5b53bc6",
         },
-        "7/declaration/body/8/argument/1/3/1/3/1": {
+        "7/declaration/body/13/argument/1/1/1/3/3/3/3": {
+          content: {
+            de: "<function:Math.round/>% ({stats.completedIdeas}/{stats.totalIdeas})",
+            en: "<function:Math.round/>% ({stats.completedIdeas}/{stats.totalIdeas})",
+            es: "<function:Math.round/>% ({stats.completedIdeas}/{stats.totalIdeas})",
+            fr: "<function:Math.round/>% ({stats.completedIdeas}/{stats.totalIdeas})",
+            ru: "<function:Math.round/>% ({stats.completedIdeas}/{stats.totalIdeas})",
+          },
+          hash: "c71eb517fa1a2e7dd6c8c2aedb705428",
+        },
+        "7/declaration/body/13/argument/1/3/1/3/1": {
           content: {
             de: "Gesamtideen",
             en: "Total Ideas",
             es: "Ideas totales",
-            fr: "Total d'idées",
+            fr: "Total des idées",
             ru: "Всего идей",
           },
           hash: "c9b8cba9e1ca4a3ed085f8709b4d5331",
         },
-        "7/declaration/body/8/argument/1/3/3/3/1": {
+        "7/declaration/body/13/argument/1/3/3/3/1": {
+          content: {
+            de: "Abgeschlossen",
+            en: "Completed",
+            es: "Completadas",
+            fr: "Complétées",
+            ru: "Выполнено",
+          },
+          hash: "66ba3842b6a76b74ba28044ce8c3c9a0",
+        },
+        "7/declaration/body/13/argument/1/3/5/3/1": {
           content: {
             de: "Kategorien",
             en: "Categories",
@@ -1351,17 +1915,17 @@ export default {
           },
           hash: "23dbb4e7056dc8afeef9849141bff4a4",
         },
-        "7/declaration/body/8/argument/1/3/5/3/1": {
+        "7/declaration/body/13/argument/1/3/7/3/1": {
           content: {
             de: "Ideen/Monat",
             en: "Ideas/Month",
             es: "Ideas/mes",
-            fr: "Idées/Mois",
-            ru: "Идеи в месяц",
+            fr: "Idées par mois",
+            ru: "Идеи/Месяц",
           },
           hash: "ee3d11eb470ca4979b8e8e72d1c99c8e",
         },
-        "7/declaration/body/8/argument/1/5/1/1/1": {
+        "7/declaration/body/13/argument/1/5/1/1/1": {
           content: {
             de: "<element:PieChart></element:PieChart> Kategorien",
             en: "<element:PieChart></element:PieChart> Categories",
@@ -1371,17 +1935,17 @@ export default {
           },
           hash: "de7ff2441f31fca736d5859acbefa6ce",
         },
-        "7/declaration/body/8/argument/1/5/1/3/expression/alternate/3": {
+        "7/declaration/body/13/argument/1/5/1/3/expression/alternate/3": {
           content: {
             de: "Noch keine Kategorien",
             en: "No categories yet",
-            es: "Sin categorías aún",
+            es: "Todavía no hay categorías",
             fr: "Aucune catégorie pour le moment",
             ru: "Еще нет категорий",
           },
           hash: "703b42d9be29e2852ff1cc994520d56c",
         },
-        "7/declaration/body/8/argument/1/5/1/3/expression/consequent/1/expression/0/body/1/argument/1/3":
+        "7/declaration/body/13/argument/1/5/1/3/expression/consequent/1/expression/0/body/1/argument/1/3":
           {
             content: {
               de: "{percentage}% • {count}",
@@ -1392,7 +1956,7 @@ export default {
             },
             hash: "4900c82b71a3f3cfe1fa00edbee050a0",
           },
-        "7/declaration/body/8/argument/1/5/3/1": {
+        "7/declaration/body/13/argument/1/5/3/1": {
           content: {
             de: "<element:Clock></element:Clock> Letzte Ideen",
             en: "<element:Clock></element:Clock> Recent Ideas",
@@ -1402,19 +1966,19 @@ export default {
           },
           hash: "1aea6b326b371d3ff39dfdcc2ad289f2",
         },
-        "7/declaration/body/8/argument/1/5/3/3/expression/alternate/3": {
+        "7/declaration/body/13/argument/1/5/3/3/expression/alternate/3": {
           content: {
             de: "Keine aktuellen Ideen",
             en: "No recent ideas",
-            es: "Sin ideas recientes",
+            es: "No hay ideas recientes",
             fr: "Aucune idée récente",
             ru: "Нет недавних идей",
           },
           hash: "915d3fdec8a75b5bf16663d2c04be0a7",
         },
-        "7/declaration/body/8/argument/1/5/3/3/expression/alternate/5": {
+        "7/declaration/body/13/argument/1/5/3/3/expression/alternate/5": {
           content: {
-            de: "Erstelle deine erste Idee",
+            de: "Erstellen Sie Ihre erste Idee",
             en: "Create your first idea",
             es: "Crea tu primera idea",
             fr: "Créer votre première idée",
@@ -1422,15 +1986,25 @@ export default {
           },
           hash: "9c4ecb30767eab7c11f43121dee61fb5",
         },
-        "7/declaration/body/8/argument/1/5/3/3/expression/consequent/3/1": {
+        "7/declaration/body/13/argument/1/5/3/3/expression/consequent/3/1": {
           content: {
             de: "Alle Ideen anzeigen",
             en: "View all ideas",
             es: "Ver todas las ideas",
             fr: "Voir toutes les idées",
-            ru: "Посмотреть все идеи",
+            ru: "Просмотреть все идеи",
           },
           hash: "d42406857ecc8b4e086e1658465c275c",
+        },
+        "7/declaration/body/4/consequent/0/argument/1/3": {
+          content: {
+            de: "Profil wird geladen...",
+            en: "Loading profile...",
+            es: "Cargando perfil...",
+            fr: "Chargement du profil...",
+            ru: "Загрузка профиля...",
+          },
+          hash: "ca2b31f0693bfd00761fde43e3ec2b9f",
         },
       },
     },

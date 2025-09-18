@@ -10,6 +10,7 @@ import {
   Zap,
   Clock,
   PieChart,
+  CheckCircle2,
 } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 import moment from "moment";
@@ -19,6 +20,7 @@ export function Profile({ navigate }) {
   const ideas = useIdeas();
   const [stats, setStats] = useState({
     totalIdeas: 0,
+    completedIdeas: 0,
     categories: {},
     priorities: {},
     recentActivity: [],
@@ -37,6 +39,9 @@ export function Profile({ navigate }) {
     );
     const categories = {};
     const priorities = {};
+    const completedIdeas = userIdeas.filter(
+      (idea) => idea.status === "completed"
+    ).length;
 
     userIdeas.forEach((idea) => {
       const cat = idea.category || "Web App";
@@ -48,6 +53,7 @@ export function Profile({ navigate }) {
 
     setStats({
       totalIdeas: userIdeas.length,
+      completedIdeas,
       categories,
       priorities,
       recentActivity: userIdeas.slice(0, 3),
@@ -70,19 +76,26 @@ export function Profile({ navigate }) {
   const topCategory = Object.entries(stats.categories).sort(
     (a, b) => b[1] - a[1]
   )[0];
-  const productivityScore = Math.min(
-    100,
-    Math.round(
-      (stats.totalIdeas /
-        Math.max(
-          1,
-          Math.ceil(
-            (Date.now() - new Date(user.current.$createdAt)) /
-              (1000 * 60 * 60 * 24 * 30)
-          )
-        )) *
-        10
-    )
+
+  // Improved productivity score based on completed ideas
+  const completionRate =
+    stats.totalIdeas > 0 ? (stats.completedIdeas / stats.totalIdeas) * 100 : 0;
+
+  // Calculate activity rate based on ideas created in last 30 days
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+  const recentIdeas = ideas.current.filter(
+    (idea) =>
+      idea.userId === user.current.$id &&
+      new Date(idea.$createdAt) > thirtyDaysAgo
+  ).length;
+
+  const activityRate = Math.min(100, recentIdeas * 10); 
+
+  // Balanced productivity score
+  const productivityScore = Math.round(
+    completionRate * 0.7 + activityRate * 0.3
   );
 
   return (
@@ -195,13 +208,14 @@ export function Profile({ navigate }) {
 
                 <div className="bg-gray-50 dark:bg-[#0F0F0F] rounded-lg p-4 border border-[#FD366E]">
                   <div className="flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4 text-[#FD366E]" />
+                    <CheckCircle2 className="w-4 h-4 text-[#FD366E]" />
                     <span className="text-xs text-gray-600 dark:text-gray-300">
-                      Total ideas
+                      Completion rate
                     </span>
                   </div>
                   <p className="text-gray-900 dark:text-white text-sm font-medium mt-1">
-                    {stats.totalIdeas}
+                    {Math.round(completionRate)}% ({stats.completedIdeas}/
+                    {stats.totalIdeas})
                   </p>
                 </div>
               </div>
@@ -210,7 +224,7 @@ export function Profile({ navigate }) {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          className="grid grid-cols-1 md:grid-cols-4 gap-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -228,6 +242,21 @@ export function Profile({ navigate }) {
               </p>
             </div>
           </div>
+
+          <div className="bg-white dark:bg-[#000000] border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+              <CheckCircle2 className="w-5 h-5 text-green-500" />
+            </div>
+            <div>
+              <p className="text-gray-600 dark:text-gray-400 text-xs">
+                Completed
+              </p>
+              <p className="text-gray-900 dark:text-white font-medium">
+                {stats.completedIdeas}
+              </p>
+            </div>
+          </div>
+
           <div className="bg-white dark:bg-[#000000] border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex items-center space-x-3">
             <div className="w-10 h-10 rounded-lg bg-[#fd366e0a] border border-[#FD366E]/20 flex items-center justify-center">
               <Tag className="w-5 h-5 text-[#FD366E]" />
@@ -241,6 +270,7 @@ export function Profile({ navigate }) {
               </p>
             </div>
           </div>
+
           <div className="bg-white dark:bg-[#000000] border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex items-center space-x-3">
             <div className="w-10 h-10 rounded-lg bg-[#fd366e0a] border border-[#FD366E]/20 flex items-center justify-center">
               <Clock className="w-5 h-5 text-[#FD366E]" />
@@ -347,17 +377,22 @@ export function Profile({ navigate }) {
                       <h4 className="font-medium text-gray-900 dark:text-white text-sm break-words break-all min-w-0">
                         {idea.title}
                       </h4>
-                      <span
-                        className={`text-xs px-2 py-0.5 rounded-full shrink-0 ${
-                          idea.priority === "High"
-                            ? "bg-red-500/20 text-red-600 dark:text-red-300"
-                            : idea.priority === "Medium"
-                              ? "bg-yellow-500/20 text-yellow-600 dark:text-yellow-300"
-                              : "bg-green-500/20 text-green-600 dark:text-green-300"
-                        }`}
-                      >
-                        {idea.priority || "Medium"}
-                      </span>
+                      <div className="flex items-center gap-2 shrink-0">
+                        {idea.status === "completed" && (
+                          <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        )}
+                        <span
+                          className={`text-xs px-2 py-0.5 rounded-full ${
+                            idea.priority === "High"
+                              ? "bg-red-500/20 text-red-600 dark:text-red-300"
+                              : idea.priority === "Medium"
+                                ? "bg-yellow-500/20 text-yellow-600 dark:text-yellow-300"
+                                : "bg-green-500/20 text-green-600 dark:text-green-300"
+                          }`}
+                        >
+                          {idea.priority || "Medium"}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="flex justify-between items-center mt-2 gap-2 min-w-0">

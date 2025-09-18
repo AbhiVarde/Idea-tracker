@@ -115,15 +115,15 @@
           "overrides": {},
           "content": "60+"
         },
-        "3/body/1/argument/1/5/1/1": {
+        "3/body/1/argument/1/5/3/1": {
           "type": "element",
-          "hash": "daa64d7fb8b9ff0e8084dcef7bf9fb3f",
+          "hash": "c425bfd389002960a41b97a9d4606944",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "Built with"
+          "content": "Built with 💚"
         },
-        "3/body/1/argument/1/5/1/5": {
+        "3/body/1/argument/1/5/3/5": {
           "type": "element",
           "hash": "4bfd9ca52df95a588eb1829ede67aedb",
           "context": "",
@@ -131,21 +131,29 @@
           "overrides": {},
           "content": "by"
         },
-        "3/body/1/argument/1/5/1/7/1": {
+        "3/body/1/argument/1/5/3/7": {
           "type": "element",
-          "hash": "054afe9c3fa465bdc9886e15f44f990c",
+          "hash": "eb3539b8dcde2db09e063fcc0cc532ef",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "abhivarde.in"
+          "content": "abhivarde.in<element:ExternalLink></element:ExternalLink>"
         },
-        "3/body/1/argument/1/5/3/3": {
+        "3/body/1/argument/1/5/7/1/3": {
           "type": "element",
-          "hash": "8e2c21de85774504ebd69310fd7e7c95",
+          "hash": "ffdfe5f3a1a352cdf0e7df22ea436fbb",
           "context": "",
           "skip": false,
           "overrides": {},
           "content": "View Code"
+        },
+        "3/body/1/argument/1/5/7/3": {
+          "type": "element",
+          "hash": "60c51009a8ae55a39a2aa0d011a5710b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "💚 Sponsor"
         }
       }
     },
@@ -393,6 +401,86 @@
         }
       }
     },
+    "components/dialogs/CustomCategory.jsx": {
+      "scopes": {
+        "3/declaration/body/2/argument/1/1/1/1/1": {
+          "type": "element",
+          "hash": "2b34d0995cc326d984e545784f2a7fd5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Add Custom Category"
+        },
+        "3/declaration/body/2/argument/1/1/1/3-placeholder": {
+          "type": "attribute",
+          "hash": "f2cfffba1f01d55a94ef7867f610e637",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Enter category name..."
+        },
+        "3/declaration/body/2/argument/1/1/1/5/1": {
+          "type": "element",
+          "hash": "5936f87dccc089542c7871a72ed1dacf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "3/declaration/body/2/argument/1/1/1/5/3": {
+          "type": "element",
+          "hash": "b11f2fba9997d31ab1b84dd9519e49b5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Add & Select"
+        }
+      }
+    },
+    "components/dialogs/DeleteIdea.jsx": {
+      "scopes": {
+        "3/declaration/body/2/argument/1/1/1/3/1": {
+          "type": "element",
+          "hash": "27c56a6ecea8c41d992f77108d343a3f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete Idea"
+        },
+        "3/declaration/body/2/argument/1/1/1/3/3": {
+          "type": "element",
+          "hash": "04f85139d8d93223c157d1ea7b64b721",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This action cannot be undone"
+        },
+        "3/declaration/body/2/argument/1/1/3/1": {
+          "type": "element",
+          "hash": "24f42a97bbe9038bff5bee3795df8b93",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Are you sure you want to delete <element:span>\"<expression/>\"</element:span> ?"
+        },
+        "3/declaration/body/2/argument/1/1/5/1": {
+          "type": "element",
+          "hash": "07296eb8d91ad98e1b60cd7ab0def914",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "3/declaration/body/2/argument/1/1/5/3": {
+          "type": "element",
+          "hash": "8568ef0f71bc34a3fed5c37520fd4c7f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete"
+        }
+      }
+    },
     "components/dialogs/NotificationPreferences.jsx": {
       "scopes": {
         "9/0/init/body/15/argument/1/1/1-aria-label": {
@@ -439,7 +527,7 @@
     },
     "pages/Discover.jsx": {
       "scopes": {
-        "7/declaration/body/9/argument/1/3/1/1": {
+        "8/declaration/body/9/argument/1/3/1/1": {
           "type": "element",
           "hash": "84ae6be3b5bcbdc3a9521a7cb50c41a6",
           "context": "",
@@ -447,7 +535,7 @@
           "overrides": {},
           "content": "<element:Compass></element:Compass> Discover Ideas"
         },
-        "7/declaration/body/9/argument/1/3/1/3": {
+        "8/declaration/body/9/argument/1/3/1/3": {
           "type": "element",
           "hash": "48000132e7af9c8ff20c4e4a684a664a",
           "context": "",
@@ -455,15 +543,23 @@
           "overrides": {},
           "content": "Explore amazing public ideas from the community"
         },
-        "7/declaration/body/9/argument/1/3/3/1/1": {
+        "8/declaration/body/9/argument/1/3/3/1/1": {
           "type": "element",
-          "hash": "2547e684d62a4710bdfbb9415a9970d0",
+          "hash": "06c429ecf54a4fee7f0138b1e8f9d175",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "All Categories"
+          "content": "All Categories (<function:getCategoryCount/>)"
         },
-        "7/declaration/body/9/argument/1/7/3/1": {
+        "8/declaration/body/9/argument/1/3/3/1/3/expression/0/body": {
+          "type": "element",
+          "hash": "edcf4ab97364ace38731e4170c209934",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{cat} (<function:getCategoryCount/>)"
+        },
+        "8/declaration/body/9/argument/1/7/3/1": {
           "type": "element",
           "hash": "e6c1208f6ddc7591fe64b8c209877607",
           "context": "",
@@ -471,7 +567,7 @@
           "overrides": {},
           "content": "Public Ideas ({filteredIdeas.length})"
         },
-        "7/declaration/body/9/argument/1/7/5/1/expression/consequent/3": {
+        "8/declaration/body/9/argument/1/7/5/1/expression/consequent/3": {
           "type": "element",
           "hash": "e0d1dd6d9fc95a3d1d2b4c43b73387c6",
           "context": "",
@@ -483,7 +579,23 @@
     },
     "pages/Home.jsx": {
       "scopes": {
-        "12/declaration/body/37/argument/1/1/1": {
+        "15/declaration/body/48/0/init/body/3/argument/3/expression/right/3": {
+          "type": "element",
+          "hash": "dc6f84ae27b6defbe6f3b8b9a7c14faa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Add category<element:div></element:div>"
+        },
+        "15/declaration/body/48/0/init/body/3/argument/7/expression/right/3": {
+          "type": "element",
+          "hash": "bf43b93831ef8516df96951502927c94",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete category<element:div></element:div>"
+        },
+        "15/declaration/body/49/argument/1/1/1": {
           "type": "element",
           "hash": "e0e7353ce31f34d87517b9e3b2869d3c",
           "context": "",
@@ -491,7 +603,7 @@
           "overrides": {},
           "content": "Your Creative <element:FlipWords></element:FlipWords>"
         },
-        "12/declaration/body/37/argument/1/1/3": {
+        "15/declaration/body/49/argument/1/1/3": {
           "type": "element",
           "hash": "dc0941c0e0604d7c3f9bd792cea8f507",
           "context": "",
@@ -499,175 +611,7 @@
           "overrides": {},
           "content": "Track ideas with clarity and bring them to life naturally."
         },
-        "12/declaration/body/37/argument/1/3/expression/alternate/1/1/3": {
-          "type": "element",
-          "hash": "771e0a32289f998ae66ca9cf7a72f8aa",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Join now"
-        },
-        "12/declaration/body/37/argument/1/3/expression/alternate/1/1/5": {
-          "type": "element",
-          "hash": "7ee80a07313b8e39e471b9409397461b",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Join Idea Tracker"
-        },
-        "12/declaration/body/37/argument/1/3/expression/alternate/1/3": {
-          "type": "element",
-          "hash": "e93eaeedbad5df95c8cd88af4c5d106b",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Get Started"
-        },
-        "12/declaration/body/37/argument/1/3/expression/alternate/3": {
-          "type": "element",
-          "hash": "f7ccbab2fce754df910731f52b954bd7",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Login to start tracking your amazing ideas"
-        },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/1/1": {
-          "type": "element",
-          "hash": "a3721f15ec1ab56fb6879ef2dd26de81",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "New Idea"
-        },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/11/3/3-placeholder": {
-          "type": "attribute",
-          "hash": "648a7ed4d8ce0dc3f1441ef2ec066f9a",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "GitHub URL (max 200 chars)"
-        },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/1-placeholder": {
-          "type": "attribute",
-          "hash": "ee92a438db86847f895525e2b4b30dc2",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Tags (max 5, 20 chars each)"
-        },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/3/3-aria-label": {
-          "type": "attribute",
-          "hash": "552bfded7136252e62bc96870e372ae4",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Toggle idea visibility"
-        },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/3/1-placeholder": {
-          "type": "attribute",
-          "hash": "d0abd69c81b4462ebc9b9ce22fbb5ebd",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Idea title..."
-        },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/7-placeholder": {
-          "type": "attribute",
-          "hash": "8c844bd6e2d2c9c81890a4f8b486bf4d",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Describe your idea (min 10 chars)..."
-        },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/alternate": {
-          "type": "element",
-          "hash": "9ee87ef4e0cae6d28259e32f031ad616",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Save Idea"
-        },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/consequent/3": {
-          "type": "element",
-          "hash": "7cb2d8f012d57db8a62187b65ef164dc",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Saving..."
-        },
-        "12/declaration/body/37/argument/1/3/expression/consequent/1/1/expression/consequent/3": {
-          "type": "element",
-          "hash": "7457579fef8ea58198d8c7f372825f61",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Add New Idea"
-        },
-        "12/declaration/body/37/argument/1/5/1/1/3-placeholder": {
-          "type": "attribute",
-          "hash": "cd6feb04f8c1923349550d916d1bcecc",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Search ideas by title or description..."
-        },
-        "12/declaration/body/37/argument/1/5/1/3/3": {
-          "type": "element",
-          "hash": "acf5accc113ff3c1992688058576732c",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Filters"
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/1/1": {
-          "type": "element",
-          "hash": "8cd10d9d3417a39aeab511ea55048d6e",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Category"
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/1/3/1": {
-          "type": "element",
-          "hash": "70694a376046a6580bad8ca2fa35bf39",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "All Categories"
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/3/1": {
-          "type": "element",
-          "hash": "18b192b994a3619e8ac97184a232a2ab",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Priority"
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/3/3/1": {
-          "type": "element",
-          "hash": "d0bcc95400c926ee4bacac1fc95bc8ea",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "All Priorities"
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/5/1": {
-          "type": "element",
-          "hash": "a2e4379316b9f736fa8add2360d7d04a",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Tags"
-        },
-        "12/declaration/body/37/argument/1/5/3/1/expression/right/1/1/5/3-placeholder": {
-          "type": "attribute",
-          "hash": "0097484dac30bacc43dc773c96fddfbe",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Filter by tags..."
-        },
-        "12/declaration/body/37/argument/1/9/1/1": {
+        "15/declaration/body/49/argument/1/11/1/1": {
           "type": "element",
           "hash": "2f5ac9c8d6d350b156d9108ec5d341d6",
           "context": "",
@@ -675,15 +619,7 @@
           "overrides": {},
           "content": "Ideas (<expression/>)"
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/17/3/expression/right/3": {
-          "type": "element",
-          "hash": "cdf49b4f3ea3bf5d776900b15440c849",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "View on GitHub"
-        },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/19/expression/right/3/3/expression/right/3": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/19/expression/right/1/3/expression/right/3": {
           "type": "element",
           "hash": "0643dd657cc7ce37d0c147d04f8ea2f0",
           "context": "",
@@ -691,23 +627,7 @@
           "overrides": {},
           "content": "View on GitHub"
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/11/3": {
-          "type": "element",
-          "hash": "59b68913033e83af3705fcfc98dcf026",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Delete<element:div></element:div>"
-        },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/3/3": {
-          "type": "element",
-          "hash": "57a2318b30963fdecd221c0d742f84cc",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Expand with AI<element:div></element:div>"
-        },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/7/3": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/11/3": {
           "type": "element",
           "hash": "1a67da82566e0894fbf43beb976d5e17",
           "context": "",
@@ -715,7 +635,23 @@
           "overrides": {},
           "content": "Edit<element:div></element:div>"
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/1": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/15/3": {
+          "type": "element",
+          "hash": "59b68913033e83af3705fcfc98dcf026",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete<element:div></element:div>"
+        },
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/7/3": {
+          "type": "element",
+          "hash": "57a2318b30963fdecd221c0d742f84cc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Expand with AI<element:div></element:div>"
+        },
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/1": {
           "type": "element",
           "hash": "8662ae6135bd08a0dbf7d6e0300b7304",
           "context": "",
@@ -723,7 +659,7 @@
           "overrides": {},
           "content": "Edit Idea"
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/alternate": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/alternate": {
           "type": "element",
           "hash": "f7a2929f33bc420195e59ac5a8bcd454",
           "context": "",
@@ -731,7 +667,7 @@
           "overrides": {},
           "content": "Save"
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/consequent/3": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/consequent/3": {
           "type": "element",
           "hash": "7cb2d8f012d57db8a62187b65ef164dc",
           "context": "",
@@ -739,7 +675,7 @@
           "overrides": {},
           "content": "Saving..."
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/11/3/3-placeholder": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/11/3/3-placeholder": {
           "type": "attribute",
           "hash": "648a7ed4d8ce0dc3f1441ef2ec066f9a",
           "context": "",
@@ -747,7 +683,7 @@
           "overrides": {},
           "content": "GitHub URL (max 200 chars)"
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/1-placeholder": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/1-placeholder": {
           "type": "attribute",
           "hash": "ee92a438db86847f895525e2b4b30dc2",
           "context": "",
@@ -755,7 +691,7 @@
           "overrides": {},
           "content": "Tags (max 5, 20 chars each)"
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/3/3-aria-label": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/3/3-aria-label": {
           "type": "attribute",
           "hash": "552bfded7136252e62bc96870e372ae4",
           "context": "",
@@ -763,7 +699,7 @@
           "overrides": {},
           "content": "Toggle idea visibility"
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/3/1-placeholder": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/3/1-placeholder": {
           "type": "attribute",
           "hash": "d0abd69c81b4462ebc9b9ce22fbb5ebd",
           "context": "",
@@ -771,7 +707,7 @@
           "overrides": {},
           "content": "Idea title..."
         },
-        "12/declaration/body/37/argument/1/9/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/7-placeholder": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/7-placeholder": {
           "type": "attribute",
           "hash": "8c844bd6e2d2c9c81890a4f8b486bf4d",
           "context": "",
@@ -779,45 +715,533 @@
           "overrides": {},
           "content": "Describe your idea (min 10 chars)..."
         },
-        "12/declaration/body/37/argument/3/expression/right/1/1/3/1": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/5/expression/right/1/1/expression/alternate": {
           "type": "element",
-          "hash": "703fb782546ee10b1747c437b0a6edfe",
+          "hash": "14b146dc55d3aea3c927e75d37d1f124",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "Delete Idea"
+          "content": "Load More"
         },
-        "12/declaration/body/37/argument/3/expression/right/1/1/3/3": {
+        "15/declaration/body/49/argument/1/11/3/1/expression/alternate/5/expression/right/1/1/expression/consequent/3": {
           "type": "element",
-          "hash": "c8ff304eb731db3d216916eff4b6062e",
+          "hash": "82b4ea7ed1439094d7c4be13aaba9a66",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "This action cannot be undone"
+          "content": "Loading..."
         },
-        "12/declaration/body/37/argument/3/expression/right/1/3/1": {
+        "15/declaration/body/49/argument/1/3/expression/alternate/1/1/3": {
           "type": "element",
-          "hash": "b6a657fe1c12d75a4080782612ff94d7",
+          "hash": "771e0a32289f998ae66ca9cf7a72f8aa",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "Are you sure you want to delete <element:span>\"<expression/> \"</element:span> ?"
+          "content": "Join now"
         },
-        "12/declaration/body/37/argument/3/expression/right/1/5/1": {
+        "15/declaration/body/49/argument/1/3/expression/alternate/1/1/5": {
           "type": "element",
-          "hash": "5936f87dccc089542c7871a72ed1dacf",
+          "hash": "7ee80a07313b8e39e471b9409397461b",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "Cancel"
+          "content": "Join Idea Tracker"
         },
-        "12/declaration/body/37/argument/3/expression/right/1/5/3": {
+        "15/declaration/body/49/argument/1/3/expression/alternate/1/3": {
           "type": "element",
-          "hash": "63d42bb73343bb4599cbf2893584b6e2",
+          "hash": "e93eaeedbad5df95c8cd88af4c5d106b",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "Delete"
+          "content": "Get Started"
+        },
+        "15/declaration/body/49/argument/1/3/expression/alternate/3": {
+          "type": "element",
+          "hash": "f7ccbab2fce754df910731f52b954bd7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login to start tracking your amazing ideas"
+        },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/1/1": {
+          "type": "element",
+          "hash": "a3721f15ec1ab56fb6879ef2dd26de81",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "New Idea"
+        },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/11/3/3-placeholder": {
+          "type": "attribute",
+          "hash": "648a7ed4d8ce0dc3f1441ef2ec066f9a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "GitHub URL (max 200 chars)"
+        },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/1-placeholder": {
+          "type": "attribute",
+          "hash": "ee92a438db86847f895525e2b4b30dc2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags (max 5, 20 chars each)"
+        },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/3/3-aria-label": {
+          "type": "attribute",
+          "hash": "552bfded7136252e62bc96870e372ae4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Toggle idea visibility"
+        },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/3/1-placeholder": {
+          "type": "attribute",
+          "hash": "d0abd69c81b4462ebc9b9ce22fbb5ebd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea title..."
+        },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/7-placeholder": {
+          "type": "attribute",
+          "hash": "8c844bd6e2d2c9c81890a4f8b486bf4d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Describe your idea (min 10 chars)..."
+        },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/alternate": {
+          "type": "element",
+          "hash": "9ee87ef4e0cae6d28259e32f031ad616",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save Idea"
+        },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "7cb2d8f012d57db8a62187b65ef164dc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Saving..."
+        },
+        "15/declaration/body/49/argument/1/3/expression/consequent/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "7457579fef8ea58198d8c7f372825f61",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Add New Idea"
+        },
+        "15/declaration/body/49/argument/1/7/1/1/3-placeholder": {
+          "type": "attribute",
+          "hash": "3f41d75e3fa6517e95a1b621dd03989b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Search ideas by title, description, or tags..."
+        },
+        "15/declaration/body/49/argument/1/7/1/3/3": {
+          "type": "element",
+          "hash": "acf5accc113ff3c1992688058576732c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Filters"
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/1/1": {
+          "type": "element",
+          "hash": "8cd10d9d3417a39aeab511ea55048d6e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Category"
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/1/3/1": {
+          "type": "element",
+          "hash": "70694a376046a6580bad8ca2fa35bf39",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "All Categories"
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/3/1": {
+          "type": "element",
+          "hash": "18b192b994a3619e8ac97184a232a2ab",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority"
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/3/3/1": {
+          "type": "element",
+          "hash": "d0bcc95400c926ee4bacac1fc95bc8ea",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "All Priorities"
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/5/1": {
+          "type": "element",
+          "hash": "388e763d08ae139d0c47a1dbdb48752d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Status"
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/7/1": {
+          "type": "element",
+          "hash": "a2e4379316b9f736fa8add2360d7d04a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags"
+        },
+        "15/declaration/body/49/argument/1/7/3/1/expression/right/1/1/7/3-placeholder": {
+          "type": "attribute",
+          "hash": "0097484dac30bacc43dc773c96fddfbe",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Filter by tags..."
+        },
+        "15/declaration/body/50/0/init/body/3/argument/3/expression/right/3": {
+          "type": "element",
+          "hash": "dc6f84ae27b6defbe6f3b8b9a7c14faa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Add category<element:div></element:div>"
+        },
+        "15/declaration/body/50/0/init/body/3/argument/7/expression/right/3": {
+          "type": "element",
+          "hash": "bf43b93831ef8516df96951502927c94",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete category<element:div></element:div>"
+        },
+        "15/declaration/body/51/argument/1/1/1": {
+          "type": "element",
+          "hash": "e0e7353ce31f34d87517b9e3b2869d3c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Your Creative <element:FlipWords></element:FlipWords>"
+        },
+        "15/declaration/body/51/argument/1/1/3": {
+          "type": "element",
+          "hash": "dc0941c0e0604d7c3f9bd792cea8f507",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Track ideas with clarity and bring them to life naturally."
+        },
+        "15/declaration/body/51/argument/1/11/1/1": {
+          "type": "element",
+          "hash": "2f5ac9c8d6d350b156d9108ec5d341d6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Ideas (<expression/>)"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/11/3": {
+          "type": "element",
+          "hash": "1a67da82566e0894fbf43beb976d5e17",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit<element:div></element:div>"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/15/3": {
+          "type": "element",
+          "hash": "59b68913033e83af3705fcfc98dcf026",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Delete<element:div></element:div>"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/alternate/3/3/expression/right/7/3": {
+          "type": "element",
+          "hash": "57a2318b30963fdecd221c0d742f84cc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Expand with AI<element:div></element:div>"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/1": {
+          "type": "element",
+          "hash": "8662ae6135bd08a0dbf7d6e0300b7304",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit Idea"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/alternate": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/1/3/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "7cb2d8f012d57db8a62187b65ef164dc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Saving..."
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/11/3/3-placeholder": {
+          "type": "attribute",
+          "hash": "d29c076e0ae3e3401aa7158ecb074f1e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Preview URL (max 200 chars)"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/11/5/3-placeholder": {
+          "type": "attribute",
+          "hash": "648a7ed4d8ce0dc3f1441ef2ec066f9a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "GitHub URL (max 200 chars)"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/1-placeholder": {
+          "type": "attribute",
+          "hash": "ee92a438db86847f895525e2b4b30dc2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags (max 5, 20 chars each)"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/15/3/3-aria-label": {
+          "type": "attribute",
+          "hash": "552bfded7136252e62bc96870e372ae4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Toggle idea visibility"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/3/1-placeholder": {
+          "type": "attribute",
+          "hash": "d0abd69c81b4462ebc9b9ce22fbb5ebd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea title..."
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/1/expression/0/body/1/expression/consequent/3/7-placeholder": {
+          "type": "attribute",
+          "hash": "8c844bd6e2d2c9c81890a4f8b486bf4d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Describe your idea (min 10 chars)..."
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/5/expression/right/1/1/expression/alternate": {
+          "type": "element",
+          "hash": "14b146dc55d3aea3c927e75d37d1f124",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Load More"
+        },
+        "15/declaration/body/51/argument/1/11/3/1/expression/alternate/5/expression/right/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "82b4ea7ed1439094d7c4be13aaba9a66",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Loading..."
+        },
+        "15/declaration/body/51/argument/1/3/expression/alternate/1/1/3": {
+          "type": "element",
+          "hash": "771e0a32289f998ae66ca9cf7a72f8aa",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Join now"
+        },
+        "15/declaration/body/51/argument/1/3/expression/alternate/1/1/5": {
+          "type": "element",
+          "hash": "7ee80a07313b8e39e471b9409397461b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Join Idea Tracker"
+        },
+        "15/declaration/body/51/argument/1/3/expression/alternate/1/3": {
+          "type": "element",
+          "hash": "e93eaeedbad5df95c8cd88af4c5d106b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Get Started"
+        },
+        "15/declaration/body/51/argument/1/3/expression/alternate/3": {
+          "type": "element",
+          "hash": "f7ccbab2fce754df910731f52b954bd7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Login to start tracking your amazing ideas"
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/1/1": {
+          "type": "element",
+          "hash": "a3721f15ec1ab56fb6879ef2dd26de81",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "New Idea"
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/11/3/3-placeholder": {
+          "type": "attribute",
+          "hash": "d29c076e0ae3e3401aa7158ecb074f1e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Preview URL (max 200 chars)"
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/11/5/3-placeholder": {
+          "type": "attribute",
+          "hash": "648a7ed4d8ce0dc3f1441ef2ec066f9a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "GitHub URL (max 200 chars)"
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/1-placeholder": {
+          "type": "attribute",
+          "hash": "ee92a438db86847f895525e2b4b30dc2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags (max 5, 20 chars each)"
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/15/3/3-aria-label": {
+          "type": "attribute",
+          "hash": "552bfded7136252e62bc96870e372ae4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Toggle idea visibility"
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/3/1-placeholder": {
+          "type": "attribute",
+          "hash": "d0abd69c81b4462ebc9b9ce22fbb5ebd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Idea title..."
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/3/7-placeholder": {
+          "type": "attribute",
+          "hash": "8c844bd6e2d2c9c81890a4f8b486bf4d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Describe your idea (min 10 chars)..."
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/alternate": {
+          "type": "element",
+          "hash": "9ee87ef4e0cae6d28259e32f031ad616",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save Idea"
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/alternate/1/5/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "7cb2d8f012d57db8a62187b65ef164dc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Saving..."
+        },
+        "15/declaration/body/51/argument/1/3/expression/consequent/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "7457579fef8ea58198d8c7f372825f61",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Add New Idea"
+        },
+        "15/declaration/body/51/argument/1/7/1/1/3-placeholder": {
+          "type": "attribute",
+          "hash": "3f41d75e3fa6517e95a1b621dd03989b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Search ideas by title, description, or tags..."
+        },
+        "15/declaration/body/51/argument/1/7/1/3/3": {
+          "type": "element",
+          "hash": "acf5accc113ff3c1992688058576732c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Filters"
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/1/1": {
+          "type": "element",
+          "hash": "8cd10d9d3417a39aeab511ea55048d6e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Category"
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/1/3/1": {
+          "type": "element",
+          "hash": "70694a376046a6580bad8ca2fa35bf39",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "All Categories"
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/3/1": {
+          "type": "element",
+          "hash": "18b192b994a3619e8ac97184a232a2ab",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority"
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/3/3/1": {
+          "type": "element",
+          "hash": "d0bcc95400c926ee4bacac1fc95bc8ea",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "All Priorities"
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/5/1": {
+          "type": "element",
+          "hash": "388e763d08ae139d0c47a1dbdb48752d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Status"
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/7/1": {
+          "type": "element",
+          "hash": "a2e4379316b9f736fa8add2360d7d04a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tags"
+        },
+        "15/declaration/body/51/argument/1/7/3/1/expression/right/1/1/7/3-placeholder": {
+          "type": "attribute",
+          "hash": "0097484dac30bacc43dc773c96fddfbe",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Filter by tags..."
         }
       }
     },
@@ -1007,15 +1431,7 @@
     },
     "pages/Profile.jsx": {
       "scopes": {
-        "7/declaration/body/4/consequent/0/argument/1/3": {
-          "type": "element",
-          "hash": "ca2b31f0693bfd00761fde43e3ec2b9f",
-          "context": "",
-          "skip": false,
-          "overrides": {},
-          "content": "Loading profile..."
-        },
-        "7/declaration/body/8/argument/1/1/1/1/1/1/expression/consequent/1-alt": {
+        "7/declaration/body/13/argument/1/1/1/1/1/1/expression/consequent/1-alt": {
           "type": "attribute",
           "hash": "d7878693f91303a438852d617f6d35df",
           "context": "",
@@ -1023,7 +1439,7 @@
           "overrides": {},
           "content": "Profile"
         },
-        "7/declaration/body/8/argument/1/1/1/3/1/3/3": {
+        "7/declaration/body/13/argument/1/1/1/3/1/3/3": {
           "type": "element",
           "hash": "10dc28fc78d697a0cfed77c86a0d3d87",
           "context": "",
@@ -1031,7 +1447,7 @@
           "overrides": {},
           "content": "{productivityScore}% Productive"
         },
-        "7/declaration/body/8/argument/1/1/1/3/3/1/1/3": {
+        "7/declaration/body/13/argument/1/1/1/3/3/1/1/3": {
           "type": "element",
           "hash": "b95af6b0d922dc057d4f8ac489697b14",
           "context": "",
@@ -1039,15 +1455,23 @@
           "overrides": {},
           "content": "Member since"
         },
-        "7/declaration/body/8/argument/1/1/1/3/3/3/1/3": {
+        "7/declaration/body/13/argument/1/1/1/3/3/3/1/3": {
           "type": "element",
-          "hash": "bca3736b2ad20e1cb736a665b31095be",
+          "hash": "0900575e128b815af91735f5c5b53bc6",
           "context": "",
           "skip": false,
           "overrides": {},
-          "content": "Total ideas"
+          "content": "Completion rate"
         },
-        "7/declaration/body/8/argument/1/3/1/3/1": {
+        "7/declaration/body/13/argument/1/1/1/3/3/3/3": {
+          "type": "element",
+          "hash": "c71eb517fa1a2e7dd6c8c2aedb705428",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<function:Math.round/>% ({stats.completedIdeas}/{stats.totalIdeas})"
+        },
+        "7/declaration/body/13/argument/1/3/1/3/1": {
           "type": "element",
           "hash": "c9b8cba9e1ca4a3ed085f8709b4d5331",
           "context": "",
@@ -1055,7 +1479,15 @@
           "overrides": {},
           "content": "Total Ideas"
         },
-        "7/declaration/body/8/argument/1/3/3/3/1": {
+        "7/declaration/body/13/argument/1/3/3/3/1": {
+          "type": "element",
+          "hash": "66ba3842b6a76b74ba28044ce8c3c9a0",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Completed"
+        },
+        "7/declaration/body/13/argument/1/3/5/3/1": {
           "type": "element",
           "hash": "23dbb4e7056dc8afeef9849141bff4a4",
           "context": "",
@@ -1063,7 +1495,7 @@
           "overrides": {},
           "content": "Categories"
         },
-        "7/declaration/body/8/argument/1/3/5/3/1": {
+        "7/declaration/body/13/argument/1/3/7/3/1": {
           "type": "element",
           "hash": "ee3d11eb470ca4979b8e8e72d1c99c8e",
           "context": "",
@@ -1071,7 +1503,7 @@
           "overrides": {},
           "content": "Ideas/Month"
         },
-        "7/declaration/body/8/argument/1/5/1/1/1": {
+        "7/declaration/body/13/argument/1/5/1/1/1": {
           "type": "element",
           "hash": "de7ff2441f31fca736d5859acbefa6ce",
           "context": "",
@@ -1079,7 +1511,7 @@
           "overrides": {},
           "content": "<element:PieChart></element:PieChart> Categories"
         },
-        "7/declaration/body/8/argument/1/5/1/3/expression/alternate/3": {
+        "7/declaration/body/13/argument/1/5/1/3/expression/alternate/3": {
           "type": "element",
           "hash": "703b42d9be29e2852ff1cc994520d56c",
           "context": "",
@@ -1087,7 +1519,7 @@
           "overrides": {},
           "content": "No categories yet"
         },
-        "7/declaration/body/8/argument/1/5/1/3/expression/consequent/1/expression/0/body/1/argument/1/3": {
+        "7/declaration/body/13/argument/1/5/1/3/expression/consequent/1/expression/0/body/1/argument/1/3": {
           "type": "element",
           "hash": "4900c82b71a3f3cfe1fa00edbee050a0",
           "context": "",
@@ -1095,7 +1527,7 @@
           "overrides": {},
           "content": "{percentage}% • {count}"
         },
-        "7/declaration/body/8/argument/1/5/3/1": {
+        "7/declaration/body/13/argument/1/5/3/1": {
           "type": "element",
           "hash": "1aea6b326b371d3ff39dfdcc2ad289f2",
           "context": "",
@@ -1103,7 +1535,7 @@
           "overrides": {},
           "content": "<element:Clock></element:Clock> Recent Ideas"
         },
-        "7/declaration/body/8/argument/1/5/3/3/expression/alternate/3": {
+        "7/declaration/body/13/argument/1/5/3/3/expression/alternate/3": {
           "type": "element",
           "hash": "915d3fdec8a75b5bf16663d2c04be0a7",
           "context": "",
@@ -1111,7 +1543,7 @@
           "overrides": {},
           "content": "No recent ideas"
         },
-        "7/declaration/body/8/argument/1/5/3/3/expression/alternate/5": {
+        "7/declaration/body/13/argument/1/5/3/3/expression/alternate/5": {
           "type": "element",
           "hash": "9c4ecb30767eab7c11f43121dee61fb5",
           "context": "",
@@ -1119,13 +1551,21 @@
           "overrides": {},
           "content": "Create your first idea"
         },
-        "7/declaration/body/8/argument/1/5/3/3/expression/consequent/3/1": {
+        "7/declaration/body/13/argument/1/5/3/3/expression/consequent/3/1": {
           "type": "element",
           "hash": "d42406857ecc8b4e086e1658465c275c",
           "context": "",
           "skip": false,
           "overrides": {},
           "content": "View all ideas"
+        },
+        "7/declaration/body/4/consequent/0/argument/1/3": {
+          "type": "element",
+          "hash": "ca2b31f0693bfd00761fde43e3ec2b9f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Loading profile..."
         }
       }
     }

@@ -1,3 +1,17 @@
+/* Global text selection style */
+::selection {
+  background-color: #fd366e;
+  /* pink/red background */
+  color: #ffffff;
+  /* white text on selection */
+}
+
+/* For Firefox specifically */
+::-moz-selection {
+  background-color: #fd366e;
+  color: #ffffff;
+}
+
 html {
   color-scheme: light dark;
 }
