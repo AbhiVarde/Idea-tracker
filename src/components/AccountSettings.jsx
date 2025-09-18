@@ -123,27 +123,27 @@ const AccountSettings = ({ isOpen, onClose }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="bg-[#000000] border border-gray-800 rounded-2xl p-6 w-full max-w-sm relative"
+          className="bg-white dark:bg-[#000000] border border-gray-200 dark:border-gray-800 rounded-2xl p-6 w-full max-w-sm relative"
           onClick={(e) => e.stopPropagation()}
         >
           <button
             onClick={handleClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-1"
+            className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors p-1"
           >
             <X className="w-5 h-5" />
           </button>
 
           <div className="text-center mb-6">
-            <h2 className="text-xl font-bold text-white mb-2">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
               Account Settings
             </h2>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
               Manage your account preferences
             </p>
           </div>
 
           <div className="space-y-4">
-            <div className="bg-gray-800/30 rounded-xl p-4 text-center">
+            <div className="bg-[#f4f4f7] dark:bg-gray-800/30 rounded-xl p-4 text-center">
               <div className="relative inline-block mb-3">
                 <div className="w-16 h-16 bg-[#FD366E] rounded-full flex items-center justify-center text-white font-medium text-xl mx-auto relative">
                   {user.current?.prefs?.profilePictureId ? (
@@ -178,7 +178,7 @@ const AccountSettings = ({ isOpen, onClose }) => {
                 <motion.button
                   onClick={() => setShowProfileActions(!showProfileActions)}
                   disabled={isUploadingImage}
-                  className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#FD366E] hover:bg-[#FD366E]/80 rounded-full flex items-center justify-center transition-colors disabled:opacity-50 border-2 border-black"
+                  className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#FD366E] hover:bg-[#FD366E]/80 rounded-full flex items-center justify-center transition-colors disabled:opacity-50 border-2 border-white dark:border-black"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -200,14 +200,14 @@ const AccountSettings = ({ isOpen, onClose }) => {
                         duration: 0.25,
                         ease: [0.25, 0.1, 0.25, 1],
                       }}
-                      className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-[#000000] border border-gray-800 rounded-xl shadow-xl z-10 w-36"
+                      className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-white dark:bg-[#000000] border border-gray-200 dark:border-gray-800 rounded-xl shadow-xl z-10 w-36"
                     >
                       <motion.button
                         onClick={() => {
                           fileInputRef.current?.click();
                           setShowProfileActions(false);
                         }}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-lg transition-colors duration-200"
+                        className="w-full flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/60 rounded-lg transition-colors duration-200"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -222,7 +222,7 @@ const AccountSettings = ({ isOpen, onClose }) => {
                       {user.current?.prefs?.profilePictureId && (
                         <motion.button
                           onClick={handleRemoveImage}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors duration-200 ease-in-out"
+                          className="w-full flex items-center gap-2 px-3 py-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors duration-200 ease-in-out"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
@@ -235,10 +235,10 @@ const AccountSettings = ({ isOpen, onClose }) => {
                 </AnimatePresence>
               </div>
 
-              <p className="text-white font-medium mb-1">
+              <p className="text-gray-900 dark:text-white font-medium mb-1">
                 {user.current?.email}
               </p>
-              <p className="text-gray-400 text-sm">
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
                 Member since{" "}
                 {moment(user.current?.$createdAt).format("DD MMM YYYY")}
               </p>
@@ -253,17 +253,21 @@ const AccountSettings = ({ isOpen, onClose }) => {
             </div>
 
             {error && (
-              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-3">
-                <p className="text-red-400 text-sm">{error}</p>
+              <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 rounded-xl p-3">
+                <p className="text-red-600 dark:text-red-400 text-sm">
+                  {error}
+                </p>
               </div>
             )}
 
-            <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+            <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 rounded-xl p-4">
               <div className="flex items-center space-x-2 mb-3">
-                <AlertTriangle className="w-5 h-5 text-red-400" />
-                <h3 className="text-red-400 font-semibold">Delete Account</h3>
+                <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                <h3 className="text-red-600 dark:text-red-400 font-semibold">
+                  Delete Account
+                </h3>
               </div>
-              <p className="text-gray-300 text-sm mb-4">
+              <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
                 This will permanently delete your account and all your ideas.
                 This action cannot be undone.
               </p>
@@ -285,14 +289,14 @@ const AccountSettings = ({ isOpen, onClose }) => {
                   animate={{ opacity: 1, height: "auto" }}
                   className="space-y-3"
                 >
-                  <p className="text-red-400 text-sm font-medium">
+                  <p className="text-red-600 dark:text-red-400 text-sm font-medium">
                     Type "DELETE" to confirm:
                   </p>
                   <input
                     type="text"
                     value={deleteConfirmText}
                     onChange={(e) => setDeleteConfirmText(e.target.value)}
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg text-sm px-3 py-[7px] text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-sm px-3 py-[7px] text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Type DELETE here"
                     autoFocus
                     disabled={isDeleting}
@@ -304,7 +308,7 @@ const AccountSettings = ({ isOpen, onClose }) => {
                         setDeleteConfirmText("");
                         setError("");
                       }}
-                      className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-lg transition-all"
+                      className="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white py-2 rounded-lg transition-all"
                       disabled={isDeleting}
                     >
                       Cancel
@@ -312,7 +316,7 @@ const AccountSettings = ({ isOpen, onClose }) => {
                     <motion.button
                       onClick={handleDeleteAccount}
                       disabled={deleteConfirmText !== "DELETE" || isDeleting}
-                      className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white py-2 rounded-lg transition-all flex items-center justify-center"
+                      className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white py-2 rounded-lg transition-all flex items-center justify-center"
                       whileHover={{
                         scale:
                           deleteConfirmText === "DELETE" && !isDeleting

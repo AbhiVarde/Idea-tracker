@@ -35,7 +35,6 @@ const WORDS = [
   "Vision Board",
   "Dream Factory",
   "Project Vault",
-  "Inspiration Wall",
   "Idea Bank",
   "Next Big Thing",
 ];
@@ -239,33 +238,33 @@ export function Home({ navigate }) {
   const getPriorityColor = (priority) => {
     switch (priority) {
       case "High":
-        return "bg-red-500/10 text-red-400 border-red-500/30";
+        return "bg-red-500/10 dark:text-red-400 text-red-600 border-red-500/30";
       case "Medium":
-        return "bg-yellow-500/10 text-yellow-400 border-yellow-500/30";
+        return "bg-yellow-500/10 dark:text-yellow-400 text-yellow-600 border-yellow-500/30";
       default:
-        return "bg-green-500/10 text-green-400 border-green-500/30";
+        return "bg-green-500/10 dark:text-green-400 text-green-600 border-green-500/30";
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 space-y-4">
+    <div className="max-w-2xl mx-auto p-1 sm:p-4 space-y-4">
       <motion.div
         className="text-center"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <h1 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-wide">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold dark:text-white text-gray-900 mb-3 tracking-wide">
           Your Creative{" "}
           <FlipWords words={WORDS} duration={3000} className="text-[#FD366E]" />
         </h1>
-        <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed sm:leading-loose">
-          Capture, organize, and bring your brilliant ideas to life
+        <p className="dark:text-gray-400 text-gray-600 text-base sm:text-lg max-w-xl mx-auto leading-relaxed sm:leading-loose">
+          Track ideas with clarity and bring them to life naturally.
         </p>
       </motion.div>
       {user.current ? (
         <motion.section
-          className="bg-[#000000] rounded-2xl p-4 border border-gray-800"
+          className="dark:bg-[#000000] bg-white rounded-2xl p-4 dark:border-gray-800 border-gray-200 border"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -275,7 +274,7 @@ export function Home({ navigate }) {
               <motion.button
                 key="add-button"
                 onClick={() => setShowForm(true)}
-                className="w-full flex items-center justify-center space-x-3 p-2 bg-[#FD366E]/10 hover:bg-[#FD366E]/20 border border-[#FD366E]/30 hover:border-[#FD366E]/50 rounded-xl transition-all duration-300 text-[#FD366E]"
+                className="w-full flex items-center justify-center space-x-3 p-2 bg-[#FD366E]/10 hover:bg-[#FD366E]/20 dark:border-[#FD366E]/30 border-[#FD366E]/20 hover:border-[#FD366E]/50 rounded-xl transition-all duration-300 text-[#FD366E]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -296,11 +295,13 @@ export function Home({ navigate }) {
                 transition={{ duration: 0.3 }}
               >
                 <div className="flex justify-between items-center">
-                  <h2 className="text-2xl font-bold text-white">New Idea</h2>
+                  <h2 className="text-2xl font-bold dark:text-white text-gray-900">
+                    New Idea
+                  </h2>
                   <button
                     type="button"
                     onClick={() => setShowForm(false)}
-                    className="text-gray-400 hover:text-white p-2 hover:bg-gray-800 rounded-lg transition-colors"
+                    className="dark:text-gray-400 text-gray-600 hover:dark:text-white hover:text-gray-900 p-2 dark:hover:bg-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -313,16 +314,20 @@ export function Home({ navigate }) {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     maxLength={100}
-                    className="bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                    className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                     required
                   />
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                    className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                   >
                     {CATEGORIES.map((cat) => (
-                      <option key={cat} value={cat} className="bg-[#000000]">
+                      <option
+                        key={cat}
+                        value={cat}
+                        className="dark:bg-[#000000] bg-white"
+                      >
                         {cat}
                       </option>
                     ))}
@@ -335,17 +340,21 @@ export function Home({ navigate }) {
                   onChange={(e) => setDescription(e.target.value)}
                   rows={3}
                   maxLength={500}
-                  className="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
+                  className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
                 />
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <select
                     value={priority}
                     onChange={(e) => setPriority(e.target.value)}
-                    className="bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                    className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                   >
                     {PRIORITIES.map((pri) => (
-                      <option key={pri} value={pri} className="bg-[#000000]">
+                      <option
+                        key={pri}
+                        value={pri}
+                        className="dark:bg-[#000000] bg-white"
+                      >
                         {pri}
                       </option>
                     ))}
@@ -356,7 +365,7 @@ export function Home({ navigate }) {
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
                     maxLength={200}
-                    className="bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                    className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                   />
                 </div>
 
@@ -382,7 +391,7 @@ export function Home({ navigate }) {
         </motion.section>
       ) : (
         <motion.section
-          className="bg-[#000000] rounded-2xl p-4 border border-gray-800 text-white"
+          className="dark:bg-[#000000] bg-white rounded-2xl p-4 dark:border-gray-800 border-gray-200 border dark:text-white text-gray-900"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -407,7 +416,7 @@ export function Home({ navigate }) {
             </motion.button>
           </div>
 
-          <p className="text-gray-400 text-start">
+          <p className="dark:text-gray-400 text-gray-600 text-start">
             Login to start tracking your amazing ideas
           </p>
         </motion.section>
@@ -421,20 +430,20 @@ export function Home({ navigate }) {
       >
         <div className="flex items-center gap-4">
           <div className="relative group flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#FD366E] transition-colors duration-200 w-5 h-5" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 dark:text-gray-400 text-gray-500 group-focus-within:text-[#FD366E] transition-colors duration-200 w-5 h-5" />
             <input
               type="text"
               placeholder="Search ideas by title or description..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-[#000000] border border-gray-800 rounded-xl pl-12 pr-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+              className="w-full dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 rounded-xl pl-12 pr-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
             />
             {searchTerm && (
               <motion.button
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 dark:text-gray-400 text-gray-500 hover:dark:text-white hover:text-gray-900 transition-colors"
               >
                 <X className="w-4 h-4" />
               </motion.button>
@@ -443,7 +452,7 @@ export function Home({ navigate }) {
 
           <motion.button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center space-x-2 bg-[#000000] border border-gray-800 rounded-xl px-4 py-2 text-white hover:border-[#FD366E]/40 transition-all duration-200 group flex-shrink-0"
+            className="flex items-center space-x-2 dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 rounded-xl px-4 py-2 dark:text-white text-gray-900 hover:border-[#FD366E]/40 transition-all duration-200 group flex-shrink-0"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -486,26 +495,33 @@ export function Home({ navigate }) {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden"
             >
-              <div className="bg-[#000000] border border-gray-800 rounded-xl p-6 space-y-4">
+              <div className="dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 rounded-xl p-6 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
                   >
-                    <label className="block text-sm font-medium text-gray-400 mb-2">
+                    <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
                       Category
                     </label>
                     <select
                       value={filterCategory}
                       onChange={(e) => setFilterCategory(e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                      className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
                     >
-                      <option value="All" className="bg-[#000000]">
+                      <option
+                        value="All"
+                        className="dark:bg-[#000000] bg-white"
+                      >
                         All Categories
                       </option>
                       {CATEGORIES.map((cat) => (
-                        <option key={cat} value={cat} className="bg-[#000000]">
+                        <option
+                          key={cat}
+                          value={cat}
+                          className="dark:bg-[#000000] bg-white"
+                        >
                           {cat}
                         </option>
                       ))}
@@ -517,19 +533,26 @@ export function Home({ navigate }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15 }}
                   >
-                    <label className="block text-sm font-medium text-gray-400 mb-2">
+                    <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
                       Priority
                     </label>
                     <select
                       value={filterPriority}
                       onChange={(e) => setFilterPriority(e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                      className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
                     >
-                      <option value="All" className="bg-[#000000]">
+                      <option
+                        value="All"
+                        className="dark:bg-[#000000] bg-white"
+                      >
                         All Priorities
                       </option>
                       {PRIORITIES.map((pri) => (
-                        <option key={pri} value={pri} className="bg-[#000000]">
+                        <option
+                          key={pri}
+                          value={pri}
+                          className="dark:bg-[#000000] bg-white"
+                        >
                           {pri}
                         </option>
                       ))}
@@ -541,7 +564,7 @@ export function Home({ navigate }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    <label className="block text-sm font-medium text-gray-400 mb-2">
+                    <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
                       Tags
                     </label>
                     <input
@@ -549,7 +572,7 @@ export function Home({ navigate }) {
                       placeholder="Filter by tags..."
                       value={filterTags}
                       onChange={(e) => setFilterTags(e.target.value)}
-                      className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-[7px] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                      className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-[7px] dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
                     />
                   </motion.div>
                 </div>
@@ -562,7 +585,7 @@ export function Home({ navigate }) {
       {/* Ideas List */}
       <section>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-white">
+          <h2 className="text-xl font-bold dark:text-white text-gray-900">
             Ideas ({filteredIdeas.length})
           </h2>
         </div>
@@ -577,8 +600,8 @@ export function Home({ navigate }) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <PieChart className="w-8 h-8 text-gray-600 mx-auto mb-2" />
-              <p className="text-gray-400 text-lg">
+              <PieChart className="w-8 h-8 dark:text-gray-600 text-gray-400 mx-auto mb-2" />
+              <p className="dark:text-gray-400 text-gray-600 text-lg">
                 {searchTerm ||
                 filterCategory !== "All" ||
                 filterPriority !== "All" ||
@@ -599,7 +622,7 @@ export function Home({ navigate }) {
               {filteredIdeas.map((idea, index) => (
                 <motion.div
                   key={idea.$id}
-                  className="bg-[#000000] rounded-2xl p-5 border border-gray-800 hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
+                  className="dark:bg-[#000000] bg-white rounded-2xl p-5 dark:border-gray-800 border-gray-200 border hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -616,7 +639,7 @@ export function Home({ navigate }) {
                       className="space-y-4"
                     >
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-white">
+                        <h3 className="text-lg font-semibold dark:text-white text-gray-900">
                           Edit Idea
                         </h3>
                         <div className="flex space-x-2">
@@ -638,7 +661,7 @@ export function Home({ navigate }) {
                           </motion.button>
                           <button
                             onClick={cancelEdit}
-                            className="text-white p-1 hover:bg-gray-800 rounded-lg transition-colors"
+                            className="dark:text-white text-gray-900 p-1 dark:hover:bg-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
                           >
                             <X className="w-5 h-5" />
                           </button>
@@ -649,27 +672,27 @@ export function Home({ navigate }) {
                         type="text"
                         value={editTitle}
                         onChange={(e) => setEditTitle(e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                        className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                       />
 
                       <textarea
                         value={editDescription}
                         onChange={(e) => setEditDescription(e.target.value)}
                         rows={3}
-                        className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
+                        className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
                       />
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <select
                           value={editCategory}
                           onChange={(e) => setEditCategory(e.target.value)}
-                          className="bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                          className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                         >
                           {CATEGORIES.map((cat) => (
                             <option
                               key={cat}
                               value={cat}
-                              className="bg-[#000000]"
+                              className="dark:bg-[#000000] bg-white"
                             >
                               {cat}
                             </option>
@@ -678,13 +701,13 @@ export function Home({ navigate }) {
                         <select
                           value={editPriority}
                           onChange={(e) => setEditPriority(e.target.value)}
-                          className="bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                          className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                         >
                           {PRIORITIES.map((pri) => (
                             <option
                               key={pri}
                               value={pri}
-                              className="bg-[#000000]"
+                              className="dark:bg-[#000000] bg-white"
                             >
                               {pri}
                             </option>
@@ -697,13 +720,13 @@ export function Home({ navigate }) {
                         placeholder="Tags (comma separated)"
                         value={editTags}
                         onChange={(e) => setEditTags(e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                        className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
                       />
                     </motion.div>
                   ) : (
                     <>
                       <div className="flex items-start justify-between mb-3">
-                        <h3 className="text-lg md:text-xl font-semibold text-white group-hover:text-[#FD366E] transition-colors line-clamp-2">
+                        <h3 className="text-lg md:text-xl font-semibold dark:text-white text-gray-900 group-hover:text-[#FD366E] transition-colors line-clamp-2">
                           {idea.title}
                         </h3>
                         {user.current?.$id === idea.userId && (
@@ -728,12 +751,12 @@ export function Home({ navigate }) {
                         )}
                       </div>
 
-                      <p className="text-gray-400 mb-3 text-sm leading-relaxed line-clamp-4">
+                      <p className="dark:text-gray-400 text-gray-600 mb-3 text-sm leading-relaxed line-clamp-4">
                         {idea.description}
                       </p>
 
                       <div className="flex flex-wrap gap-2 mb-3">
-                        <span className="bg-[#FD366E]/10 text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30">
+                        <span className="bg-[#FD366E]/10 dark:text-white text-gray-900 px-3 py-1 rounded-full text-xs border border-[#FD366E]/30">
                           {idea.category}
                         </span>
                         <span
@@ -750,7 +773,7 @@ export function Home({ navigate }) {
                           {idea.tags?.split(",")?.map((tag, i) => (
                             <span
                               key={i}
-                              className="bg-gray-800/50 text-gray-300 px-2 py-1 rounded-md text-xs flex items-center"
+                              className="dark:bg-gray-800/50 bg-gray-100 dark:text-gray-300 text-gray-700 px-2 py-1 rounded-md text-xs flex items-center"
                             >
                               <Tag className="w-3 h-3 mr-1" />
                               {tag.trim()}
@@ -759,7 +782,7 @@ export function Home({ navigate }) {
                         </div>
                       )}
 
-                      <span className="flex items-center text-gray-400 gap-2">
+                      <span className="flex items-center dark:text-gray-400 text-gray-600 gap-2">
                         <Calendar className="w-4 h-4" />
                         {moment(idea.$createdAt).format("MMM D, YYYY")}
                       </span>
@@ -781,7 +804,7 @@ export function Home({ navigate }) {
           onClick={() => setDeleteConfirm(null)}
         >
           <motion.div
-            className="bg-[#000000] border border-gray-800 rounded-2xl p-6 max-w-md w-full mx-4"
+            className="dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 rounded-2xl p-6 max-w-md w-full mx-4"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -792,19 +815,19 @@ export function Home({ navigate }) {
                 <AlertTriangle className="w-5 h-5 text-red-400" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-white">
+                <h3 className="text-lg font-semibold dark:text-white text-gray-900">
                   Delete Idea
                 </h3>
-                <p className="text-gray-400 text-sm">
+                <p className="dark:text-gray-400 text-gray-600 text-sm">
                   This action cannot be undone
                 </p>
               </div>
             </div>
 
             <div className="mb-6">
-              <p className="text-gray-300">
+              <p className="dark:text-gray-300 text-gray-700">
                 Are you sure you want to delete{" "}
-                <span className="font-medium text-white">
+                <span className="font-medium dark:text-white text-gray-900">
                   "
                   {
                     filteredIdeas.find((idea) => idea.$id === deleteConfirm)
@@ -819,7 +842,7 @@ export function Home({ navigate }) {
             <div className="flex space-x-3">
               <motion.button
                 onClick={() => setDeleteConfirm(null)}
-                className="flex-1 bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded-xl transition-colors"
+                className="flex-1 dark:bg-gray-800 bg-gray-200 hover:dark:bg-gray-900 hover:bg-gray-300 dark:text-white text-gray-900 py-2 px-4 rounded-xl transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

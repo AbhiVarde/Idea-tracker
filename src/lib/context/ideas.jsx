@@ -11,8 +11,8 @@ import { ID, Query } from "appwrite";
 import { toast } from "sonner";
 import { useUser } from "./user";
 
-export const IDEAS_DATABASE_ID = `${process.env.REACT_APP_APPWRITE_DATABASE_ID}`;
-export const IDEAS_COLLECTION_ID = `${process.env.REACT_APP_APPWRITE_COLLECTION_ID}`;
+export const IDEAS_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+export const IDEAS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
 
 const IdeasContext = createContext();
 

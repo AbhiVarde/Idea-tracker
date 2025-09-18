@@ -80,7 +80,7 @@ export function UserProvider({ children }) {
       if (user?.prefs?.profilePictureId) {
         try {
           await storage.deleteFile(
-            process.env.REACT_APP_APPWRITE_STORAGE_BUCKET_ID,
+            import.meta.env.VITE_APPWRITE_STORAGE_BUCKET_ID,
             user.prefs.profilePictureId
           );
         } catch (error) {
@@ -90,7 +90,7 @@ export function UserProvider({ children }) {
 
       // Upload new profile picture
       const uploadedFile = await storage.createFile(
-        process.env.REACT_APP_APPWRITE_STORAGE_BUCKET_ID,
+        import.meta.env.VITE_APPWRITE_STORAGE_BUCKET_ID,
         ID.unique(),
         file
       );
@@ -118,7 +118,7 @@ export function UserProvider({ children }) {
     try {
       if (user?.prefs?.profilePictureId) {
         await storage.deleteFile(
-          process.env.REACT_APP_APPWRITE_STORAGE_BUCKET_ID,
+          import.meta.env.VITE_APPWRITE_STORAGE_BUCKET_ID,
           user.prefs.profilePictureId
         );
       }
@@ -143,7 +143,7 @@ export function UserProvider({ children }) {
   const getProfilePictureUrl = (profilePictureId) => {
     if (!profilePictureId) return null;
     return storage.getFileView(
-      process.env.REACT_APP_APPWRITE_STORAGE_BUCKET_ID,
+      import.meta.env.VITE_APPWRITE_STORAGE_BUCKET_ID,
       profilePictureId
     );
   };
@@ -304,7 +304,7 @@ export function UserProvider({ children }) {
       if (currentUser?.prefs?.profilePictureId) {
         try {
           await storage.deleteFile(
-            process.env.REACT_APP_APPWRITE_STORAGE_BUCKET_ID,
+            import.meta.env.VITE_APPWRITE_STORAGE_BUCKET_ID,
             currentUser.prefs.profilePictureId
           );
         } catch (error) {
@@ -314,16 +314,16 @@ export function UserProvider({ children }) {
 
       try {
         const userDocuments = await databases.listDocuments(
-          process.env.REACT_APP_APPWRITE_DATABASE_ID,
-          process.env.REACT_APP_APPWRITE_COLLECTION_ID,
+          import.meta.env.VITE_APPWRITE_DATABASE_ID,
+          import.meta.env.VITE_APPWRITE_COLLECTION_ID,
           [Query.equal("userId", currentUser.$id)]
         );
 
         if (userDocuments.documents.length > 0) {
           const deletePromises = userDocuments.documents.map((doc) =>
             databases.deleteDocument(
-              process.env.REACT_APP_APPWRITE_DATABASE_ID,
-              process.env.REACT_APP_APPWRITE_COLLECTION_ID,
+              import.meta.env.VITE_APPWRITE_DATABASE_ID,
+              import.meta.env.VITE_APPWRITE_COLLECTION_ID,
               doc.$id
             )
           );

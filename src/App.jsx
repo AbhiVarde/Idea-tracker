@@ -5,6 +5,7 @@ import { Profile } from "./pages/Profile";
 import { NotFound } from "./pages/NotFound";
 import { UserProvider } from "./lib/context/user";
 import { IdeasProvider } from "./lib/context/ideas";
+import { ThemeProvider, useTheme } from "./lib/context/theme";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -12,8 +13,9 @@ import { Toaster } from "sonner";
 
 const validRoutes = ["/", "/login", "/profile"];
 
-function App() {
+function AppContent() {
   const [currentPage, setCurrentPage] = useState("home");
+  const { theme } = useTheme();
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -76,7 +78,10 @@ function App() {
   }, [currentPage]);
 
   return (
-    <div className="min-h-screen bg-[#000000] text-white">
+    <div
+      className="min-h-screen bg-[#f4f4f7] dark:bg-[#000000] text-gray-900 dark:text-white transition-colors duration-300"
+      data-theme={theme}
+    >
       <UserProvider>
         <IdeasProvider>
           {currentPage !== "404" && (
@@ -103,9 +108,8 @@ function App() {
 
           {currentPage !== "404" && <Footer />}
 
-          {/* Sonner Toast Container */}
           <Toaster
-            theme="dark"
+            theme="system"
             visibleToasts={3}
             position="top-right"
             style={{ fontFamily: '"Poppins", sans-serif' }}
@@ -113,6 +117,14 @@ function App() {
         </IdeasProvider>
       </UserProvider>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
