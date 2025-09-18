@@ -29,9 +29,6 @@ class EmailService {
         JSON.stringify(payload)
       );
 
-      // console.log("Email function execution response:", response);
-
-      // Check if execution was successful
       if (response.status !== "completed") {
         console.error("Email function execution failed:", response);
         throw new Error(
@@ -39,13 +36,11 @@ class EmailService {
         );
       }
 
-      // Check for function errors
       if (response.errors && response.errors.trim()) {
         console.error("Email function errors:", response.errors);
         throw new Error(`Email function error: ${response.errors}`);
       }
 
-      // Check if response.responseBody exists and is not empty
       if (!response.responseBody || response.responseBody.trim() === "") {
         throw new Error("Email function returned empty response");
       }
@@ -75,9 +70,25 @@ class EmailService {
       userId,
     });
   }
+
   async sendIdeaExpandedNotification(userEmail, userName, ideaTitle, userId) {
     return this.sendNotification("ideaExpanded", userEmail, userName, {
       ideaTitle,
+      userId,
+    });
+  }
+
+  // New method for batch idea notifications
+  async sendBatchIdeaNotification(
+    userEmail,
+    userName,
+    ideaTitles,
+    remainingCount,
+    userId
+  ) {
+    return this.sendNotification("batchIdeaAdded", userEmail, userName, {
+      ideaTitles,
+      remainingCount,
       userId,
     });
   }

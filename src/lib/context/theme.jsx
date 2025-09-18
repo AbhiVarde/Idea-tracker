@@ -10,16 +10,32 @@ export const useTheme = () => {
   return context;
 };
 
+// Simplified initialization since CSS handles the styling
+const initializeTheme = () => {
+  if (typeof window === "undefined") return "light";
+
+  const savedTheme = localStorage.getItem("app-theme");
+  const validThemes = ["light", "dark", "system"];
+  const theme = validThemes.includes(savedTheme) ? savedTheme : "light";
+
+  const getSystemTheme = () => {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+
+  const effectiveTheme = theme === "system" ? getSystemTheme() : theme;
+
+  // Only apply the class, CSS handles the rest
+  const root = document.documentElement;
+  root.classList.remove("light", "dark");
+  root.classList.add(effectiveTheme);
+
+  return theme;
+};
+
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("app-theme");
-      if (savedTheme && ["light", "dark", "system"].includes(savedTheme)) {
-        return savedTheme;
-      }
-    }
-    return "light";
-  });
+  const [theme, setTheme] = useState(() => initializeTheme());
 
   const getSystemTheme = () => {
     if (typeof window !== "undefined") {
@@ -39,21 +55,8 @@ export const ThemeProvider = ({ children }) => {
 
   const applyTheme = (effectiveTheme) => {
     const root = document.documentElement;
-    const body = document.body;
-
     root.classList.remove("light", "dark");
-    body.classList.remove("light-theme", "dark-theme");
-
     root.classList.add(effectiveTheme);
-    body.classList.add(`${effectiveTheme}-theme`);
-
-    if (effectiveTheme === "dark") {
-      body.style.backgroundColor = "#000000";
-      body.style.color = "#ffffff";
-    } else {
-      body.style.backgroundColor = "#f4f4f7";
-      body.style.color = "#1f2937";
-    }
   };
 
   useEffect(() => {

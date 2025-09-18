@@ -15,6 +15,7 @@ import { emailService } from "../services/emailService";
 
 export const IDEAS_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 export const IDEAS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
+const PREFERENCES_COLLECTION_ID = "user-preferences"; // New collection ID
 
 const IdeasContext = createContext();
 
@@ -23,11 +24,42 @@ export function useIdeas() {
 }
 
 export function IdeasProvider({ children }) {
-  const { current: user, isInitialized, loading } = useUser();
+  const {
+    current: user,
+    isInitialized,
+    loading,
+    getProfilePictureUrl,
+  } = useUser();
   const [ideas, setIdeas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const lastFetchTimeRef = useRef(null);
   const pendingOperationsRef = useRef(new Set());
+  const previousUserIdRef = useRef(null);
+
+  const emailDebounceRef = useRef(null);
+  const pendingNotificationsRef = useRef([]);
+
+  // Clear state when user changes or logs out
+  useEffect(() => {
+    const currentUserId = user?.$id;
+
+    if (previousUserIdRef.current !== currentUserId) {
+      // User changed or logged out - clear all state
+      setIdeas([]);
+      setIsLoading(false);
+      lastFetchTimeRef.current = null;
+      pendingOperationsRef.current.clear();
+      pendingNotificationsRef.current = [];
+
+      // Clear email debounce
+      if (emailDebounceRef.current) {
+        clearTimeout(emailDebounceRef.current);
+        emailDebounceRef.current = null;
+      }
+
+      previousUserIdRef.current = currentUserId;
+    }
+  }, [user?.$id]);
 
   const getErrorMessage = (error) => {
     if (error?.code === 401) return "Please log in to continue";
@@ -36,28 +68,23 @@ export function IdeasProvider({ children }) {
     return error?.message || "Something went wrong. Please try again.";
   };
 
-  // Add this function after getErrorMessage:
   const fetchUserPreferences = useCallback(async (userId) => {
     try {
+      // Look for preferences in the new collection
       const response = await databases.listDocuments(
         IDEAS_DATABASE_ID,
-        IDEAS_COLLECTION_ID,
-        [Query.equal("userId", userId)]
+        PREFERENCES_COLLECTION_ID,
+        [Query.equal("userId", userId), Query.limit(1)]
       );
 
       if (response.documents.length > 0) {
-        // Look for preferences in the user document
-        const userDoc = response.documents.find(
-          (doc) => doc.userId === userId && doc.emailNotifications !== undefined
-        );
-        if (userDoc) {
-          return {
-            emailNotifications: userDoc.emailNotifications ?? true,
-            ideaAdded: userDoc.ideaAdded ?? true,
-            ideaExpanded: userDoc.ideaExpanded ?? true,
-            weeklySummary: userDoc.weeklySummary ?? true,
-          };
-        }
+        const prefsDoc = response.documents[0];
+        return {
+          emailNotifications: prefsDoc.emailNotifications ?? true,
+          ideaAdded: prefsDoc.ideaAdded ?? true,
+          ideaExpanded: prefsDoc.ideaExpanded ?? true,
+          weeklySummary: prefsDoc.weeklySummary ?? true,
+        };
       }
 
       // Default preferences if none found
@@ -93,7 +120,7 @@ export function IdeasProvider({ children }) {
   }, []);
 
   // Helper function to send email notifications with user preferences check
-  const sendNotificationEmail = async (type, ideaTitle = "", userId) => {
+  const sendBatchedNotificationEmail = async (type, ideaTitle = "", userId) => {
     if (!user?.email || !user?.name) return;
 
     try {
@@ -102,34 +129,75 @@ export function IdeasProvider({ children }) {
 
       // Check if notifications are enabled
       if (!userPreferences.emailNotifications) {
-        // console.log("Email notifications disabled for user");
         return;
       }
 
       // Check specific notification type
       const shouldSend = checkNotificationPreference(type, userPreferences);
       if (!shouldSend) {
-        // console.log(`Notification ${type} skipped due to user preferences`);
         return;
       }
 
-      switch (type) {
-        case "ideaAdded":
-          await emailService.sendIdeaAddedNotification(
-            user.email,
-            user.name,
-            ideaTitle,
-            userId
-          );
-          break;
-        case "ideaExpanded":
-          await emailService.sendIdeaExpandedNotification(
-            user.email,
-            user.name,
-            ideaTitle,
-            userId
-          );
-          break;
+      if (type === "ideaAdded") {
+        // Add to pending notifications
+        pendingNotificationsRef.current.push({
+          type,
+          ideaTitle,
+          userId,
+          timestamp: new Date(),
+        });
+
+        // Clear existing debounce
+        if (emailDebounceRef.current) {
+          clearTimeout(emailDebounceRef.current);
+        }
+
+        // Set new debounce - send email after 5 minutes of inactivity
+        emailDebounceRef.current = setTimeout(
+          async () => {
+            const notifications = pendingNotificationsRef.current;
+            pendingNotificationsRef.current = [];
+
+            if (notifications.length === 0) return;
+
+            // If only one notification, send normal email
+            if (notifications.length === 1) {
+              await emailService.sendIdeaAddedNotification(
+                user.email,
+                user.name,
+                notifications[0].ideaTitle,
+                userId
+              );
+            } else {
+              // Send batch notification
+              const ideaTitles = notifications
+                .map((n) => n.ideaTitle)
+                .slice(0, 5); // Show max 5 titles
+              const remainingCount = Math.max(0, notifications.length - 5);
+
+              await emailService.sendBatchIdeaNotification(
+                user.email,
+                user.name,
+                ideaTitles,
+                remainingCount,
+                userId
+              );
+            }
+          },
+          5 * 60 * 1000
+        ); // 5 minutes
+      } else {
+        // For other types (like ideaExpanded), send immediately
+        switch (type) {
+          case "ideaExpanded":
+            await emailService.sendIdeaExpandedNotification(
+              user.email,
+              user.name,
+              ideaTitle,
+              userId
+            );
+            break;
+        }
       }
     } catch (error) {
       console.error("Email notification failed:", error);
@@ -167,6 +235,9 @@ export function IdeasProvider({ children }) {
         {
           ...idea,
           userId: user.$id,
+          userName: user.name || "",
+          userProfilePicture:
+            getProfilePictureUrl(user.prefs.profilePictureId) || "",
         }
       );
 
@@ -175,8 +246,8 @@ export function IdeasProvider({ children }) {
 
       toast.success("Idea added successfully!");
 
-      // Send email notification in background
-      sendNotificationEmail("ideaAdded", idea.title, user.$id);
+      // Send batched email notification in background
+      sendBatchedNotificationEmail("ideaAdded", idea.title, user.$id);
 
       return response;
     } catch (err) {
@@ -196,11 +267,19 @@ export function IdeasProvider({ children }) {
     pendingOperationsRef.current.add(id);
 
     try {
+      const finalUpdatedIdea = {
+        ...updatedIdea,
+        userName: user.name || "",
+        // userEmail: user.email || "",
+        userProfilePicture:
+          getProfilePictureUrl(user.prefs.profilePictureId) || "",
+      };
+
       const response = await databases.updateDocument(
         IDEAS_DATABASE_ID,
         IDEAS_COLLECTION_ID,
         id,
-        updatedIdea
+        finalUpdatedIdea
       );
 
       setIdeas((prev) =>
@@ -283,8 +362,7 @@ export function IdeasProvider({ children }) {
           expandedAt: expandedAt,
         });
 
-        // Send email notification for AI expansion
-        sendNotificationEmail("ideaExpanded", idea.title, user.$id);
+        sendBatchedNotificationEmail("ideaExpanded", idea.title, user.$id);
 
         return result.expansion;
       } else {
@@ -293,6 +371,77 @@ export function IdeasProvider({ children }) {
     } catch (err) {
       console.error("AI expansion error:", err);
       toast.error("Failed to expand idea. Please try again.");
+      throw err;
+    }
+  }
+
+  async function toggleLike(
+    ideaId,
+    externalIdeas = null,
+    setExternalIdeas = null
+  ) {
+    if (!user) {
+      toast.error("Please log in to like ideas");
+      return;
+    }
+
+    try {
+      const targetIdeas = externalIdeas || ideas;
+      const currentIdea = targetIdeas.find((idea) => idea.$id === ideaId);
+      if (!currentIdea) return;
+
+      const likedBy = currentIdea.likedBy || [];
+      const hasLiked = likedBy.includes(user.$id);
+
+      let newLikedBy;
+      let newLikes;
+
+      if (hasLiked) {
+        // Unlike
+        newLikedBy = likedBy.filter((id) => id !== user.$id);
+        newLikes = Math.max(0, (currentIdea.likes || 0) - 1);
+      } else {
+        // Like
+        newLikedBy = [...likedBy, user.$id];
+        newLikes = (currentIdea.likes || 0) + 1;
+      }
+
+      // Update database
+      await databases.updateDocument(
+        IDEAS_DATABASE_ID,
+        IDEAS_COLLECTION_ID,
+        ideaId,
+        {
+          likes: newLikes,
+          likedBy: newLikedBy,
+        }
+      );
+
+      // Update appropriate state based on context
+      if (externalIdeas && setExternalIdeas) {
+        // Update external state (for public ideas in Discover)
+        setExternalIdeas((prev) =>
+          prev.map((idea) =>
+            idea.$id === ideaId
+              ? { ...idea, likes: newLikes, likedBy: newLikedBy }
+              : idea
+          )
+        );
+      } else {
+        // Update internal state (for user's own ideas in Home)
+        setIdeas((prev) =>
+          prev.map((idea) =>
+            idea.$id === ideaId
+              ? { ...idea, likes: newLikes, likedBy: newLikedBy }
+              : idea
+          )
+        );
+      }
+
+      return !hasLiked;
+    } catch (err) {
+      console.error("Toggle like error:", err);
+      toast.error("Failed to update like. Please try again.");
       throw err;
     }
   }
@@ -328,6 +477,30 @@ export function IdeasProvider({ children }) {
       setIsLoading(false);
     }
   }, [user]);
+
+  const fetchPublicIdeas = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await databases.listDocuments(
+        IDEAS_DATABASE_ID,
+        IDEAS_COLLECTION_ID,
+        [
+          Query.equal("isPublic", true),
+          Query.orderDesc("$createdAt"),
+          Query.limit(50),
+        ]
+      );
+
+      return response.documents;
+    } catch (err) {
+      console.error("Fetch public ideas error:", err);
+      toast.error(getErrorMessage(err));
+      return [];
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (isInitialized && !loading) {
@@ -392,12 +565,22 @@ export function IdeasProvider({ children }) {
     };
   }, [user, isInitialized, addIdeaToState]);
 
+  useEffect(() => {
+    return () => {
+      if (emailDebounceRef.current) {
+        clearTimeout(emailDebounceRef.current);
+      }
+    };
+  }, []);
+
   const contextValue = {
     current: ideas,
     add,
     update,
     remove,
     expandWithAI,
+    toggleLike,
+    fetchPublicIdeas,
     isLoading,
     refresh: fetchIdeas,
   };

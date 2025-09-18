@@ -16,6 +16,7 @@ import {
   ChevronDown,
   Settings,
   Bell,
+  Compass,
 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import AnnouncementBar from "./AnnouncementBar";
@@ -168,7 +169,7 @@ function Navbar({ navigate, currentPage }) {
           <div className="flex flex-row sm:items-center justify-between gap-2 sm:gap-0 py-4 sm:py-0">
             <motion.button
               onClick={() => navigate("home")}
-              className="flex items-center space-x-3 text-gray-900 dark:text-white font-bold text-xl"
+              className="flex items-center space-x-3 text-gray-900 dark:text-white font-medium text-xl"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2 }}
@@ -227,7 +228,7 @@ function Navbar({ navigate, currentPage }) {
               </span>
             </motion.button>
 
-            <div className="flex flex-wrap justify-end items-center space-x-2">
+            <div className="flex flex-wrap justify-end items-center space-x-1 sm:space-x-2">
               {user.current ? (
                 <>
                   <NavButton
@@ -235,6 +236,12 @@ function Navbar({ navigate, currentPage }) {
                     label="Home"
                     isActive={currentPage === "home"}
                     onClick={() => navigate("home")}
+                  />
+                  <NavButton
+                    icon={Compass}
+                    label="Discover"
+                    isActive={currentPage === "discover"}
+                    onClick={() => navigate("discover")}
                   />
                   <NavButton
                     icon={User}

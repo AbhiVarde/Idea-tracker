@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "../lib/context/user";
 import { useIdeas } from "../lib/context/ideas";
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,6 +22,8 @@ import {
   ChevronDown,
   Sparkles,
   AlertTriangle,
+  Github,
+  Check,
 } from "lucide-react";
 
 const CATEGORIES = [
@@ -65,12 +67,29 @@ export function Home({ navigate }) {
   const [editPriority, setEditPriority] = useState("");
   const [editTags, setEditTags] = useState("");
 
+  const [isPublic, setIsPublic] = useState(false);
+  const [githubUrl, setGithubUrl] = useState("");
+  const [editIsPublic, setEditIsPublic] = useState(false);
+  const [editGithubUrl, setEditGithubUrl] = useState("");
+
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [selectedIdea, setSelectedIdea] = useState(null);
+
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        if (deleteConfirm) setDeleteConfirm(null);
+        if (aiModalOpen) setAiModalOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [deleteConfirm, aiModalOpen]);
 
   const handleAIExpansion = (idea) => {
     setSelectedIdea(idea);
@@ -82,6 +101,7 @@ export function Home({ navigate }) {
 
     const trimmedTitle = title.trim();
     const trimmedDescription = description.trim();
+    const trimmedGithubUrl = githubUrl.trim();
 
     if (!trimmedTitle) {
       toast.error("Please enter a title for your idea");
@@ -98,8 +118,44 @@ export function Home({ navigate }) {
       return;
     }
 
+    // Validate description length
+    if (trimmedDescription.length < 10 && trimmedDescription.length > 0) {
+      toast.error("Description must be at least 10 characters if provided");
+      return;
+    }
+
     if (trimmedDescription.length > 500) {
       toast.error("Description must be less than 500 characters");
+      return;
+    }
+
+    // Validate GitHub URL if provided
+    if (trimmedGithubUrl && !trimmedGithubUrl.includes("github.com")) {
+      toast.error("Please enter a valid GitHub URL");
+      return;
+    }
+
+    // Validate GitHub URL length
+    if (trimmedGithubUrl.length > 200) {
+      toast.error("GitHub URL must be less than 200 characters");
+      return;
+    }
+
+    // Validate individual tags
+    const tagArray = tags
+      ?.split(",")
+      ?.map((tag) => tag.trim())
+      ?.filter(Boolean);
+    if (tagArray?.some((tag) => tag.length > 20)) {
+      toast.error("Each tag must be 20 characters or less");
+      return;
+    }
+    if (tagArray?.some((tag) => tag.length < 2 && tag.length > 0)) {
+      toast.error("Each tag must be at least 2 characters");
+      return;
+    }
+    if (tagArray?.length > 5) {
+      toast.error("Maximum 5 tags allowed");
       return;
     }
 
@@ -111,7 +167,7 @@ export function Home({ navigate }) {
         ?.map((tag) => tag.trim())
         ?.filter(Boolean)
         ?.filter((tag) => tag.length <= 20)
-        ?.slice(0, 10)
+        ?.slice(0, 5)
         ?.join(",");
 
       await ideas.add({
@@ -121,11 +177,17 @@ export function Home({ navigate }) {
         category,
         priority,
         tags: processedTags,
+        isPublic: isPublic,
+        githubUrl: trimmedGithubUrl || null,
+        likes: 0,
+        likedBy: [],
       });
 
       setTitle("");
       setDescription("");
       setTags("");
+      setIsPublic(false);
+      setGithubUrl("");
       setShowForm(false);
     } catch (err) {
       console.error(err);
@@ -135,27 +197,10 @@ export function Home({ navigate }) {
     }
   };
 
-  const startEdit = (idea) => {
-    setEditingId(idea.$id);
-    setEditTitle(idea.title);
-    setEditDescription(idea.description);
-    setEditCategory(idea.category);
-    setEditPriority(idea.priority);
-    setEditTags(idea.tags || "");
-  };
-
-  const cancelEdit = () => {
-    setEditingId(null);
-    setEditTitle("");
-    setEditDescription("");
-    setEditCategory("");
-    setEditPriority("");
-    setEditTags("");
-  };
-
   const saveEdit = async (ideaId) => {
     const trimmedTitle = editTitle.trim();
     const trimmedDescription = editDescription.trim();
+    const trimmedGithubUrl = editGithubUrl.trim();
 
     if (!trimmedTitle) {
       toast.error("Please enter a title for your idea");
@@ -172,8 +217,44 @@ export function Home({ navigate }) {
       return;
     }
 
+    // Validate description length
+    if (trimmedDescription.length < 10 && trimmedDescription.length > 0) {
+      toast.error("Description must be at least 10 characters if provided");
+      return;
+    }
+
     if (trimmedDescription.length > 500) {
       toast.error("Description must be less than 500 characters");
+      return;
+    }
+
+    // Validate GitHub URL if provided
+    if (trimmedGithubUrl && !trimmedGithubUrl.includes("github.com")) {
+      toast.error("Please enter a valid GitHub URL");
+      return;
+    }
+
+    // Validate GitHub URL length
+    if (trimmedGithubUrl.length > 200) {
+      toast.error("GitHub URL must be less than 200 characters");
+      return;
+    }
+
+    // Validate individual tags
+    const tagArray = editTags
+      ?.split(",")
+      ?.map((tag) => tag.trim())
+      ?.filter(Boolean);
+    if (tagArray?.some((tag) => tag.length > 20)) {
+      toast.error("Each tag must be 20 characters or less");
+      return;
+    }
+    if (tagArray?.some((tag) => tag.length < 2 && tag.length > 0)) {
+      toast.error("Each tag must be at least 2 characters");
+      return;
+    }
+    if (tagArray?.length > 5) {
+      toast.error("Maximum 5 tags allowed");
       return;
     }
 
@@ -185,7 +266,7 @@ export function Home({ navigate }) {
         .map((tag) => tag.trim())
         .filter(Boolean)
         .filter((tag) => tag.length <= 20)
-        .slice(0, 10)
+        .slice(0, 5)
         .join(",");
 
       await ideas.update(ideaId, {
@@ -194,6 +275,8 @@ export function Home({ navigate }) {
         category: editCategory,
         priority: editPriority,
         tags: processedTags,
+        isPublic: editIsPublic,
+        githubUrl: trimmedGithubUrl || null,
       });
 
       cancelEdit();
@@ -203,6 +286,28 @@ export function Home({ navigate }) {
     } finally {
       setIsUpdating(false);
     }
+  };
+
+  const startEdit = (idea) => {
+    setEditingId(idea.$id);
+    setEditTitle(idea.title);
+    setEditDescription(idea.description);
+    setEditCategory(idea.category);
+    setEditPriority(idea.priority);
+    setEditTags(idea.tags || "");
+    setEditIsPublic(idea.isPublic || false);
+    setEditGithubUrl(idea.githubUrl || "");
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditTitle("");
+    setEditDescription("");
+    setEditCategory("");
+    setEditPriority("");
+    setEditTags("");
+    setEditIsPublic(false);
+    setEditGithubUrl("");
   };
 
   const handleDelete = async (ideaId) => {
@@ -216,23 +321,26 @@ export function Home({ navigate }) {
   };
 
   const filteredIdeas = ideas.current.filter((idea) => {
-    if (!user.current || idea.userId !== user.current.$id) {
+    if (!user?.current || !idea?.userId || idea.userId !== user.current.$id) {
       return false;
     }
 
     const matchesSearch =
-      idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      idea.description.toLowerCase().includes(searchTerm.toLowerCase());
+      (idea?.title || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (idea?.description || "")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
     const matchesCategory =
-      filterCategory === "All" || idea.category === filterCategory;
+      filterCategory === "All" || idea?.category === filterCategory;
 
     const matchesPriority =
-      filterPriority === "All" || idea.priority === filterPriority;
+      filterPriority === "All" || idea?.priority === filterPriority;
 
     const matchesTags =
       !filterTags ||
-      (idea.tags && idea.tags.toLowerCase().includes(filterTags.toLowerCase()));
+      (idea?.tags &&
+        idea.tags.toLowerCase().includes(filterTags.toLowerCase()));
 
     return matchesSearch && matchesCategory && matchesPriority && matchesTags;
   });
@@ -257,7 +365,7 @@ export function Home({ navigate }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold dark:text-white text-gray-900 mb-3 tracking-wide">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-medium dark:text-white text-gray-900 mb-3 tracking-wide">
             Your Creative{" "}
             <FlipWords
               words={WORDS}
@@ -299,9 +407,9 @@ export function Home({ navigate }) {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <h2 className="text-2xl font-bold dark:text-white text-gray-900">
+                      <h2 className="text-lg font-medium dark:text-white text-gray-900">
                         New Idea
                       </h2>
                       <button
@@ -313,66 +421,116 @@ export function Home({ navigate }) {
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        placeholder="Idea title..."
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        maxLength={100}
-                        className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                        required
-                      />
-                      <select
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                      >
-                        {CATEGORIES.map((cat) => (
-                          <option
-                            key={cat}
-                            value={cat}
-                            className="dark:bg-[#000000] bg-white"
-                          >
-                            {cat}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <div className="space-y-3">
+                      {/* Title + Category */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <input
+                          type="text"
+                          placeholder="Idea title..."
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                          maxLength={100}
+                          minLength={3}
+                          className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                          required
+                        />
 
-                    <textarea
-                      placeholder="Describe your idea..."
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      rows={3}
-                      maxLength={500}
-                      className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
-                    />
+                        <select
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value)}
+                          className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                        >
+                          {CATEGORIES.map((cat) => (
+                            <option
+                              key={cat}
+                              value={cat}
+                              className="dark:bg-[#000000] bg-white"
+                            >
+                              {cat}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <select
-                        value={priority}
-                        onChange={(e) => setPriority(e.target.value)}
-                        className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                      >
-                        {PRIORITIES.map((pri) => (
-                          <option
-                            key={pri}
-                            value={pri}
-                            className="dark:bg-[#000000] bg-white"
-                          >
-                            {pri}
-                          </option>
-                        ))}
-                      </select>
-                      <input
-                        type="text"
-                        placeholder="Tags (comma separated, max 10)"
-                        value={tags}
-                        onChange={(e) => setTags(e.target.value)}
-                        maxLength={200}
-                        className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-xl px-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
+                      {/* Description */}
+                      <textarea
+                        placeholder="Describe your idea (min 10 chars)..."
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        rows={3}
+                        maxLength={500}
+                        minLength={10}
+                        className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent resize-none transition-all duration-200"
                       />
+
+                      {/* Priority + GitHub */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <select
+                          value={priority}
+                          onChange={(e) => setPriority(e.target.value)}
+                          className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                        >
+                          {PRIORITIES.map((pri) => (
+                            <option
+                              key={pri}
+                              value={pri}
+                              className="dark:bg-[#000000] bg-white"
+                            >
+                              {pri}
+                            </option>
+                          ))}
+                        </select>
+
+                        <div className="relative">
+                          <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
+                          <input
+                            type="url"
+                            placeholder="GitHub URL (max 200 chars)"
+                            value={githubUrl}
+                            onChange={(e) => setGithubUrl(e.target.value)}
+                            maxLength={200}
+                            className="w-full text-sm pl-10 pr-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Tags + Toggle */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <input
+                          type="text"
+                          placeholder="Tags (max 5, 20 chars each)"
+                          value={tags}
+                          onChange={(e) => setTags(e.target.value)}
+                          maxLength={200}
+                          className="w-full text-sm px-3 py-2 dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 rounded-lg dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                        />
+                        <div className="flex items-center justify-between px-3 py-2 dark:bg-gray-800/50 bg-gray-50 rounded-lg border-[0.5px] dark:border-gray-700 border-gray-200">
+                          <span className="text-sm dark:text-white text-gray-900">
+                            {isPublic ? "Public" : "Private"}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setIsPublic(!isPublic)}
+                            className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ${
+                              isPublic
+                                ? "bg-[#FD366E]"
+                                : "bg-gray-300 dark:bg-gray-600"
+                            } cursor-pointer`}
+                            aria-pressed={isPublic}
+                            aria-label="Toggle idea visibility"
+                          >
+                            <span
+                              className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform duration-200 ${
+                                isPublic ? "translate-x-5" : "translate-x-1"
+                              }`}
+                            >
+                              {isPublic && (
+                                <Check className="w-2 h-2 text-[#FD366E] absolute inset-0 m-auto" />
+                              )}
+                            </span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
 
                     <motion.button
@@ -483,7 +641,7 @@ export function Home({ navigate }) {
                     <motion.span
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="bg-[#FD366E] text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1.5 ml-1"
+                      className="bg-[#FD366E] text-white text-xs font-medium rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1.5 ml-1"
                     >
                       {activeFiltersCount}
                     </motion.span>
@@ -596,9 +754,9 @@ export function Home({ navigate }) {
 
         {/* Ideas List */}
         <section>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold dark:text-white text-gray-900">
-              Ideas ({filteredIdeas.length})
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-medium dark:text-white text-gray-900">
+              Ideas ({filteredIdeas?.length || 0})
             </h2>
           </div>
 
@@ -634,7 +792,7 @@ export function Home({ navigate }) {
                 {filteredIdeas.map((idea, index) => (
                   <motion.div
                     key={idea.$id}
-                    className="dark:bg-[#000000] bg-white rounded-2xl p-5 dark:border-gray-800 border-gray-200 border hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
+                    className="dark:bg-[#000000] bg-white rounded-2xl p-4 dark:border-gray-800 border-gray-200 border hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -642,7 +800,6 @@ export function Home({ navigate }) {
                   >
                     {editingId === idea.$id ? (
                       <motion.div
-                        layout
                         key="editing"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -651,10 +808,10 @@ export function Home({ navigate }) {
                         className="space-y-4"
                       >
                         <div className="flex items-center justify-between mb-4">
-                          <h3 className="text-lg font-semibold dark:text-white text-gray-900">
+                          <h3 className="text-lg font-medium dark:text-white text-gray-900 break-words min-w-0 flex-1 mr-4">
                             Edit Idea
                           </h3>
-                          <div className="flex space-x-2">
+                          <div className="flex space-x-2 flex-shrink-0">
                             <motion.button
                               onClick={() => saveEdit(idea.$id)}
                               disabled={isUpdating}
@@ -680,81 +837,145 @@ export function Home({ navigate }) {
                           </div>
                         </div>
 
-                        <input
-                          type="text"
-                          value={editTitle}
-                          onChange={(e) => setEditTitle(e.target.value)}
-                          className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                        />
+                        <div className="space-y-4">
+                          {/* Title and Category Row */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input
+                              type="text"
+                              value={editTitle}
+                              onChange={(e) => setEditTitle(e.target.value)}
+                              maxLength={100}
+                              minLength={3}
+                              placeholder="Idea title..."
+                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                            />
 
-                        <textarea
-                          value={editDescription}
-                          onChange={(e) => setEditDescription(e.target.value)}
-                          rows={3}
-                          className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] resize-none"
-                        />
+                            <select
+                              value={editCategory}
+                              onChange={(e) => setEditCategory(e.target.value)}
+                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                            >
+                              {CATEGORIES.map((cat) => (
+                                <option
+                                  key={cat}
+                                  value={cat}
+                                  className="dark:bg-black bg-white"
+                                >
+                                  {cat}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <select
-                            value={editCategory}
-                            onChange={(e) => setEditCategory(e.target.value)}
-                            className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                          >
-                            {CATEGORIES.map((cat) => (
-                              <option
-                                key={cat}
-                                value={cat}
-                                className="dark:bg-[#000000] bg-white"
+                          {/* Description */}
+                          <textarea
+                            value={editDescription}
+                            onChange={(e) => setEditDescription(e.target.value)}
+                            rows={3}
+                            maxLength={500}
+                            minLength={10}
+                            placeholder="Describe your idea (min 10 chars)..."
+                            className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent resize-none transition-all duration-200"
+                          />
+
+                          {/* Priority and GitHub URL Row */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <select
+                              value={editPriority}
+                              onChange={(e) => setEditPriority(e.target.value)}
+                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                            >
+                              {PRIORITIES.map((pri) => (
+                                <option
+                                  key={pri}
+                                  value={pri}
+                                  className="dark:bg-black bg-white"
+                                >
+                                  {pri}
+                                </option>
+                              ))}
+                            </select>
+
+                            <div className="relative">
+                              <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
+                              <input
+                                type="url"
+                                placeholder="GitHub URL (max 200 chars)"
+                                value={editGithubUrl}
+                                onChange={(e) =>
+                                  setEditGithubUrl(e.target.value)
+                                }
+                                maxLength={200}
+                                className="w-full text-sm pl-10 pr-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Tags and Public Toggle Row */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input
+                              type="text"
+                              placeholder="Tags (max 5, 20 chars each)"
+                              value={editTags}
+                              onChange={(e) => setEditTags(e.target.value)}
+                              maxLength={200}
+                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                            />
+
+                            <div className="flex items-center justify-between px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200">
+                              <span className="text-sm dark:text-white text-gray-900">
+                                {editIsPublic ? "Public" : "Private"}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => setEditIsPublic(!editIsPublic)}
+                                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ${
+                                  editIsPublic
+                                    ? "bg-[#FD366E]"
+                                    : "bg-gray-300 dark:bg-gray-600"
+                                } cursor-pointer`}
+                                aria-pressed={editIsPublic}
+                                aria-label="Toggle idea visibility"
                               >
-                                {cat}
-                              </option>
-                            ))}
-                          </select>
-                          <select
-                            value={editPriority}
-                            onChange={(e) => setEditPriority(e.target.value)}
-                            className="dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                          >
-                            {PRIORITIES.map((pri) => (
-                              <option
-                                key={pri}
-                                value={pri}
-                                className="dark:bg-[#000000] bg-white"
-                              >
-                                {pri}
-                              </option>
-                            ))}
-                          </select>
+                                <span
+                                  className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform duration-200 ${
+                                    editIsPublic
+                                      ? "translate-x-5"
+                                      : "translate-x-1"
+                                  }`}
+                                >
+                                  {editIsPublic && (
+                                    <Check className="w-2 h-2 text-[#FD366E] absolute inset-0 m-auto" />
+                                  )}
+                                </span>
+                              </button>
+                            </div>
+                          </div>
                         </div>
-
-                        <input
-                          type="text"
-                          placeholder="Tags (comma separated)"
-                          value={editTags}
-                          onChange={(e) => setEditTags(e.target.value)}
-                          className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E]"
-                        />
                       </motion.div>
                     ) : (
-                      <>
-                        <div className="flex items-start justify-between mb-3">
-                          <h3 className="text-lg md:text-xl font-semibold dark:text-white text-gray-900 group-hover:text-[#FD366E] transition-colors line-clamp-2">
+                      <div className="min-w-0">
+                        {/* Title + Actions */}
+                        <div className="flex items-start gap-4 mb-2.5">
+                          <h3 className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-[#FD366E] transition-colors break-words break-all min-w-0 flex-1 leading-tight">
                             {idea.title}
                           </h3>
+
                           {user.current?.$id === idea.userId && (
-                            <div className="flex space-x-2 duration-300">
+                            <div className="flex space-x-2 flex-shrink-0 relative">
                               {/* Expand with AI */}
                               <div className="relative group/expand">
                                 <motion.button
                                   onClick={() => handleAIExpansion(idea)}
-                                  className="text-[#FD366E] hover:text-[#FD366E]/90"
+                                  className="text-[#FD366E] hover:text-[#FD366E]/90 p-1 rounded-md hover:bg-[#FD366E]/10 transition-colors"
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
                                 >
                                   <Sparkles className="w-5 h-5" />
                                 </motion.button>
-                                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover/expand:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/expand:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
                                   Expand with AI
+                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
                                 </div>
                               </div>
 
@@ -762,14 +983,15 @@ export function Home({ navigate }) {
                               <div className="relative group/edit">
                                 <motion.button
                                   onClick={() => startEdit(idea)}
-                                  className="text-blue-400 hover:text-blue-300"
+                                  className="text-blue-400 hover:text-blue-300 p-1 rounded-md hover:bg-blue-400/10 transition-colors"
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
                                 >
                                   <Edit3 className="w-5 h-5" />
                                 </motion.button>
-                                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover/edit:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/edit:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
                                   Edit
+                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
                                 </div>
                               </div>
 
@@ -777,56 +999,125 @@ export function Home({ navigate }) {
                               <div className="relative group/delete">
                                 <motion.button
                                   onClick={() => setDeleteConfirm(idea.$id)}
-                                  className="text-red-500 hover:text-red-400"
+                                  className="text-red-500 hover:text-red-400 p-1 rounded-md hover:bg-red-500/10 transition-colors"
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
                                 >
                                   <Trash2 className="w-5 h-5" />
                                 </motion.button>
-                                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover/delete:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/delete:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
                                   Delete
+                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
                                 </div>
                               </div>
                             </div>
                           )}
                         </div>
 
-                        <p className="dark:text-gray-400 text-gray-600 mb-3 text-sm leading-relaxed line-clamp-4">
-                          {idea.description}
-                        </p>
+                        {/* Description */}
+                        {idea.description && (
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2.5 leading-relaxed break-words break-all">
+                            {idea.description}
+                          </p>
+                        )}
 
-                        <div className="flex flex-wrap gap-2 mb-3">
-                          <span className="bg-[#FD366E]/10 dark:text-white text-gray-900 px-3 py-1 rounded-full text-xs border border-[#FD366E]/30">
-                            {idea.category}
-                          </span>
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs border ${getPriorityColor(
-                              idea.priority
-                            )}`}
-                          >
-                            {idea.priority}
-                          </span>
-                        </div>
-
-                        {idea.tags && (
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {idea.tags?.split(",")?.map((tag, i) => (
-                              <span
-                                key={i}
-                                className="dark:bg-gray-800/50 bg-gray-100 dark:text-gray-300 text-gray-700 px-2 py-1 rounded-md text-xs flex items-center"
-                              >
-                                <Tag className="w-3 h-3 mr-1" />
-                                {tag.trim()}
+                        {/* Labels */}
+                        {(idea.category ||
+                          idea.priority ||
+                          typeof idea.isPublic !== "undefined") && (
+                          <div className="flex flex-wrap gap-2 mb-2.5">
+                            {idea.category && (
+                              <span className="bg-[#FD366E]/10 text-[#FD366E] dark:text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30 break-words break-all">
+                                {idea.category}
                               </span>
-                            ))}
+                            )}
+
+                            {idea.priority && (
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs border break-words break-all ${getPriorityColor(
+                                  idea.priority
+                                )}`}
+                              >
+                                {idea.priority}
+                              </span>
+                            )}
+
+                            {typeof idea.isPublic !== "undefined" && (
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs border break-words break-all ${
+                                  idea.isPublic
+                                    ? "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30"
+                                    : "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/30"
+                                }`}
+                              >
+                                {idea.isPublic ? "Public" : "Private"}
+                              </span>
+                            )}
                           </div>
                         )}
 
-                        <span className="flex text-sm items-center dark:text-gray-400 text-gray-600 gap-2">
-                          <Calendar className="w-4 h-4" />
-                          {moment(idea.$createdAt).format("MMM D, YYYY")}
-                        </span>
-                      </>
+                        {/* Tags */}
+                        {idea?.tags && idea.tags.trim() && (
+                          <div className="flex flex-wrap gap-2 mb-2.5">
+                            {idea.tags.split(",").map((tag, i) => {
+                              const trimmedTag = tag?.trim();
+                              if (!trimmedTag) return null;
+                              return (
+                                <span
+                                  key={i}
+                                  className="flex items-center text-xs px-2 py-1 rounded-md bg-gray-100 text-gray-700 dark:bg-gray-800/50 dark:text-gray-300 max-w-full"
+                                >
+                                  <Tag className="w-3 h-3 mr-1 flex-shrink-0" />
+                                  <span className="break-words break-all truncate max-w-32">
+                                    {trimmedTag}
+                                  </span>
+                                </span>
+                              );
+                            })}
+                          </div>
+                        )}
+
+                        {/* Bottom section */}
+                        {(idea.githubUrl || idea.$createdAt) && (
+                          <div className="pt-1.5 border-t border-gray-100 dark:border-gray-800">
+                            {/* Use flex layout instead of grid for better control */}
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                              {/* GitHub */}
+                              {idea.githubUrl && (
+                                <a
+                                  href={idea.githubUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-2 text-[#FD366E] hover:text-[#FD366E]/80 text-sm min-w-0 order-1 sm:order-none"
+                                >
+                                  <Github className="w-4 h-4 flex-shrink-0" />
+                                  <span className="truncate break-all">
+                                    View on GitHub
+                                  </span>
+                                </a>
+                              )}
+
+                              {/* Created Date - Always show if available */}
+                              {idea.$createdAt && (
+                                <div
+                                  className={`flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2 order-2 sm:order-none ${
+                                    !idea.githubUrl
+                                      ? "sm:justify-start"
+                                      : "sm:justify-end"
+                                  }`}
+                                >
+                                  <Calendar className="w-4 h-4 flex-shrink-0" />
+                                  <span className="whitespace-nowrap">
+                                    {moment(idea.$createdAt).format(
+                                      "MMM D, YYYY"
+                                    )}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     )}
                   </motion.div>
                 ))}
@@ -868,12 +1159,10 @@ export function Home({ navigate }) {
             <div className="mb-6">
               <p className="dark:text-gray-300 text-gray-700">
                 Are you sure you want to delete{" "}
-                <span className="font-medium dark:text-white text-gray-900">
+                <span className="font-medium dark:text-white text-gray-900 break-words">
                   "
-                  {
-                    filteredIdeas.find((idea) => idea.$id === deleteConfirm)
-                      ?.title
-                  }
+                  {filteredIdeas?.find((idea) => idea?.$id === deleteConfirm)
+                    ?.title || "Unknown"}
                   "
                 </span>
                 ?

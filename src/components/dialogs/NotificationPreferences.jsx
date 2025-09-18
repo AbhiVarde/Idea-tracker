@@ -7,7 +7,7 @@ import { useUser } from "../../lib/context/user";
 import { ID, Query } from "appwrite";
 
 const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
-const COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID;
+const PREFERENCES_COLLECTION_ID = "user-preferences"; // New collection ID
 
 const NotificationPreferences = ({ isOpen, onClose }) => {
   const { current: user } = useUser();
@@ -44,8 +44,8 @@ const NotificationPreferences = ({ isOpen, onClose }) => {
     try {
       const response = await databases.listDocuments(
         DATABASE_ID,
-        COLLECTION_ID,
-        [Query.equal("userId", user.$id)]
+        PREFERENCES_COLLECTION_ID,
+        [Query.equal("userId", user.$id), Query.limit(1)]
       );
 
       let userPrefs = {
@@ -112,8 +112,8 @@ const NotificationPreferences = ({ isOpen, onClose }) => {
       // Check if user preferences already exist
       const existing = await databases.listDocuments(
         DATABASE_ID,
-        COLLECTION_ID,
-        [Query.equal("userId", user.$id)]
+        PREFERENCES_COLLECTION_ID,
+        [Query.equal("userId", user.$id), Query.limit(1)]
       );
 
       const timestamp = new Date().toISOString();
@@ -122,7 +122,7 @@ const NotificationPreferences = ({ isOpen, onClose }) => {
         // Update existing preferences
         await databases.updateDocument(
           DATABASE_ID,
-          COLLECTION_ID,
+          PREFERENCES_COLLECTION_ID,
           existing.documents[0].$id,
           {
             ...preferences,
@@ -133,7 +133,7 @@ const NotificationPreferences = ({ isOpen, onClose }) => {
         // Create new preferences document
         await databases.createDocument(
           DATABASE_ID,
-          COLLECTION_ID,
+          PREFERENCES_COLLECTION_ID,
           ID.unique(),
           {
             userId: user.$id,
@@ -249,7 +249,7 @@ const NotificationPreferences = ({ isOpen, onClose }) => {
             <div className="w-12 h-12 bg-[#FD366E]/10 rounded-full flex items-center justify-center mx-auto mb-3">
               <Bell className="w-6 h-6 text-[#FD366E]" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            <h2 className="text-xl font-medium text-gray-900 dark:text-white mb-2">
               Notifications
             </h2>
             <p className="text-gray-600 dark:text-gray-400 text-sm">
