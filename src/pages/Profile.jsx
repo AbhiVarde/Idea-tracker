@@ -11,7 +11,7 @@ import {
   Clock,
   PieChart,
 } from "lucide-react";
-import { LuArrowRight } from "react-icons/lu";
+import { ArrowRight } from "lucide-react";
 import moment from "moment";
 
 export function Profile({ navigate }) {
@@ -106,7 +106,6 @@ export function Profile({ navigate }) {
                       alt="Profile"
                       className="w-full h-full object-cover"
                       onLoad={(e) => {
-                        // Hide fallback when image loads successfully
                         const fallback = e.target.nextElementSibling;
                         if (fallback) fallback.style.display = "none";
                       }}
@@ -376,7 +375,7 @@ export function Profile({ navigate }) {
                   whileHover={{ scale: 1.02 }}
                 >
                   <span>View all ideas</span>
-                  <LuArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4" />
                 </motion.button>
               </div>
             ) : (

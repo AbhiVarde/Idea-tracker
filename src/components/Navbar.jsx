@@ -1,6 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { useUser } from "../lib/context/user";
 import { motion, AnimatePresence } from "framer-motion";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import AccountSettings from "./dialogs/AccountSettings";
+import NotificationPreferences from "./dialogs/NotificationPreferences";
+import ThemeSelector from "./ThemeSelector";
+import moment from "moment";
 import {
   Home,
   User,
@@ -10,17 +15,16 @@ import {
   Sparkles,
   ChevronDown,
   Settings,
+  Bell,
 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
-import AccountSettings from "./dialogs/AccountSettings";
-import moment from "moment";
-import { LanguageSwitcher } from "./LanguageSwitcher";
-import ThemeSelector from "./ThemeSelector";
+import AnnouncementBar from "./AnnouncementBar";
 
 function Navbar({ navigate, currentPage }) {
   const user = useUser();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
   const dropdownRef = useRef(null);
 
   const handleLogout = async () => {
@@ -37,6 +41,11 @@ function Navbar({ navigate, currentPage }) {
 
   const openSettings = () => {
     setShowSettings(true);
+    setShowUserDropdown(false);
+  };
+
+  const openNotifications = () => {
+    setShowNotifications(true);
     setShowUserDropdown(false);
   };
 
@@ -187,11 +196,13 @@ function Navbar({ navigate, currentPage }) {
 
   return (
     <>
+      <AnnouncementBar />
+
       <motion.nav
         className="bg-[#FFFFFF]/50 dark:bg-[#000000]/50 backdrop-blur-sm sticky top-0 z-50"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0 }}
       >
         <div className="max-w-2xl mx-auto px-2 sm:px-4 py-1.5 sm:py-3">
           <div className="flex flex-row sm:items-center justify-between gap-2 sm:gap-0 py-2 sm:py-0">
@@ -307,6 +318,16 @@ function Navbar({ navigate, currentPage }) {
                             <ThemeSelector variant="dropdown" />
 
                             <motion.button
+                              onClick={openNotifications}
+                              className="w-full flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/60 rounded-lg transition-colors duration-200 ease-in-out"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <Bell className="w-4 h-4" />
+                              <span className="text-sm">Notifications</span>
+                            </motion.button>
+
+                            <motion.button
                               onClick={openSettings}
                               className="w-full flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/60 rounded-lg transition-colors duration-200 ease-in-out"
                               whileHover={{ scale: 1.02 }}
@@ -378,6 +399,12 @@ function Navbar({ navigate, currentPage }) {
       <AccountSettings
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
+      />
+
+      <NotificationPreferences
+        isOpen={showNotifications}
+        onClose={() => setShowNotifications(false)}
+        user={user}
       />
     </>
   );

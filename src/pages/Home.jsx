@@ -237,13 +237,6 @@ export function Home({ navigate }) {
     return matchesSearch && matchesCategory && matchesPriority && matchesTags;
   });
 
-  const clearFilters = () => {
-    setFilterCategory("All");
-    setFilterPriority("All");
-    setFilterTags("");
-    setSearchTerm("");
-  };
-
   const getPriorityColor = (priority) => {
     switch (priority) {
       case "High":
@@ -442,36 +435,60 @@ export function Home({ navigate }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <div className="relative group flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 dark:text-gray-400 text-gray-500 group-focus-within:text-[#FD366E] transition-colors duration-200 w-5 h-5" />
+
               <input
                 type="text"
                 placeholder="Search ideas by title or description..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl pl-12 pr-4 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                className="w-full dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl pl-12 pr-12 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
               />
-              {searchTerm && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  onClick={() => setSearchTerm("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 dark:text-gray-400 text-gray-500 hover:dark:text-white hover:text-gray-900 transition-colors"
-                >
-                  <X className="w-4 h-4" />
-                </motion.button>
-              )}
-            </div>
 
+              <div className="absolute right-4 top-2.5">
+                <AnimatePresence>
+                  {searchTerm && (
+                    <motion.button
+                      key="clear-button"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      onClick={() => setSearchTerm("")}
+                      className="text-gray-500 dark:text-gray-400 hover:text-[#FD366E] transition-colors duration-200 w-5 h-5"
+                    >
+                      <X className="w-5 h-5" />
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
             <motion.button
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center space-x-2 dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl px-4 py-2 dark:text-white text-gray-900 transition-all duration-200 group flex-shrink-0"
+              className="flex items-center space-x-2 dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl px-4 py-2 dark:text-white text-gray-900 transition-all duration-200 group flex-shrink-0 relative"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <Filter className="w-4 h-4 group-hover:text-[#FD366E] transition-colors" />
               <span className="font-medium">Filters</span>
+              {!showFilters &&
+                (() => {
+                  const activeFiltersCount =
+                    (filterCategory !== "All" ? 1 : 0) +
+                    (filterPriority !== "All" ? 1 : 0) +
+                    (filterTags ? 1 : 0);
+                  return activeFiltersCount > 0 ? (
+                    <motion.span
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="bg-[#FD366E] text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1.5 ml-1"
+                    >
+                      {activeFiltersCount}
+                    </motion.span>
+                  ) : null;
+                })()}
               <motion.div
                 animate={{ rotate: showFilters ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
@@ -479,25 +496,6 @@ export function Home({ navigate }) {
                 <ChevronDown className="w-4 h-4" />
               </motion.div>
             </motion.button>
-
-            <AnimatePresence>
-              {(filterCategory !== "All" ||
-                filterPriority !== "All" ||
-                filterTags ||
-                searchTerm) && (
-                <motion.button
-                  key="clear-all"
-                  initial={{ opacity: 0, x: 8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 8 }}
-                  transition={{ duration: 0.25, ease: "easeInOut" }}
-                  onClick={clearFilters}
-                  className="text-[#FD366E] hover:text-[#FD366E]/80 text-sm font-medium px-3 py-2 rounded-lg hover:bg-[#FD366E]/10 transition-all duration-200 flex-shrink-0"
-                >
-                  Clear All
-                </motion.button>
-              )}
-            </AnimatePresence>
           </div>
 
           <AnimatePresence>
@@ -779,7 +777,7 @@ export function Home({ navigate }) {
                               <div className="relative group/delete">
                                 <motion.button
                                   onClick={() => setDeleteConfirm(idea.$id)}
-                                  className="text-red-400 hover:text-red-300"
+                                  className="text-red-500 hover:text-red-400"
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
                                 >
@@ -854,8 +852,8 @@ export function Home({ navigate }) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-red-500/30 rounded-full flex items-center justify-center">
-                <AlertTriangle className="w-5 h-5 text-red-400" />
+              <div className="w-10 h-10 bg-red-300/30 rounded-full flex items-center justify-center">
+                <AlertTriangle className="w-5 h-5 text-red-500" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold dark:text-white text-gray-900">

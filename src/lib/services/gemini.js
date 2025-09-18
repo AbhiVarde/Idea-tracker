@@ -22,7 +22,7 @@ export async function expandIdea(title, description, category, priority) {
       })
     );
 
-    console.log("Function execution response:", response);
+    // console.log("Function execution response:", response);
 
     // Check if execution was successful
     if (response.status !== "completed") {

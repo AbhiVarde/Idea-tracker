@@ -31,7 +31,6 @@ function AppContent() {
 
     const handlePopState = () => {
       const path = window.location.pathname;
-
       if (!validRoutes.includes(path)) {
         setCurrentPage("404");
         return;

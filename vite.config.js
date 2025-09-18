@@ -6,17 +6,16 @@ export default defineConfig(() =>
   lingoCompiler.vite({
     sourceRoot: "src",
     sourceLocale: "en",
-    targetLocales: ["es", "fr", "ru", "de"],
+    targetLocales: ["es", "fr", "de", "ru"],
     models: {
-      "en:es": "groq:llama-3.1-8b-instant",
+      "en:es": "groq:llama3-8b-8192",
       "en:fr": "groq:llama-3.3-70b-versatile",
-      "en:de": "groq:llama-3.1-8b-instant",
+      "en:de": "groq:llama3-70b-8192",
       "en:ru": "groq:llama3-70b-8192",
     },
   })({
     plugins: [react()],
     define: {
-      // Appwrite variables
       "process.env.VITE_APPWRITE_ENDPOINT": JSON.stringify(
         process.env.VITE_APPWRITE_ENDPOINT
       ),
@@ -35,8 +34,6 @@ export default defineConfig(() =>
       "process.env.VITE_APPWRITE_FUNCTION_ID": JSON.stringify(
         process.env.VITE_APPWRITE_FUNCTION_ID
       ),
-
-      // OAuth variables
       "process.env.VITE_GOOGLE_CLIENT_ID": JSON.stringify(
         process.env.VITE_GOOGLE_CLIENT_ID
       ),
@@ -55,14 +52,10 @@ export default defineConfig(() =>
       "process.env.VITE_DISCORD_CLIENT_SECRET": JSON.stringify(
         process.env.VITE_DISCORD_CLIENT_SECRET
       ),
-
-      // Translation API keys
       "process.env.GROQ_API_KEY": JSON.stringify(process.env.GROQ_API_KEY),
       "process.env.LINGODOTDEV_API_KEY": JSON.stringify(
         process.env.LINGODOTDEV_API_KEY
       ),
-
-      // Google API keys
       "process.env.VITE_GOOGLE_API_KEY": JSON.stringify(
         process.env.VITE_GOOGLE_API_KEY
       ),
