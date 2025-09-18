@@ -74,6 +74,43 @@ export function UserProvider({ children }) {
     }
   }, [isInitialized]);
 
+  // Check if user is verified
+  const isUserVerified = () => {
+    if (user?.prefs?.authMethod === "oauth") return true;
+    return user?.emailVerification === true;
+  };
+
+  // Send verification email
+  const sendVerificationEmail = async () => {
+    try {
+      await account.createVerification(
+        `${window.location.origin}/verify-email`
+      );
+      toast.success("Verification email sent! Please check your inbox.");
+      return true;
+    } catch (error) {
+      console.error("Error sending verification email:", error);
+      toast.error("Failed to send verification email. Please try again.");
+      return false;
+    }
+  };
+
+  // Verify email with secret from URL
+  const verifyEmail = async (userId, secret) => {
+    try {
+      await account.updateVerification(userId, secret);
+      // Refresh user data to get updated verification status
+      const updatedUser = await account.get();
+      setUser(updatedUser);
+      toast.success("Email verified successfully!");
+      return true;
+    } catch (error) {
+      console.error("Error verifying email:", error);
+      toast.error("Failed to verify email. The link may have expired.");
+      return false;
+    }
+  };
+
   const uploadProfilePicture = async (file) => {
     try {
       // Delete old profile picture if exists
@@ -163,11 +200,19 @@ export function UserProvider({ children }) {
       await account.createEmailPasswordSession(email, password);
       const loggedIn = await account.get();
       setUser(loggedIn);
+      await account.updatePrefs({ authMethod: "email" }); // Set authMethod
 
-      // Show success toast for email/password login
-      toast.success("Successfully logged in!", {
-        description: "Welcome to Idea Tracker!",
-      });
+      // Check if email is verified for email/password login
+      if (!loggedIn.emailVerification) {
+        toast.warning("Please verify your email", {
+          description: "Check your inbox for the verification link.",
+          duration: 6000,
+        });
+      } else {
+        toast.success("Successfully logged in!", {
+          description: "Welcome to Idea Tracker!",
+        });
+      }
 
       return loggedIn;
     } catch (error) {
@@ -192,7 +237,7 @@ export function UserProvider({ children }) {
     }
   };
 
-  // Register with email and password
+  // In your UserContext, replace the register function with this:
   const register = async (email, password) => {
     try {
       // Clean up deleted account marker for this email (allow re-registration)
@@ -207,10 +252,27 @@ export function UserProvider({ children }) {
       await account.create(ID.unique(), email, password);
       await account.createEmailPasswordSession(email, password);
       const loggedIn = await account.get();
-      setUser(loggedIn);
 
-      // Show success toast for email/password registration
-      if (!isAccountDeleted(email)) {
+      await account.updatePrefs({ authMethod: "email" }); // Set authMethod first
+
+      // Set all states together to ensure proper loading state management
+      setUser(loggedIn);
+      setUserDataLoaded(true);
+      setLoading(false); // Explicitly set loading to false
+
+      console.log("Registration successful for:", loggedIn.email);
+
+      // Automatically send verification email after registration
+      try {
+        await account.createVerification(
+          `${window.location.origin}/verify-email`
+        );
+        toast.success("Account created successfully!", {
+          description: "Please check your email to verify your account.",
+          duration: 6000,
+        });
+      } catch (verificationError) {
+        console.warn("Failed to send verification email:", verificationError);
         toast.success("Account created successfully!", {
           description: "Welcome to Idea Tracker!",
         });
@@ -423,6 +485,7 @@ export function UserProvider({ children }) {
           }
 
           setUser(loggedIn);
+          await account.updatePrefs({ authMethod: "oauth" }); // Set authMethod for OAuth
 
           window.history.replaceState(
             {},
@@ -450,6 +513,30 @@ export function UserProvider({ children }) {
     }
   }, [isInitialized, loading, oauthProcessed]);
 
+  // Handle email verification redirect
+  useEffect(() => {
+    const handleVerificationRedirect = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const userId = urlParams.get("userId");
+      const secret = urlParams.get("secret");
+      const isVerificationPage = window.location.pathname === "/verify-email";
+
+      if (userId && secret && isVerificationPage) {
+        try {
+          await verifyEmail(userId, secret);
+          // Clear URL parameters
+          window.history.replaceState({}, document.title, "/");
+        } catch (error) {
+          console.error("Verification failed:", error);
+        }
+      }
+    };
+
+    if (isInitialized && !loading) {
+      handleVerificationRedirect();
+    }
+  }, [isInitialized, loading]);
+
   const contextValue = {
     current: user,
     loading,
@@ -465,6 +552,9 @@ export function UserProvider({ children }) {
     uploadProfilePicture,
     removeProfilePicture,
     getProfilePictureUrl,
+    isUserVerified,
+    sendVerificationEmail,
+    verifyEmail,
     account,
     databases,
   };

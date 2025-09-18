@@ -71,8 +71,7 @@ export function Login({ navigate }) {
     setIsLoading(true);
     try {
       await user.register(email, password);
-      navigate("home");
-      toast.success("Account created successfully!");
+      toast.success("Account created successfully! Please verify your email.");
     } catch (err) {
       console.error("Registration error:", err);
       if (err.message?.includes("already exists") || err.code === 409) {

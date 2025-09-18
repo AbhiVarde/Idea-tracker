@@ -127,7 +127,7 @@ function Footer() {
                 </div>
                 <div className="flex items-center gap-1 text-md text-white">
                   <Github className="w-5 h-5" />
-                  <span className="leading-none">60+</span>
+                  <span className="leading-none">70+</span>
                 </div>
               </div>
             </div>
