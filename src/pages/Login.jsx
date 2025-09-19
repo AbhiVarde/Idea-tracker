@@ -212,7 +212,6 @@ export function Login({ navigate }) {
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 w-4 h-4" />
                 <input
                   type="email"
-                  au
                   placeholder="developer@example.com"
                   value={email}
                   onChange={handleEmailChange}
