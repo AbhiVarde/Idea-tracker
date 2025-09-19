@@ -212,10 +212,12 @@ export function Login({ navigate }) {
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 w-4 h-4" />
                 <input
                   type="email"
+                  au
                   placeholder="developer@example.com"
                   value={email}
                   onChange={handleEmailChange}
                   onBlur={() => setEmailError(validateEmail(email))}
+                  autoComplete="off"
                   className={`w-full bg-transparent border rounded-lg pl-10 pr-4 py-2 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all ${
                     emailError
                       ? "border-red-500"
@@ -245,6 +247,7 @@ export function Login({ navigate }) {
                   value={password}
                   onChange={handlePasswordChange}
                   onBlur={() => setPasswordError(validatePassword(password))}
+                  autoComplete="off"
                   className={`w-full bg-transparent border rounded-lg pl-10 pr-12 py-2 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all ${
                     passwordError
                       ? "border-red-500"
