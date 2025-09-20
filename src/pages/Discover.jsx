@@ -194,7 +194,7 @@ export function Discover({ navigate }) {
                 {filteredIdeas.map((idea, index) => (
                   <motion.div
                     key={idea.$id}
-                    className="bg-white dark:bg-black border dark:border-gray-800 border-gray-200 rounded-xl p-4 hover:shadow-sm transition flex flex-col"
+                    className="bg-white dark:bg-black border dark:border-gray-800 border-gray-200 rounded-2xl p-4 hover:shadow-sm transition flex flex-col"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2, delay: index * 0.02 }}

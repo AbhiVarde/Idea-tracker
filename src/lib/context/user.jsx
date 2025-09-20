@@ -309,10 +309,19 @@ export function UserProvider({ children }) {
           setLoading(true);
           await account.createSession(userId, secret);
           const loggedIn = await account.get();
+
           if (isAccountDeleted(loggedIn.email))
             removeFromDeletedAccounts(loggedIn.email);
-          setUser(loggedIn);
-          await account.updatePrefs({ authMethod: "oauth" });
+
+          const currentPrefs = loggedIn.prefs || {};
+          await account.updatePrefs({
+            ...currentPrefs,
+            authMethod: "oauth",
+          });
+
+          const refreshedUser = await account.get();
+          setUser(refreshedUser);
+
           window.history.replaceState(
             {},
             document.title,
@@ -320,7 +329,7 @@ export function UserProvider({ children }) {
           );
           toast.success("Logged in!");
         } catch (error) {
-          console.error(error);
+          console.error("OAuth error:", error);
           toast.error("OAuth login failed");
           setOauthProcessed(false);
         } finally {

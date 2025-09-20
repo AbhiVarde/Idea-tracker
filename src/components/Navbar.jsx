@@ -83,11 +83,25 @@ function Navbar({ navigate, currentPage }) {
       );
     }
 
-    // Check if user has a profile picture from preferences
+    let imageUrl = null;
+
+    // Custom uploaded profile picture
     if (currentUser.prefs?.profilePictureId) {
-      const imageUrl = user.getProfilePictureUrl(
-        currentUser.prefs.profilePictureId
-      );
+      try {
+        imageUrl = user.getProfilePictureUrl(
+          currentUser.prefs.profilePictureId
+        );
+      } catch (e) {
+        console.warn("Failed to get profile picture URL:", e);
+      }
+    }
+
+    // OAuth avatar URL (for GitHub, Google, Discord)
+    if (!imageUrl && currentUser.avatarUrl) {
+      imageUrl = currentUser.avatarUrl;
+    }
+
+    if (imageUrl) {
       return (
         <div className="relative w-8 h-8">
           <img
@@ -100,11 +114,13 @@ function Navbar({ navigate, currentPage }) {
               if (fallback) fallback.style.display = "none";
             }}
             onError={(e) => {
+              console.warn("Profile image failed to load:", imageUrl);
               e.target.style.display = "none";
               const fallback = e.target.nextElementSibling;
               if (fallback) fallback.style.display = "flex";
             }}
           />
+          {/* Fallback div - always present but hidden when image loads */}
           <div className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm absolute inset-0">
             {getAvatarContent()}
           </div>
@@ -112,33 +128,7 @@ function Navbar({ navigate, currentPage }) {
       );
     }
 
-    // Check if user has an avatar URL
-    if (currentUser.avatarUrl) {
-      return (
-        <div className="relative w-8 h-8">
-          <img
-            src={currentUser.avatarUrl}
-            alt="User Avatar"
-            className="w-8 h-8 rounded-full object-cover"
-            onLoad={(e) => {
-              // Hide fallback when image loads successfully
-              const fallback = e.target.nextElementSibling;
-              if (fallback) fallback.style.display = "none";
-            }}
-            onError={(e) => {
-              e.target.style.display = "none";
-              const fallback = e.target.nextElementSibling;
-              if (fallback) fallback.style.display = "flex";
-            }}
-          />
-          <div className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm absolute inset-0">
-            {getAvatarContent()}
-          </div>
-        </div>
-      );
-    }
-
-    // Fallback to initials
+    // Fallback to initials only
     return (
       <div className="w-8 h-8 rounded-full bg-[#FD366E] flex items-center justify-center text-white font-medium text-sm">
         {getAvatarContent()}
@@ -223,7 +213,7 @@ function Navbar({ navigate, currentPage }) {
                   <Sparkles className="w-3 h-3 text-[#FD366E] absolute -top-1 -right-1 animate-pulse" />
                 </div>
               </motion.div>
-              <span className="hidden sm:inline">
+              <span className="hidden font-medium sm:inline">
                 {!user?.current && "Idea Tracker"}
               </span>
             </motion.button>

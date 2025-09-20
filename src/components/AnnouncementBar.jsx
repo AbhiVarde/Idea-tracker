@@ -41,7 +41,7 @@ function AnnouncementBar() {
             <div className="flex items-center space-x-2 text-sm font-medium truncate">
               <span>🎉</span>
               <span className="truncate">
-                Featured by Appwrite – Monthly Community Recognition
+                Featured by Appwrite - Monthly Community Recognition
               </span>
               <ExternalLink className="w-3.5 h-3.5 opacity-90 flex-shrink-0" />
             </div>
@@ -112,7 +112,7 @@ function AnnouncementBar() {
                     </a>
                   </div>
 
-                  <div className="rounded-xl overflow-hidden shadow-lg relative">
+                  <div className="rounded-2xl overflow-hidden shadow-lg relative">
                     {!imageLoaded && (
                       <div className="w-full h-[380px] bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                         <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
