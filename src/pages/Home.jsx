@@ -91,6 +91,9 @@ export function Home({ navigate }) {
     isSearching: false,
   });
 
+  const [publicIdeasForGuests, setPublicIdeasForGuests] = useState([]);
+  const [loadingPublicIdeas, setLoadingPublicIdeas] = useState(false);
+
   // Custom categories
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [newCategory, setNewCategory] = useState("");
@@ -124,6 +127,27 @@ export function Home({ navigate }) {
       setCategory(allCategories[0]);
     }
   }, [allCategories, category]);
+
+  useEffect(() => {
+    if (!user.current && !user.loading) {
+      const fetchPublicIdeasForGuests = async () => {
+        setLoadingPublicIdeas(true);
+        try {
+          const publicIdeas = await ideas.fetchPublicIdeas();
+          setPublicIdeasForGuests(publicIdeas.slice(0, 4));
+        } catch (error) {
+          console.error("Failed to fetch public ideas:", error);
+          setPublicIdeasForGuests([]);
+        } finally {
+          setLoadingPublicIdeas(false);
+        }
+      };
+
+      fetchPublicIdeasForGuests();
+    } else if (user.current) {
+      setPublicIdeasForGuests([]);
+    }
+  }, [user.current, user.loading, ideas.fetchPublicIdeas]);
 
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
@@ -729,7 +753,7 @@ export function Home({ navigate }) {
                         />
                         <div className="flex items-center justify-between px-3 py-2 dark:bg-gray-800/50 bg-gray-50 rounded-lg border-[0.5px] dark:border-gray-700 border-gray-200">
                           <span className="text-sm dark:text-white text-gray-900">
-                            {isPublic ? "Public" : "Private"}
+                            Public
                           </span>
                           <button
                             type="button"
@@ -778,688 +802,820 @@ export function Home({ navigate }) {
             </AnimatePresence>
           </motion.section>
         ) : (
+          <>
+            <motion.section
+              className="dark:bg-[#000000] bg-white rounded-2xl p-4 dark:border-gray-800 border-gray-200 border dark:text-white text-gray-900"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-2">
+                  <UserIcon className="w-7 h-7 text-[#FD366E]" />
+                  <h2 className="sm:hidden text-lg font-medium">Join now</h2>
+                  <h2 className="hidden sm:flex text-lg font-medium">
+                    Join Idea Tracker
+                  </h2>
+                </div>
+
+                <motion.button
+                  onClick={() => navigate("login")}
+                  className="bg-[#FD366E] hover:bg-[#FD366E]/90 text-white font-medium px-6 py-2 rounded-lg transition-all duration-300 shadow-lg shadow-[#FD366E]/20 text-sm"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Get Started
+                </motion.button>
+              </div>
+
+              <p className="dark:text-gray-400 text-gray-600 text-start">
+                Login to start tracking your amazing ideas
+              </p>
+            </motion.section>
+
+            {/* Public Ideas Preview Section */}
+            <motion.section
+              className="space-y-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <h2 className="text-xl font-medium dark:text-white text-gray-900">
+                Community Ideas
+              </h2>
+
+              {loadingPublicIdeas ? (
+                <div className="text-center py-8">
+                  <div className="w-6 h-6 border-2 border-[#FD366E]/30 border-t-[#FD366E] rounded-full animate-spin mx-auto mb-3"></div>
+                  <p className="dark:text-gray-400 text-gray-600">
+                    Loading ideas...
+                  </p>
+                </div>
+              ) : publicIdeasForGuests.length > 0 ? (
+                <motion.div
+                  key="public-ideas-grid"
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {publicIdeasForGuests.map((idea, index) => (
+                    <motion.div
+                      key={idea.$id}
+                      className="bg-white dark:bg-black border dark:border-gray-800 border-gray-200 rounded-2xl p-4 hover:shadow-sm transition flex flex-col"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2, delay: index * 0.02 }}
+                    >
+                      {/* Avatar, Name */}
+                      <div className="flex justify-between items-center mb-3">
+                        <div className="flex items-center gap-2">
+                          {idea.userProfilePicture ? (
+                            <img
+                              src={idea.userProfilePicture}
+                              alt={idea.userName || "User"}
+                              className="w-7 h-7 rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-7 h-7 rounded-full bg-[#FD366E] text-white text-xs font-medium flex items-center justify-center">
+                              {idea.userName
+                                ? idea.userName
+                                    .split(" ")
+                                    .map((n) => n[0])
+                                    .join("")
+                                    .toUpperCase()
+                                    .slice(0, 2)
+                                : "U"}
+                            </div>
+                          )}
+                          <div className="leading-tight">
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">
+                              {idea.userName || "Anonymous"}
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              {moment(idea.$createdAt).format("MMM D")}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Title */}
+                      <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1 break-words break-all min-w-0 leading-snug line-clamp-2">
+                        {idea.title}
+                      </h3>
+
+                      {/* Description */}
+                      {idea.description && (
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 break-words break-all min-w-0 leading-snug line-clamp-3">
+                          {idea.description}
+                        </p>
+                      )}
+
+                      {/* Footer */}
+                      <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2 border-t border-gray-100 dark:border-gray-800 gap-2 min-w-0">
+                        <span className="bg-[#FD366E]/10 text-[#FD366E] px-2 py-0.5 rounded-full truncate break-words break-all min-w-0 max-w-[50%]">
+                          {idea.category}
+                        </span>
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          {idea.previewUrl && (
+                            <a
+                              href={idea.previewUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
+                            >
+                              <Globe className="w-4 h-4 shrink-0" />
+                            </a>
+                          )}
+                          {idea.githubUrl && (
+                            <a
+                              href={idea.githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
+                            >
+                              <Github className="w-4 h-4 shrink-0" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              ) : (
+                <div className="text-center py-8">
+                  <PieChart className="w-8 h-8 dark:text-gray-600 text-gray-400 mx-auto mb-2" />
+                  <p className="dark:text-gray-400 text-gray-600">
+                    No public ideas available yet
+                  </p>
+                </div>
+              )}
+            </motion.section>
+          </>
+        )}
+
+        {/* Search & Filters List - Only show for logged-in users */}
+        {user.current && (
           <motion.section
-            className="dark:bg-[#000000] bg-white rounded-2xl p-4 dark:border-gray-800 border-gray-200 border dark:text-white text-gray-900"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            className="space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center space-x-2">
-                <UserIcon className="w-7 h-7 text-[#FD366E]" />
-                <h2 className="sm:hidden text-lg font-medium">Join now</h2>
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className="relative group flex-1">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 dark:text-gray-400 text-gray-500 group-focus-within:text-[#FD366E] transition-colors duration-200 w-5 h-5" />
 
-                <h2 className="hidden sm:flex text-lg font-medium">
-                  Join Idea Tracker
-                </h2>
+                <input
+                  type="text"
+                  placeholder="Search ideas by title, description, or tags..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl pl-12 pr-12 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                />
+
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-[#FD366E] transition-colors duration-200 w-5 h-5 flex items-center justify-center"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                )}
               </div>
 
               <motion.button
-                onClick={() => navigate("login")}
-                className="bg-[#FD366E] hover:bg-[#FD366E]/90 text-white font-medium px-6 py-2 rounded-lg transition-all duration-300 shadow-lg shadow-[#FD366E]/20 text-sm"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowFilters(!showFilters)}
+                className="flex items-center space-x-2 dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl px-4 py-2 dark:text-white text-gray-900 transition-all duration-200 group flex-shrink-0 relative"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Get Started
+                <Filter className="w-4 h-4 group-hover:text-[#FD366E] transition-colors" />
+                <span className="font-medium">Filters</span>
+                {!showFilters &&
+                  (() => {
+                    const activeFiltersCount =
+                      (filterCategory !== "All" ? 1 : 0) +
+                      (filterPriority !== "All" ? 1 : 0) +
+                      (filterStatus !== "All" ? 1 : 0) +
+                      (filterTags ? 1 : 0);
+                    return activeFiltersCount > 0 ? (
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="bg-[#FD366E] text-white text-xs font-medium rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1.5 ml-1"
+                      >
+                        {activeFiltersCount}
+                      </motion.span>
+                    ) : null;
+                  })()}
+                <motion.div
+                  animate={{ rotate: showFilters ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ChevronDown className="w-4 h-4" />
+                </motion.div>
               </motion.button>
             </div>
 
-            <p className="dark:text-gray-400 text-gray-600 text-start">
-              Login to start tracking your amazing ideas
-            </p>
+            <AnimatePresence>
+              {showFilters && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0, y: -10 }}
+                  animate={{ opacity: 1, height: "auto", y: 0 }}
+                  exit={{ opacity: 0, height: 0, y: -10 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl p-6 space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
+                          Category
+                        </label>
+                        <select
+                          value={filterCategory}
+                          onChange={(e) => setFilterCategory(e.target.value)}
+                          className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                        >
+                          <option
+                            value="All"
+                            className="dark:bg-[#000000] bg-white"
+                          >
+                            All Categories
+                          </option>
+                          {allCategories.map((cat) => (
+                            <option
+                              key={cat}
+                              value={cat}
+                              className="dark:bg-[#000000] bg-white"
+                            >
+                              {cat}
+                            </option>
+                          ))}
+                        </select>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.15 }}
+                      >
+                        <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
+                          Priority
+                        </label>
+                        <select
+                          value={filterPriority}
+                          onChange={(e) => setFilterPriority(e.target.value)}
+                          className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                        >
+                          <option
+                            value="All"
+                            className="dark:bg-[#000000] bg-white"
+                          >
+                            All Priorities
+                          </option>
+                          {PRIORITIES.map((pri) => (
+                            <option
+                              key={pri}
+                              value={pri}
+                              className="dark:bg-[#000000] bg-white"
+                            >
+                              {pri}
+                            </option>
+                          ))}
+                        </select>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.17 }}
+                      >
+                        <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
+                          Status
+                        </label>
+                        <select
+                          value={filterStatus}
+                          onChange={(e) => setFilterStatus(e.target.value)}
+                          className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                        >
+                          {STATUSES.map((status) => (
+                            <option
+                              key={status}
+                              value={status}
+                              className="dark:bg-[#000000] bg-white"
+                            >
+                              {status}
+                            </option>
+                          ))}
+                        </select>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
+                          Tags
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Filter by tags..."
+                          value={filterTags}
+                          onChange={(e) => setFilterTags(e.target.value)}
+                          className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-[7px] dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
+                        />
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.section>
         )}
 
-        {/* Search & Filters List */}
-        <motion.section
-          className="space-y-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center gap-2 md:gap-4">
-            <div className="relative group flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 dark:text-gray-400 text-gray-500 group-focus-within:text-[#FD366E] transition-colors duration-200 w-5 h-5" />
-
-              <input
-                type="text"
-                placeholder="Search ideas by title, description, or tags..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl pl-12 pr-12 py-2 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
-              />
-
-              {searchTerm && (
-                <button
-                  onClick={() => setSearchTerm("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-[#FD366E] transition-colors duration-200 w-5 h-5 flex items-center justify-center"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              )}
+        {/* Ideas List - Only show for logged-in users */}
+        {user.current && (
+          <section>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-medium dark:text-white text-gray-900">
+                Ideas ({filteredIdeas?.length || 0})
+              </h2>
             </div>
 
-            <motion.button
-              onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center space-x-2 dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl px-4 py-2 dark:text-white text-gray-900 transition-all duration-200 group flex-shrink-0 relative"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Filter className="w-4 h-4 group-hover:text-[#FD366E] transition-colors" />
-              <span className="font-medium">Filters</span>
-              {!showFilters &&
-                (() => {
-                  const activeFiltersCount =
-                    (filterCategory !== "All" ? 1 : 0) +
-                    (filterPriority !== "All" ? 1 : 0) +
-                    (filterStatus !== "All" ? 1 : 0) +
-                    (filterTags ? 1 : 0);
-                  return activeFiltersCount > 0 ? (
-                    <motion.span
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="bg-[#FD366E] text-white text-xs font-medium rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1.5 ml-1"
-                    >
-                      {activeFiltersCount}
-                    </motion.span>
-                  ) : null;
-                })()}
-              <motion.div
-                animate={{ rotate: showFilters ? 180 : 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <ChevronDown className="w-4 h-4" />
-              </motion.div>
-            </motion.button>
-          </div>
-
-          <AnimatePresence>
-            {showFilters && (
-              <motion.div
-                initial={{ opacity: 0, height: 0, y: -10 }}
-                animate={{ opacity: 1, height: "auto", y: 0 }}
-                exit={{ opacity: 0, height: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="overflow-hidden"
-              >
-                <div className="dark:bg-[#000000] bg-white dark:border-gray-800 border-gray-200 border rounded-xl p-6 space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <AnimatePresence mode="wait">
+              {filteredIdeas.length === 0 ? (
+                <motion.div
+                  key="empty-state"
+                  className="text-center py-16"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <PieChart className="w-8 h-8 dark:text-gray-600 text-gray-400 mx-auto mb-2" />
+                  <p className="dark:text-gray-400 text-gray-600 text-lg">
+                    {searchTerm ||
+                    filterCategory !== "All" ||
+                    filterPriority !== "All" ||
+                    filterStatus !== "All" ||
+                    filterTags
+                      ? "No ideas match your filters"
+                      : "No ideas yet. Create your first one!"}
+                  </p>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="ideas-grid"
+                  className="grid grid-cols-1 gap-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {filteredIdeas.map((idea, index) => (
                     <motion.div
+                      key={idea.$id}
+                      className="dark:bg-[#000000] bg-white rounded-2xl p-4 dark:border-gray-800 border-gray-200 border hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 }}
+                      transition={{ duration: 0.3, delay: index * 0.05 }}
+                      whileHover={{ scale: 1.01, y: -2 }}
                     >
-                      <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
-                        Category
-                      </label>
-                      <select
-                        value={filterCategory}
-                        onChange={(e) => setFilterCategory(e.target.value)}
-                        className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
-                      >
-                        <option
-                          value="All"
-                          className="dark:bg-[#000000] bg-white"
+                      {editingId === idea.$id ? (
+                        <motion.div
+                          key="editing"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="space-y-4"
                         >
-                          All Categories
-                        </option>
-                        {allCategories.map((cat) => (
-                          <option
-                            key={cat}
-                            value={cat}
-                            className="dark:bg-[#000000] bg-white"
-                          >
-                            {cat}
-                          </option>
-                        ))}
-                      </select>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.15 }}
-                    >
-                      <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
-                        Priority
-                      </label>
-                      <select
-                        value={filterPriority}
-                        onChange={(e) => setFilterPriority(e.target.value)}
-                        className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
-                      >
-                        <option
-                          value="All"
-                          className="dark:bg-[#000000] bg-white"
-                        >
-                          All Priorities
-                        </option>
-                        {PRIORITIES.map((pri) => (
-                          <option
-                            key={pri}
-                            value={pri}
-                            className="dark:bg-[#000000] bg-white"
-                          >
-                            {pri}
-                          </option>
-                        ))}
-                      </select>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.17 }}
-                    >
-                      <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
-                        Status
-                      </label>
-                      <select
-                        value={filterStatus}
-                        onChange={(e) => setFilterStatus(e.target.value)}
-                        className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
-                      >
-                        {STATUSES.map((status) => (
-                          <option
-                            key={status}
-                            value={status}
-                            className="dark:bg-[#000000] bg-white"
-                          >
-                            {status}
-                          </option>
-                        ))}
-                      </select>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <label className="block text-sm font-medium dark:text-gray-400 text-gray-600 mb-2">
-                        Tags
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Filter by tags..."
-                        value={filterTags}
-                        onChange={(e) => setFilterTags(e.target.value)}
-                        className="w-full dark:bg-gray-800/50 bg-gray-100 dark:border-gray-700 border-gray-300 rounded-lg px-3 py-[7px] dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-[#FD366E]/50 transition-all duration-200"
-                      />
-                    </motion.div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.section>
-
-        {/* Ideas List */}
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-medium dark:text-white text-gray-900">
-              Ideas ({filteredIdeas?.length || 0})
-            </h2>
-          </div>
-
-          <AnimatePresence mode="wait">
-            {filteredIdeas.length === 0 ? (
-              <motion.div
-                key="empty-state"
-                className="text-center py-16"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                <PieChart className="w-8 h-8 dark:text-gray-600 text-gray-400 mx-auto mb-2" />
-                <p className="dark:text-gray-400 text-gray-600 text-lg">
-                  {searchTerm ||
-                  filterCategory !== "All" ||
-                  filterPriority !== "All" ||
-                  filterStatus !== "All" ||
-                  filterTags
-                    ? "No ideas match your filters"
-                    : "No ideas yet. Create your first one!"}
-                </p>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="ideas-grid"
-                className="grid grid-cols-1 gap-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {filteredIdeas.map((idea, index) => (
-                  <motion.div
-                    key={idea.$id}
-                    className="dark:bg-[#000000] bg-white rounded-2xl p-4 dark:border-gray-800 border-gray-200 border hover:border-[#FD366E]/40 transition-all duration-300 group w-full"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    whileHover={{ scale: 1.01, y: -2 }}
-                  >
-                    {editingId === idea.$id ? (
-                      <motion.div
-                        key="editing"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="space-y-4"
-                      >
-                        <div className="flex items-center justify-between mb-4">
-                          <h3 className="text-lg font-medium dark:text-white text-gray-900 break-words min-w-0 flex-1 mr-4">
-                            Edit Idea
-                          </h3>
-                          <div className="flex space-x-2 flex-shrink-0">
-                            <motion.button
-                              onClick={() => saveEdit(idea.$id)}
-                              disabled={isUpdating}
-                              className="bg-[#FD366E] hover:bg-[#FD366E]/90 disabled:bg-[#FD366E]/50 disabled:cursor-not-allowed text-white px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-1"
-                              whileHover={!isUpdating ? { scale: 1.05 } : {}}
-                              whileTap={!isUpdating ? { scale: 0.95 } : {}}
-                            >
-                              {isUpdating ? (
-                                <>
-                                  <div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin"></div>
-                                  <span>Saving...</span>
-                                </>
-                              ) : (
-                                <span>Save</span>
-                              )}
-                            </motion.button>
-                            <button
-                              onClick={cancelEdit}
-                              className="dark:text-white text-gray-900 p-1 dark:hover:bg-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
-                            >
-                              <X className="w-5 h-5" />
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="space-y-4">
-                          {/* Title and Category Row */}
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <input
-                              type="text"
-                              value={editTitle}
-                              onChange={(e) => setEditTitle(e.target.value)}
-                              maxLength={100}
-                              minLength={3}
-                              placeholder="Idea title..."
-                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
-                            />
-
-                            <CategorySelect
-                              value={editCategory}
-                              onChange={setEditCategory}
-                              onAddCategory={() => setShowCategoryForm(true)}
-                              onRemoveCategory={ideas.removeCustomCategory}
-                              allCategories={allCategories}
-                              showAddButton={true}
-                              disabled={isUpdating}
-                            />
-                          </div>
-
-                          {/* Description */}
-                          <textarea
-                            value={editDescription}
-                            onChange={(e) => setEditDescription(e.target.value)}
-                            rows={3}
-                            maxLength={500}
-                            minLength={10}
-                            placeholder="Describe your idea (min 10 chars)..."
-                            className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent resize-none transition-all duration-200"
-                          />
-
-                          {/* Priority + GitHub URL + Preview URL Row */}
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <select
-                              value={editPriority}
-                              onChange={(e) => setEditPriority(e.target.value)}
-                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
-                            >
-                              {PRIORITIES.map((pri) => (
-                                <option
-                                  key={pri}
-                                  value={pri}
-                                  className="dark:bg-black bg-white"
-                                >
-                                  {pri}
-                                </option>
-                              ))}
-                            </select>
-
-                            <div className="relative">
-                              <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
-                              <input
-                                type="url"
-                                placeholder="Preview URL (max 200 chars)"
-                                value={editPreviewUrl}
-                                onChange={(e) =>
-                                  setEditPreviewUrl(e.target.value)
-                                }
-                                maxLength={200}
-                                className="w-full text-sm pl-10 pr-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
-                              />
-                            </div>
-
-                            <div className="relative">
-                              <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
-                              <input
-                                type="url"
-                                placeholder="GitHub URL (max 200 chars)"
-                                value={editGithubUrl}
-                                onChange={(e) =>
-                                  setEditGithubUrl(e.target.value)
-                                }
-                                maxLength={200}
-                                className="w-full text-sm pl-10 pr-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
-                              />
-                            </div>
-                          </div>
-
-                          {/* Tags and Public Toggle Row */}
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <input
-                              type="text"
-                              placeholder="Tags (max 5, 20 chars each)"
-                              value={editTags}
-                              onChange={(e) => setEditTags(e.target.value)}
-                              maxLength={200}
-                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
-                            />
-
-                            <div className="flex items-center justify-between px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200">
-                              <span className="text-sm dark:text-white text-gray-900">
-                                {editIsPublic ? "Public" : "Private"}
-                              </span>
-                              <button
-                                type="button"
-                                onClick={() => setEditIsPublic(!editIsPublic)}
-                                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ${
-                                  editIsPublic
-                                    ? "bg-[#FD366E]"
-                                    : "bg-gray-300 dark:bg-gray-600"
-                                } cursor-pointer`}
-                                aria-pressed={editIsPublic}
-                                aria-label="Toggle idea visibility"
+                          <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-lg font-medium dark:text-white text-gray-900 break-words min-w-0 flex-1 mr-4">
+                              Edit Idea
+                            </h3>
+                            <div className="flex space-x-2 flex-shrink-0">
+                              <motion.button
+                                onClick={() => saveEdit(idea.$id)}
+                                disabled={isUpdating}
+                                className="bg-[#FD366E] hover:bg-[#FD366E]/90 disabled:bg-[#FD366E]/50 disabled:cursor-not-allowed text-white px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-1"
+                                whileHover={!isUpdating ? { scale: 1.05 } : {}}
+                                whileTap={!isUpdating ? { scale: 0.95 } : {}}
                               >
-                                <span
-                                  className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform duration-200 ${
-                                    editIsPublic
-                                      ? "translate-x-5"
-                                      : "translate-x-1"
-                                  }`}
-                                >
-                                  {editIsPublic && (
-                                    <Check className="w-2 h-2 text-[#FD366E] absolute inset-0 m-auto" />
-                                  )}
-                                </span>
+                                {isUpdating ? (
+                                  <>
+                                    <div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin"></div>
+                                    <span>Saving...</span>
+                                  </>
+                                ) : (
+                                  <span>Save</span>
+                                )}
+                              </motion.button>
+                              <button
+                                onClick={cancelEdit}
+                                className="dark:text-white text-gray-900 p-1 dark:hover:bg-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+                              >
+                                <X className="w-5 h-5" />
                               </button>
                             </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    ) : (
-                      <div className="min-w-0">
-                        {/* Title + Actions */}
-                        <div className="flex items-start gap-4 mb-2.5">
-                          <h3 className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-[#FD366E] transition-colors break-words break-all min-w-0 flex-1 leading-tight">
-                            {idea.title}
-                          </h3>
 
-                          {user.current?.$id === idea.userId && (
-                            <div className="flex space-x-2 flex-shrink-0 relative">
-                              {/* Mark Complete/Active */}
-                              <div className="relative group/status">
-                                {idea.status === "completed" ? (
+                          <div className="space-y-4">
+                            {/* Title and Category Row */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              <input
+                                type="text"
+                                value={editTitle}
+                                onChange={(e) => setEditTitle(e.target.value)}
+                                maxLength={100}
+                                minLength={3}
+                                placeholder="Idea title..."
+                                className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                              />
+
+                              <CategorySelect
+                                value={editCategory}
+                                onChange={setEditCategory}
+                                onAddCategory={() => setShowCategoryForm(true)}
+                                onRemoveCategory={ideas.removeCustomCategory}
+                                allCategories={allCategories}
+                                showAddButton={true}
+                                disabled={isUpdating}
+                              />
+                            </div>
+
+                            {/* Description */}
+                            <textarea
+                              value={editDescription}
+                              onChange={(e) =>
+                                setEditDescription(e.target.value)
+                              }
+                              rows={3}
+                              maxLength={500}
+                              minLength={10}
+                              placeholder="Describe your idea (min 10 chars)..."
+                              className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent resize-none transition-all duration-200"
+                            />
+
+                            {/* Priority + GitHub URL + Preview URL Row */}
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                              <select
+                                value={editPriority}
+                                onChange={(e) =>
+                                  setEditPriority(e.target.value)
+                                }
+                                className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                              >
+                                {PRIORITIES.map((pri) => (
+                                  <option
+                                    key={pri}
+                                    value={pri}
+                                    className="dark:bg-black bg-white"
+                                  >
+                                    {pri}
+                                  </option>
+                                ))}
+                              </select>
+
+                              <div className="relative">
+                                <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
+                                <input
+                                  type="url"
+                                  placeholder="Preview URL (max 200 chars)"
+                                  value={editPreviewUrl}
+                                  onChange={(e) =>
+                                    setEditPreviewUrl(e.target.value)
+                                  }
+                                  maxLength={200}
+                                  className="w-full text-sm pl-10 pr-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                                />
+                              </div>
+
+                              <div className="relative">
+                                <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-gray-400 text-gray-500" />
+                                <input
+                                  type="url"
+                                  placeholder="GitHub URL (max 200 chars)"
+                                  value={editGithubUrl}
+                                  onChange={(e) =>
+                                    setEditGithubUrl(e.target.value)
+                                  }
+                                  maxLength={200}
+                                  className="w-full text-sm pl-10 pr-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                                />
+                              </div>
+                            </div>
+
+                            {/* Tags and Public Toggle Row */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              <input
+                                type="text"
+                                placeholder="Tags (max 5, 20 chars each)"
+                                value={editTags}
+                                onChange={(e) => setEditTags(e.target.value)}
+                                maxLength={200}
+                                className="w-full text-sm px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200 dark:text-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FD366E] focus:border-transparent transition-all duration-200"
+                              />
+
+                              <div className="flex items-center justify-between px-3 py-2 rounded-lg dark:bg-gray-800/50 bg-gray-50 border-[0.5px] dark:border-gray-700 border-gray-200">
+                                <span className="text-sm dark:text-white text-gray-900">
+                                  Public
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => setEditIsPublic(!editIsPublic)}
+                                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ${
+                                    editIsPublic
+                                      ? "bg-[#FD366E]"
+                                      : "bg-gray-300 dark:bg-gray-600"
+                                  } cursor-pointer`}
+                                  aria-pressed={editIsPublic}
+                                  aria-label="Toggle idea visibility"
+                                >
+                                  <span
+                                    className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform duration-200 ${
+                                      editIsPublic
+                                        ? "translate-x-5"
+                                        : "translate-x-1"
+                                    }`}
+                                  >
+                                    {editIsPublic && (
+                                      <Check className="w-2 h-2 text-[#FD366E] absolute inset-0 m-auto" />
+                                    )}
+                                  </span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ) : (
+                        <div className="min-w-0">
+                          {/* Title + Actions */}
+                          <div className="flex items-start gap-4 mb-2.5">
+                            <h3 className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-[#FD366E] transition-colors break-words break-all min-w-0 flex-1 leading-tight">
+                              {idea.title}
+                            </h3>
+
+                            {user.current?.$id === idea.userId && (
+                              <div className="flex space-x-2 flex-shrink-0 relative">
+                                {/* Mark Complete/Active */}
+                                <div className="relative group/status">
+                                  {idea.status === "completed" ? (
+                                    <motion.button
+                                      onClick={() => handleMarkActive(idea.$id)}
+                                      className="text-green-500 hover:text-green-400 p-1 rounded-md hover:bg-green-500/10 transition-colors"
+                                      whileHover={{ scale: 1.1 }}
+                                      whileTap={{ scale: 0.9 }}
+                                    >
+                                      <RotateCcw className="w-5 h-5" />
+                                    </motion.button>
+                                  ) : (
+                                    <motion.button
+                                      onClick={() =>
+                                        handleMarkComplete(idea.$id)
+                                      }
+                                      className="text-gray-500 hover:text-green-500 p-1 rounded-md hover:bg-green-500/10 transition-colors"
+                                      whileHover={{ scale: 1.1 }}
+                                      whileTap={{ scale: 0.9 }}
+                                    >
+                                      <CheckCircle2 className="w-5 h-5" />
+                                    </motion.button>
+                                  )}
+                                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/status:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
+                                    {idea.status === "completed"
+                                      ? "Mark as Active"
+                                      : "Mark as Complete"}
+                                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
+                                  </div>
+                                </div>
+
+                                {/* Expand with AI */}
+                                <div className="relative group/expand">
                                   <motion.button
-                                    onClick={() => handleMarkActive(idea.$id)}
-                                    className="text-green-500 hover:text-green-400 p-1 rounded-md hover:bg-green-500/10 transition-colors"
+                                    onClick={() => handleAIExpansion(idea)}
+                                    className="text-[#FD366E] hover:text-[#FD366E]/90 p-1 rounded-md hover:bg-[#FD366E]/10 transition-colors"
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.9 }}
                                   >
-                                    <RotateCcw className="w-5 h-5" />
+                                    <Sparkles className="w-5 h-5" />
                                   </motion.button>
-                                ) : (
+                                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/expand:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
+                                    Expand with AI
+                                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
+                                  </div>
+                                </div>
+
+                                {/* Edit */}
+                                <div className="relative group/edit">
                                   <motion.button
-                                    onClick={() => handleMarkComplete(idea.$id)}
-                                    className="text-gray-500 hover:text-green-500 p-1 rounded-md hover:bg-green-500/10 transition-colors"
+                                    onClick={() => startEdit(idea)}
+                                    className="text-blue-400 hover:text-blue-300 p-1 rounded-md hover:bg-blue-400/10 transition-colors"
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.9 }}
                                   >
-                                    <CheckCircle2 className="w-5 h-5" />
+                                    <Edit3 className="w-5 h-5" />
                                   </motion.button>
-                                )}
-                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/status:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
+                                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/edit:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
+                                    Edit
+                                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
+                                  </div>
+                                </div>
+
+                                {/* Delete */}
+                                <div className="relative group/delete">
+                                  <motion.button
+                                    onClick={() => setDeleteConfirm(idea.$id)}
+                                    className="text-red-500 hover:text-red-400 p-1 rounded-md hover:bg-red-500/10 transition-colors"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                  >
+                                    <Trash2 className="w-5 h-5" />
+                                  </motion.button>
+                                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/delete:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
+                                    Delete
+                                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Description */}
+                          {idea.description && (
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2.5 leading-relaxed break-words break-all">
+                              {idea.description}
+                            </p>
+                          )}
+
+                          {/* Labels */}
+                          {(idea.category ||
+                            idea.priority ||
+                            idea.status ||
+                            typeof idea.isPublic !== "undefined") && (
+                            <div className="flex flex-wrap gap-2 mb-2.5">
+                              {idea.category && (
+                                <span className="bg-[#FD366E]/10 text-[#FD366E] dark:text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30 break-words break-all">
+                                  {idea.category}
+                                </span>
+                              )}
+
+                              {idea.priority && (
+                                <span
+                                  className={`px-3 py-1 rounded-full text-xs border break-words break-all ${getPriorityColor(
+                                    idea.priority
+                                  )}`}
+                                >
+                                  {idea.priority}
+                                </span>
+                              )}
+
+                              {idea.status && (
+                                <span
+                                  className={`px-3 py-1 rounded-full text-xs border break-words break-all ${getStatusColor(
+                                    idea.status
+                                  )}`}
+                                >
                                   {idea.status === "completed"
-                                    ? "Mark as Active"
-                                    : "Mark as Complete"}
-                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
-                                </div>
-                              </div>
+                                    ? "Completed"
+                                    : "Active"}
+                                </span>
+                              )}
 
-                              {/* Expand with AI */}
-                              <div className="relative group/expand">
-                                <motion.button
-                                  onClick={() => handleAIExpansion(idea)}
-                                  className="text-[#FD366E] hover:text-[#FD366E]/90 p-1 rounded-md hover:bg-[#FD366E]/10 transition-colors"
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.9 }}
+                              {typeof idea.isPublic !== "undefined" && (
+                                <span
+                                  className={`px-3 py-1 rounded-full text-xs border break-words break-all ${
+                                    idea.isPublic
+                                      ? "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30"
+                                      : "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/30"
+                                  }`}
                                 >
-                                  <Sparkles className="w-5 h-5" />
-                                </motion.button>
-                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/expand:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
-                                  Expand with AI
-                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
-                                </div>
-                              </div>
+                                  {idea.isPublic ? "Public" : "Private"}
+                                </span>
+                              )}
+                            </div>
+                          )}
 
-                              {/* Edit */}
-                              <div className="relative group/edit">
-                                <motion.button
-                                  onClick={() => startEdit(idea)}
-                                  className="text-blue-400 hover:text-blue-300 p-1 rounded-md hover:bg-blue-400/10 transition-colors"
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.9 }}
-                                >
-                                  <Edit3 className="w-5 h-5" />
-                                </motion.button>
-                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/edit:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
-                                  Edit
-                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
-                                </div>
-                              </div>
+                          {/* Tags */}
+                          {idea?.tags && idea.tags.trim() && (
+                            <div className="flex flex-wrap gap-2 mb-2.5">
+                              {idea.tags.split(",").map((tag, i) => {
+                                const trimmedTag = tag?.trim();
+                                if (!trimmedTag) return null;
+                                return (
+                                  <span
+                                    key={i}
+                                    className="flex items-center text-xs px-2 py-1 rounded-md bg-gray-100 text-gray-700 dark:bg-gray-800/50 dark:text-gray-300 max-w-full"
+                                  >
+                                    <Tag className="w-3 h-3 mr-1 flex-shrink-0" />
+                                    <span className="break-words break-all truncate max-w-32">
+                                      {trimmedTag}
+                                    </span>
+                                  </span>
+                                );
+                              })}
+                            </div>
+                          )}
 
-                              {/* Delete */}
-                              <div className="relative group/delete">
-                                <motion.button
-                                  onClick={() => setDeleteConfirm(idea.$id)}
-                                  className="text-red-500 hover:text-red-400 p-1 rounded-md hover:bg-red-500/10 transition-colors"
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.9 }}
-                                >
-                                  <Trash2 className="w-5 h-5" />
-                                </motion.button>
-                                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/delete:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20 shadow-lg">
-                                  Delete
-                                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
-                                </div>
+                          {/* Bottom section */}
+                          {(idea.previewUrl ||
+                            idea.githubUrl ||
+                            idea.$createdAt) && (
+                            <div className="pt-1.5 border-t border-gray-100 dark:border-gray-800">
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                {/* Preview and GitHub Links */}
+                                {(idea.previewUrl || idea.githubUrl) && (
+                                  <div className="flex items-center gap-4 min-w-0 order-1 sm:order-none">
+                                    {idea.previewUrl && (
+                                      <a
+                                        href={idea.previewUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
+                                      >
+                                        <Globe className="w-5 h-5" />
+                                      </a>
+                                    )}
+
+                                    {idea.githubUrl && (
+                                      <a
+                                        href={idea.githubUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
+                                      >
+                                        <Github className="w-5 h-5" />
+                                      </a>
+                                    )}
+                                  </div>
+                                )}
+
+                                {/* Created Date */}
+                                {idea.$createdAt && (
+                                  <div
+                                    className={`flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2 order-2 sm:order-none ${
+                                      !(idea.previewUrl || idea.githubUrl)
+                                        ? "sm:justify-start"
+                                        : "sm:justify-end"
+                                    }`}
+                                  >
+                                    <Calendar className="w-4 h-4 flex-shrink-0" />
+                                    <span className="whitespace-nowrap">
+                                      {moment(idea.$createdAt).format(
+                                        "MMM D, YYYY"
+                                      )}
+                                    </span>
+                                  </div>
+                                )}
                               </div>
                             </div>
                           )}
                         </div>
-
-                        {/* Description */}
-                        {idea.description && (
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2.5 leading-relaxed break-words break-all">
-                            {idea.description}
-                          </p>
-                        )}
-
-                        {/* Labels */}
-                        {(idea.category ||
-                          idea.priority ||
-                          idea.status ||
-                          typeof idea.isPublic !== "undefined") && (
-                          <div className="flex flex-wrap gap-2 mb-2.5">
-                            {idea.category && (
-                              <span className="bg-[#FD366E]/10 text-[#FD366E] dark:text-white px-3 py-1 rounded-full text-xs border border-[#FD366E]/30 break-words break-all">
-                                {idea.category}
-                              </span>
-                            )}
-
-                            {idea.priority && (
-                              <span
-                                className={`px-3 py-1 rounded-full text-xs border break-words break-all ${getPriorityColor(
-                                  idea.priority
-                                )}`}
-                              >
-                                {idea.priority}
-                              </span>
-                            )}
-
-                            {idea.status && (
-                              <span
-                                className={`px-3 py-1 rounded-full text-xs border break-words break-all ${getStatusColor(
-                                  idea.status
-                                )}`}
-                              >
-                                {idea.status === "completed"
-                                  ? "Completed"
-                                  : "Active"}
-                              </span>
-                            )}
-
-                            {typeof idea.isPublic !== "undefined" && (
-                              <span
-                                className={`px-3 py-1 rounded-full text-xs border break-words break-all ${
-                                  idea.isPublic
-                                    ? "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30"
-                                    : "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/30"
-                                }`}
-                              >
-                                {idea.isPublic ? "Public" : "Private"}
-                              </span>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Tags */}
-                        {idea?.tags && idea.tags.trim() && (
-                          <div className="flex flex-wrap gap-2 mb-2.5">
-                            {idea.tags.split(",").map((tag, i) => {
-                              const trimmedTag = tag?.trim();
-                              if (!trimmedTag) return null;
-                              return (
-                                <span
-                                  key={i}
-                                  className="flex items-center text-xs px-2 py-1 rounded-md bg-gray-100 text-gray-700 dark:bg-gray-800/50 dark:text-gray-300 max-w-full"
-                                >
-                                  <Tag className="w-3 h-3 mr-1 flex-shrink-0" />
-                                  <span className="break-words break-all truncate max-w-32">
-                                    {trimmedTag}
-                                  </span>
-                                </span>
-                              );
-                            })}
-                          </div>
-                        )}
-
-                        {/* Bottom section */}
-                        {(idea.previewUrl ||
-                          idea.githubUrl ||
-                          idea.$createdAt) && (
-                          <div className="pt-1.5 border-t border-gray-100 dark:border-gray-800">
-                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                              {/* Preview and GitHub Links */}
-                              {(idea.previewUrl || idea.githubUrl) && (
-                                <div className="flex items-center gap-4 min-w-0 order-1 sm:order-none">
-                                  {idea.previewUrl && (
-                                    <a
-                                      href={idea.previewUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
-                                    >
-                                      <Globe className="w-5 h-5" />
-                                    </a>
-                                  )}
-
-                                  {idea.githubUrl && (
-                                    <a
-                                      href={idea.githubUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-[#FD366E] hover:text-[#FD366E]/80 transition-colors"
-                                    >
-                                      <Github className="w-5 h-5" />
-                                    </a>
-                                  )}
-                                </div>
-                              )}
-
-                              {/* Created Date */}
-                              {idea.$createdAt && (
-                                <div
-                                  className={`flex items-center text-sm text-gray-600 dark:text-gray-400 gap-2 order-2 sm:order-none ${
-                                    !(idea.previewUrl || idea.githubUrl)
-                                      ? "sm:justify-start"
-                                      : "sm:justify-end"
-                                  }`}
-                                >
-                                  <Calendar className="w-4 h-4 flex-shrink-0" />
-                                  <span className="whitespace-nowrap">
-                                    {moment(idea.$createdAt).format(
-                                      "MMM D, YYYY"
-                                    )}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </motion.div>
-                ))}
-
-                {/* Load More Button */}
-                {ideas.hasMore && (
-                  <motion.div
-                    className="flex justify-center mt-6"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <motion.button
-                      onClick={() => ideas.loadMore()}
-                      disabled={ideas.isLoading}
-                      className="bg-[#FD366E] hover:bg-[#FD366E]/90 disabled:bg-[#FD366E]/50 text-white font-medium px-6 py-2 rounded-xl transition-all duration-300 shadow-lg shadow-[#FD366E]/20 flex items-center space-x-2"
-                      whileHover={
-                        !ideas.isLoading ? { scale: 1.02, y: -1 } : {}
-                      }
-                      whileTap={!ideas.isLoading ? { scale: 0.98 } : {}}
-                    >
-                      {ideas.isLoading ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                          <span>Loading...</span>
-                        </>
-                      ) : (
-                        <span>Load More</span>
                       )}
-                    </motion.button>
-                  </motion.div>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </section>
+                    </motion.div>
+                  ))}
+
+                  {/* Load More Button */}
+                  {ideas.hasMore && (
+                    <motion.div
+                      className="flex justify-center mt-6"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <motion.button
+                        onClick={() => ideas.loadMore()}
+                        disabled={ideas.isLoading}
+                        className="bg-[#FD366E] hover:bg-[#FD366E]/90 disabled:bg-[#FD366E]/50 text-white font-medium px-6 py-2 rounded-xl transition-all duration-300 shadow-lg shadow-[#FD366E]/20 flex items-center space-x-2"
+                        whileHover={
+                          !ideas.isLoading ? { scale: 1.02, y: -1 } : {}
+                        }
+                        whileTap={!ideas.isLoading ? { scale: 0.98 } : {}}
+                      >
+                        {ideas.isLoading ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                            <span>Loading...</span>
+                          </>
+                        ) : (
+                          <span>Load More</span>
+                        )}
+                      </motion.button>
+                    </motion.div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </section>
+        )}
       </div>
 
       {/* Custom Category Modal */}

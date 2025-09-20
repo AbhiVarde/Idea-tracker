@@ -359,7 +359,7 @@ export function IdeasProvider({ children }) {
           userId: user.$id,
           userName: user.name || "",
           userProfilePicture:
-            getProfilePictureUrl(user.prefs.profilePictureId) || "",
+            getUserAvatarUrl(user, getProfilePictureUrl) || "",
           status: "active",
         },
         permissions // Use the permissions array
@@ -394,8 +394,7 @@ export function IdeasProvider({ children }) {
       const finalUpdatedIdea = {
         ...updatedIdea,
         userName: user.name || "",
-        userProfilePicture:
-          getProfilePictureUrl(user.prefs.profilePictureId) || "",
+        userProfilePicture: getUserAvatarUrl(user, getProfilePictureUrl) || "",
       };
 
       const response = await databases.updateDocument(
@@ -710,12 +709,31 @@ export function IdeasProvider({ children }) {
     [user]
   );
 
+  const getUserAvatarUrl = (user, getProfilePictureUrl) => {
+    if (!user) return null;
+
+    // Custom uploaded profile picture
+    if (user.prefs?.profilePictureId) {
+      try {
+        return getProfilePictureUrl(user.prefs.profilePictureId);
+      } catch (e) {
+        console.warn("Failed to get profile picture URL:", e);
+      }
+    }
+
+    // OAuth avatar URL
+    if (user.avatarUrl) {
+      return user.avatarUrl;
+    }
+
+    return null;
+  };
+
   useEffect(() => {
     if (isInitialized && !loading) {
       if (user) {
         fetchIdeas();
       } else {
-        console.log("No user, clearing ideas");
         setIdeas([]);
         setIsLoading(false);
         pendingOperationsRef.current.clear();
